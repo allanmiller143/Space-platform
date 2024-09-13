@@ -1,7 +1,7 @@
 import React from 'react';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from 'src/components/container/PageContainer';
-import InvoiceList from 'src/components/apps/invoice/Invoice-list/index';
+import ImoveisList from 'src/components/apps/imoveis/imoveis-list/index';
 import { InvoiceProvider } from 'src/context/InvoiceContext/index';
 import BlankCard from 'src/components/shared/BlankCard';
 import { CardContent } from '@mui/material';

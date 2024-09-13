@@ -90,9 +90,15 @@ const profile = [
 
 const appsLink = [
   {
+    href: '/apps/invoice/list',
+    title: 'Gestão de Imóveis',
+    subtext: 'Contratos, visitas, e mais',
+    avatar: ddIcon3,
+  },
+  {
     href: '/apps/chats',
     title: 'Mensagens',
-    subtext: 'Corretores, imobiliárias, e clientes',
+    subtext: 'Chat com corretores e clientes',
     avatar: ddIcon1,
   },
   // {
@@ -101,12 +107,6 @@ const appsLink = [
   //   subtext: 'Messages & Emails',
   //   avatar: ddIcon2,
   // },
-  {
-    href: '/apps/invoice/list',
-    title: 'Gestão de Imóveis',
-    subtext: 'Contratos, visitas, e mais',
-    avatar: ddIcon3,
-  },
   {
     href: '/apps/calendar',
     title: 'Calendário',
@@ -121,8 +121,8 @@ const appsLink = [
   },
   {
     href: '/apps/tickets',
-    title: 'Tickets',
-    subtext: 'Gestão de tickets',
+    title: 'Chamados e Tickets',
+    subtext: 'Gestão de chamados e tickets',
     avatar: ddIcon6,
   },
   {

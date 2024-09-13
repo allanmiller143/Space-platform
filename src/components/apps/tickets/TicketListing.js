@@ -8,17 +8,14 @@ import {
   TableCell,
   Typography,
   TableBody,
-  IconButton,
   Chip,
   Stack,
   Avatar,
-  Tooltip,
   TextField,
   Pagination,
   TableContainer,
 } from '@mui/material';
-import { fetchTickets, DeleteTicket, SearchTicket } from '../../../store/apps/tickets/TicketSlice';
-import { IconTrash } from '@tabler/icons';
+import { fetchTickets, SearchTicket } from '../../../store/apps/tickets/TicketSlice';
 
 const TicketListing = () => {
   const dispatch = useDispatch();
@@ -74,7 +71,7 @@ const TicketListing = () => {
       <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
         <TextField
           size="small"
-          label="Search"
+          label="Buscar"
           fullWidth
           onChange={(e) => dispatch(SearchTicket(e.target.value))}
         />
@@ -87,19 +84,16 @@ const TicketListing = () => {
                 <Typography variant="h6">Id</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">Ticket</Typography>
+                <Typography variant="h6">Imóvel</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">Assigned To</Typography>
+                <Typography variant="h6">Aberto por</Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6">Status</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">Date</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography variant="h6">Action</Typography>
+                <Typography variant="h6">Data</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -156,11 +150,7 @@ const TicketListing = () => {
                   <Typography>{ticket.Date}</Typography>
                 </TableCell>
                 <TableCell align="right">
-                  <Tooltip title="Delete Ticket">
-                    <IconButton onClick={() => dispatch(DeleteTicket(ticket.Id))}>
-                      <IconTrash size="18" />
-                    </IconButton>
-                  </Tooltip>
+                  {/* Ação de deletar removida */}
                 </TableCell>
               </TableRow>
             ))}

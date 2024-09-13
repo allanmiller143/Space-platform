@@ -40,12 +40,12 @@ import { Link } from 'react-router-dom';
 const InvoiceList = () => {
   const { invoices, deleteInvoice } = useContext(InvoiceContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('Todos');
+  const [activeTab, setActiveTab] = useState('All');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-  const tabItem = ['Todos', 'Vendidos', 'Alugados', 'Congelados'];
+  const tabItem = ['All', 'Shipped', 'Delivered', 'Pending'];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Handle status filter change
@@ -59,7 +59,7 @@ const InvoiceList = () => {
     return (
       (invoice.billFrom.toLowerCase().includes(searchTerm.toLowerCase()) ||
         invoice.billTo.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (activeTab === 'Todos' || invoice.status === activeTab)
+      (activeTab === 'All' || invoice.status === activeTab)
     );
   });
 
@@ -68,9 +68,9 @@ const InvoiceList = () => {
   };
 
   // Calculate the counts for different statuses
-  const Vendidos = invoices.filter((t) => t.status === 'Vendidos').length;
-  const Alugados = invoices.filter((t) => t.status === 'Alugados').length;
-  const Congelados = invoices.filter((t) => t.status === 'Congelados').length;
+  const Shipped = invoices.filter((t) => t.status === 'Shipped').length;
+  const Delivered = invoices.filter((t) => t.status === 'Delivered').length;
+  const Pending = invoices.filter((t) => t.status === 'Pending').length;
 
   // Toggle all checkboxes
   const toggleSelectAll = () => {
@@ -117,7 +117,7 @@ const InvoiceList = () => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} lg={3}>
-          <Box bgcolor="primary.light" p={3} onClick={() => handleClick("Todos")} sx={{ cursor: "pointer" }}>
+          <Box bgcolor="primary.light" p={3} onClick={() => handleClick("All")} sx={{ cursor: "pointer" }}>
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -138,13 +138,13 @@ const InvoiceList = () => {
               </Box>
               <Box>
                 <Typography>Total</Typography>
-                <Typography fontWeight={500}>{invoices.length} Imóveis</Typography>
+                <Typography fontWeight={500}>{invoices.length} Invoices</Typography>
               </Box>
             </Stack>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} lg={3}>
-          <Box bgcolor="secondary.light" p={3} onClick={() => handleClick("Vendidos")} sx={{ cursor: "pointer" }}>
+          <Box bgcolor="secondary.light" p={3} onClick={() => handleClick("Shipped")} sx={{ cursor: "pointer" }}>
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -164,14 +164,14 @@ const InvoiceList = () => {
                 </Typography>
               </Box>
               <Box>
-                <Typography>Vendidos</Typography>
-                <Typography fontWeight={500}>{Vendidos} Imóveis</Typography>
+                <Typography>Shipped</Typography>
+                <Typography fontWeight={500}>{Shipped} Invoices</Typography>
               </Box>
             </Stack>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} lg={3}>
-          <Box bgcolor="success.light" p={3} onClick={() => handleClick("Alugados")} sx={{ cursor: "pointer" }}>
+          <Box bgcolor="success.light" p={3} onClick={() => handleClick("Delivered")} sx={{ cursor: "pointer" }}>
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -191,14 +191,14 @@ const InvoiceList = () => {
                 </Typography>
               </Box>
               <Box>
-                <Typography>Alugados</Typography>
-                <Typography fontWeight={500}>{Alugados} Imóveis</Typography>
+                <Typography>Delivered</Typography>
+                <Typography fontWeight={500}>{Delivered} Invoices</Typography>
               </Box>
             </Stack>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} lg={3}>
-          <Box bgcolor="warning.light" p={3} onClick={() => handleClick("Congelados")} sx={{ cursor: "pointer" }}>
+          <Box bgcolor="warning.light" p={3} onClick={() => handleClick("Pending")} sx={{ cursor: "pointer" }}>
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -218,8 +218,8 @@ const InvoiceList = () => {
                 </Typography>
               </Box>
               <Box>
-                <Typography>Congelados</Typography>
-                <Typography fontWeight={500}>{Congelados} Imóveis</Typography>
+                <Typography>Pending</Typography>
+                <Typography fontWeight={500}>{Pending} Invoices</Typography>
               </Box>
             </Stack>
           </Box>
@@ -237,7 +237,7 @@ const InvoiceList = () => {
           type="text"
           size="small"
           variant="outlined"
-          placeholder="Pesquisar"
+          placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
@@ -256,11 +256,11 @@ const InvoiceList = () => {
               onClick={handleDelete}
               startIcon={<IconTrash width={18} />}
             >
-              Deletar Todos
+              Delete All
             </Button>
           )}
           <Button variant="contained" color="primary" component={Link} to="/apps/invoice/create">
-            Novo Imóvel
+            New Invoice
           </Button>
         </Box>
       </Stack>
@@ -278,17 +278,17 @@ const InvoiceList = () => {
               </TableCell>
               <TableCell>
                 <Typography variant="h6" fontSize="14px">
-                  Galeria
+                  Bill From
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" fontSize="14px">
-                  Endereço
+                  Bill To
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" fontSize="14px">
-                  Preço Total
+                  Total Cost
                 </Typography>
               </TableCell>
               <TableCell>
@@ -298,7 +298,7 @@ const InvoiceList = () => {
               </TableCell>
               <TableCell align="center">
                 <Typography variant="h6" fontSize="14px">
-                  Ação
+                  Action
                 </Typography>
               </TableCell>
             </TableRow>
@@ -329,18 +329,18 @@ const InvoiceList = () => {
                   <Typography fontSize="14px">{invoice.totalCost}</Typography>
                 </TableCell>
                 <TableCell>
-                  {invoice.status === 'Vendidos' ? (
+                  {invoice.status === 'Shipped' ? (
                     <Chip color="primary" label={invoice.status} size="small" />
-                  ) : invoice.status === 'Alugados' ? (
+                  ) : invoice.status === 'Delivered' ? (
                     <Chip color="success" label={invoice.status} size="small" />
-                  ) : invoice.status === 'Congelados' ? (
+                  ) : invoice.status === 'Pending' ? (
                     <Chip color="warning" label={invoice.status} size="small" />
                   ) : (
                     ''
                   )}
                 </TableCell>
                 <TableCell align="center">
-                  <Tooltip title="Editar Imóvel">
+                  <Tooltip title="Edit Invoice">
                     <IconButton
                       color="success"
                       component={Link}
@@ -349,7 +349,7 @@ const InvoiceList = () => {
                       <IconEdit width={22} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Visualizar Imóvel">
+                  <Tooltip title="View Invoice">
                     <IconButton
                       color="primary"
                       component={Link}
@@ -358,7 +358,7 @@ const InvoiceList = () => {
                       <IconEye width={22} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Deletar Imóvel">
+                  <Tooltip title="Delete Invoice">
                     <IconButton
                       color="error"
                       onClick={() => {
@@ -376,14 +376,14 @@ const InvoiceList = () => {
         </Table>
       </Box>
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-        <DialogTitle>Confirmar Deleção</DialogTitle>
-        <DialogContent>Você tem certeza que deseja deletar os imóveis selecionados?</DialogContent>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure you want to delete selected invoices?</DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCloseDeleteDialog}>
-            Cancelar
+            Cancel
           </Button>
           <Button color="error" variant="outlined" onClick={handleConfirmDelete}>
-            Deletar
+            Delete
           </Button>
         </DialogActions>
       </Dialog>
