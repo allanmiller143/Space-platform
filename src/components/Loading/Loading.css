@@ -1,0 +1,14 @@
+.filterContainer {
+  position: relative; /* Garante que o position:absolute do Backdrop funcione corretamente */
+  /* Outros estilos conforme necessário */
+}
+
+.customBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Cobrirá toda a largura do componente pai */
+  height: 100%; /* Cobrirá toda a altura do componente pai */
+  background-color: rgba(0, 0, 0, 0.5); /* Cor e opacidade do backdrop */
+  z-index: 1000; /* Garante que o backdrop esteja acima de outros elementos */
+}

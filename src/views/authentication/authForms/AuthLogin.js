@@ -1,91 +1,143 @@
-import React from 'react';
-import {
-  Box,
-  Typography,
-  FormGroup,
-  FormControlLabel,
-  Button,
-  Stack,
-  Divider,
-} from '@mui/material';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
+import { Box, Typography, FormGroup, FormControlLabel, Button, Stack, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
-
 import CustomCheckbox from '../../../components/forms/theme-elements/CustomCheckbox';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
-
 import AuthSocialButtons from './AuthSocialButtons';
+import { getData, postData } from '../../../Services/Api';
+import {useNavigate} from 'react-router-dom';
+import {toast} from 'sonner';
+import Loading from '../../../components/Loading/Loading';
+import GoogleSignIn from './GoogleSignIn';
 
-const AuthLogin = ({ title, subtitle, subtext }) => (
-  <>
-    {title ? (
-      <Typography fontWeight="700" variant="h3" mb={1}>
-        {title}
-      </Typography>
-    ) : null}
+const AuthLogin = ({ title, subtitle, subtext }) => {
+  // Definindo os estados para email e senha
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const Navigate = useNavigate();
 
-    {subtext}
+  const handleLogin =  async (event) => {
+    event.preventDefault(); 
+    if(email === '' && password === ''){
+      toast.error('por favor preencha todos os campos');
+    }else{
+      try{
+        setLoading(true);
+        const data =  {'email' : email, 'password': password};
+        const response = await postData('login',data);
+        if(response.status === 200 || response.status === 201){
+          const token = response.data.token; 
+          const user = response.data.user;
+          localStorage.setItem('token', token);
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          const favoritesResponse = await getData(`favorites/${user.email}`,token);
+          if(favoritesResponse.status === 200 || favoritesResponse.status === 201){
+            localStorage.setItem('currentUserFavorites', JSON.stringify(favoritesResponse.userInfo));
+            Navigate('/');
+            toast.success('Login efetuado com sucesso');
+          }
+          else{
+            toast.error('Ocorreu um erro inesperado, por favor tente novamente mais tarde');
+          }
+        }else{
+          toast.error('Email ou senha inválidos');
+        }
+      }catch(error){
+        toast.error(error.message);
+      }finally{
+        setLoading(false);
+      }
+    }
+  };
 
-    <AuthSocialButtons title="Sign in with" />
-    <Box mt={3}>
-      <Divider>
-        <Typography
-          component="span"
-          color="textSecondary"
-          variant="h6"
-          fontWeight="400"
-          position="relative"
-          px={2}
-        >
-          or sign in with
+  return (
+    <>
+      {loading && <Loading data = {{open:loading}}/>}
+
+      {title ? (
+        <Typography fontWeight="700" variant="h3" mb={1}>
+          {title}
         </Typography>
-      </Divider>
-    </Box>
+      ) : null}
 
-    <Stack>
-      <Box>
-        <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
-        <CustomTextField id="username" variant="outlined" fullWidth />
+      {subtext}
+
+      <GoogleSignIn/>
+      <Box mt={3}>
+        <Divider>
+          <Typography
+            component="span"
+            color="textSecondary"
+            variant="h6"
+            fontWeight="400"
+            position="relative"
+            px={2}
+          >
+            or sign in with
+          </Typography>
+        </Divider>
       </Box>
-      <Box>
-        <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-        <CustomTextField id="password" type="password" variant="outlined" fullWidth />
-      </Box>
-      <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
-        <FormGroup>
-          <FormControlLabel
-            control={<CustomCheckbox defaultChecked />}
-            label="Remeber this Device"
+
+      <Stack component="form" onSubmit={handleLogin}>
+        <Box>
+          <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
+          <CustomTextField
+            id="email"
+            variant="outlined"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Atualiza o estado do email
           />
-        </FormGroup>
-        <Typography
-          component={Link}
-          to="/auth/forgot-password"
-          fontWeight="500"
-          sx={{
-            textDecoration: 'none',
-            color: 'primary.main',
-          }}
-        >
-          Forgot Password ?
-        </Typography>
+        </Box>
+        <Box>
+          <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+          <CustomTextField
+            id="password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} // Atualiza o estado da senha
+          />
+        </Box>
+        <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
+          <FormGroup>
+            <FormControlLabel
+              control={<CustomCheckbox defaultChecked />}
+              label="Remember this Device"
+            />
+          </FormGroup>
+          <Typography
+            component={Link}
+            to="/auth/forgot-password"
+            fontWeight="500"
+            sx={{
+              textDecoration: 'none',
+              color: 'primary.main',
+            }}
+          >
+            Forgot Password ?
+          </Typography>
+        </Stack>
+        <Box>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            fullWidth
+            type="submit" // Define o botão como "submit"
+          >
+            Sign In
+          </Button>
+        </Box>
       </Stack>
-    </Stack>
-    <Box>
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        fullWidth
-        component={Link}
-        to="/"
-        type="submit"
-      >
-        Sign In
-      </Button>
-    </Box>
-    {subtitle}
-  </>
-);
+      {subtitle}
+    </>
+  );
+};
 
 export default AuthLogin;
