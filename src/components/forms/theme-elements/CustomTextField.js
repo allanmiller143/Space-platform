@@ -38,7 +38,7 @@ const ToggleableTextField = ({ type = 'text', ...props }) => {
         // Exibe o ícone de olho apenas se o tipo for 'password'
         endAdornment: type === 'password' && (
           <InputAdornment position="end">
-            <IconButton onClick={togglePasswordVisibility} edge="end">
+            <IconButton onClick={togglePasswordVisibility} edge="end" style={{ paddingRight: 10 }}>
               {showPassword ? <IoMdEyeOff /> : <FaEye />}
             </IconButton>
           </InputAdornment>
