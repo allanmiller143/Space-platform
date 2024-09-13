@@ -11,6 +11,7 @@ import { getData, postData } from '../../../Services/Api';
 import {useNavigate} from 'react-router-dom';
 import {toast} from 'sonner';
 import Loading from '../../../components/Loading/Loading';
+import GoogleSignIn from './GoogleSignIn';
 
 const AuthLogin = ({ title, subtitle, subtext }) => {
   // Definindo os estados para email e senha
@@ -65,7 +66,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
 
       {subtext}
 
-      <AuthSocialButtons title="Sign in with" />
+      <GoogleSignIn/>
       <Box mt={3}>
         <Divider>
           <Typography
