@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 
-// components
+// componentes
 import PageContainer from 'src/components/container/PageContainer';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthLogin from '../authForms/AuthLogin';
 
 const Login2 = () => {
   return (
-    <PageContainer title="Login" description="this is Login page">
+    <PageContainer title="Login" description="esta é a página de Login">
       <Box
         sx={{
           position: 'relative',
@@ -44,7 +44,7 @@ const Login2 = () => {
                 subtitle={
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
                     <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      New to Modernize?
+                      Novo no Modernize?
                     </Typography>
                     <Typography
                       component={Link}
@@ -55,7 +55,7 @@ const Login2 = () => {
                         color: 'primary.main',
                       }}
                     >
-                      Create an account
+                      Criar uma conta
                     </Typography>
                   </Stack>
                 }

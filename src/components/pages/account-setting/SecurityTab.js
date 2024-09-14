@@ -11,7 +11,7 @@ import {
   Stack
 } from '@mui/material';
 
-// components
+// componentes
 import BlankCard from '../../shared/BlankCard';
 import { IconDeviceLaptop, IconDeviceMobile, IconDotsVertical } from '@tabler/icons';
 
@@ -23,7 +23,7 @@ const SecurityTab = () => {
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
-                Two-factor Authentication
+                Autenticação de Dois Fatores
               </Typography>
               <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
                 <Typography variant="subtitle1" color="textSecondary">
@@ -31,53 +31,53 @@ const SecurityTab = () => {
                   earum officiis laboriosam ut.
                 </Typography>
                 <Button variant="contained" color="primary">
-                  Enable
+                  Ativar
                 </Button>
               </Stack>
 
               <Divider />
 
-              {/* list 1 */}
+              {/* lista 1 */}
               <Stack direction="row" spacing={2} py={2} alignItems="center">
                 <Box>
-                  <Typography variant="h6">Authentication App</Typography>
+                  <Typography variant="h6">Aplicativo de Autenticação</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Google auth app
+                    Aplicativo Google Authenticator
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
                   <Button variant="text" color="primary">
-                    Setup
+                    Configurar
                   </Button>
                 </Box>
               </Stack>
               <Divider />
-              {/* list 2 */}
+              {/* lista 2 */}
               <Stack direction="row" spacing={2} py={2} alignItems="center">
                 <Box>
-                  <Typography variant="h6">Another e-mail</Typography>
+                  <Typography variant="h6">Outro e-mail</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    E-mail to send verification link
+                    E-mail para enviar link de verificação
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
                   <Button variant="text" color="primary">
-                    Setup
+                    Configurar
                   </Button>
                 </Box>
               </Stack>
               <Divider />
-              {/* list 3 */}
+              {/* lista 3 */}
               <Stack direction="row" spacing={2} py={2} alignItems="center">
                 <Box>
-                  <Typography variant="h6">SMS Recovery</Typography>
+                  <Typography variant="h6">Recuperação por SMS</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Your phone number or something
+                    Seu número de telefone ou algo assim
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
                   <Button variant="text" color="primary">
-                    Setup
+                    Configurar
                   </Button>
                 </Box>
               </Stack>
@@ -95,23 +95,23 @@ const SecurityTab = () => {
               </Avatar>
 
               <Typography variant="h5" mt={2}>
-                Devices
+                Dispositivos
               </Typography>
               <Typography color="textSecondary" mt={1} mb={2}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit Rem.
               </Typography>
               <Button variant="contained" color="primary">
-                Sign out from all devices
+                Sair de todos os dispositivos
               </Button>
 
-              {/* list 1 */}
+              {/* lista 1 */}
               <Stack direction="row" spacing={2} py={2} mt={3} alignItems="center">
                 <IconDeviceMobile size="26" />
 
                 <Box>
                   <Typography variant="h6">iPhone 14</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    London UK, Oct 23 at 1:15 AM
+                    Londres, Reino Unido, 23 de Out às 1:15
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -121,14 +121,14 @@ const SecurityTab = () => {
                 </Box>
               </Stack>
               <Divider />
-              {/* list 2 */}
+              {/* lista 2 */}
               <Stack direction="row" spacing={2} py={2} alignItems="center">
                 <IconDeviceLaptop size="26" />
 
                 <Box>
                   <Typography variant="h6">Macbook Air </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Gujarat India, Oct 24 at 3:15 AM
+                    Gujarat, Índia, 24 de Out às 3:15
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -139,7 +139,7 @@ const SecurityTab = () => {
               </Stack>
               <Stack>
                 <Button variant="text" color="primary">
-                  Need Help ?
+                  Precisa de Ajuda?
                 </Button>
               </Stack>
             </CardContent>
@@ -149,10 +149,10 @@ const SecurityTab = () => {
 
       <Stack direction="row" spacing={2} sx={{ justifyContent: 'end' }} mt={3}>
         <Button size="large" variant="contained" color="primary">
-          Save
+          Salvar
         </Button>
         <Button size="large" variant="text" color="error">
-          Cancel
+          Cancelar
         </Button>
       </Stack>
     </>

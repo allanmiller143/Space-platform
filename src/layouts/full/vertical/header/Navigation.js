@@ -19,6 +19,18 @@ const AppDD = () => {
 
   return (
     <>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/dashboards/ecommerce" component={Link}>
+        Buscar imóveis
+      </Button>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/chats" component={Link}>
+        Feed
+      </Button>
+      {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/calendar" component={Link}>
+        Calendário
+      </Button> */}
+      {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/email" component={Link}>
+        Email
+      </Button> */}
       <Box>
         <Button
           aria-label="show 11 new notifications"
@@ -33,7 +45,7 @@ const AppDD = () => {
           onClick={handleClick2}
           endIcon={<IconChevronDown size="15" style={{ marginLeft: '-5px', marginTop: '2px' }} />}
         >
-          Apps
+          Produtos
         </Button>
         {/* ------------------------------------------- */}
         {/* Message Dropdown */}
@@ -48,29 +60,24 @@ const AppDD = () => {
           transformOrigin={{ horizontal: 'left', vertical: 'top' }}
           sx={{
             '& .MuiMenu-paper': {
-              width: '850px',
+              width: '600px',
             },
             '& .MuiMenu-paper ul': {
               p: 0,
             },
           }}
         >
-          <Grid container>
-            <Grid item sm={8} display="flex">
-              <Box p={4} pr={0} pb={3}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Box p={3}>
                 <AppLinks />
-                <Divider />
+                <Divider sx={{ my: 2 }} />
                 <Box
                   sx={{
-                    display: {
-                      xs: 'none',
-                      sm: 'flex',
-                    },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                   }}
-                  alignItems="center"
-                  justifyContent="space-between"
-                  pt={2}
-                  pr={4}
                 >
                   <Link to="/faq">
                     <Typography
@@ -85,30 +92,15 @@ const AppDD = () => {
                       Perguntas Frequentes
                     </Typography>
                   </Link>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" size="small">
                     Ler mais
                   </Button>
                 </Box>
-              </Box>
-              <Divider orientation="vertical" />
-            </Grid>
-            <Grid item sm={4}>
-              <Box p={4}>
-                <QuickLinks />
               </Box>
             </Grid>
           </Grid>
         </Menu>
       </Box>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" to="/apps/chats" component={Link}>
-        Chat
-      </Button>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" to="/apps/calendar" component={Link}>
-        Calendário
-      </Button>
-      <Button color="inherit" sx={{color: (theme) => theme.palette.text.secondary}} variant="text" to="/apps/email" component={Link}>
-        Email
-      </Button>
     </>
   );
 };

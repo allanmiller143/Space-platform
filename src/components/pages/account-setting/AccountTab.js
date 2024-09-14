@@ -1,52 +1,52 @@
 import React from 'react';
 import { CardContent, Grid, Typography, MenuItem, Box, Avatar, Button, Stack } from '@mui/material';
 
-// components
+// componentes
 import BlankCard from '../../shared/BlankCard';
 import CustomTextField from '../../forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../forms/theme-elements/CustomFormLabel';
 import CustomSelect from '../../forms/theme-elements/CustomSelect';
 
-// images
+// imagens
 import user1 from 'src/assets/images/profile/user-1.jpg';
 
-// locations
+// localizações
 const locations = [
   {
     value: 'us',
-    label: 'United States',
+    label: 'Estados Unidos',
   },
   {
     value: 'uk',
-    label: 'United Kingdom',
+    label: 'Reino Unido',
   },
   {
     value: 'india',
-    label: 'India',
+    label: 'Índia',
   },
   {
     value: 'russia',
-    label: 'Russia',
+    label: 'Rússia',
   },
 ];
 
-// currency
+// moeda
 const currencies = [
   {
     value: 'us',
-    label: 'US Dollar ($)',
+    label: 'Dólar Americano ($)',
   },
   {
     value: 'uk',
-    label: 'United Kingdom (Pound)',
+    label: 'Libra Esterlina (£)',
   },
   {
     value: 'india',
-    label: 'India (INR)',
+    label: 'Rúpia Indiana (₹)',
   },
   {
     value: 'russia',
-    label: 'Russia (Ruble)',
+    label: 'Rublo Russo (₽)',
   },
 ];
 
@@ -57,7 +57,7 @@ const AccountTab = () => {
     setLocation(event.target.value);
   };
 
-  //   currency
+  //   moeda
   const [currency, setCurrency] = React.useState('india');
 
   const handleChange2 = (event) => {
@@ -66,14 +66,14 @@ const AccountTab = () => {
 
   return (
     <Grid container spacing={3}>
-      {/* Change Profile */}
+      {/* Alterar Perfil */}
       <Grid item xs={12} lg={6}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
-              Change Profile
+              Alterar Perfil
             </Typography>
-            <Typography color="textSecondary" mb={3}>Change your profile picture from here</Typography>
+            <Typography color="textSecondary" mb={3}>Altere sua foto de perfil aqui</Typography>
             <Box textAlign="center" display="flex" justifyContent="center">
               <Box>
                 <Avatar
@@ -83,29 +83,29 @@ const AccountTab = () => {
                 />
                 <Stack direction="row" justifyContent="center" spacing={2} my={3}>
                   <Button variant="contained" color="primary" component="label">
-                    Upload
+                    Enviar
                     <input hidden accept="image/*" multiple type="file" />
                   </Button>
                   <Button variant="outlined" color="error">
-                    Reset
+                    Redefinir
                   </Button>
                 </Stack>
                 <Typography variant="subtitle1" color="textSecondary" mb={4}>
-                  Allowed JPG, GIF or PNG. Max size of 800K
+                  Permitido JPG, GIF ou PNG. Tamanho máximo de 800K
                 </Typography>
               </Box>
             </Box>
           </CardContent>
         </BlankCard>
       </Grid>
-      {/*  Change Password */}
+      {/*  Alterar Senha */}
       <Grid item xs={12} lg={6}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
-              Change Password
+              Alterar Senha
             </Typography>
-            <Typography color="textSecondary" mb={3}>To change your password please confirm here</Typography>
+            <Typography color="textSecondary" mb={3}>Para alterar sua senha, por favor confirme aqui</Typography>
             <form>
               <CustomFormLabel
                 sx={{
@@ -113,7 +113,7 @@ const AccountTab = () => {
                 }}
                 htmlFor="text-cpwd"
               >
-                Current Password
+                Senha Atual
               </CustomFormLabel>
               <CustomTextField
                 id="text-cpwd"
@@ -123,7 +123,7 @@ const AccountTab = () => {
                 type="password"
               />
               {/* 2 */}
-              <CustomFormLabel htmlFor="text-npwd">New Password</CustomFormLabel>
+              <CustomFormLabel htmlFor="text-npwd">Nova Senha</CustomFormLabel>
               <CustomTextField
                 id="text-npwd"
                 value="MathewAnderson"
@@ -132,7 +132,7 @@ const AccountTab = () => {
                 type="password"
               />
               {/* 3 */}
-              <CustomFormLabel htmlFor="text-conpwd">Confirm Password</CustomFormLabel>
+              <CustomFormLabel htmlFor="text-conpwd">Confirmar Senha</CustomFormLabel>
               <CustomTextField
                 id="text-conpwd"
                 value="MathewAnderson"
@@ -144,14 +144,14 @@ const AccountTab = () => {
           </CardContent>
         </BlankCard>
       </Grid>
-      {/* Edit Details */}
+      {/* Editar Detalhes */}
       <Grid item xs={12}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
-              Personal Details
+              Detalhes Pessoais
             </Typography>
-            <Typography color="textSecondary" mb={3}>To change your personal detail , edit and save from here</Typography>
+            <Typography color="textSecondary" mb={3}>Para alterar seus detalhes pessoais, edite e salve aqui</Typography>
             <form>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
@@ -161,7 +161,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-name"
                   >
-                    Your Name
+                    Seu Nome
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-name"
@@ -178,7 +178,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-store-name"
                   >
-                    Store Name
+                    Nome da Loja
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-store-name"
@@ -195,7 +195,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-location"
                   >
-                    Location
+                    Localização
                   </CustomFormLabel>
                   <CustomSelect
                     fullWidth
@@ -219,7 +219,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-currency"
                   >
-                    Currency
+                    Moeda
                   </CustomFormLabel>
                   <CustomSelect
                     fullWidth
@@ -243,7 +243,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-email"
                   >
-                    Email
+                    E-mail
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-email"
@@ -260,7 +260,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-phone"
                   >
-                    Phone
+                    Telefone
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-phone"
@@ -277,7 +277,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-address"
                   >
-                    Address
+                    Endereço
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-address"
@@ -292,10 +292,10 @@ const AccountTab = () => {
         </BlankCard>
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'end' }} mt={3}>
           <Button size="large" variant="contained" color="primary">
-            Save
+            Salvar
           </Button>
           <Button size="large" variant="text" color="error">
-            Cancel
+            Cancelar
           </Button>
         </Stack>
       </Grid>

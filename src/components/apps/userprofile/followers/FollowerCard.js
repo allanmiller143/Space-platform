@@ -42,18 +42,18 @@ const FollowerCard = () => {
           <Stack direction="row" alignItems={'center'} mt={2}>
             <Box>
               <Typography variant="h3">
-                Followers &nbsp;
+                Seguidores &nbsp;
                 <Chip label={getFollowers.length} color="secondary" size="small" />
               </Typography>
             </Box>
             <Box ml="auto">
               <TextField
                 id="outlined-search"
-                placeholder="Search Followers"
+                placeholder="Buscar Seguidores"
                 size="small"
                 type="search"
                 variant="outlined"
-                inputProps={{ 'aria-label': 'Search Followers' }}
+                inputProps={{ 'aria-label': 'Buscar Seguidores' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -73,7 +73,7 @@ const FollowerCard = () => {
               <BlankCard>
                 <CardContent>
                   <Stack direction={'row'} gap={2} alignItems="center">
-                    <Avatar alt="Remy Sharp" src={profile.avatar} />
+                    <Avatar alt="Fernando Dias" src={profile.avatar} />
                     <Box>
                       <Typography variant="h6" textOverflow={'ellipsis'} noWrap>
                         {profile.name}
@@ -96,7 +96,7 @@ const FollowerCard = () => {
                           size="small"
                           onClick={() => dispatch(onToggleFollow(profile.id))}
                         >
-                          Followed
+                          Seguindo
                         </Button>
                       ) : (
                         <Button
@@ -105,7 +105,7 @@ const FollowerCard = () => {
                           size="small"
                           onClick={() => dispatch(onToggleFollow(profile.id))}
                         >
-                          Follow
+                          Seguir
                         </Button>
                       )}
                     </Box>

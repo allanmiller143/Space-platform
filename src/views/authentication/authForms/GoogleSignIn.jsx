@@ -8,6 +8,7 @@ import { getData, postData } from '../../../Services/Api';
 import Loading from '../../../components/Loading/Loading';
 import { Avatar, Box, Stack } from '@mui/material';
 import CustomSocialButton from '../../../components/forms/theme-elements/CustomSocialButton';
+import AppleIcon from '@mui/icons-material/Apple';
 
 function GoogleSignIn() {
   const [loading,setLoading] = useState(false);
@@ -82,29 +83,41 @@ function GoogleSignIn() {
     }
 
   };
+
+  const handleAppleLogin = () => {
+    // Implementar lógica de login com Apple
+    toast.info('Por enquanto não disponível. Desculpe o inconveniente.');
+  };
+
   return (
     <div className="GoogleSignIn__div">
       {loading && <Loading data={{ open: loading }} />}
-      <Stack direction="row" justifyContent="center" spacing={2} mt={3}>
-      <CustomSocialButton onClick={handleSocialLogin}>
-        <Avatar
-          src={icon1}
-          alt="Google Icon"
-          sx={{
-            width: 16,
-            height: 16,
-            borderRadius: 0,
-            mr: 1,
-          }}
-        />
-        <Box sx={{ display: { xs: 'none', sm: 'flex' }, whiteSpace: 'nowrap', mr: { sm: '3px' } }}>
-          Sign in with 
-        </Box>{' '}
-        Google
-      </CustomSocialButton>
-    </Stack>
+      <Stack direction="column" justifyContent="center" spacing={2} mt={3}>
+        <CustomSocialButton onClick={handleSocialLogin}>
+          <Avatar
+            src={icon1}
+            alt="Google Icon"
+            sx={{
+              width: 16,
+              height: 16,
+              borderRadius: 0,
+              mr: 1,
+            }}
+          />
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, whiteSpace: 'nowrap', mr: { sm: '3px' } }}>
+            Iniciar sessão com
+          </Box>{' '}
+          Google
+        </CustomSocialButton>
+        <CustomSocialButton onClick={handleAppleLogin} sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333', color: 'white' } }}>
+          <AppleIcon sx={{ mr: 1 }} />
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, whiteSpace: 'nowrap', mr: { sm: '3px' } }}>
+            Iniciar sessão com
+          </Box>{' '}
+          Apple
+        </CustomSocialButton>
+      </Stack>
     </div>
-
   );
 }
 

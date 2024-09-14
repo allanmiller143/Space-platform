@@ -22,7 +22,7 @@ const PhotosCard = () => {
 
   return (
     <ChildCard>
-      <Typography variant="h4">Photos</Typography>
+      <Typography variant="h4">Fotos</Typography>
       <ImageList cols={3} gap={20}>
         {getPhotos.map((photo) => (
           <Box key={photo.id}>

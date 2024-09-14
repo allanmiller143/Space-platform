@@ -9,7 +9,7 @@ import img1 from 'src/assets/images/backgrounds/login-bg.svg';
 import AuthForgotPassword from '../authForms/AuthForgotPassword';
 
 const ForgotPassword = () => (
-  <PageContainer title="Forgot Password" description="this is Forgot Password page">
+  <PageContainer title="Esqueceu a Senha" description="Recupere o acesso à sua conta">
     <Grid container justifyContent="center" spacing={0} sx={{ overflowX: 'hidden' }}>
       <Grid
         item
@@ -69,12 +69,11 @@ const ForgotPassword = () => (
       >
         <Box p={4}>
           <Typography variant="h4" fontWeight="700">
-            Forgot your password?
+            Esqueceu sua senha?
           </Typography>
 
           <Typography color="textSecondary" variant="subtitle2" fontWeight="400" mt={2}>
-            Please enter the email address associated with your account and We will email you a link
-            to reset your password.
+            Por favor, digite o endereço de e-mail associado à sua conta e enviaremos um link para redefinir sua senha.
           </Typography>
           <AuthForgotPassword />
         </Box>

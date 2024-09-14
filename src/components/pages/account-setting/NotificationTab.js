@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Box, CardContent, Grid, IconButton, Typography, Tooltip, Button, Stack } from '@mui/material';
 
-// components
+// componentes
 import BlankCard from '../../shared/BlankCard';
 import CustomTextField from '../../forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../forms/theme-elements/CustomFormLabel';
@@ -25,19 +25,18 @@ const NotificationTab = () => {
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
-                Notification Preferences
+                Preferências de Notificação
               </Typography>
               <Typography color="textSecondary">
-                Select the notificaitons ou would like to receive via email. Please note that you
-                cannot opt out of receving service messages, such as payment, security or legal
-                notifications.
+                Selecione as notificações que você gostaria de receber por e-mail. Por favor, note que você
+                não pode optar por não receber mensagens de serviço, como notificações de pagamento, segurança ou legais.
               </Typography>
 
-              <CustomFormLabel htmlFor="text-email">Email Address*</CustomFormLabel>
+              <CustomFormLabel htmlFor="text-email">Endereço de E-mail*</CustomFormLabel>
               <CustomTextField id="text-email" variant="outlined" fullWidth />
-              <Typography color="textSecondary">Required for notificaitons.</Typography>
+              <Typography color="textSecondary">Necessário para notificações.</Typography>
 
-              {/* list 1 */}
+              {/* lista 1 */}
               <Stack direction="row" spacing={2} mt={4}>
                 <Avatar
                   variant="rounded"
@@ -47,10 +46,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Our newsletter
+                    Nossa newsletter
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    We'll always let you know about important changes
+                    Sempre informaremos você sobre mudanças importantes
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -58,7 +57,7 @@ const NotificationTab = () => {
                 </Box>
               </Stack>
 
-              {/* list 2 */}
+              {/* lista 2 */}
               <Stack direction="row" spacing={2} mt={3}>
                 <Avatar
                   variant="rounded"
@@ -68,10 +67,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Order Confirmation
+                    Confirmação de Pedido
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    You will be notified when customer order any product
+                    Você será notificado quando o cliente fizer qualquer pedido
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -79,7 +78,7 @@ const NotificationTab = () => {
                 </Box>
               </Stack>
 
-              {/* list 3 */}
+              {/* lista 3 */}
               <Stack direction="row" spacing={2} mt={3}>
                 <Avatar
                   variant="rounded"
@@ -89,10 +88,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Order Status Changed
+                    Status do Pedido Alterado
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    You will be notified when customer make changes to the order
+                    Você será notificado quando o cliente fizer alterações no pedido
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -100,7 +99,7 @@ const NotificationTab = () => {
                 </Box>
               </Stack>
 
-              {/* list 4 */}
+              {/* lista 4 */}
               <Stack direction="row" spacing={2} mt={3}>
                 <Avatar
                   variant="rounded"
@@ -110,10 +109,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Order Delivered
+                    Pedido Entregue
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    You will be notified once the order is delivered
+                    Você será notificado assim que o pedido for entregue
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -121,7 +120,7 @@ const NotificationTab = () => {
                 </Box>
               </Stack>
 
-              {/* list 5 */}
+              {/* lista 5 */}
               <Stack direction="row" spacing={2} mt={3}>
                 <Avatar
                   variant="rounded"
@@ -131,10 +130,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Email Notification
+                    Notificação por E-mail
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Turn on email notificaiton to get updates through email
+                    Ative a notificação por e-mail para receber atualizações por e-mail
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -150,13 +149,13 @@ const NotificationTab = () => {
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
-                Date & Time
+                Data e Hora
               </Typography>
               <Typography color="textSecondary">
-                Time zones and calendar display settings.
+                Configurações de fuso horário e exibição do calendário.
               </Typography>
 
-              {/* list 1 */}
+              {/* lista 1 */}
               <Stack direction="row" spacing={2} mt={4}>
                 <Avatar
                   variant="rounded"
@@ -166,10 +165,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Time zone
+                    Fuso horário
                   </Typography>
                   <Typography variant="h6" mb={1}>
-                    (UTC + 02:00) Athens, Bucharet
+                    (UTC + 02:00) Atenas, Bucareste
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -189,10 +188,10 @@ const NotificationTab = () => {
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
-                Ignore Tracking
+                Ignorar Rastreamento
               </Typography>
 
-              {/* list 1 */}
+              {/* lista 1 */}
               <Stack direction="row" spacing={2} mt={4}>
                 <Avatar
                   variant="rounded"
@@ -202,10 +201,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Ignore Browser Tracking
+                    Ignorar Rastreamento do Navegador
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Browser Cookie
+                    Cookie do Navegador
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -219,10 +218,10 @@ const NotificationTab = () => {
 
       <Stack direction="row" spacing={2} sx={{ justifyContent: 'end' }} mt={3}>
         <Button size="large" variant="contained" color="primary">
-          Save
+          Salvar
         </Button>
         <Button size="large" variant="text" color="error">
-          Cancel
+          Cancelar
         </Button>
       </Stack>
     </>

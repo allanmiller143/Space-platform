@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack } from '@mui/material';
+import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleMobileSidebar } from 'src/store/customizer/CustomizerSlice';
@@ -11,6 +11,7 @@ import Profile from 'src/layouts/full/vertical/header/Profile';
 // import Language from 'src/layouts/full/vertical/header/Language';
 import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -29,7 +30,7 @@ const Header = () => {
       minHeight: customizer.TopbarHeight,
     },
   }));
-  const ToolbarStyled = styled(Toolbar)(({theme}) => ({ margin: '0 auto', width: '100%', color: `${theme.palette.text.secondary} !important`, }));
+  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({ margin: '0 auto', width: '100%', color: `${theme.palette.text.secondary} !important`, }));
 
   return (
     <AppBarStyled position="sticky" color="default" elevation={8}>
@@ -75,6 +76,13 @@ const Header = () => {
           {/* End Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
           {/* <Notifications /> */}
+          <Button color="primary"
+            fullWidth component={Link} to="/auth/register">
+            Criar conta
+          </Button>
+          <Button variant="contained" color="primary" component={Link} to="/auth/login">
+            Login
+          </Button>
           <Profile />
         </Stack>
       </ToolbarStyled>

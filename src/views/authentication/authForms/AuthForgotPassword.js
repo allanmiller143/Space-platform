@@ -43,7 +43,7 @@ const AuthForgotPassword = () => {
       {loading && <Loading data={{ open: loading }} />}
 
       <Stack mt={4} spacing={2}>
-        <CustomFormLabel htmlFor="reset-email">Email Adddress</CustomFormLabel>
+        <CustomFormLabel htmlFor="reset-email">Endereço de Email</CustomFormLabel>
         <CustomTextField
           id="reset-email"
           variant="outlined"
@@ -58,10 +58,10 @@ const AuthForgotPassword = () => {
           fullWidth
           onClick={handleForgotPassword} // Função chamada ao clicar no botão
         >
-          Send code
+          Enviar código
         </Button>
         <Button color="primary" size="large" fullWidth component={Link} to="/auth/login">
-          Back to login
+          Voltar para o login
         </Button>
       </Stack>
     </>

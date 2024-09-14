@@ -7,7 +7,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import AuthTwoSteps from '../authForms/AuthTwoSteps';
 
 const TwoSteps2 = () => (
-  <PageContainer title="Forgot Password" description="this is Forgot Password page">
+  <PageContainer title="Esqueceu a Senha" description="Esta é a página de Esqueceu a Senha">
     <Box
       sx={{
         position: 'relative',
@@ -39,8 +39,8 @@ const TwoSteps2 = () => (
               <Logo />
             </Box>
             <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-              We sent a verification code to your mobile. Enter the code from the mobile in the
-              field below.
+              Enviamos um código de verificação para o seu celular. Digite o código do celular no
+              campo abaixo.
             </Typography>
             <Typography variant="subtitle1" textAlign="center" fontWeight="700" mb={1}>
               ******1234

@@ -39,7 +39,7 @@ const PostItem = ({ post }) => {
         id: uniqueId('#COMMENT_'),
         avatar: post?.profile.avatar,
         name: post?.profile.name,
-        time: 'now',
+        time: 'agora',
       },
       data: {
         comment: comment,
@@ -59,16 +59,16 @@ const PostItem = ({ post }) => {
     <BlankCard>
       <Box p={3}>
         <Stack direction={'row'} gap={2} alignItems="center">
-          <Avatar alt="Remy Sharp" src={post?.profile.avatar} />
+          <Avatar alt="Fernando Dias" src={post?.profile.avatar} />
           <Typography variant="h6">{post?.profile.name}</Typography>
           <Typography variant="caption" color="textSecondary">
             <IconCircle size="7" fill="" fillOpacity={'0.1'} strokeOpacity="0.1" />{' '}
             {post?.profile.time}
           </Typography>
         </Stack>
-        {/**Post Content**/}
+        {/**Conteúdo do Post**/}
         <Box py={2}>{post?.data.content}</Box>
-        {/**If Post has Image**/}
+        {/**Se o Post tem Imagem**/}
         {post.data.images.length > 0 ? (
           <Box>
             <Grid container spacing={3} mb={2}>
@@ -79,7 +79,7 @@ const PostItem = ({ post }) => {
                       component="img"
                       sx={{ borderRadius: customizer.borderRadius / 4, height: 360 }}
                       image={photo.img}
-                      alt="cover"
+                      alt="capa"
                       width={'100%'}
                     />
                   </Grid>
@@ -90,7 +90,7 @@ const PostItem = ({ post }) => {
         ) : (
           ''
         )}
-        {/**If Post has Video**/}
+        {/**Se o Post tem Vídeo**/}
         {post?.data.video ? (
           <CardMedia
             sx={{
@@ -104,10 +104,10 @@ const PostItem = ({ post }) => {
         ) : (
           ''
         )}
-        {/**Post Like Comment Share buttons**/}
+        {/**Botões de Curtir, Comentar e Compartilhar do Post**/}
         <Box>
           <Stack direction="row" gap={1} alignItems="center">
-            <Tooltip title="Like" placement="top">
+            <Tooltip title="Curtir" placement="top">
               <Fab
                 size="small"
                 color={
@@ -121,7 +121,7 @@ const PostItem = ({ post }) => {
             <Typography variant="body1" fontWeight={600}>
               {post?.data && post?.data.likes && post?.data.likes.value}
             </Typography>
-            <Tooltip title="Comment" placement="top">
+            <Tooltip title="Comentar" placement="top">
               <Fab sx={{ ml: 2 }} size="small" color="secondary">
                 <IconMessage2 size="16" />
               </Fab>
@@ -129,14 +129,14 @@ const PostItem = ({ post }) => {
             <Typography variant="body1" fontWeight={600}>
               {post?.data.comments ? post?.data.comments.length : 0}
             </Typography>
-            <Tooltip title="Share" placement="top">
+            <Tooltip title="Compartilhar" placement="top">
               <IconButton sx={{ ml: 'auto' }}>
                 <IconShare size="16" />
               </IconButton>
             </Tooltip>
           </Stack>
         </Box>
-        {/**Comments if any**/}
+        {/**Comentários, se houver**/}
         <Box>
           {post?.data.comments ? (
             <>
@@ -153,19 +153,19 @@ const PostItem = ({ post }) => {
       <Box p={2}>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
-            alt="Remy Sharp"
+            alt="Fernando Dias"
             src={post?.profile.avatar}
             sx={{ width: '33px', height: '33px' }}
           />
           <TextField
-            placeholder="Comment"
+            placeholder="Comentar"
             value={comText}
             onChange={(e) => setComText(e.target.value)}
             variant="outlined"
             fullWidth
           />
           <Button variant="contained" onClick={() => onSubmit(post?.id, comText)}>
-            Comment
+            Comentar
           </Button>
         </Stack>
       </Box>

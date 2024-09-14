@@ -1,13 +1,19 @@
 import { Link } from 'react-router-dom';
 import { Grid, Box, Stack, Typography } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import img1 from 'src/assets/images/backgrounds/login-bg.svg';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthLogin from '../authForms/AuthLogin';
 
 const Login = () => (
-  <PageContainer title="Login" description="this is Login page">
-    <Grid container spacing={0} sx={{ overflowX: 'hidden' }}>
+  <PageContainer title="Login" description="Esta é a página de Login">
+    <Grid
+      container
+      spacing={0}
+      sx={{
+        overflowX: 'hidden',
+        minHeight: '100vh',
+      }}
+    >
       <Grid
         item
         xs={12}
@@ -16,42 +22,16 @@ const Login = () => (
         xl={8}
         sx={{
           position: 'relative',
-          '&:before': {
-            content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            opacity: '0.3',
-          },
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundImage: 'url("/src/assets/images/posters/imagem-9.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
-        <Box position="relative">
-          <Box px={3}>
-            <Logo />
-          </Box>
-          <Box
-            alignItems="center"
-            justifyContent="center"
-            height={'calc(100vh - 75px)'}
-            sx={{
-              display: {
-                xs: 'none',
-                lg: 'flex',
-              },
-            }}
-          >
-            <img
-              src={img1}
-              alt="bg"
-              style={{
-                width: '100%',
-                maxWidth: '500px',
-              }}
-            />
-          </Box>
+        <Box position="absolute" top={0} left={0} p={3}>
         </Box>
       </Grid>
       <Grid
@@ -63,30 +43,35 @@ const Login = () => (
         display="flex"
         justifyContent="center"
         alignItems="center"
+        sx={{
+          backgroundColor: 'background.paper',
+          boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+        }}
       >
-        <Box p={4}>
+        <Box p={4} width="100%" maxWidth="400px">
+          <Logo />
           <AuthLogin
-            title="Welcome to Modernize"
+            title="Bem-vindo de volta"
             subtext={
               <Typography variant="subtitle1" color="textSecondary" mb={1}>
-                Your Admin Dashboard
+                Entre para continuar
               </Typography>
             }
             subtitle={
               <Stack direction="row" spacing={1} mt={3}>
                 <Typography color="textSecondary" variant="h6" fontWeight="500">
-                  New to Modernize?
+                  Novo no Space iMóveis?
                 </Typography>
                 <Typography
                   component={Link}
-                  to="/auth/register"
+                  to="/auth/register2"
                   fontWeight="500"
                   sx={{
                     textDecoration: 'none',
                     color: 'primary.main',
                   }}
                 >
-                  Create an account
+                  Crie uma conta
                 </Typography>
               </Stack>
             }

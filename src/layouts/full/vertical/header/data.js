@@ -72,12 +72,12 @@ const profile = [
     subtitle: 'Configurações da Conta',
     icon: icon1,
   },
-  {
-    href: '/apps/email',
-    title: 'Minha Caixa de Entrada',
-    subtitle: 'Mensagens e Emails',
-    icon: icon2,
-  },
+  // {
+  //   href: '/apps/email',
+  //   title: 'Minha Caixa de Entrada',
+  //   subtitle: 'Mensagens e Emails',
+  //   icon: icon2,
+  // },
   {
     href: '/apps/notes',
     title: 'Minhas Tarefas',
@@ -131,12 +131,12 @@ const appsLink = [
     subtext: 'Gestão de anotações',
     avatar: icon3,
   },
-  {
-    href: '/apps/email',
-    title: 'Email App',
-    subtext: 'Gestão de emails',
-    avatar: ddIcon7,
-  },
+  // {
+  //   href: '/apps/email',
+  //   title: 'Email App',
+  //   subtext: 'Gestão de emails',
+  //   avatar: ddIcon7,
+  // },
   // {
   //   href: '/dashboards/ecommerce',
   //   title: 'Ecom Dashboard ',
@@ -146,26 +146,26 @@ const appsLink = [
 ];
 
 const pageLinks = [
-  {
-    href: '/pricing',
-    title: 'Planos e Preços',
-  },
-  {
-    href: '/auth/login',
-    title: 'Login',
-  },
-  {
-    href: '/auth/register',
-    title: 'Cadastre-se',
-  },
-  {
-    href: '/404',
-    title: '404 Error Page',
-  },
-  {
-    href: '/user-profile',
-    title: 'Perfil',
-  },
+  // {
+  //   href: '/pricing',
+  //   title: 'Planos e Preços',
+  // }
+  // {
+  //   href: '/auth/login',
+  //   title: 'Login',
+  // },
+  // {
+  //   href: '/auth/register',
+  //   title: 'Cadastre-se',
+  // },
+  // {
+  //   href: '/404',
+  //   title: '404 Error Page',
+  // },
+  // {
+  //   href: '/user-profile',
+  //   title: 'Perfil',
+  // },
   // {
   //   href: '/apps/blog/posts',
   //   title: 'Blog',

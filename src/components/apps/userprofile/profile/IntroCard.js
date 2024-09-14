@@ -7,27 +7,27 @@ import { IconBriefcase, IconDeviceDesktop, IconMail, IconMapPin } from '@tabler/
 const IntroCard = () => (
   <ChildCard>
     <Typography fontWeight={600} variant="h4" mb={2}>
-      Introduction
+      Introdução
     </Typography>
     <Typography color="textSecondary" variant="subtitle2" mb={2}>
-      Hello, I am Mathew Anderson. I love making websites and graphics. Lorem ipsum dolor sit amet,
+      Olá, eu sou Fernando Dias. Eu amo trabalhar com imóveis e ajudar pessoas a encontrarem o lar dos seus sonhos. Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.
     </Typography>
     <Stack direction="row" gap={2} alignItems="center" mb={3}>
       <IconBriefcase size="21" />
-      <Typography variant="h6">Sir, P P Institute Of Science</Typography>
+      <Typography variant="h6">Corretor de Imóveis Autônomo</Typography>
     </Stack>
     <Stack direction="row" gap={2} alignItems="center" mb={3}>
       <IconMail size="21" />
-      <Typography variant="h6">xyzjonathan@gmail.com</Typography>
+      <Typography variant="h6">fernandodias@email.com</Typography>
     </Stack>
     <Stack direction="row" gap={2} alignItems="center" mb={3}>
       <IconDeviceDesktop size="21" />
-      <Typography variant="h6">www.xyz.com</Typography>
+      <Typography variant="h6">www.fernandodias.com.br</Typography>
     </Stack>
     <Stack direction="row" gap={2} alignItems="center" mb={1}>
       <IconMapPin size="21" />
-      <Typography variant="h6">Newyork, USA - 100001</Typography>
+      <Typography variant="h6">São Paulo, Brasil - 01000-000</Typography>
     </Stack>
   </ChildCard>
 );

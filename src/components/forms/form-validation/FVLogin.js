@@ -86,11 +86,11 @@ const FVRegister = () => {
             color: 'primary.main',
           }}
         >
-          Forgot Password ?
+          Esqueceu sua senha?
         </Typography>
       </Stack>
       <Button color="primary" variant="contained" type="submit">
-        Sign In
+        Iniciar sessão
       </Button>
     </form>
   );

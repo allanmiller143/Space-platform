@@ -48,18 +48,18 @@ const GalleryCard = () => {
           <Stack direction="row" alignItems={'center'} mt={2}>
             <Box>
               <Typography variant="h3">
-                Gallery &nbsp;
+                Galeria &nbsp;
                 <Chip label={getPhotos.length} color="secondary" size="small" />
               </Typography>
             </Box>
             <Box ml="auto">
               <TextField
                 id="outlined-search"
-                placeholder="Search Gallery"
+                placeholder="Buscar na Galeria"
                 size="small"
                 type="search"
                 variant="outlined"
-                inputProps={{ 'aria-label': 'Search Gallery' }}
+                inputProps={{ 'aria-label': 'Buscar na Galeria' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -87,14 +87,14 @@ const GalleryCard = () => {
                     ></Skeleton>
                   </>
                 ) : (
-                  <CardMedia component={'img'} height="220" alt="Remy Sharp" src={photo.cover} />
+                  <CardMedia component={'img'} height="220" alt="Fernando Dias" src={photo.cover} />
                 )}
                 <Box p={3}>
                   <Stack direction="row" gap={1}>
                     <Box>
                       <Typography variant="h6">{photo.name}jpg</Typography>
                       <Typography variant="caption">
-                        {format(new Date(photo.time), 'E, MMM d, yyyy')}
+                        {format(new Date(photo.time), 'E, d MMM yyyy')}
                       </Typography>
                     </Box>
                     <Box ml={'auto'}>

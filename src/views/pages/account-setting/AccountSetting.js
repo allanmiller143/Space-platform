@@ -3,7 +3,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { Grid, Tabs, Tab, Box, CardContent, Divider } from '@mui/material';
 
-// components
+// componentes
 import AccountTab from '../../../components/pages/account-setting/AccountTab';
 import { IconArticle, IconBell, IconLock, IconUserCircle } from '@tabler/icons';
 import BlankCard from '../../../components/shared/BlankCard';
@@ -14,10 +14,10 @@ import SecurityTab from '../../../components/pages/account-setting/SecurityTab';
 const BCrumb = [
   {
     to: '/',
-    title: 'Home',
+    title: 'Início',
   },
   {
-    title: 'Account Setting',
+    title: 'Configurações da Conta',
   },
 ];
 
@@ -53,10 +53,10 @@ const AccountSetting = () => {
   };
 
   return (
-    <PageContainer title="Account Setting" description="this is Account Setting page">
+    <PageContainer title="Configurações da Conta" description="Esta é a página de Configurações da Conta">
       {/* breadcrumb */}
-      <Breadcrumb title="Account Setting" items={BCrumb} />
-      {/* end breadcrumb */}
+      <Breadcrumb title="Configurações da Conta" items={BCrumb} />
+      {/* fim do breadcrumb */}
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -66,31 +66,31 @@ const AccountSetting = () => {
                 value={value}
                 onChange={handleChange}
                 scrollButtons="auto"
-                aria-label="basic tabs example" variant="scrollable"
+                aria-label="exemplo de abas básicas" variant="scrollable"
               >
                 <Tab
                   iconPosition="start"
                   icon={<IconUserCircle size="22" />}
-                  label="Account"
+                  label="Conta"
                   {...a11yProps(0)}
                 />
 
                 <Tab
                   iconPosition="start"
                   icon={<IconBell size="22" />}
-                  label="Notifications"
+                  label="Notificações"
                   {...a11yProps(1)}
                 />
                 <Tab
                   iconPosition="start"
                   icon={<IconArticle size="22" />}
-                  label="Bills"
+                  label="Faturas"
                   {...a11yProps(2)}
                 />
                 <Tab
                   iconPosition="start"
                   icon={<IconLock size="22" />}
-                  label="Security"
+                  label="Segurança"
                   {...a11yProps(3)}
                 />
               </Tabs>

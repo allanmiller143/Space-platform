@@ -18,7 +18,7 @@ const PostComments = ({ comment, post }) => {
         id: uniqueId('#REPLY_'),
         avatar: post?.profile.avatar,
         name: post?.profile.name,
-        time: 'now',
+        time: 'agora',
       },
       data: {
         comment: reply,
@@ -39,7 +39,7 @@ const PostComments = ({ comment, post }) => {
       <Box mt={2} p={3} sx={{ borderColor: (theme) => theme.palette.grey[100], borderWidth: '1px', borderStyle: 'solid' }}>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
-            alt="Remy Sharp"
+            alt="Fernando Dias"
             src={comment?.profile.avatar}
             sx={{ width: '33px', height: '33px' }}
           />
@@ -53,7 +53,7 @@ const PostComments = ({ comment, post }) => {
           <Typography color="textSecondary">{comment?.data.comment}</Typography>
         </Box>
         <Stack direction="row" gap={1} alignItems="center">
-          <Tooltip title="Like" placement="top">
+          <Tooltip title="Curtir" placement="top">
             <Fab
               size="small"
               color={
@@ -68,7 +68,7 @@ const PostComments = ({ comment, post }) => {
           <Typography variant="body1" fontWeight={600}>
             {comment?.data && comment?.data.likes && comment?.data.likes.value}
           </Typography>
-          <Tooltip title="Reply" placement="top">
+          <Tooltip title="Responder" placement="top">
             <Fab sx={{ ml: 2 }} size="small" color="info" onClick={() => setShowReply(!showReply)}>
               <IconArrowBackUp size="16" />
             </Fab>
@@ -87,7 +87,7 @@ const PostComments = ({ comment, post }) => {
                   sx={{ borderColor: (theme) => theme.palette.grey[100], borderWidth: '1px', borderStyle: 'solid' }}
                 >
                   <Stack direction={'row'} gap={2} alignItems="center">
-                    <Avatar alt="Remy Sharp" src={reply.profile.avatar} />
+                    <Avatar alt="Fernando Dias" src={reply.profile.avatar} />
                     <Typography variant="h6">{reply.profile.name}</Typography>
                     <Typography variant="caption" color="textSecondary">
                       <IconCircle size="7" fill="" fillOpacity={'0.1'} strokeOpacity="0.1" />{' '}
@@ -109,19 +109,19 @@ const PostComments = ({ comment, post }) => {
         <Box p={2}>
           <Stack direction={'row'} gap={2} alignItems="center">
             <Avatar
-              alt="Remy Sharp"
+              alt="Fernando Dias"
               src={post?.profile.avatar}
               sx={{ width: '33px', height: '33px' }}
             />
             <TextField
-              placeholder="Reply"
+              placeholder="Responder"
               value={replyTxt}
               onChange={(e) => setReplyTxt(e.target.value)}
               variant="outlined"
               fullWidth
             />
             <Button variant="contained" onClick={() => onSubmit(post.id, comment.id, replyTxt)}>
-              Reply
+              Responder
             </Button>
           </Stack>
         </Box>

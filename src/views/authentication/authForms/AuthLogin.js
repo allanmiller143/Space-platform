@@ -77,7 +77,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
             position="relative"
             px={2}
           >
-            or sign in with
+            ou faça login com
           </Typography>
         </Divider>
       </Box>
@@ -104,11 +104,23 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
             onChange={(e) => setPassword(e.target.value)} // Atualiza o estado da senha
           />
         </Box>
-        <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
+        <Box>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            fullWidth
+            type="submit"
+            sx={{ my: 2 }}
+          >
+            Iniciar sessão
+          </Button>
+        </Box>
+        <Stack direction="column" spacing={2} sx={{ my: 2 }}>
           <FormGroup>
             <FormControlLabel
               control={<CustomCheckbox defaultChecked />}
-              label="Remember this Device"
+              label="Lembre-se deste dispositivo"
             />
           </FormGroup>
           <Typography
@@ -120,20 +132,9 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
               color: 'primary.main',
             }}
           >
-            Forgot Password ?
+            Esqueceu sua senha?
           </Typography>
         </Stack>
-        <Box>
-          <Button
-            color="primary"
-            variant="contained"
-            size="large"
-            fullWidth
-            type="submit" // Define o botão como "submit"
-          >
-            Sign In
-          </Button>
-        </Box>
       </Stack>
       {subtitle}
     </>

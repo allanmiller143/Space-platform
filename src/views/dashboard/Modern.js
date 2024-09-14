@@ -1,75 +1,58 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
-import TopCards from '../../components/dashboards/modern/TopCards';
-import RevenueUpdates from '../../components/dashboards/modern/RevenueUpdates';
-import YearlyBreakup from '../../components/dashboards/modern/YearlyBreakup';
-import MonthlyEarnings from '../../components/dashboards/modern/MonthlyEarnings';
-import EmployeeSalary from '../../components/dashboards/modern/EmployeeSalary';
-import Customers from '../../components/dashboards/modern/Customers';
-import Projects from '../../components/dashboards/modern/Projects';
-import Social from '../../components/dashboards/modern/Social';
-import SellingProducts from '../../components/dashboards/modern/SellingProducts';
-import WeeklyStats from '../../components/dashboards/modern/WeeklyStats';
-import TopPerformers from '../../components/dashboards/modern/TopPerformers';
-import Welcome from 'src/layouts/full/shared/welcome/Welcome';
+import { Grid, Box, Card, Typography } from '@mui/material';
+import PageContainer from 'src/components/container/PageContainer';
+import { Button, CardContent, Divider } from '@mui/material';
+
 
 const Modern = () => {
   return (
-    <Box>
-      <Grid container spacing={3}>
-        {/* column */}
-        <Grid item sm={12} lg={12}>
-          <TopCards />
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={8}>
-          <RevenueUpdates />
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={4}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={12}>
-              <YearlyBreakup />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={12}>
-              <MonthlyEarnings />
-            </Grid>
+    <PageContainer title="Dashboard Moderno" description="Esta é a página do Dashboard Moderno">
+      <Box sx={{ flexGrow: 1 }}>
+        {/* Seção principal para uma mensagem de marketing primária ou chamada para ação */}
+        <Box sx={{ bgcolor: 'primary.light', py: 8 }}>
+          <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 3 }}>
+            <Typography variant="h2" component="h1" gutterBottom>
+              Bem-vindo ao nosso projeto em desenvolvimento!
+            </Typography>
+            <Typography variant="h5" color="text.secondary" paragraph>
+              Estamos atualmente em fase de testes e desenvolvimento. Pedimos sua paciência enquanto trabalhamos para aprimorar nossa plataforma. Agradecemos sua compreensão e feedback durante este período de aperfeiçoamento.
+            </Typography>
+            <Box sx={{ mt: 4 }}>
+              <Button variant="contained" size="large" href="#" color="primary">
+                Saiba mais »
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Exemplo de linha de colunas */}
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', mt: 8 }}>
+          <Grid container spacing={4}>
+            {[1, 2, 3].map((item) => (
+              <Grid item xs={12} md={4} key={item}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" component="h2" gutterBottom>
+                      Título
+                    </Typography>
+                    <Typography variant="" paragraph>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                    </Typography>
+                    <Button variant="outlined" href="#" color="primary">
+                      Ver detalhes »
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={4}>
-          <EmployeeSalary />
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={4}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <Customers />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12}>
-              <Social />
-            </Grid>
-          </Grid>
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={4}>
-          <SellingProducts />
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={4}>
-          <WeeklyStats />
-        </Grid>
-        {/* column */}
-        <Grid item xs={12} lg={8}>
-          <TopPerformers />
-        </Grid>
-      </Grid>
-      {/* column */}
-      <Welcome />
-    </Box>
+        </Box>
+
+        <Box sx={{ maxWidth: 'lg', mx: 'auto', my: 8 }}>
+          <Divider />
+        </Box>
+      </Box>
+    </PageContainer>
   );
 };
 

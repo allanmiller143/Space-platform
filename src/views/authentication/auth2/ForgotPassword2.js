@@ -7,7 +7,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import AuthForgotPassword from '../authForms/AuthForgotPassword';
 
 const ForgotPassword2 = () => (
-  <PageContainer title="Forgot Password" description="this is Forgot Password page">
+  <PageContainer title="Esqueceu a Senha" description="Esta é a página de Esqueceu a Senha">
     <Box
       sx={{
         position: 'relative',
@@ -44,8 +44,7 @@ const ForgotPassword2 = () => (
               variant="subtitle2"
               fontWeight="400"
             >
-              Please enter the email address associated with your account and We will email you a
-              link to reset your password.
+              Por favor, insira o endereço de e-mail associado à sua conta e enviaremos um link para redefinir sua senha.
             </Typography>
             <AuthForgotPassword />
           </Card>

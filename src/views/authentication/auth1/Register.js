@@ -89,7 +89,7 @@ const Register = () => (
                     color: 'primary.main',
                   }}
                 >
-                  Sign In
+                  Iniciar sessão
                 </Typography>
               </Stack>
             }

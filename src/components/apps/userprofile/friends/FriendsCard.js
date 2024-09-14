@@ -68,18 +68,18 @@ const FriendsCard = () => {
           <Stack direction="row" alignItems={'center'} mt={2}>
             <Box>
               <Typography variant="h3">
-                Friends &nbsp;
+                Amigos &nbsp;
                 <Chip label={getFriends.length} color="secondary" size="small" />
               </Typography>
             </Box>
             <Box ml="auto">
               <TextField
                 id="outlined-search"
-                placeholder="Search Friends"
+                placeholder="Buscar Amigos"
                 size="small"
                 type="search"
                 variant="outlined"
-                inputProps={{ 'aria-label': 'Search Followers' }}
+                inputProps={{ 'aria-label': 'Buscar Seguidores' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -100,7 +100,7 @@ const FriendsCard = () => {
                 <CardContent>
                   <Stack direction={'column'} gap={2} alignItems="center">
                     <Avatar
-                      alt="Remy Sharp"
+                      alt="Fernando Dias"
                       src={profile.avatar}
                       sx={{ width: '80px', height: '80px' }}
                     />

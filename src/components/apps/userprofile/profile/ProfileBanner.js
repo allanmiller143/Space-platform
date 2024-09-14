@@ -24,6 +24,7 @@ import {
 } from '@tabler/icons';
 import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
+import { Link } from 'react-router-dom';
 
 const ProfileBanner = () => {
   const ProfileImage = styled(Box)(() => ({
@@ -181,8 +182,8 @@ const ProfileBanner = () => {
               <Fab size="small" color="error" sx={{ backgroundColor: '#CD201F' }}>
                 <IconBrandYoutube size="18" />
               </Fab>
-              <Button color="primary" variant="contained">
-                Add To Story
+              <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">
+                Editar Perfil
               </Button>
             </Stack>
           </Grid>

@@ -11,22 +11,22 @@ const ProfileTab = () => {
   };
   const ProfileTabs = [
     {
-      label: 'Profile',
+      label: 'Perfil',
       icon: <IconUserCircle size="20" />,
       to: '/user-profile',
     },
     {
-      label: 'Followers',
+      label: 'Seguidores',
       icon: <IconHeart size="20" />,
       to: '/apps/followers',
     },
     {
-      label: 'Friends',
+      label: 'Amigos',
       icon: <IconUserCircle size="20" />,
       to: '/apps/friends',
     },
     {
-      label: 'Gallery',
+      label: 'Galeria',
       icon: <IconPhoto size="20" />,
       to: '/apps/gallery',
     },
@@ -35,7 +35,7 @@ const ProfileTab = () => {
   return (
     <Box mt={1} sx={{ mt: 1, backgroundColor: (theme) => theme.palette.grey[100] }}>
       <Box justifyContent={'end'} display="flex" sx={{ overflow: 'auto', width: { xs: '333px', sm: 'auto' } }}>
-        <Tabs value={value} onChange={handleChange} aria-label="scrollable prevent tabs example" variant="scrollable"
+        <Tabs value={value} onChange={handleChange} aria-label="exemplo de abas rolantes com prevenção" variant="scrollable"
           scrollButtons="auto">
           {ProfileTabs.map((tab) => {
             return (
