@@ -11,7 +11,7 @@ import { getData, postData } from '../../../Services/Api';
 import {useNavigate} from 'react-router-dom';
 import {toast} from 'sonner';
 import Loading from '../../../components/Loading/Loading';
-import GoogleSignIn from './GoogleSignIn';
+import GoogleSignIn from './AuthGoogleSignIn';
 
 const AuthLogin = ({ title, subtitle, subtext }) => {
   // Definindo os estados para email e senha

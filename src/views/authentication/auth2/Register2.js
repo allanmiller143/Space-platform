@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Box, Card, Typography, Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import  { useState, useEffect } from 'react';
+import { Grid, Box, Card, } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Logo from 'src/layouts/full/shared/logo/Logo';
-import AuthRegister from '../authForms/AuthRegister';
+//import AuthRegister from '../authForms/AuthRegister';
+import AuthSimpleRegister from '../authForms/AuthSimpleRegister';
 
 const Register2 = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -68,7 +68,7 @@ const Register2 = () => {
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Logo />
               </Box>
-              <AuthRegister />
+              <AuthSimpleRegister />
             </Card>
           </Grid>
         </Grid>
