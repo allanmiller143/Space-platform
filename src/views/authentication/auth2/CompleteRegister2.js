@@ -77,7 +77,7 @@ const CompleteRegister2 = () => {
             xs={11}
             sm={11}
             md={10}
-            lg={6}
+            lg={8}
             xl={6}
             display="flex"
             justifyContent="center"
