@@ -90,7 +90,7 @@ const profile = [
 
 const appsLink = [
   {
-    href: '/apps/invoice/list',
+    href: '/apps/imoveis/list',
     title: 'Gestão de Imóveis',
     subtext: 'Contratos, visitas, e mais',
     avatar: ddIcon3,

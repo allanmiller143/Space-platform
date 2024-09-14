@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import houseImage from 'src/assets/images/ilustracoes/house.png';
 import { Container, Grid, Stack } from '@mui/material';
 import { Add as IconPlus, InfoOutlined as IconInfoCircle } from '@mui/icons-material';
-function Page() {
+function ImovelEdit() {
   return (
     <>
       <PageContainer title="Central de Imóveis" description="Gerencie seus imóveis de forma eficiente">
@@ -20,7 +20,7 @@ function Page() {
                 Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. Publique novos anúncios, atualize informações existentes e mantenha seus prontos para venda.
               </Typography>
               <Stack direction="row" spacing={2} mt={4}>
-                <Button variant="contained" href="/apps/imoveis/edit" color="primary" startIcon={<IconPlus size={20} />}>
+                <Button variant="contained" href="#" color="primary" startIcon={<IconPlus size={20} />}>
                   Adicionar Novo Imóvel
                 </Button>
                 <Button variant="outlined" href="#" color="primary" startIcon={<IconInfoCircle size={20} />}>
@@ -39,4 +39,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default ImovelEdit;

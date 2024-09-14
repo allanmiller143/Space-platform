@@ -33,7 +33,7 @@ const AppDD = () => {
       </Button> */}
       <Box>
         <Button
-          aria-label="show 11 new notifications"
+          aria-label="Exibir 11 notificacoes"
           color="inherit"
           variant="text"
           aria-controls="msgs-menu"
