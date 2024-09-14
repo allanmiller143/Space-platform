@@ -7,7 +7,9 @@ import StepTwo from './completeRegisterComponentes/StepTwo';
 import StepThree from './completeRegisterComponentes/StepThree';
 import StepFour from './completeRegisterComponentes/StepFour';
 import { toast } from 'sonner';
-
+import { postData, putFormData } from '../../../Services/Api';
+import Loading from '../../../components/Loading/Loading';
+import { useNavigate } from 'react-router-dom';
 // Função para validar email
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -67,6 +69,21 @@ const isValidCNPJ = (cnpj) => {
   return true;
 };
 
+const validatePassword = (password, confirmPassword) => {
+  const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!password.match(passwordRequirements)) {
+    return false;
+  } 
+  else if (confirmPassword && password !== confirmPassword) {
+    return false;
+  } else if(password !== '' && confirmPassword === '') {
+    return false;
+  }
+  else {
+    return true;
+  }
+};
+
 // Função para validar telefone
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
@@ -77,6 +94,8 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedType, setSelectedType] = useState('');
   const [canGoNext, setCanGoNext] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     type: '',
     name: '',
@@ -86,7 +105,8 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     cpf: '',
     creci: '',
     cnpj: '',
-    socialLinks: '',
+    socialOne: '',
+    socialTwo: '',
     street: '',
     number: '',
     neighborhood: '',
@@ -94,13 +114,22 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     state: '',
     cep: '',
     profilePhoto: '',
-    bio: ''
+    bio: '',
+    password: '',
+    confirmPassword: '',
+    profilePhotoFile: null,
+
   });
-  const [ setDropdownLocaleValue] = useState('');
+  const [ dropdownLocaleValue,setDropdownLocaleValue] = useState('');
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+  const token = localStorage.getItem('token');
+  const Navigate = useNavigate();
 
   const isStepTwoValid = () => {
     const { name, email, phone, cpf, rg, creci, cnpj } = formData;
 
+    console.log(formData);
     if (!name || !email || !phone) {
       toast.warning("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
       return false;
@@ -138,12 +167,8 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         return false;
       }
     } else if (selectedType === 'Imobiliária') {
-      if (!cnpj || !creci || !isValidCNPJ(cnpj) || !isValidCRECI(creci)) {
-        if(!isValidCNPJ(cnpj) ){
-          toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
-          return false;
-        }
-        else if(!isValidCRECI(creci)){
+      if (!cnpj || !creci || !isValidCRECI(creci)) {
+         if(!isValidCRECI(creci)){
           toast.warning("Para 'Imobiliária', CRECI deve estar no formato: CRECI-XX 12345.");
           return false;
         }
@@ -151,21 +176,23 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         return false;
       }
     }
-
     return true;
   };
 
   const isStepThreeValid = () => {
     const { street, number, neighborhood, city, state, cep } = formData;
-
     if (!street || !number || !neighborhood || !city || !state || !cep) {
       toast.warning("Por favor, preencha todos os campos de endereço: Rua, Número, Bairro, Cidade, Estado e CEP.");
       return false;
     }
 
+    if(!validatePassword(formData.password, formData.confirmPassword)){
+      toast.warning("Verifique o campo de senha");
+      return false;
+    }
+
     return true;
   };
-
   const handleNext = () => {
     if (activeStep === 1 && !isStepTwoValid()) {
       return; // Validação falhou, não prossiga
@@ -182,9 +209,99 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-  const handleFinish = () => {
-    console.log(formData);
-    toast.success("Cadastro finalizado com sucesso!");
+  const handleFinish = async () => {
+    let postDataExample = {};
+    let userRoute = '';
+    if(selectedType === 'Corretor'){
+      postDataExample = {
+        'name':formData.name,
+        'email':formData.email,
+        'password':formData.password,
+        'phone':formData.phone,
+        'rg':formData.rg,
+        'creci':formData.creci,
+        'cep':formData.cep,
+        'cpf':formData.cpf,
+        'address':formData.street,
+        'house_number':formData.number,
+        'city':formData.city,
+        'district':formData.neighborhood,
+        'state':formData.state,
+        'socialOne':formData.socialOne,
+        'socialTwo':formData.socialTwo,
+        'bio': formData.bio
+      };
+      userRoute = 'realtors';
+    }else if(selectedType === 'Vendedor'){
+      postDataExample = { 
+        'name':formData.name,
+        'email':formData.email,
+        'password':formData.password,
+        'phone':formData.phone,
+        'rg':formData.rg,
+        'cep':formData.cep,
+        'cpf':formData.cpf,
+        'address':formData.street,
+        'house_number':formData.number,
+        'city':formData.city,
+        'district':formData.neighborhood,
+        'state':formData.state,
+      };
+      userRoute = 'owners';
+    }else{
+      postDataExample = {
+        'company_name':formData.name,
+        'email':formData.email,
+        'password':formData.password,
+        'phone':formData.phone,
+        'cep':formData.cep,
+        'address':formData.street,
+        'house_number':formData.number,      
+        'city':formData.city,
+        'district':formData.neighborhood,
+        'creci':formData.creci,
+        'cnpj':formData.cnpj,
+        'state':formData.state,
+        'socialOne':formData.socialOne,
+        'socialTwo':formData.socialTwo,
+        'bio': formData.bio
+      };
+      userRoute = 'realstate';
+    }
+    console.log(postDataExample);
+    console.log(token);
+
+
+    try {
+        setLoading(true);
+        const form = new FormData();  
+        form.append('photo', formData.profilePhotoFile);
+         
+        form.append('data', JSON.stringify(postDataExample)); //
+        const elevateTypeResponse = await putFormData(`${userRoute}/elevate/${currentUserls.email}`, form, token);
+        if(elevateTypeResponse.status == 200 || elevateTypeResponse.status == 201){
+          const data = { 'email': postDataExample.email, 'password': postDataExample.password };
+          const loginResponse = await postData('login', data);
+          if (loginResponse.status === 200 || loginResponse.status === 201) {
+            const token = loginResponse.data.token;
+            const user = loginResponse.data.user;
+            localStorage.setItem('token', token);
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUserFavorites',JSON.stringify([]));
+            Navigate('/');
+            toast.success('Agora você pode anunciar imóveis');
+          } else {
+            toast.error(` erro no login${userRoute}`); 
+          }
+        }else{
+          toast.error(`${elevateTypeResponse.message}`);
+        }
+      } 
+       catch (error) {
+        toast.error('Ocorreu um erro ao criar a conta. Por favor, tente novamente mais tarde.');
+      } finally {
+        setLoading(false);
+      }
   };
 
   const steps = [
@@ -201,7 +318,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
       ),
     },
     {
-      label: 'Endereço',
+      label: 'Endereço e Senha',
       content: (
         <StepThree {...{ formData, setFormData, setDropdownLocaleValue, selectedType }} />
       ),
@@ -216,6 +333,8 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
 
   return (
     <>
+      {loading && <Loading data = {{open:loading}}/>}
+
       <Typography variant="h4" gutterBottom>
         {title}
       </Typography>

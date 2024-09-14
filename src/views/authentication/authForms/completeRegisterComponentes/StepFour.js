@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-// completeRegisterComponentes/StepFour.js
-
 import React from 'react';
 import { Box, Typography, Avatar, TextField, Button, Stack } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
@@ -10,14 +8,12 @@ const StepFour = ({ formData, setFormData }) => {
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevState) => ({
-          ...prevState,
-          profilePhoto: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
+      // Store the file object in formData for submission
+      setFormData((prevState) => ({
+        ...prevState,
+        profilePhotoFile: file, 
+        profilePhotoPreview: URL.createObjectURL(file), // For preview purpose
+      }));
     }
   };
 
@@ -65,10 +61,10 @@ const StepFour = ({ formData, setFormData }) => {
       </Box>
 
       {/* Exibir a foto selecionada */}
-      {formData.profilePhoto && (
+      {formData.profilePhotoPreview && (
         <Box mt={3}>
           <Avatar
-            src={formData.profilePhoto}
+            src={formData.profilePhotoPreview}
             alt="Foto do Perfil"
             sx={{ width: 150, height: 150, mx: 'auto' }}
           />
@@ -88,13 +84,17 @@ const StepFour = ({ formData, setFormData }) => {
       />
 
       {/* Botão opcional para remover a foto */}
-      {formData.profilePhoto && (
+      {formData.profilePhotoPreview && (
         <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 3 }}>
           <Button
             variant="contained"
             color="secondary"
             onClick={() =>
-              setFormData((prevState) => ({ ...prevState, profilePhoto: null }))
+              setFormData((prevState) => ({
+                ...prevState,
+                profilePhotoFile: null, // Remove the file
+                profilePhotoPreview: null, // Remove the preview
+              }))
             }
           >
             Remover Foto

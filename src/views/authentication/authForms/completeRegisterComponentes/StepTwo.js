@@ -1,8 +1,20 @@
 /* eslint-disable react/prop-types */
 import { Box, Typography, Grid, Paper, TextField, Stack } from '@mui/material';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
+import { useEffect } from 'react';
 
 const StepTwo = ({ selectedType, formData, setFormData }) => {
+
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      email: currentUserls.email,
+      phone: currentUserls.phone || formData.phone,
+    });
+  }, []);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -11,7 +23,6 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
       [id]: value,
     });
   };
-
 
   const formatPhoneNumber = (value) => {
     if (!value) return '';
@@ -28,7 +39,6 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
     return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
   };
 
-  // Função que lida com a mudança no campo de telefone e aplica a formatação
   const handlePhoneChange = (event) => {
     const formattedPhone = formatPhoneNumber(event.target.value);
     setFormData({
@@ -53,7 +63,14 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                  <TextField id="email" variant="outlined" fullWidth value={formData.email} onChange={handleChange} />
+                  <TextField
+                    id="email"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled // Adicionado para desabilitar o campo
+                  />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
@@ -106,7 +123,14 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                  <TextField id="email" variant="outlined" fullWidth value={formData.email} onChange={handleChange} />
+                  <TextField
+                    id="email"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled // Adicionado para desabilitar o campo
+                  />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
@@ -142,7 +166,14 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                  <TextField id="email" variant="outlined" fullWidth value={formData.email} onChange={handleChange} />
+                  <TextField
+                    id="email"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled // Adicionado para desabilitar o campo
+                  />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
@@ -166,12 +197,12 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="instagram">Instagram (opcional)</CustomFormLabel>
-                  <TextField id="instagram" variant="outlined" fullWidth value={formData.instagram} onChange={handleChange} />
+                  <CustomFormLabel htmlFor="socialOne">Instagram (opcional)</CustomFormLabel>
+                  <TextField id="socialOne" variant="outlined" fullWidth value={formData.socialOne} onChange={handleChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="facebook">Facebook (opcional)</CustomFormLabel>
-                  <TextField id="facebook" variant="outlined" fullWidth value={formData.facebook} onChange={handleChange} />
+                  <CustomFormLabel htmlFor="socialTwo">Facebook (opcional)</CustomFormLabel>
+                  <TextField id="socialTwo" variant="outlined" fullWidth value={formData.socialTwo} onChange={handleChange} />
                 </Grid>
               </Grid>
             </Paper>

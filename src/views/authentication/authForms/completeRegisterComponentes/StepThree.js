@@ -6,6 +6,7 @@ import CustomFormLabel from '../../../../components/forms/theme-elements/CustomF
 import DropDownFilter from '../DropDownFilter';
 import fetchCepData from '../../../../Services/SearchCep';
 import { toast } from 'sonner';
+import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
 
 const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue }) => {
   const [cep, setCep] = useState('');
@@ -130,6 +131,38 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
             />
           </Grid>
         </Grid>
+        <Typography variant="h6" gutterBottom mt={3}>
+          Segurança
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+          <CustomFormLabel htmlFor="password">Senha</CustomFormLabel>
+            <CustomTextField
+              id="password"
+              variant="outlined"
+              fullWidth
+              type="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />          
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <CustomFormLabel htmlFor="confirmPassword">Confirmar senha</CustomFormLabel>
+            <CustomTextField
+              id="confirmPassword"
+              variant="outlined"
+              fullWidth
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            />          
+          </Grid>
+        </Grid>
+        <Typography variant="body2" color="textSecondary" textAlign="left" mt={2}>
+            A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial
+        </Typography>
+
       </Paper>
     </Stack>
   );
