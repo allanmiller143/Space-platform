@@ -1,12 +1,10 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Box, Typography, Stack } from '@mui/material';
-
 import PageContainer from 'src/components/container/PageContainer';
 import img1 from 'src/assets/images/backgrounds/login-bg.svg';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 
-import AuthRegister from '../authForms/AuthRegister';
+import AuthRegister from '../authForms/AuthCompleteRegister';
 
 const Register = () => (
   <PageContainer title="Register" description="this is Register page">

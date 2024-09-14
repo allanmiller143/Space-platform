@@ -9,7 +9,7 @@ import CustomFormLabel from '../../../components/forms/theme-elements/CustomForm
 import { Stack } from '@mui/system';
 import AuthSocialButtons from './AuthSocialButtons';
 
-const AuthRegister = ({ title, subtitle, subtext }) => {
+const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedType, setSelectedType] = useState('');
 
@@ -184,4 +184,4 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
   );
 };
 
-export default AuthRegister;
+export default AuthCompleteRegister;

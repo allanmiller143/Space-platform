@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Loadable from '../layouts/full/shared/loadable/Loadable';
+import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -241,6 +243,7 @@ const Router = [
       { path: '/auth/login2', element: <Login2 /> },
       { path: '/auth/register', element: <Register /> },
       { path: '/auth/register2', element: <Register2 /> },
+      { path: '/auth/complete-register2', element: <CompleteRegister2 /> },
       { path: '/auth/forgot-password', element: <ForgotPassword /> },
       { path: '/auth/forgot-password2', element: <ForgotPassword2 /> },
       { path: '/auth/two-steps', element: <TwoSteps /> },
