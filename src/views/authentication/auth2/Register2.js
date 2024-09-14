@@ -104,7 +104,6 @@ const Register2 = () => {
                 </Box>
                 <Logo />
               </Box>
-              
               <AuthSimpleRegister />
             </Card>
           </Grid>

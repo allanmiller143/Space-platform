@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { postData } from '../../../Services/Api';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
+import GoogleSignIn from './AuthGoogleSignIn';
 
 const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
   const [name, setName] = useState('');
@@ -141,14 +142,9 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
             </Divider>
           </Box>
 
-          <Box mt={1}>
-            <AuthSocialButtons title="Cadastre-se com" />
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <GoogleSignIn />
           </Box>
-
-          {/* Texto abaixo dos botões sociais */}
-          <Typography variant="body2" color="textSecondary" textAlign="center" mt={2}>
-            Bem-vindo! Ao se cadastrar, você poderá aproveitar todos os nossos serviços.
-          </Typography>
         </Box>
       </Box>
 
