@@ -12,6 +12,31 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
     });
   };
 
+
+  const formatPhoneNumber = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+  
+    if (cleaned.length <= 2) {
+      return `(${cleaned}`;
+    } else if (cleaned.length <= 7) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+    } else if (cleaned.length <= 11) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+    }
+  
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
+  };
+
+  // Função que lida com a mudança no campo de telefone e aplica a formatação
+  const handlePhoneChange = (event) => {
+    const formattedPhone = formatPhoneNumber(event.target.value);
+    setFormData({
+      ...formData,
+      phone: formattedPhone,
+    });
+  };
+
   const renderUserSpecificFields = () => {
     switch (selectedType) {
       case 'Corretor':
@@ -34,7 +59,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
-                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handleChange} />
+                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="rg">RG</CustomFormLabel>
@@ -87,7 +112,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
-                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handleChange} />
+                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="rg">RG</CustomFormLabel>
@@ -123,7 +148,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
-                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handleChange} />
+                  <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="creci">Creci</CustomFormLabel>
