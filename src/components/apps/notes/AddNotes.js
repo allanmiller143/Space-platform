@@ -35,16 +35,15 @@ const AddNotes = ({ colors }) => {
   return (
     <>
       <Button variant="contained" disableElevation color="primary" onClick={handleClickOpen}>
-        Add Note
+        Adicionar Compromisso
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Typography variant="h5" mb={2} fontWeight={700}>
-            Add New Note
+            Adicionar Novo Compromisso
           </Typography>
           <DialogContentText>
-            To add new notes please enter your description and choose note colors. and press the
-            submit button to add new note.
+            Para adicionar um novo compromisso, por favor, insira a descrição e escolha uma cor para o evento. Em seguida, pressione o botão enviar para adicionar o novo compromisso à sua agenda.
           </DialogContentText>
           <TextField
             multiline
@@ -53,14 +52,14 @@ const AddNotes = ({ colors }) => {
             onChange={(e) => setTitle(e.target.value)}
             margin="normal"
             id="description"
-            label="Add Note Description"
+            label="Adicionar Descrição do Compromisso"
             type="text"
             fullWidth
             size="small"
             variant="outlined"
           />
           <Typography variant="h6" my={2}>
-            Choose Color
+            Escolher Cor
           </Typography>
           {colors.map((color) => (
             <Fab
@@ -79,7 +78,7 @@ const AddNotes = ({ colors }) => {
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <Button
             disabled={title === ''}
             onClick={(e) => {
@@ -90,7 +89,7 @@ const AddNotes = ({ colors }) => {
             }}
             variant="contained"
           >
-            Submit
+            Enviar
           </Button>
         </DialogActions>
       </Dialog>

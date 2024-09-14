@@ -38,6 +38,7 @@ const InvoiceDetail = Loadable(lazy(() => import('../views/apps/invoice/Detail')
 const InvoiceEdit = Loadable(lazy(() => import('../views/apps/invoice/Edit')));
 const Kanban = Loadable(lazy(() => import('../views/apps/kanban/Kanban')));
 const ImoveisList = Loadable(lazy(() => import('../views/apps/imoveis/List'))); // New route for Imoveis List
+const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/Edit'))); // New route for Imoveis List
 
 // Pages
 const RollbaseCASL = Loadable(lazy(() => import('../views/pages/rollbaseCASL/RollbaseCASL')));
@@ -148,6 +149,7 @@ const Router = [
       { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> }, // New route for Imoveis List
+      { path: '/apps/imoveis/edit', element: <ImoveisEdit /> }, // New route for Imoveis Edit
       { path: '/apps/chats', element: <Chats /> },
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/calendar', element: <Calendar /> },

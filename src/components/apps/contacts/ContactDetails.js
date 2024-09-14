@@ -33,56 +33,56 @@ const ContactDetails = () => {
   const tableData = [
     {
       id: 1,
-      title: 'Firstname',
+      title: 'Nome',
       alias: 'firstname',
       gdata: contactDetail ? contactDetail.firstname : '',
       type: 'text',
     },
     {
       id: 2,
-      title: 'Lastname',
+      title: 'Sobrenome',
       alias: 'lastname',
       gdata: contactDetail ? contactDetail.lastname : '',
       type: 'text',
     },
     {
       id: 3,
-      title: 'Company',
+      title: 'Imobiliária',
       alias: 'company',
       gdata: contactDetail ? contactDetail.company : '',
       type: 'text',
     },
     {
       id: 4,
-      title: 'Department',
+      title: 'Especialidade',
       alias: 'department',
       gdata: contactDetail ? contactDetail.department : '',
       type: 'text',
     },
     {
       id: 5,
-      title: 'Email',
+      title: 'E-mail',
       alias: 'email',
       gdata: contactDetail ? contactDetail.email : '',
       type: 'email',
     },
     {
       id: 6,
-      title: 'Phone',
+      title: 'Telefone',
       alias: 'phone',
       gdata: contactDetail ? contactDetail.phone : '',
       type: 'phone',
     },
     {
       id: 7,
-      title: 'Address',
+      title: 'Endereço',
       alias: 'address',
       gdata: contactDetail ? contactDetail.address : '',
       type: 'text',
     },
     {
       id: 8,
-      title: 'Notes',
+      title: 'Observações',
       alias: 'notes',
       gdata: contactDetail ? contactDetail.notes : '',
       type: 'text',
@@ -92,17 +92,17 @@ const ContactDetails = () => {
   return (
     <>
       {/* ------------------------------------------- */}
-      {/* Contact Detail Part */}
+      {/* Parte de Detalhes do Contato */}
       {/* ------------------------------------------- */}
       {contactDetail && !contactDetail.deleted ? (
         <>
           {/* ------------------------------------------- */}
-          {/* Header Part */}
+          {/* Parte do Cabeçalho */}
           {/* ------------------------------------------- */}
           <Box p={3} py={2} display={'flex'} alignItems="center">
-            <Typography variant="h5">Contact Details</Typography>
+            <Typography variant="h5">Detalhes do Corretor</Typography>
             <Stack gap={0} direction="row" ml={'auto'}>
-              <Tooltip title={contactDetail.starred ? 'Unstar' : 'Star'}>
+              <Tooltip title={contactDetail.starred ? 'Remover destaque' : 'Destacar'}>
                 <IconButton onClick={() => dispatch(toggleStarredContact(contactDetail.id))}>
                   <IconStar
                     stroke={1.3}
@@ -114,7 +114,7 @@ const ContactDetails = () => {
                   />
                 </IconButton>
               </Tooltip>
-              <Tooltip title={editContact ? 'Save' : 'Edit'}>
+              <Tooltip title={editContact ? 'Salvar' : 'Editar'}>
                 <IconButton onClick={() => dispatch(isEdit())}>
                   {!editContact ? (
                     <IconPencil size="18" stroke={1.3} />
@@ -123,7 +123,7 @@ const ContactDetails = () => {
                   )}
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Delete">
+              <Tooltip title="Excluir">
                 <IconButton>
                   <IconTrash size="18" stroke={1.3} />
                 </IconButton>
@@ -132,7 +132,7 @@ const ContactDetails = () => {
           </Box>
           <Divider />
           {/* ------------------------------------------- */}
-          {/* Contact Table Part */}
+          {/* Parte da Tabela de Contato */}
           {/* ------------------------------------------- */}
           <Box sx={{ overflow: 'auto' }}>
             {!editContact ? (
@@ -159,7 +159,7 @@ const ContactDetails = () => {
                   <Grid container>
                     <Grid item lg={6} xs={12} mt={4}>
                       <Typography variant="body2" color="text.secondary">
-                        Phone Number
+                        Número de Telefone
                       </Typography>
                       <Typography variant="subtitle1" mb={0.5} fontWeight={600}>
                         {contactDetail.phone}
@@ -167,7 +167,7 @@ const ContactDetails = () => {
                     </Grid>
                     <Grid item lg={6} xs={12} mt={4}>
                       <Typography variant="body2" color="text.secondary">
-                        Email address
+                        Endereço de E-mail
                       </Typography>
                       <Typography variant="subtitle1" fontWeight={600} mb={0.5}>
                         {contactDetail.email}
@@ -175,7 +175,7 @@ const ContactDetails = () => {
                     </Grid>
                     <Grid item lg={12} xs={12} mt={4}>
                       <Typography variant="body2" color="text.secondary">
-                        Address
+                        Endereço
                       </Typography>
                       <Typography variant="subtitle1" fontWeight={600} mb={0.5}>
                         {contactDetail.address}
@@ -183,7 +183,7 @@ const ContactDetails = () => {
                     </Grid>
                     <Grid item lg={6} xs={12} mt={4}>
                       <Typography variant="body2" color="text.secondary">
-                        Department
+                        Especialidade
                       </Typography>
                       <Typography variant="subtitle1" mb={0.5} fontWeight={600}>
                         {contactDetail.department}
@@ -191,7 +191,7 @@ const ContactDetails = () => {
                     </Grid>
                     <Grid item lg={6} xs={12} mt={4}>
                       <Typography variant="body2" color="text.secondary">
-                        Company
+                        Imobiliária
                       </Typography>
                       <Typography variant="subtitle1" fontWeight={600} mb={0.5}>
                         {contactDetail.company}
@@ -199,7 +199,7 @@ const ContactDetails = () => {
                     </Grid>
                     <Grid item lg={12} xs={12} mt={4}>
                       <Typography variant="body2" mb={1} color="text.secondary">
-                        Notes
+                        Observações
                       </Typography>
                       <Typography variant="subtitle1" mb={0.5}>
                         {contactDetail.notes}
@@ -215,7 +215,7 @@ const ContactDetails = () => {
                     size="small"
                     onClick={() => dispatch(isEdit())}
                   >
-                    Edit
+                    Editar
                   </Button>
                   <Button
                     color="error"
@@ -223,7 +223,7 @@ const ContactDetails = () => {
                     size="small"
                     onClick={() => dispatch(DeleteContact(contactDetail.id))}
                   >
-                    Delete
+                    Excluir
                   </Button>
                 </Box>
               </Box>
@@ -255,7 +255,7 @@ const ContactDetails = () => {
                           variant="contained"
                           onClick={() => dispatch(isEdit())}
                         >
-                          Save Contact
+                          Salvar Contato
                         </Button>
                       </Box>
                     </Box>
@@ -268,10 +268,10 @@ const ContactDetails = () => {
       ) : (
         <Box p={3} height="50vh" display={'flex'} justifyContent="center" alignItems={'center'}>
           {/* ------------------------------------------- */}
-          {/* If no Contact  */}
+          {/* Se não houver Contato  */}
           {/* ------------------------------------------- */}
           <Box>
-            <Typography variant="h4">Please Select a Contact</Typography>
+            <Typography variant="h4">Por favor, selecione um corretor</Typography>
             <br />
             <img src={emailIcon} alt={emailIcon} width={'250px'} />
           </Box>

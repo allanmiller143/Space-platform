@@ -54,7 +54,7 @@ const NoteContent = ({ toggleNoteSidebar }) => {
   return (
     <Box sx={{ height: { lg: 'calc(100vh - 250px)', sm: '100vh' }, maxHeight: '700px' }}>
       {/* ------------------------------------------- */}
-      {/* Header Part */}
+      {/* Parte do Cabeçalho */}
       {/* ------------------------------------------- */}
       <Box display="flex" alignItems="center" justifyContent="space-between" p={2}>
         <IconButton onClick={toggleNoteSidebar}>
@@ -64,19 +64,19 @@ const NoteContent = ({ toggleNoteSidebar }) => {
       </Box>
       <Divider />
       {/* ------------------------------------------- */}
-      {/* Edit notes */}
+      {/* Editar compromissos */}
       {/* ------------------------------------------- */}
       {noteDetails && noteDetails.deleted === false ? (
         <Box p={3}>
           <FormLabel htmlFor="outlined-multiline-static">
             <Typography variant="h6" mb={2} fontWeight={600} color="text.primary">
-              Edit Note
+              Editar Compromisso
             </Typography>
           </FormLabel>
 
           <TextField
             id="outlined-multiline-static"
-            placeholder="Edit Note"
+            placeholder="Editar Compromisso"
             multiline
             fullWidth
             rows={5}
@@ -86,7 +86,7 @@ const NoteContent = ({ toggleNoteSidebar }) => {
           />
           <br />
           <Typography variant="h6" mt={3} mb={2} fontWeight={600}>
-            Change Note Color
+            Alterar Cor do Compromisso
           </Typography>
 
           {colorvariation.map((color1) => (
@@ -107,7 +107,7 @@ const NoteContent = ({ toggleNoteSidebar }) => {
           ))}
         </Box>
       ) : (
-        <Box sx={{ textAlign: 'center', fontSize: '24px', mt: 2 }}>Select a Note</Box>
+        <Box sx={{ textAlign: 'center', fontSize: '24px', mt: 2 }}>Selecione um Compromisso</Box>
       )}
     </Box>
   );

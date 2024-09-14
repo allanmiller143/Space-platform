@@ -41,7 +41,7 @@ const ContactList = ({ showrightSidebar }) => {
         return contacts.filter(
           (c) =>
             !c.deleted &&
-            c.department === 'Engineering' &&
+            c.department === 'Vendas' &&
             c.firstname.toLocaleLowerCase().includes(contactSearch),
         );
 
@@ -49,7 +49,7 @@ const ContactList = ({ showrightSidebar }) => {
         return contacts.filter(
           (c) =>
             !c.deleted &&
-            c.department === 'Support' &&
+            c.department === 'Avaliação' &&
             c.firstname.toLocaleLowerCase().includes(contactSearch),
         );
 
@@ -57,12 +57,12 @@ const ContactList = ({ showrightSidebar }) => {
         return contacts.filter(
           (c) =>
             !c.deleted &&
-            c.department === 'Sales' &&
+            c.department === 'Locação' &&
             c.firstname.toLocaleLowerCase().includes(contactSearch),
         );
 
       default:
-        throw new Error(`Unknown filter: ${filter}`);
+        throw new Error(`Filtro desconhecido: ${filter}`);
     }
   };
   const contacts = useSelector((state) =>

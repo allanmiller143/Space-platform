@@ -22,7 +22,7 @@ const AppDD = () => {
       <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/dashboards/ecommerce" component={Link}>
         Buscar imóveis
       </Button>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/chats" component={Link}>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/" component={Link}>
         Feed
       </Button>
       {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/calendar" component={Link}>
@@ -33,7 +33,7 @@ const AppDD = () => {
       </Button> */}
       <Box>
         <Button
-          aria-label="show 11 new notifications"
+          aria-label="Exibir 11 notificacoes"
           color="inherit"
           variant="text"
           aria-controls="msgs-menu"
