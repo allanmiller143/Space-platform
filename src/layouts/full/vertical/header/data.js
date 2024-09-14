@@ -66,24 +66,24 @@ const notifications = [
 // Profile dropdown
 //
 const profile = [
-  {
-    href: '/user-profile',
-    title: 'Meu Perfil',
-    subtitle: 'Configurações da Conta',
-    icon: icon1,
-  },
+  // {
+  //   href: '/user-profile',
+  //   title: 'Meu Perfil',
+  //   subtitle: 'Configurações da Conta',
+  //   icon: icon1,
+  // },
   // {
   //   href: '/apps/email',
   //   title: 'Minha Caixa de Entrada',
   //   subtitle: 'Mensagens e Emails',
   //   icon: icon2,
   // },
-  {
-    href: '/apps/notes',
-    title: 'Minhas Tarefas',
-    subtitle: 'Tarefas e Atividades Diárias',
-    icon: icon3,
-  },
+  // {
+  //   href: '/apps/notes',
+  //   title: 'Minhas Tarefas',
+  //   subtitle: 'Tarefas e Atividades Diárias',
+  //   icon: icon3,
+  // },
 ];
 
 // apps dropdown
