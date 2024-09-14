@@ -1,33 +1,34 @@
-import React from 'react';
-import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from 'src/components/container/PageContainer';
-import ImoveisList from 'src/components/apps/imoveis/imoveis-list/index';
-import { InvoiceProvider } from 'src/context/InvoiceContext/index';
-import BlankCard from 'src/components/shared/BlankCard';
-import { CardContent } from '@mui/material';
+import FilteringTable from "src/components/react-tables/filter/pageimoveis";
+import { Box, Typography, Badge } from '@mui/material';
+import { Button } from '@mui/material';
 
-const BCrumb = [
-  {
-    to: '/',
-    title: 'Home',
-  },
-  {
-    title: 'Invoice List',
-  },
-];
-
-const InvoiceListing = () => {
+function Page() {
   return (
-    <InvoiceProvider>
-      <PageContainer title="Invoice List" description="this is Invoice List">
-        <Breadcrumb title="Invoice List" items={BCrumb} />
-        <BlankCard>
-          <CardContent>
-            <InvoiceList />
-          </CardContent>
-        </BlankCard>
+    <>
+      <PageContainer title="Central de Imóveis" description="Gerencie seus imóveis de forma eficiente">
+        <Box sx={{ bgcolor: 'primary.light', py: 4 , mb: 4}}>
+          <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 3 }}>
+            <Typography variant="h2" component="h1" gutterBottom>
+              Bem-vindo à sua Central de Imóveis
+            </Typography>
+            <Typography variant="h5" color="text.secondary" paragraph>
+              Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. Publique novos anúncios, atualize informações existentes e mantenha seu portfólio sempre atualizado.
+            </Typography>
+            <Box sx={{ mt: 4 }}>
+              <Button variant="contained" size="large" href="#" color="primary">
+                Adicionar Novo Imóvel »
+              </Button>
+              <Button variant="outlined" size="large" href="#" color="inherit" sx={{ ml: 2 }}>
+                Saiba como funciona
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+        <FilteringTable />
       </PageContainer>
-    </InvoiceProvider>
+    </>
   );
-};
-export default InvoiceListing;
+}
+
+export default Page;
