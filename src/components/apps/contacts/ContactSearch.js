@@ -32,7 +32,7 @@ const ContactSearch = ({ onClick }) => {
         fullWidth
         size="small"
         value={searchTerm}
-        placeholder="Search Contacts"
+        placeholder="Buscar Contatos de Corretores"
         variant="outlined"
         onChange={(e) => dispatch(SearchContact(e.target.value))}
       />

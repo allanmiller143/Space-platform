@@ -12,7 +12,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Ecommerce = () => {
   return (
-    <PageContainer title="Dashboard Moderno" description="Esta é a página do Dashboard Moderno">
+    <PageContainer title="Buscar Imóveis" description="Seu proximo imóvel está aqui">
       <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Grid container sx={{ flexGrow: 1 }}>
           <Grid item xs={12} md={7}>

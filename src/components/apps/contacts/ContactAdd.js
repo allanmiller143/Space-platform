@@ -57,7 +57,7 @@ const ContactAdd = () => {
     <>
       <Box p={3} pb={1}>
         <Button color="primary" variant="contained" fullWidth onClick={toggle}>
-          Add New Contact
+          Adicionar Novo Contato
         </Button>
       </Box>
       <Dialog
@@ -68,18 +68,18 @@ const ContactAdd = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" variant="h5">
-          {'Add New Contact'}
+          {'Adicionar Novo Contato'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Lets add new contact for your application. fill the all field and
-            <br /> click on submit button.
+            Vamos adicionar um novo contato para sua lista de clientes. Preencha todos os campos e
+            <br /> clique no botão enviar.
           </DialogContentText>
           <Box mt={3}>
             <form onSubmit={handleSubmit}>
               <Grid spacing={3} container>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>FirstName</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <TextField
                     id="firstname"
                     size="small"
@@ -90,7 +90,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>LastName</FormLabel>
+                  <FormLabel>Sobrenome</FormLabel>
                   <TextField
                     id="lastname"
                     size="small"
@@ -101,7 +101,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>Department</FormLabel>
+                  <FormLabel>Tipo de Imóvel Desejado</FormLabel>
                   <TextField
                     id="department"
                     size="small"
@@ -112,7 +112,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>Company</FormLabel>
+                  <FormLabel>Empresa (se aplicável)</FormLabel>
                   <TextField
                     id="company"
                     size="small"
@@ -123,7 +123,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>Telefone</FormLabel>
                   <TextField
                     id="phone"
                     size="small"
@@ -134,7 +134,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>E-mail</FormLabel>
                   <TextField
                     id="email"
                     type="email"
@@ -147,7 +147,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={12}>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>Endereço</FormLabel>
                   <TextField
                     id="address"
                     size="small"
@@ -160,7 +160,7 @@ const ContactAdd = () => {
                   />
                 </Grid>
                 <Grid item xs={12} lg={12}>
-                  <FormLabel>Notes</FormLabel>
+                  <FormLabel>Observações</FormLabel>
                   <TextField
                     id="notes"
                     size="small"
@@ -180,10 +180,10 @@ const ContactAdd = () => {
                     type="submit"
                     disabled={values.firstname.length === 0 || values.notes.length === 0}
                   >
-                    Submit
+                    Enviar
                   </Button>
                   <Button variant="contained" color="error" onClick={toggle}>
-                    Cancel
+                    Cancelar
                   </Button>
                 </Grid>
               </Grid>

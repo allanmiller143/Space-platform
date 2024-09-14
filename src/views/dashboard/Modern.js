@@ -6,7 +6,7 @@ import { Button, CardContent, Divider } from '@mui/material';
 
 const Modern = () => {
   return (
-    <PageContainer title="Dashboard Moderno" description="Esta é a página do Dashboard Moderno">
+    <PageContainer title="Home" description="Bem-vindo ao nosso projeto em desenvolvimento!">
       <Box sx={{ flexGrow: 1 }}>
         {/* Seção principal para uma mensagem de marketing primária ou chamada para ação */}
         <Box sx={{ bgcolor: 'primary.light', py: 8 }}>

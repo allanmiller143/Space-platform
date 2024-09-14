@@ -23,7 +23,7 @@ import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import { IconCheck } from '@tabler/icons';
 import BlankCard from '../../../components/shared/BlankCard';
 
-moment.locale('en-GB');
+moment.locale('pt-BR');
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
@@ -142,11 +142,11 @@ const BigCalendar = () => {
   };
 
   return (
-    <PageContainer title="Calendar ui" description="this is Calendar page">
-      <Breadcrumb title="Calendar" subtitle="App" />
+    <PageContainer title="Calendário de Contatos" description="Esta é a página do Calendário de Contatos">
+      <Breadcrumb title="Calendário" subtitle="Aplicativo" />
       <BlankCard key={slot} variant="outlined">
         {/* ------------------------------------------- */}
-        {/* Calendar */}
+        {/* Calendário */}
         {/* ------------------------------------------- */}
         <CardContent>
           <Calendar
@@ -164,46 +164,46 @@ const BigCalendar = () => {
         </CardContent>
       </BlankCard>
       {/* ------------------------------------------- */}
-      {/* Add Calendar Event Dialog */}
+      {/* Diálogo para Adicionar Evento no Calendário */}
       {/* ------------------------------------------- */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
         <form onSubmit={update ? updateEvent : submitHandler}>
           <DialogContent>
             {/* ------------------------------------------- */}
-            {/* Add Edit title */}
+            {/* Adicionar/Editar título */}
             {/* ------------------------------------------- */}
             <Typography variant="h4" sx={{ mb: 2 }}>
-              {update ? 'Update Event' : 'Add Event'}
+              {update ? 'Atualizar Contato' : 'Adicionar Contato'}
             </Typography>
             <Typography mb={3} variant="subtitle2">
               {!update
-                ? 'To add Event kindly fillup the title and choose the event color and press the add button'
-                : 'To Edit/Update Event kindly change the title and choose the event color and press the update button'}
+                ? 'Para adicionar um contato, preencha o título, escolha a cor do evento e pressione o botão adicionar'
+                : 'Para editar/atualizar um contato, altere o título, escolha a cor do evento e pressione o botão atualizar'}
             </Typography>
             <TextField
               id="Event Title"
-              placeholder="Enter Event Title"
+              placeholder="Digite o Nome do Contato"
               variant="outlined"
               fullWidth
-              label="Event Title"
+              label="Nome do Contato"
               value={title}
               sx={{ mb: 3 }}
               onChange={inputChangeHandler}
             />
             {/* ------------------------------------------- */}
-            {/* Selection of Start and end date */}
+            {/* Seleção de Data de Início e Fim */}
             {/* ------------------------------------------- */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MobileDatePicker
-                label="Start Date"
-                inputFormat="MM/dd/yyyy"
+                label="Data de Início"
+                inputFormat="dd/MM/yyyy"
                 value={start}
                 onChange={handleStartChange}
                 renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
               />
               <MobileDatePicker
-                label="End Date"
-                inputFormat="MM/dd/yyyy"
+                label="Data de Fim"
+                inputFormat="dd/MM/yyyy"
                 value={end}
                 onChange={handleEndChange}
                 renderInput={(params) => (
@@ -212,20 +212,20 @@ const BigCalendar = () => {
                     fullWidth
                     sx={{ mb: 3 }}
                     error={start > end}
-                    helperText={start > end ? 'End date must be later than start date' : ''}
+                    helperText={start > end ? 'A data de fim deve ser posterior à data de início' : ''}
                   />
                 )}
               />
             </LocalizationProvider>
 
             {/* ------------------------------------------- */}
-            {/* Calendar Event Color*/}
+            {/* Cor do Evento no Calendário */}
             {/* ------------------------------------------- */}
             <Typography variant="h6" fontWeight={600} my={2}>
-              Select Event Color
+              Selecione a Cor do Contato
             </Typography>
             {/* ------------------------------------------- */}
-            {/* colors for event */}
+            {/* cores para o evento */}
             {/* ------------------------------------------- */}
             {ColorVariation.map((mcolor) => {
               return (
@@ -247,10 +247,10 @@ const BigCalendar = () => {
             })}
           </DialogContent>
           {/* ------------------------------------------- */}
-          {/* Action for dialog */}
+          {/* Ações para o diálogo */}
           {/* ------------------------------------------- */}
           <DialogActions sx={{ p: 3 }}>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Cancelar</Button>
 
             {update ? (
               <Button
@@ -259,17 +259,17 @@ const BigCalendar = () => {
                 variant="contained"
                 onClick={() => deleteHandler(update)}
               >
-                Delete
+                Excluir
               </Button>
             ) : (
               ''
             )}
             <Button type="submit" disabled={!title} variant="contained">
-              {update ? 'Update Event' : 'Add Event'}
+              {update ? 'Atualizar Contato' : 'Adicionar Contato'}
             </Button>
           </DialogActions>
           {/* ------------------------------------------- */}
-          {/* End Calendar */}
+          {/* Fim do Calendário */}
           {/* ------------------------------------------- */}
         </form>
       </Dialog>
