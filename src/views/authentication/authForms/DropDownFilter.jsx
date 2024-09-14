@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import PropTypes from 'prop-types';
 
-function DropDownFilter({ data, handleSelectChange, initialValue, white,withLabel }) {
+function DropDownFilter({ data, handleSelectChange, initialValue }) {
   const { itens } = data;
 
   // Utilize o estado local para controlar o valor selecionado
@@ -23,31 +23,24 @@ function DropDownFilter({ data, handleSelectChange, initialValue, white,withLabe
   };
 
   return (
-      <Box>
-        <FormControl fullWidth>
-          <Select
-            value={selectedValue}
-            onChange={handleChange}
-            sx={{
-              height: 40,
-              bgcolor: white ? '#fafafa' : '', // Cor de fundo condicional
-              border: white ? 'none' : '', // Condiciona a borda
-              '&:focus': {
-                border: white ? 'none' : '1px solid #ccc', // Condiciona a borda no foco
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: white ? 'none !important' : '', // Condiciona a borda no contorno
-              },
-            }}
-          >
-            {itens.map((item) => (
-              <MenuItem key={item.value} value={item.value} sx={{ fontSize: '0.9rem !important' }}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+    <Box>
+      <FormControl fullWidth>
+        <Select
+          value={selectedValue}
+          initialValue={initialValue}
+          onChange={handleChange}
+          sx={{
+            height: 40,
+          }}
+        >
+          {itens.map((item) => (
+            <MenuItem key={item.value} value={item.value} sx={{ fontSize: '0.9rem !important' }}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }
 

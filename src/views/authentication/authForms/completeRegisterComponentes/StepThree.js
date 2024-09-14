@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import  { useState } from 'react';
-import { Box, Typography, Button, Stepper, Step, StepLabel, Grid, Card, CardContent, Avatar, Stack, TextField, Paper, Select, MenuItem } from '@mui/material';
+import { useState } from 'react';
+import { Box, Typography, Grid, TextField, Paper, Stack } from '@mui/material';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import DropDownFilter from '../DropDownFilter';
+import fetchCepData from '../../../../Services/SearchCep';
+import { toast } from 'sonner';
 
-const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue }) => {
-
+const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue }) => {
+  const [cep, setCep] = useState('');
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -15,7 +17,6 @@ const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue 
       [id]: value,
     });
   };
-
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
@@ -26,7 +27,7 @@ const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue 
       state: selectedValue,
     });
   };
-  
+
   const localItens = [
     { value: 'AC', label: 'Acre' },
     { value: 'AL', label: 'Alagoas' },
@@ -57,6 +58,36 @@ const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue 
     { value: 'TO', label: 'Tocantins' }
   ];
 
+  const handleCepChange = async (value) => {
+    setCep(value);
+    setFormData(prevState => ({
+      ...prevState,
+      cep: value
+    }));
+    if (value.length === 8) {
+      try {
+        const cepData = await fetchCepData(value);
+        console.log(cepData);
+        setFormData(prevState => ({
+          ...prevState,
+          street: cepData.street,
+          city: cepData.city,
+          neighborhood: cepData.district,
+          state: cepData.state
+        }));
+        setDropdownLocaleValue(localItens.find(item => item.value === cepData.state)?.label || '');
+      } catch (error) {
+        toast.error(error.message);
+        setFormData(prevState => ({
+          ...prevState,
+          street: '',
+          city: '',
+          neighborhood: '',
+          state: ''
+        }));
+      }
+    }
+  };
 
   const renderAddressFields = () => (
     <Stack spacing={3} mb={3}>
@@ -67,7 +98,7 @@ const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="CEP">CEP</CustomFormLabel>
-            <TextField id="CEP" variant="outlined" fullWidth value={formData.cep} onChange={handleChange} />
+            <TextField id="CEP" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="city">Cidade</CustomFormLabel>
@@ -91,8 +122,12 @@ const StepThree = ({ selectedType, formData, setFormData,setDropdownLocaleValue 
           </Grid>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="state">Estado</CustomFormLabel>
-            <DropDownFilter handleSelectChange={handleSelectChange} data={{ label: '', itens: localItens }} className="WhoAreYouPage__dropdown"/>
-            </Grid>
+            <DropDownFilter 
+              handleSelectChange={handleSelectChange} 
+              initialValue={formData.state}
+              data={{ label: '', itens: localItens}} 
+            />
+          </Grid>
         </Grid>
       </Paper>
     </Stack>
