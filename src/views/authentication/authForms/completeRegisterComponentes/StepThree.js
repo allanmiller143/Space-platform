@@ -64,6 +64,7 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
       ...prevState,
       cep: value
     }));
+
     if (value.length === 8) {
       try {
         const cepData = await fetchCepData(value);
@@ -97,8 +98,8 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <CustomFormLabel htmlFor="CEP">CEP</CustomFormLabel>
-            <TextField id="CEP" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
+            <CustomFormLabel htmlFor="cep">cep</CustomFormLabel>
+            <TextField id="cep" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="city">Cidade</CustomFormLabel>
