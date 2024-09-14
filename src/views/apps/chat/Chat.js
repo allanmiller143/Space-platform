@@ -11,7 +11,7 @@ const Chats = () => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <PageContainer title="Chat ui" description="this is Chat page">
+    <PageContainer title="Chat" description="Converse com corretores, proprietários e imobiliárias">
       <Breadcrumb title="Mensagens" subtitle="Converse com corretores, proprietários e imobiliárias" />
       <AppCard>
         {/* ------------------------------------------- */}

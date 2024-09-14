@@ -40,8 +40,8 @@ const NoteList = () => {
         <TextField
           id="search"
           value={searchTerm}
-          placeholder="Search Notes"
-          inputProps={{ 'aria-label': 'Search Notes' }}
+          placeholder="Pesquisar Imóveis"
+          inputProps={{ 'aria-label': 'Pesquisar Imóveis' }}
           size="small"
           type="search"
           variant="outlined"
@@ -49,7 +49,7 @@ const NoteList = () => {
           onChange={(e) => dispatch(SearchNotes(e.target.value))}
         />
         <Typography variant="h6" mb={0} mt={4} pl={1}>
-          All Notes
+          Todos os Imóveis
         </Typography>
       </Box>
       <Box>
@@ -76,9 +76,9 @@ const NoteList = () => {
                     <Typography variant="caption">
                       {new Date(note.datef).toLocaleDateString()}
                     </Typography>
-                    <Tooltip title="Delete">
+                    <Tooltip title="Excluir">
                       <IconButton
-                        aria-label="delete"
+                        aria-label="excluir"
                         size="small"
                         onClick={() => dispatch(DeleteNote(note.id))}
                       >
@@ -92,7 +92,7 @@ const NoteList = () => {
           ) : (
             <Box m={2}>
               <Alert severity="error" variant="filled" sx={{ color: 'white' }}>
-                No Notes Found!
+                Nenhum Imóvel Encontrado!
               </Alert>
             </Box>
           )}

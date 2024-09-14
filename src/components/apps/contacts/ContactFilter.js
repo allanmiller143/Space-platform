@@ -22,19 +22,19 @@ const ContactFilter = () => {
   const filterData = [
     {
       id: 2,
-      name: 'All',
+      name: 'Todos',
       sort: 'show_all',
       icon: IconMail,
     },
     {
       id: 3,
-      name: 'Frequent',
+      name: 'Frequentes',
       sort: 'frequent_contact',
       icon: IconSend,
     },
     {
       id: 4,
-      name: 'Starred',
+      name: 'Favoritos',
       sort: 'starred_contact',
       icon: IconBucket,
     },
@@ -44,26 +44,26 @@ const ContactFilter = () => {
     },
     {
       id: 5,
-      filterbyTitle: 'Categories',
+      filterbyTitle: 'Categorias',
     },
 
     {
       id: 7,
-      name: 'Engineering',
+      name: 'Residencial',
       sort: 'engineering_department',
       icon: IconFolder,
       color: 'primary.main',
     },
     {
       id: 8,
-      name: 'Support',
+      name: 'Comercial',
       sort: 'support_department',
       icon: IconFolder,
       color: 'error.main',
     },
     {
       id: 9,
-      name: 'Sales',
+      name: 'Rural',
       sort: 'sales_department',
       icon: IconFolder,
       color: 'success.main',

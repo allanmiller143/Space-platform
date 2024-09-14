@@ -9,10 +9,10 @@ import AppCard from 'src/components/shared/AppCard';
 const BCrumb = [
   {
     to: '/',
-    title: 'Home',
+    title: 'Início',
   },
   {
-    title: 'Notes',
+    title: 'Notas',
   },
 ];
 
@@ -22,8 +22,8 @@ const Notes = () => {
 
 
   return (
-    <PageContainer title="Note App" description="this is Note App">
-      <Breadcrumb title="Note app" items={BCrumb} />
+    <PageContainer title="Aplicativo de Notas" description="Este é o Aplicativo de Notas para Corretores de Imóveis">
+      <Breadcrumb title="Aplicativo de Notas" items={BCrumb} />
       <AppCard>
         {lgDown ?
           <NoteSidebar

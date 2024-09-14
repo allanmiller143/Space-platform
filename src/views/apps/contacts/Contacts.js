@@ -17,11 +17,11 @@ const Contacts = () => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   return (
-    <PageContainer title="Contact App" description="this is Contact page">
-      <Breadcrumb title="Contact app" subtitle="List Your Contacts" />
+    <PageContainer title="Aplicativo de Contatos" description="Esta é a página de Contatos">
+      <Breadcrumb title="Aplicativo de Contatos" subtitle="Liste seus Contatos Imobiliários" />
       <AppCard>
         {/* ------------------------------------------- */}
-        {/* Left Part */}
+        {/* Parte Esquerda */}
         {/* ------------------------------------------- */}
 
         <Drawer
@@ -37,7 +37,7 @@ const Contacts = () => {
           <ContactFilter />
         </Drawer>
         {/* ------------------------------------------- */}
-        {/* Middle part */}
+        {/* Parte do Meio */}
         {/* ------------------------------------------- */}
         <Box
           sx={{
@@ -50,7 +50,7 @@ const Contacts = () => {
           <ContactList showrightSidebar={() => setRightSidebarOpen(true)} />
         </Box>
         {/* ------------------------------------------- */}
-        {/* Right part */}
+        {/* Parte Direita */}
         {/* ------------------------------------------- */}
         <Drawer
           anchor="right"
@@ -64,7 +64,7 @@ const Contacts = () => {
             [`& .MuiDrawer-paper`]: { width: '100%', position: 'relative' },
           }}
         >
-          {/* back btn Part */}
+          {/* Parte do botão voltar */}
           {mdUp ? (
             ''
           ) : (
@@ -76,7 +76,7 @@ const Contacts = () => {
                 onClick={() => setRightSidebarOpen(false)}
                 sx={{ mb: 3, display: { xs: 'block', md: 'none', lg: 'none' } }}
               >
-                Back{' '}
+                Voltar{' '}
               </Button>
             </Box>
           )}
