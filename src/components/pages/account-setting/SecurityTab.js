@@ -111,7 +111,7 @@ const SecurityTab = () => {
                 <Box>
                   <Typography variant="h6">iPhone 14</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Londres, Reino Unido, 23 de Out às 1:15
+                    São Paulo, Brasil, 23 de Out às 1:15
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -123,12 +123,12 @@ const SecurityTab = () => {
               <Divider />
               {/* lista 2 */}
               <Stack direction="row" spacing={2} py={2} alignItems="center">
-                <IconDeviceLaptop size="26" />
+                <IconDeviceLaptop size="26" />  
 
                 <Box>
                   <Typography variant="h6">Macbook Air </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Gujarat, Índia, 24 de Out às 3:15
+                    Rio de Janeiro, Brasil, 24 de Out às 3:15
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>

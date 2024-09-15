@@ -21,7 +21,7 @@ const BillsTab = () => {
     return (
         <>
             <Grid container spacing={3} justifyContent="center">
-                <Grid item xs={12} lg={9}>
+                <Grid item xs={12} lg={12}>
                     <BlankCard>
                         <CardContent>
                             <Typography variant="h4" mb={2}>
@@ -81,7 +81,7 @@ const BillsTab = () => {
                 </Grid>
 
                 {/* 2 */}
-                <Grid item xs={12} lg={9}>
+                <Grid item xs={12} lg={12}>
                     <BlankCard>
                         <CardContent>
                             <Typography variant="h4" display="flex" mb={2}>
@@ -132,7 +132,7 @@ const BillsTab = () => {
                 </Grid>
 
                 {/* 3 */}
-                <Grid item xs={12} lg={9}>
+                <Grid item xs={12} lg={12}>
                     <BlankCard>
                         <CardContent>
                             <Typography variant="h4" mb={2}>

@@ -21,7 +21,7 @@ const NotificationTab = () => {
   return (
     <>
       <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} lg={9}>
+        <Grid item xs={12}>
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
@@ -46,10 +46,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Nossa newsletter
+                    Atualizações de Propriedades
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Sempre informaremos você sobre mudanças importantes
+                    Receba notificações sobre novas propriedades adicionadas
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -67,10 +67,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Confirmação de Pedido
+                    Confirmação de Reserva
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Você será notificado quando o cliente fizer qualquer pedido
+                    Você será notificado quando uma reserva for confirmada
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -88,10 +88,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Status do Pedido Alterado
+                    Alteração no Status da Reserva
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Você será notificado quando o cliente fizer alterações no pedido
+                    Você será notificado quando houver alterações no status da reserva
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -109,10 +109,10 @@ const NotificationTab = () => {
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb={1}>
-                    Pedido Entregue
+                    Propriedade Alugada
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Você será notificado assim que o pedido for entregue
+                    Você será notificado assim que a propriedade for alugada
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 'auto !important' }}>
@@ -145,7 +145,7 @@ const NotificationTab = () => {
         </Grid>
 
         {/* 2 */}
-        <Grid item xs={12} lg={9}>
+        <Grid item xs={12} lg={6}>
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
@@ -184,7 +184,7 @@ const NotificationTab = () => {
         </Grid>
 
         {/* 3 */}
-        <Grid item xs={12} lg={9}>
+        <Grid item xs={12} lg={6}>
           <BlankCard>
             <CardContent>
               <Typography variant="h4" mb={2}>
