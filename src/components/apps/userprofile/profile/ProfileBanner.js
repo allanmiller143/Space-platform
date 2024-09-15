@@ -142,8 +142,8 @@ const ProfileBanner = () => {
                   <Typography fontWeight={600} variant="h5">
                     Fernando Dias
                   </Typography>
-                  <Typography color="textSecondary" variant="h6" fontWeight={400}>
-                    Corretor de Imóveis
+                  <Typography color="gray" variant="h6" fontWeight={400}>
+                    @fernandodias.corretor
                   </Typography>
                 </Box>
               </Box>

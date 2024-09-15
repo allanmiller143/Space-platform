@@ -1,56 +1,30 @@
-import React, { useEffect } from 'react';
-import { Typography, ImageList, ImageListItem, Skeleton, Box } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos } from 'src/store/apps/userProfile/UserProfileSlice';
+import React from 'react';
+import { Stack, Typography } from '@mui/material';
+
 import ChildCard from 'src/components/shared/ChildCard';
+import { IconBriefcase, IconDeviceDesktop, IconMail, IconMapPin } from '@tabler/icons';
 
-const PhotosCard = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchPhotos());
-  }, [dispatch]);
-
-  const getPhotos = useSelector((state) => state.userpostsReducer.gallery);
-  const [isLoading, setLoading] = React.useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <ChildCard>
-      <Typography variant="h4">Fotos</Typography>
-      <ImageList cols={3} gap={20}>
-        {getPhotos.map((photo) => (
-          <Box key={photo.id}>
-            {isLoading ? (
-              <>
-                <Skeleton
-                  variant="square"
-                  animation="wave"
-                  width="100%"
-                  height={93}
-                  key={photo.id + photo.cover}
-                ></Skeleton>
-              </>
-            ) : (
-              <ImageListItem>
-                <img
-                  srcSet={`${photo.cover} 1x, ${photo.cover} 2x`}
-                  alt={photo.img}
-                  loading="lazy"
-                  style={{ borderRadius: 8 }}
-                />
-              </ImageListItem>
-            )}
-          </Box>
-        ))}
-      </ImageList>
+const IntroCard = () => (
+  <>
+    <ChildCard sx={{ mt: 3, position: 'relative'}}>
+      <Stack direction="row" marginTop={3} gap={2} alignItems="center" mb={3}>
+        <IconBriefcase size="21" />
+        <Typography variant="h6">Corretor de Imóveis Autônomo</Typography>
+      </Stack>
+      <Stack direction="row" gap={2} alignItems="center" mb={3}>
+        <IconMail size="21" />
+        <Typography variant="h6">fernandodias@email.com</Typography>
+      </Stack>
+      <Stack direction="row" gap={2} alignItems="center" mb={3}>
+        <IconDeviceDesktop size="21" />
+        <Typography variant="h6">www.fernandodias.com.br</Typography>
+      </Stack>
+      <Stack direction="row" gap={2} alignItems="center" mb={1}>
+        <IconMapPin size="21" />
+        <Typography variant="h6">São Paulo, Brasil - 01000-000</Typography>
+      </Stack>
     </ChildCard>
-  );
-};
+  </>
+);
 
-export default PhotosCard;
+export default IntroCard;
