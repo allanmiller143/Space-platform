@@ -77,7 +77,7 @@ const Header = () => {
           {/* ------------------------------------------- */}
           {/* <Notifications /> */}
           <Button color="primary"
-            fullWidth component={Link} to="/auth/register2">
+            fullWidth component={Link} to="/auth/complete-register2">
             Criar conta
           </Button>
           <Button variant="contained" color="primary" component={Link} to="/auth/login">
