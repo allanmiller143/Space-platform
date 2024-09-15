@@ -11,16 +11,12 @@ import {
   Fab,
   Skeleton,
 } from '@mui/material';
-import profilecover from 'src/assets/images/backgrounds/profilebg.jpg';
+import profilecover from '/mobiliado/imagem-1.jpg';
 import userimg from 'src/assets/images/profile/user-1.jpg';
 import {
-  IconBrandDribbble,
   IconBrandFacebook,
-  IconBrandTwitter,
-  IconBrandYoutube,
-  IconFileDescription,
-  IconUserCheck,
-  IconUserCircle,
+  IconBrandInstagram,
+  IconBrandWhatsapp,
 } from '@tabler/icons';
 import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
@@ -28,7 +24,6 @@ import { Link } from 'react-router-dom';
 
 const ProfileBanner = () => {
   const ProfileImage = styled(Box)(() => ({
-    backgroundImage: 'linear-gradient(#50b2fc,#f44c66)',
     borderRadius: '50%',
     width: '110px',
     height: '110px',
@@ -54,7 +49,15 @@ const ProfileBanner = () => {
             <Skeleton variant="square" animation="wave" width="100%" height={330}></Skeleton>
           </>
         ) : (
-          <CardMedia component="img" image={profilecover} alt={profilecover} width="100%" />
+          <CardMedia
+            sx={{
+              height: '370px',
+              backgroundImage: `url(${profilecover})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
         )}
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           {/* Post | Followers | Following */}
@@ -74,36 +77,27 @@ const ProfileBanner = () => {
           >
             <Stack direction="row" textAlign="center" justifyContent="center" gap={6} m={3}>
               <Box>
-                <Typography color="text.secondary">
-                  <IconFileDescription width="20" />
-                </Typography>
                 <Typography variant="h4" fontWeight="600">
-                  938
+                  0
                 </Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>
-                  Posts
+                  Publicações
                 </Typography>
               </Box>
               <Box>
-                <Typography color="text.secondary">
-                  <IconUserCircle width="20" />
-                </Typography>
                 <Typography variant="h4" fontWeight="600">
-                  3,586
+                  0
                 </Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>
-                  Followers
+                  Seguidores
                 </Typography>
               </Box>
               <Box>
-                <Typography color="text.secondary">
-                  <IconUserCheck width="20" />
-                </Typography>
                 <Typography variant="h4" fontWeight="600">
-                  2,659
+                  0
                 </Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>
-                  Following
+                  Seguindo
                 </Typography>
               </Box>
             </Stack>
@@ -146,10 +140,10 @@ const ProfileBanner = () => {
                 </ProfileImage>
                 <Box mt={1}>
                   <Typography fontWeight={600} variant="h5">
-                    Mathew Anderson
+                    Fernando Dias
                   </Typography>
                   <Typography color="textSecondary" variant="h6" fontWeight={400}>
-                    Designer
+                    Corretor de Imóveis
                   </Typography>
                 </Box>
               </Box>
@@ -169,18 +163,15 @@ const ProfileBanner = () => {
               },
             }}
           >
-            <Stack direction={'row'} gap={2} alignItems="center" justifyContent="center" my={2}>
+            <Stack direction={'row'} gap={2} alignItems="center" justifyContent="end" my={2} mr={2}>
               <Fab size="small" color="primary" sx={{ backgroundColor: '#1877F2' }}>
                 <IconBrandFacebook size="16" />
               </Fab>
-              <Fab size="small" color="primary" sx={{ backgroundColor: '#1DA1F2' }}>
-                <IconBrandTwitter size="18" />
+              <Fab size="small" color="success" sx={{ backgroundColor: '#25D366' }}>
+                <IconBrandWhatsapp size="18" />
               </Fab>
-              <Fab size="small" color="error" sx={{ backgroundColor: '#EA4C89' }}>
-                <IconBrandDribbble size="18" />
-              </Fab>
-              <Fab size="small" color="error" sx={{ backgroundColor: '#CD201F' }}>
-                <IconBrandYoutube size="18" />
+              <Fab size="small" color="error" sx={{ backgroundColor: '#E4405F' }}>
+                <IconBrandInstagram size="18" />
               </Fab>
               <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">
                 Editar Perfil

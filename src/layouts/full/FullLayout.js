@@ -72,7 +72,7 @@ const FullLayout = () => {
           {/* End Page */}
           {/* ------------------------------------------- */}
         </Container>
-        {/* <Customizer /> */}
+        <Customizer />
       </PageWrapper>
     </MainWrapper>
   );

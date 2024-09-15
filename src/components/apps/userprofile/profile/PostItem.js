@@ -137,7 +137,7 @@ const PostItem = ({ post }) => {
           </Stack>
         </Box>
         {/**Comentários, se houver**/}
-        <Box>
+        {/* <Box>
           {post?.data.comments ? (
             <>
               {post?.data.comments.map((comment) => {
@@ -147,9 +147,9 @@ const PostItem = ({ post }) => {
           ) : (
             ''
           )}
-        </Box>
+        </Box> */}
       </Box>
-      <Divider />
+      {/* <Divider />
       <Box p={2}>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
@@ -168,7 +168,7 @@ const PostItem = ({ post }) => {
             Comentar
           </Button>
         </Stack>
-      </Box>
+      </Box> */}
     </BlankCard>
   );
 };

@@ -17,9 +17,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchFollwores } from 'src/store/apps/userProfile/UserProfileSlice';
 import {
   IconBrandFacebook,
-  IconBrandGithub,
   IconBrandInstagram,
-  IconBrandTwitter,
+  IconBrandLinkedin,
+  IconBrandWhatsapp,
   IconSearch,
 } from '@tabler/icons';
 
@@ -34,11 +34,11 @@ const SocialIcons = [
   },
   {
     name: 'Github',
-    icon: <IconBrandGithub size="18" color="#006097" />,
+    icon: <IconBrandLinkedin size="18" color="#006097" />,
   },
   {
     name: 'Twitter',
-    icon: <IconBrandTwitter size="18" color="#1C9CEA" />,
+    icon: <IconBrandWhatsapp size="18" color="green" />,
   },
 ];
 

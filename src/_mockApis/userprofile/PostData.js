@@ -1,7 +1,7 @@
 import mock from '../mock';
-import image1 from 'src/assets/images/products/s1.jpg';
-import image2 from 'src/assets/images/products/s2.jpg';
-import image4 from 'src/assets/images/products/s4.jpg';
+import image1 from '/mobiliado/imagem-1.jpg';
+import image2 from '/mobiliado/imagem-2.jpg';
+import image4 from '/mobiliado/imagem-3.jpg';
 
 import user1 from 'src/assets/images/profile/user-1.jpg';
 import user2 from 'src/assets/images/profile/user-2.jpg';
@@ -13,15 +13,15 @@ import { Chance } from 'chance';
 
 const chance = new Chance();
 
-// social profile
+// perfil social
 const posts= [
   {
     id: chance.integer({ min: 1, max: 2000 }),
     profile: {
       id: chance.integer({ min: 1, max: 2000 }),
       avatar: user1,
-      name: 'Mathew Anderson',
-      time: '15 min ago',
+      name: 'Fernando Dias',
+      time: '15 min atrás',
     },
     data: {
       content: chance.paragraph({ sentences: 2 }),
@@ -42,7 +42,7 @@ const posts= [
             id: chance.integer({ min: 1, max: 2000 }),
             avatar: user3,
             name: 'Deran Mac',
-            time: '8 min ago ',
+            time: '8 min atrás',
           },
           data: {
             comment: chance.paragraph({ sentences: 2 }),
@@ -59,7 +59,7 @@ const posts= [
             id: chance.integer({ min: 1, max: 2000 }),
             avatar: user4,
             name: 'Jonathan Bg',
-            time: '5 min ago ',
+            time: '5 min atrás',
           },
           data: {
             comment: chance.paragraph({ sentences: 2 }),
@@ -74,7 +74,7 @@ const posts= [
                   id: chance.integer({ min: 1, max: 2000 }),
                   avatar: user5,
                   name: 'Carry minati',
-                  time: 'just now ',
+                  time: 'agora mesmo',
                 },
                 data: {
                   comment: chance.paragraph({ sentences: 2 }),
@@ -94,9 +94,9 @@ const posts= [
     id: chance.integer({ min: 1, max: 2000 }),
     profile: {
       id: chance.integer({ min: 1, max: 2000 }),
-      avatar: user5,
-      name: 'Carry Minati',
-      time: 'now',
+      avatar: user1,
+      name: 'Fernando Dias',
+      time: 'agora',
     },
     data: {
       content: chance.paragraph({ sentences: 2 }),
@@ -112,20 +112,20 @@ const posts= [
     id: chance.integer({ min: 1, max: 2000 }),
     profile: {
       id: chance.integer({ min: 1, max: 2000 }),
-      avatar: user2,
-      name: 'Genelia Desouza',
-      time: '15 min ago ',
+      avatar: user1,
+      name: 'Fernando Dias',
+      time: '15 min atrás',
     },
     data: {
       content: chance.paragraph({ sentences: 2 }),
       images: [
         {
           img: image2,
-          title: 'Image Title',
+          title: 'Título da Imagem',
         },
         {
           img: image4,
-          title: 'Painter',
+          title: 'Pintor',
         },
       ],
       likes: {
@@ -139,7 +139,7 @@ const posts= [
             id: chance.integer({ min: 1, max: 2000 }),
             avatar: user3,
             name: 'Ritesh Deshmukh',
-            time: '15 min ago ',
+            time: '15 min atrás',
           },
           data: {
             comment: chance.paragraph({ sentences: 2 }),
@@ -157,9 +157,9 @@ const posts= [
     id: chance.integer({ min: 1, max: 2000 }),
     profile: {
       id: chance.integer({ min: 1, max: 2000 }),
-      avatar: user6,
-      name: 'Mathew Anderson',
-      time: '15 min ago ',
+      avatar: user1,
+      name: 'Fernando Dias',
+      time: '15 min atrás',
     },
     data: {
       content: chance.paragraph({ sentences: 2 }),
@@ -194,7 +194,7 @@ mock.onPost('/api/data/posts/like').reply((config) => {
   } catch (err) {
     console.error(err);
 
-    return [500, { message: 'Internal server error' }];
+    return [500, { message: 'Erro interno do servidor' }];
   }
 });
 
@@ -210,7 +210,7 @@ mock.onPost('/api/data/posts/comments/add').reply((config) => {
   } catch (err) {
     console.error(err);
 
-    return [500, { message: 'Internal server error' }];
+    return [500, { message: 'Erro interno do servidor' }];
   }
 });
 
@@ -229,7 +229,7 @@ mock.onPost('/api/data/posts/replies/add').reply((config) => {
   } catch (err) {
     console.error(err);
 
-    return [500, { message: 'Internal server error' }];
+    return [500, { message: 'Erro interno do servidor' }];
   }
 });
 
@@ -254,7 +254,7 @@ mock.onPost('/api/data/posts/replies/like').reply((config) => {
   } catch (err) {
     console.error(err);
 
-    return [500, { message: 'Internal server error' }];
+    return [500, { message: 'Erro interno do servidor' }];
   }
 });
 

@@ -11,14 +11,9 @@ const ProfileTab = () => {
   };
   const ProfileTabs = [
     {
-      label: 'Perfil',
+      label: 'Feed',
       icon: <IconUserCircle size="20" />,
       to: '/user-profile',
-    },
-    {
-      label: 'Seguidores',
-      icon: <IconHeart size="20" />,
-      to: '/apps/followers',
     },
     {
       label: 'Amigos',
@@ -26,10 +21,15 @@ const ProfileTab = () => {
       to: '/apps/friends',
     },
     {
-      label: 'Galeria',
-      icon: <IconPhoto size="20" />,
-      to: '/apps/gallery',
+      label: 'Seguidores',
+      icon: <IconHeart size="20" />,
+      to: '/apps/followers',
     },
+    // {
+    //   label: 'Galeria',
+    //   icon: <IconPhoto size="20" />,
+    //   to: '/apps/gallery',
+    // },
   ];
 
   return (

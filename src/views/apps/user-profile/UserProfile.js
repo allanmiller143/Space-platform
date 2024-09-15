@@ -24,7 +24,7 @@ const UserProfile = () => {
               <IntroCard />
             </Grid>
             <Grid item sm={12}>
-              <PhotosCard />
+              {/* <PhotosCard /> */}
             </Grid>
           </Grid>
         </Grid>
