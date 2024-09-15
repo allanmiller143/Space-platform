@@ -1,51 +1,149 @@
 import React from 'react';
-import { Grid, Box, Card, Typography } from '@mui/material';
+import { Grid, Box, Card, Typography, MenuItem, TextField, InputAdornment, CardMedia, CardActions } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import { Button, CardContent, Divider } from '@mui/material';
+import { Button, CardContent, Divider, Select } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import SwipperRender from '../../components/swipper/SwipperRender'
 
 const Modern = () => {
   return (
     <PageContainer title="Home" description="Bem-vindo ao nosso projeto em desenvolvimento!">
    
+      <Box sx={{ bgcolor: 'red', color: 'white', p: 2, borderRadius: 2, textAlign: 'center', mb: 3 }}>
+        <Typography variant="h6">
+          SITE EM CONSTANTE ATUALIZAÇÃO. ERROS E LENTIDÃO PODEM OCORRER.
+        </Typography>
+      </Box>
 
       {/* Seção Hero */}
-      <Box mb={5}>
+      <Box sx={{ mb: 5 }} className="Frameworkui">
         <Card sx={{ bgcolor: 'primary.light', borderRadius: 4, height: 560 }}>
           <Grid container>
-            <Grid item md={4} sx={{ ml: 8, alignSelf: 'center' }}>
-              <CardContent>
-                <Typography variant="h3" gutterBottom>
-                  Aqui é o hero da homepage. Dedicado a busca rápida de imóveis.
+            <Grid item md={6} sx={{ alignSelf: 'center', p: 4 }}>
+              <Typography variant="h3" gutterBottom>
+                Seu próximo imóvel
+              </Typography>
+              <Typography variant="body1">
+                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              </Typography>
+            </Grid>
+            <Grid item md={5} sx={{ alignSelf: 'center', px: 4 }}>
+              <Box mb={3}>
+                <Typography variant="subtitle1" component="label" htmlFor="formInput2">
+                  Alugar ou comprar
                 </Typography>
-                <Typography variant="body1">
-                  Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                </Typography>
-              </CardContent>
+                <Select
+                  id="formInput2"
+                  fullWidth
+                  defaultValue=""
+                >
+                  <MenuItem value="">Selecione uma opção</MenuItem>
+                  <MenuItem value={1}>Alugar</MenuItem>
+                  <MenuItem value={2}>Comprar</MenuItem>
+                </Select>
+              </Box>
+              <Box mb={3}>
+                <TextField
+                  fullWidth
+                  placeholder="Cidade"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item md={11} sx={{ alignSelf: 'center', ml: 8 }}>
+              <SwipperRender
+                items={[...Array(10)].map((_, index) => ({
+                  image: "https://pinegrow.com/placeholders/img10.jpg",
+                  title: `Imóvel ${index + 1}`,
+                  description: "Descrição breve do imóvel. Clique para mais detalhes.",
+                  content: (
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://pinegrow.com/placeholders/img10.jpg"
+                        alt={`Imóvel ${index + 1}`}
+                      />
+                      <CardContent>
+                        <Typography variant="h5" component="div">
+                          Imóvel {index + 1}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          Localização
+                        </Typography>
+                        <Typography variant="body2">
+                          Descrição breve do imóvel. Clique para mais detalhes.
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button variant="contained" color="primary">Ver Detalhes</Button>
+                      </CardActions>
+                    </Card>
+                  ),
+                }))}
+              />
             </Grid>
           </Grid>
         </Card>
       </Box>
 
       {/* Seção de Imóveis Patrocinados */}
-      <Box mb={5}>
-        <Card sx={{ bgcolor: 'warning.light', borderRadius: 4, height: 560 }}>
+      <Box sx={{ mb: 5 }} className="Frameworkui">
+        <Card sx={{ bgcolor: 'warning.light', borderRadius: 4, height: 560, p: 4 }}>
           <Grid container>
-            <Grid item md={4} sx={{ ml: 8, alignSelf: 'center' }}>
-              <CardContent>
-                <Typography variant="h3" gutterBottom>
-                  Imóveis selecionados por nós<br />(aqui é o loop de imóveis patrocinados)
-                </Typography>
-                <Typography variant="body1">
-                  Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                </Typography>
-              </CardContent>
+            <Grid item md={10} sx={{ alignSelf: 'center' }}>
+              <Typography variant="h3" gutterBottom>
+                Imóveis selecionados por nós
+              </Typography>
+              <Typography variant="body1">
+                Confira nossa seleção especial de imóveis patrocinados. Deslize para ver mais opções.
+              </Typography>
+            </Grid>
+            <Grid item md={12} sx={{ mt: 2 }}>
+              <SwipperRender
+                items={[...Array(10)].map((_, index) => ({
+                  image: "https://pinegrow.com/placeholders/img10.jpg",
+                  title: `Imóvel Patrocinado ${index + 1}`,
+                  description: "Descrição breve do imóvel patrocinado. Clique para mais detalhes.",
+                  content: (
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://pinegrow.com/placeholders/img10.jpg"
+                        alt={`Imóvel Patrocinado ${index + 1}`}
+                      />
+                      <CardContent>
+                        <Typography variant="h5" component="div">
+                          Imóvel Patrocinado {index + 1}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          Localização
+                        </Typography>
+                        <Typography variant="body2">
+                          Descrição breve do imóvel patrocinado. Clique para mais detalhes.
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button variant="contained" color="primary">Ver Detalhes</Button>
+                      </CardActions>
+                    </Card>
+                  ),
+                }))}
+              />
             </Grid>
           </Grid>
         </Card>
       </Box>
 
       {/* Seção para falar com o Corretor */}
-      <Box mb={5}>
+      <Box sx={{ mb: 5 }} className="Frameworkui">
         <Card sx={{ bgcolor: 'success.light', borderRadius: 4, height: 560 }}>
           <Grid container>
             <Grid item md={4} sx={{ ml: 8, alignSelf: 'center' }}>
@@ -63,7 +161,7 @@ const Modern = () => {
       </Box>
 
       {/* Seção para falar com a Imobiliária */}
-      <Box mb={5}>
+      <Box sx={{ mb: 5 }} className="Frameworkui">
         <Card sx={{ bgcolor: 'warning.light', borderRadius: 4, height: 560 }}>
           <Grid container>
             <Grid item md={4} sx={{ ml: 8, alignSelf: 'center' }}>
@@ -81,7 +179,7 @@ const Modern = () => {
       </Box>
 
       {/* Footer */}
-      <Box component="footer" py={5}>
+      <Box component="footer" py={5} className="Frameworkui">
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
             <Typography variant="h5" gutterBottom>
