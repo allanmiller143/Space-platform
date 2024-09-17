@@ -19,7 +19,7 @@ const AppDD = () => {
 
   return (
     <>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/dashboards/ecommerce" component={Link}>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/marketplace" component={Link}>
         Buscar imóveis
       </Button>
       <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/" component={Link}>

@@ -2,11 +2,11 @@ import React from 'react';
 import { Grid, Box, Typography, Button, Stepper, Step, StepLabel } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
 import ParentCard from '../../../components/shared/ParentCard';
-import DadosGerais from './dados-gerais';
-import Localizacao from './localizacao';
-import Caracteristicas from './caracteristicas';
-import Imagens from './imagens';
-import OutrosDetalhes from './outros-detalhes';
+import DadosGerais from './partials/dados-gerais';
+import Localizacao from './partials/localizacao';
+import Caracteristicas from './partials/caracteristicas';
+import Imagens from './partials/imagens';
+import OutrosDetalhes from './partials/outros-detalhes';
 
 const steps = [
   'Informações Gerais do Imóvel',

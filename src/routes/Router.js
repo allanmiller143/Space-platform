@@ -140,6 +140,9 @@ const Maintenance = Loadable(lazy(() => import('../views/authentication/Maintena
 // landingpage
 const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landingpage')));
 
+// Paginas do projeto Space
+const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
+
 const Router = [
   {
     path: '/',
@@ -232,7 +235,6 @@ const Router = [
       { path: '/react-tables/row-selection', element: <ReactRowSelectionTable /> },
       { path: '/react-tables/sorting', element: <ReactSortingTable /> },
       { path: '/react-tables/sticky', element: <ReactStickyTable /> },
-
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
@@ -252,6 +254,7 @@ const Router = [
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
       { path: '/auth/maintenance', element: <Maintenance /> },
       { path: '/landingpage', element: <Landingpage /> },
+      { path: '/marketplace', element: <Marketplace /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
