@@ -4,34 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid, TextField } from "@mui/material";
 import { useState } from 'react';
 import fetchCepData from '../../../Services/SearchCep';
-
-const CustomTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
-  '& .MuiOutlinedInput-input::-webkit-input-placeholder': {
-    color: theme.palette.text.secondary,
-    opacity: '0.8',
-  },
-  '& .MuiOutlinedInput-input.Mui-disabled::-webkit-input-placeholder': {
-    color: theme.palette.text.secondary,
-    opacity: '1',
-  },
-  '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.grey[200],
-  },
-}));
-
-const CustomFormLabel = styled((props) => (
-  <Typography
-    variant="subtitle1"
-    fontWeight={600}
-    {...props}
-    component="label"
-    htmlFor={props.htmlFor}
-  />
-))(() => ({
-  marginBottom: '5px',
-  marginTop: '25px',
-  display: 'block',
-}));
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
 
 const Localizacao = ({  formData, setFormData }) => {
 
@@ -154,7 +128,6 @@ const Localizacao = ({  formData, setFormData }) => {
             value={formData.complemento}
           />
         </Grid>
-        <button type="submit" onClick={() => console.log(formData)}>Cadastrar</button>
       </Grid>
     </Box>
   );
