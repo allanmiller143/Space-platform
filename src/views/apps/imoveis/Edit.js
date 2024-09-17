@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Stepper, Step, StepLabel } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
 import ParentCard from '../../../components/shared/ParentCard';
@@ -17,7 +19,35 @@ const steps = [
 ];
 
 const EditImovel = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
+
+  const [formData, setFormData] = useState({
+    tipoDeAnuncio: '',
+    tipoDeImovel : '',
+    descricao : '',
+    andar : '',
+    precoDeVenda: '',
+    precoDeAluguel: '',
+    negociavel: '',
+    iptu: '',
+    taxasExtras: '',
+    quartos: '',
+    banheiros: '',
+    vaga: '',
+    suites : '',
+    mobiliado : '',
+    cep : '',
+    rua: '',
+    numero: '',
+    cidade: '',
+    estado: '',
+    bairro: '',
+    complemento: '',
+    opcoesRapidas : [],
+    area: '',
+    aceitaFinanciamento : '',
+
+  });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -32,7 +62,7 @@ const EditImovel = () => {
       case 0:
         return <DadosGerais />;
       case 1:
-        return <Localizacao />;
+        return <Localizacao {...{ formData, setFormData }}/>;
       case 2:
         return <Caracteristicas />;
       case 3:

@@ -1,3 +1,5 @@
+/* eslint-disable no-empty-pattern */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from "@mui/material";

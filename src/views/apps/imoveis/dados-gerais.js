@@ -1,3 +1,5 @@
+/* eslint-disable no-empty-pattern */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
@@ -48,27 +50,7 @@ const DadosGerais = () => {
     <Box mt={4}>
       <Typography variant="h2" sx={{ mb: 2 }}>Dados Gerais do Imóvel</Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <CustomFormLabel htmlFor="titulo-imovel">Título do Imóvel</CustomFormLabel>
-          <CustomTextField
-            id="titulo-imovel"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <CustomFormLabel htmlFor="descricao-imovel">Descrição</CustomFormLabel>
-          <CustomTextField
-            id="descricao-imovel"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6}>
           <FormControl fullWidth margin="normal">
             <CustomFormLabel htmlFor="tipo-imovel">Tipo de Imóvel</CustomFormLabel>
             <CustomSelect
@@ -84,6 +66,18 @@ const DadosGerais = () => {
             </CustomSelect>
           </FormControl>
         </Grid>
+        <Grid item xs={12} md={12}>
+          <CustomFormLabel htmlFor="descricao-imovel">Descrição</CustomFormLabel>
+          <CustomTextField
+            id="descricao-imovel"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+          />
+        </Grid>
+
         <Grid item xs={12} md={6}>
           <FormControl fullWidth margin="normal">
             <CustomFormLabel htmlFor="finalidade-imovel">Finalidade</CustomFormLabel>
