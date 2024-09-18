@@ -1,6 +1,6 @@
 import PageContainer from 'src/components/container/PageContainer';
 import FilteringTable from "src/components/react-tables/filter/pageimoveis";
-import { Box, Typography, Badge } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Button } from '@mui/material';
 // Importe a imagem
 import houseImage from 'src/assets/images/ilustracoes/house.png';
