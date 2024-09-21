@@ -76,7 +76,7 @@ const AuthTwoSteps = ({ email }) => {
   return (
     <>
       {loading && <Loading data={{ open: loading }} />}
-      <Stack mb={-1}>
+      <Stack mb={2}>
         <CustomFormLabel htmlFor="code">Enter the verification code</CustomFormLabel>
         <Stack spacing={1} direction="row">
           {code.map((digit, index) => (
@@ -96,7 +96,7 @@ const AuthTwoSteps = ({ email }) => {
           ))}
         </Stack>
       </Stack>
-      <Box mb={-2}>
+      <Box mb={2}>
         <CustomFormLabel htmlFor="password">New Password</CustomFormLabel>
         <CustomTextField
           id="password"
@@ -107,7 +107,7 @@ const AuthTwoSteps = ({ email }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </Box>
-      <Box mb={2}>
+      <Box mb={3}>
         <CustomFormLabel htmlFor="confirm-password">Confirm Password</CustomFormLabel>
         <CustomTextField
           id="confirm-password"

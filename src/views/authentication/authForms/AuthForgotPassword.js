@@ -26,6 +26,7 @@ const AuthForgotPassword = () => {
           toast.success('Email enviado com sucesso');
           navigate('/auth/two-steps', { state: { email: email } });
         } else {
+          console.log(sendEmailResponse);
           toast.error('Ocorreu um erro ao enviar o e-mail, por favor tente novamente mais tarde');
         }
       } catch (error) {

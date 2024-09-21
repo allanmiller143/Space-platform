@@ -8,7 +8,7 @@ import CustomFormLabel from '../../../components/forms/theme-elements/CustomForm
 import { Stack } from '@mui/system';
 import AuthSocialButtons from './AuthSocialButtons';
 import { toast } from 'sonner';
-import { postData } from '../../../Services/Api';
+import { postData, postFormData } from '../../../Services/Api';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import GoogleSignIn from './AuthGoogleSignIn';
@@ -26,26 +26,28 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
       toast.error('Por favor, preencha todos os campos.');
       return;
     }
-
     if (password !== confirmPassword) {
       toast.error('As senhas não conferem.');
       return;
     }
-    
     setLoading(true);
     try {
         const postDataExample = {
           'name': name,
           'email': email,
           'password': password,
-          'phone': ''
+          'phone': '',
+          'type': 'client'
         };
-        const response = await postData('clients', postDataExample);
+
+        const form = new FormData();
+        form.append('data', JSON.stringify(postDataExample));
+        const response = await postFormData('clients', form);
         if (response.status === 201 || response.status === 200) {
           const data = { 'email': email, 'password': password };
           const loginResponse = await postData('login', data);
           if (loginResponse.status === 200 || loginResponse.status === 201){
-            const token = loginResponse.data.token;
+            const token = loginResponse.data.accessToken;
             const user = loginResponse.data.user;
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
@@ -57,6 +59,7 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
           }
         } else {
           toast.error(response.message);
+          console.log(response);
         }
       } catch (error) {
         toast.error(error.message);

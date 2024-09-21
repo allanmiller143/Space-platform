@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import CustomCheckbox from '../../../components/forms/theme-elements/CustomCheckbox';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
-import AuthSocialButtons from './AuthSocialButtons';
 import { getData, postData } from '../../../Services/Api';
 import {useNavigate} from 'react-router-dom';
 import {toast} from 'sonner';
@@ -30,8 +29,9 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
         const data =  {'email' : email, 'password': password};
         const response = await postData('login',data);
         if(response.status === 200 || response.status === 201){
-          const token = response.data.token; 
+          const token = response.data.accessToken; 
           const user = response.data.user;
+          console.log(response);
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', JSON.stringify(user));
           const favoritesResponse = await getData(`favorites/${user.email}`,token);
@@ -41,6 +41,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
             toast.success('Login efetuado com sucesso');
           }
           else{
+            console.log(favoritesResponse);
             toast.error('Ocorreu um erro inesperado, por favor tente novamente mais tarde');
           }
         }else{

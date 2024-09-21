@@ -8,7 +8,7 @@ const StepOne = ( { selectedType,setSelectedType,formData,setFormData}) => {
   const typeCards = [
     {
       title: 'Vendedor',
-      description: 'Quero vender/alugar meus imóveis',
+      description: 'Quero vender/alugar os meus imóveis',
       avatar: '/images/profile/user-1.jpg',
     },
     {
@@ -47,7 +47,7 @@ const StepOne = ( { selectedType,setSelectedType,formData,setFormData}) => {
                 >
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Avatar src={card.avatar} sx={{ height: 80, width: 80, margin: 'auto' }} />
-                    <Typography variant="h6" mt={2}>
+                    <Typography variant="h6" mt={2} mb = {1}>
                       {card.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">

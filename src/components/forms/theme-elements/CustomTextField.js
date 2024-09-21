@@ -18,6 +18,8 @@ const CustomTextField = styled((props) => <TextField {...props} />)(({ theme }) 
   '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.grey[200],
   },
+  '& .css-1fckcnt-MuiFormControl-root-MuiTextField-root': {
+    margintop: '16'  },
 }));
 
 const ToggleableTextField = ({ type = 'text', ...props }) => {

@@ -7,8 +7,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // eslint-disable-next-line react/prop-types
-const Imagens = ({ formData, setFormData }) => {
+const ImagensEdit = ({ formData, setFormData }) => {
   const [files, setFiles] = useState(formData.otherImages || []);
+  const [newImages, setNewImages] = useState(formData.newImages || []);
   const [coverImage, setCoverImage] = useState(formData.coverImage || null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -19,7 +20,7 @@ const Imagens = ({ formData, setFormData }) => {
     const newFiles = acceptedFiles.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }));
-    setFiles(prevFiles => [...prevFiles, ...newFiles]);
+    setNewImages(prevImages => [...prevImages, ...newFiles]);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -44,6 +45,7 @@ const Imagens = ({ formData, setFormData }) => {
 
   const handleRemove = () => {
     setFiles(prevFiles => prevFiles.filter(file => file.name !== selectedImage.name));
+    setNewImages(prevImages => prevImages.filter(file => file.name !== selectedImage.name));
     if (selectedImage && selectedImage.name === coverImage?.name) {
       setCoverImage(null); // Remove cover image if it was the one deleted
     }
@@ -71,14 +73,15 @@ const Imagens = ({ formData, setFormData }) => {
     setFormData({
       ...formData,
       coverImage: coverImage, // Imagem de capa
-      otherImages: files // Outras imagens que não são de capa
+      otherImages: files, // Outras imagens que não são de capa
+      newImages: newImages // Novas imagens adicionadas
     });
-  }, [files, coverImage, setFormData, formData]);
+  }, [files, coverImage, newImages, setFormData, formData]);
 
   return (
     <Box mt={4}>
-      <Typography variant="h5" >Imagens do Imóvel</Typography>
-      <Typography variant="body2" mb={2}> Insira entre 5 e 10 imagens</Typography>
+      <Typography variant="h5">Imagens do Imóvel</Typography>
+      <Typography variant="body2" mb={2}>Insira entre 5 e 10 imagens</Typography>
 
       {/* Área para a foto de capa */}
       {coverImage && (
@@ -88,12 +91,9 @@ const Imagens = ({ formData, setFormData }) => {
             <CardMedia
               component="img"
               height="200"
-              image={coverImage.preview}
+              image={coverImage.preview ? coverImage.preview : coverImage.url}
               alt="Foto de capa"
             />
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography variant="subtitle1">{coverImage.name}</Typography>
-            </CardContent>
           </Card>
         </Box>
       )}
@@ -107,13 +107,52 @@ const Imagens = ({ formData, setFormData }) => {
           </Box>
         </Grid>
 
-        {/* Área de visualização de imagens */}
+        {/* Área de visualização de imagens (imagens existentes) */}
         <Grid item xs={12}>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="files" direction="horizontal">
               {(provided) => (
                 <Box {...provided.droppableProps} ref={provided.innerRef} sx={{ display: 'flex', flexWrap: 'wrap' }}>
                   {files.map((file, index) => (
+                    <Draggable key={file.name} draggableId={file.name} index={index}>
+                      {(provided) => (
+                        <Box
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          sx={{ display: 'inline-block', margin: '10px', position: 'relative' }}
+                        >
+                          <Box sx={{ width: 120, height: 120, border: '1px solid #ccc', position: 'relative' }}>
+                            <img
+                              src={file.url}
+                              alt={file.name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }}
+                            />
+                            <IconButton
+                              sx={{ position: 'absolute', top: 0, right: 0 }}
+                              onClick={(e) => handleOpenMenu(e, file)}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                          </Box>
+                        </Box>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Box>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </Grid>
+
+        {/* Área de visualização de novas imagens */}
+        <Grid item xs={12}>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="newImages" direction="horizontal">
+              {(provided) => (
+                <Box {...provided.droppableProps} ref={provided.innerRef} sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                  {newImages.map((file, index) => (
                     <Draggable key={file.name} draggableId={file.name} index={index}>
                       {(provided) => (
                         <Box
@@ -160,4 +199,4 @@ const Imagens = ({ formData, setFormData }) => {
   );
 };
 
-export default Imagens;
+export default ImagensEdit;

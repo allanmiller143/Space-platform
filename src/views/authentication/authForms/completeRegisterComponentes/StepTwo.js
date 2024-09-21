@@ -93,7 +93,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} />
                 </Grid>
               </Grid>
-              <Typography variant="h6" gutterBottom mt={3}>
+              {/* <Typography variant="h6" gutterBottom mt={3}>
                 Redes Sociais
               </Typography>
               <Grid container spacing={2}>
@@ -105,7 +105,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <CustomFormLabel htmlFor="facebook">Facebook (opcional)</CustomFormLabel>
                   <TextField id="facebook" variant="outlined" fullWidth value={formData.facebook} onChange={handleChange} />
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Paper>
           </Stack>
         );
@@ -192,7 +192,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <TextField id="cnpj" variant="outlined" fullWidth value={formData.cnpj} onChange={handleChange} />
                 </Grid>
               </Grid>
-              <Typography variant="h6" gutterBottom mt={3}>
+              {/* <Typography variant="h6" gutterBottom mt={3}>
                 Redes Sociais
               </Typography>
               <Grid container spacing={2}>
@@ -204,7 +204,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <CustomFormLabel htmlFor="socialTwo">Facebook (opcional)</CustomFormLabel>
                   <TextField id="socialTwo" variant="outlined" fullWidth value={formData.socialTwo} onChange={handleChange} />
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Paper>
           </Stack>
         );

@@ -38,7 +38,7 @@ const InvoiceDetail = Loadable(lazy(() => import('../views/apps/invoice/Detail')
 const InvoiceEdit = Loadable(lazy(() => import('../views/apps/invoice/Edit')));
 const Kanban = Loadable(lazy(() => import('../views/apps/kanban/Kanban')));
 const ImoveisList = Loadable(lazy(() => import('../views/apps/imoveis/List'))); // New route for Imoveis List
-const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/Edit'))); // New route for Imoveis List
+const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/CreateEdit'))); // New route for Imoveis List
 
 // Pages
 const RollbaseCASL = Loadable(lazy(() => import('../views/pages/rollbaseCASL/RollbaseCASL')));

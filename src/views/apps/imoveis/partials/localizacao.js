@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Grid, TextField } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { useState } from 'react';
-import fetchCepData from '../../../Services/SearchCep';
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
-import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
+import fetchCepData from '../../../../Services/SearchCep';
+import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
+import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 
 const Localizacao = ({  formData, setFormData }) => {
-
   const [cep, setCep] = useState('');
-
   const handleCepChange = async (value) => {
     setCep(value);
     setFormData(prevState => ({

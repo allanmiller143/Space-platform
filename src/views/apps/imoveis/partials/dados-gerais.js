@@ -2,12 +2,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid, FormControl, MenuItem, Checkbox, FormControlLabel, Select } from "@mui/material";
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
-import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
-
-const CustomSelect = styled((props) => <Select {...props} />)(({}) => ({}));
+import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
+import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
+import CustomSelect from '../../../../components/forms/theme-elements/CustomSelect';
 
 const DadosGerais = ({ formData, setFormData }) => {
 
@@ -58,15 +56,15 @@ const DadosGerais = ({ formData, setFormData }) => {
               label="Tipo de Imóvel"
               id="tipo-imovel"
             >
-              <MenuItem value="Apartamento">Apartamento</MenuItem>
-              <MenuItem value="Casa">Casa</MenuItem>
-              <MenuItem value="Terreno">Terreno</MenuItem>
-              <MenuItem value="Fazenda/chácara">Fazenda/chácaras</MenuItem>
+              <MenuItem value="apartment">Apartamento</MenuItem>
+              <MenuItem value="house">Casa</MenuItem>
+              <MenuItem value="land">Terreno</MenuItem>
+              <MenuItem value="farm">Fazenda/chácaras</MenuItem>
             </CustomSelect>
           </FormControl>
         </Grid>
 
-        {formData.tipoDeImovel === 'Apartamento' && (
+        {formData.tipoDeImovel === 'apartment' && (
           <Grid item xs={12} md={6}>
             <CustomFormLabel htmlFor="andar">Andar</CustomFormLabel>
             <CustomTextField
@@ -91,14 +89,14 @@ const DadosGerais = ({ formData, setFormData }) => {
               label="Finalidade"
               id="finalidade-imovel"
             >
-              <MenuItem value="Venda">Venda</MenuItem>
-              <MenuItem value="Aluguel">Aluguel</MenuItem>
-              <MenuItem value="Ambos">Ambos</MenuItem>
+              <MenuItem value="sell">Venda</MenuItem>
+              <MenuItem value="rent">Aluguel</MenuItem>
+              <MenuItem value="both">Ambos</MenuItem>
             </CustomSelect>
           </FormControl>
         </Grid>
 
-        {(formData.tipoDeAnuncio === 'Venda' || formData.tipoDeAnuncio === 'Ambos') && (
+        {(formData.tipoDeAnuncio === 'sell' || formData.tipoDeAnuncio === 'both') && (
           <Grid item xs={12} md={6}>
             <CustomFormLabel htmlFor="preco-venda">Preço de Venda</CustomFormLabel>
             <CustomTextField
@@ -112,7 +110,7 @@ const DadosGerais = ({ formData, setFormData }) => {
           </Grid>
         )}
 
-        {(formData.tipoDeAnuncio === 'Aluguel' || formData.tipoDeAnuncio === 'Ambos') && (
+        {(formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && (
           <Grid item xs={12} md={6}>
             <CustomFormLabel htmlFor="preco-aluguel">Preço de Aluguel</CustomFormLabel>
             <CustomTextField
@@ -126,7 +124,7 @@ const DadosGerais = ({ formData, setFormData }) => {
           </Grid>
         )}
 
-        {(formData.tipoDeAnuncio === 'Venda' || formData.tipoDeAnuncio === 'Aluguel' || formData.tipoDeAnuncio === 'Ambos') && (
+        {(formData.tipoDeAnuncio === 'sell' || formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && (
           <Grid item xs={12} md={12}>
             <FormControlLabel
               control={
@@ -140,7 +138,7 @@ const DadosGerais = ({ formData, setFormData }) => {
           </Grid>
         )}
 
-        {(formData.tipoDeImovel === 'Apartamento' || formData.tipoDeImovel === 'Casa') && (
+        {(formData.tipoDeImovel === 'apartment' || formData.tipoDeImovel === 'house') && (
           <>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="numero-quartos-imovel">Número de Quartos</CustomFormLabel>

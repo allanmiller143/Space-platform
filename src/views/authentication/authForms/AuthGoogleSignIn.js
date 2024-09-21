@@ -4,7 +4,7 @@ import { auth, provider } from '../../../Services/FirebaseConfig';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import {toast} from 'sonner';
 import {useNavigate} from 'react-router-dom';
-import { getData, postData } from '../../../Services/Api';
+import { getData, postData, postFormData } from '../../../Services/Api';
 import Loading from '../../../components/Loading/Loading';
 import { Avatar, Box, Stack } from '@mui/material';
 import CustomSocialButton from '../../../components/forms/theme-elements/CustomSocialButton';
@@ -32,11 +32,9 @@ function GoogleSignIn() {
       const getResponse = await getData(`find/${userData.email}`);
       if(getResponse.status === 200 || getResponse.status === 201){
         const tokenData = { 'googleToken': token };
-        console.log(tokenData);
         const loginResponse = await postData('google', tokenData);
-        
         if(loginResponse.status === 200 || loginResponse.status === 201){
-          const token = loginResponse.data.token;
+          const token = loginResponse.data.accessToken;
           const user = loginResponse.data.user;
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -53,20 +51,21 @@ function GoogleSignIn() {
           toast.error(loginResponse.message);
         }
       }
-      
       else{
-        const response = await postData('clients', userData);
-        console.log(userData);
+        userData.type = 'client';
+        const form = new FormData();
+        form.append('data', JSON.stringify(userData));
+        const response = await postFormData('clients', form);
         if(response.status === 200 || response.status === 201){
           const tokenData = { 'googleToken': token };
           const loginResponse = await postData('google', tokenData);
           if(response.status === 200 || response.status === 201){
-            const token = loginResponse.data.token;
+            const token = loginResponse.data.accessToken;
             const user = loginResponse.data.user;
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
             localStorage.setItem('currentUserFavorites',JSON.stringify([]));
-            Navigate('/see-package');
+            Navigate('/');
             toast.success('Conta criada e login feito com sucesso');
           }else{
             toast.error(loginResponse.message);

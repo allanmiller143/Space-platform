@@ -222,10 +222,10 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'creci':formData.creci,
         'cep':formData.cep,
         'cpf':formData.cpf,
-        'address':formData.street,
-        'house_number':formData.number,
+        'street':formData.street,
+        'number':formData.number,
         'city':formData.city,
-        'district':formData.neighborhood,
+        'neighborhood':formData.neighborhood,
         'state':formData.state,
         'socialOne':formData.socialOne,
         'socialTwo':formData.socialTwo,
@@ -241,24 +241,24 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'rg':formData.rg,
         'cep':formData.cep,
         'cpf':formData.cpf,
-        'address':formData.street,
-        'house_number':formData.number,
+        'street':formData.street,
+        'number':formData.number,
         'city':formData.city,
-        'district':formData.neighborhood,
+        'neighborhood':formData.neighborhood,
         'state':formData.state,
       };
       userRoute = 'owners';
     }else{
       postDataExample = {
-        'company_name':formData.name,
+        'name':formData.name,
         'email':formData.email,
         'password':formData.password,
         'phone':formData.phone,
         'cep':formData.cep,
-        'address':formData.street,
-        'house_number':formData.number,      
+        'street':formData.street,
+        'number':formData.number,      
         'city':formData.city,
-        'district':formData.neighborhood,
+        'neighborhood':formData.neighborhood,
         'creci':formData.creci,
         'cnpj':formData.cnpj,
         'state':formData.state,
@@ -268,30 +268,27 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
       };
       userRoute = 'realstate';
     }
-    console.log(postDataExample);
-    console.log(token);
-
 
     try {
         setLoading(true);
         const form = new FormData();  
         form.append('photo', formData.profilePhotoFile);
-         
         form.append('data', JSON.stringify(postDataExample)); //
         const elevateTypeResponse = await putFormData(`${userRoute}/elevate/${currentUserls.email}`, form, token);
         if(elevateTypeResponse.status == 200 || elevateTypeResponse.status == 201){
           const data = { 'email': postDataExample.email, 'password': postDataExample.password };
           const loginResponse = await postData('login', data);
           if (loginResponse.status === 200 || loginResponse.status === 201) {
-            const token = loginResponse.data.token;
+            const token = loginResponse.data.accessToken;
             const user = loginResponse.data.user;
+            console.log(loginResponse)
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
             localStorage.setItem('currentUserFavorites',JSON.stringify([]));
             Navigate('/');
             toast.success('Agora você pode anunciar imóveis');
           } else {
-            toast.error(` erro no login${userRoute}`); 
+            toast.error(` erro no login ${userRoute}`); 
           }
         }else{
           toast.error(`${elevateTypeResponse.message}`);

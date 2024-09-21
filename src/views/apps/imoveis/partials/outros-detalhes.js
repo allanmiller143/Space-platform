@@ -3,9 +3,9 @@
 /* eslint-disable no-empty-pattern */
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid, FormControl, MenuItem, Select } from "@mui/material";
-import CheckboxesGroup from './CheckBoxGroup/CheckBoxGroup';
-import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import CheckboxesGroup from '../CheckBoxGroup/CheckBoxGroup';
+import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
+import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
 
 const CustomSelect = styled((props) => <Select {...props} />)(({}) => ({}));
 
@@ -45,9 +45,9 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
               label="Mobiliado"
               id="Mobiliado"
             >
-              <MenuItem value="Mobilizado">Mobiliado</MenuItem>
-              <MenuItem value="Semi-mobiliado">Semi-mobiliado</MenuItem>
-              <MenuItem value="Não-mobiliado">Não-mobiliado</MenuItem>
+              <MenuItem value="yes">Mobiliado</MenuItem>
+              <MenuItem value="partial">Semi-mobiliado</MenuItem>
+              <MenuItem value="no">Não-mobiliado</MenuItem>
             </CustomSelect>
           </FormControl>
         </Grid>
@@ -73,21 +73,21 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
           <CheckboxesGroup  formData = {formData} setFormData={setFormData}
           data = {{label: '', 
             itens: [
-              {value: 'Piscina', label: 'Piscina',checked: formData.piscina},
-              {value: 'Churrasqueira', label: 'Churrasqueira',checked: formData.Churrasqueira},
-              {value: 'Ar_Condicionado', label: 'Ar Condicionado',checked: formData.Ar_Condicionado},
-              {value: 'Playground', label: 'Playground',checked: formData.Playground},
-              {value: 'Sala_de_eventos', label: 'Sala de eventos',checked: formData.Sala_de_eventos},
-              {value: 'Academia', label: 'Academia',checked: formData.Academia},
-              {value: 'Varanda', label: 'Varanda',checked: formData.Varanda},
-              {value: 'Energia_solar', label: 'Energia solar',checked: formData.Energia_solar},
-              {value: 'Portaria_24h', label: 'Portaria 24h',checked: formData.Portaria_24h},
-              {value: 'Quintal', label: 'Quintal',checked: formData.Quintal},
-              {value: 'Area_Gourmet', label: 'Área Gourmet',checked: formData.Area_Gourmet},
-              {value: 'Sacada', label: 'Sacada',checked: formData.Sacada},
-              {value: 'Laje', label: 'Laje',checked: formData.Laje},
-              {value: 'Condominio_fechado', label: 'Condomínio fechado',checked: formData.Condominio_fechado},
-              {value: 'Jardin', label: 'Jardin',checked: formData.Jardin},
+              {value: 'Piscina', label: 'Piscina',checked: formData.opcoesRapidas.piscina},
+              {value: 'Churrasqueira', label: 'Churrasqueira',checked: formData.opcoesRapidas.Churrasqueira},
+              {value: 'Ar_Condicionado', label: 'Ar Condicionado',checked: formData.opcoesRapidas.Ar_Condicionado},
+              {value: 'Playground', label: 'Playground',checked: formData.opcoesRapidas.Playground},
+              {value: 'Sala_de_eventos', label: 'Sala de eventos',checked: formData.opcoesRapidas.Sala_de_eventos},
+              {value: 'Academia', label: 'Academia',checked: formData.opcoesRapidas.Academia},
+              {value: 'Varanda', label: 'Varanda',checked: formData.opcoesRapidas.Varanda},
+              {value: 'Energia_solar', label: 'Energia solar',checked: formData.opcoesRapidas.Energia_solar},
+              {value: 'Portaria_24h', label: 'Portaria 24h',checked: formData.opcoesRapidas.Portaria_24h},
+              {value: 'Quintal', label: 'Quintal',checked: formData.opcoesRapidas.Quintal},
+              {value: 'Area_Gourmet', label: 'Área Gourmet',checked: formData.opcoesRapidas.Area_Gourmet},
+              {value: 'Sacada', label: 'Sacada',checked: formData.opcoesRapidas.Sacada},
+              {value: 'Laje', label: 'Laje',checked: formData.opcoesRapidas.Laje},
+              {value: 'Condominio_fechado', label: 'Condomínio fechado',checked: formData.opcoesRapidas.Condominio_fechado},
+              {value: 'Jardin', label: 'Jardin',checked: formData.opcoesRapidas.Jardin},
 
             ]}}/>
         </Grid>
