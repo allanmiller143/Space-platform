@@ -304,7 +304,7 @@ const EditImovel = () => {
       'complement': formData.complemento,
       'size': formData.area,
       'description': formData.descricao,
-      'contact': currentUserls.phone,
+      'contact': currentUserls.info.phone,
       'sellerEmail': currentUserls.email,
       'sellerType': currentUserls.type,
       'aditionalFees': '',
@@ -370,15 +370,14 @@ const EditImovel = () => {
         }
       });
       let oldPhotos = [];
+
       formData.otherImages.forEach((image) => {
-        if(image !== formData.coverImage){
-          oldPhotos.push(image.url);
-        }
+         oldPhotos.push(image.url);
       });
       formJson.oldPhotos = oldPhotos;
       setLoading(true);
       form.append('data', JSON.stringify(formJson));
-      console.log(token);
+      console.log(formJson);
       try{
         const response = await putFormData(`properties/${formData.id}`, form, token);
         if(response.status === 201 || response.status === 200){
