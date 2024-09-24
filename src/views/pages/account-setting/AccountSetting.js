@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PageContainer from 'src/components/container/PageContainer';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
@@ -75,18 +77,18 @@ const AccountSetting = () => {
                   {...a11yProps(0)}
                 />
 
-                <Tab
+                {/* <Tab
                   iconPosition="start"
                   icon={<IconBell size="22" />}
                   label="Notificações"
                   {...a11yProps(1)}
-                />
-                <Tab
+                /> */}
+                {/* <Tab
                   iconPosition="start"
                   icon={<IconArticle size="22" />}
                   label="Faturas"
                   {...a11yProps(2)}
-                />
+                /> */}
                 <Tab
                   iconPosition="start"
                   icon={<IconLock size="22" />}

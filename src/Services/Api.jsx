@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://239c-177-37-233-144.ngrok-free.app/';
+const apiUrl = 'https://525d-177-37-233-144.ngrok-free.app/';
 
 export async function getData(url= '',token = '') {
   try {

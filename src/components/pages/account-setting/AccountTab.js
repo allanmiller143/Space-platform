@@ -1,60 +1,69 @@
-import React from 'react';
-import { Grid, CardContent, Typography } from '@mui/material';
+import { CardContent, Grid, Typography } from '@mui/material';
+
+// componentes
 import BlankCard from '../../shared/BlankCard';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import user1 from 'src/assets/images/profile/user-1.jpg';
+import CustomTextField from '../../forms/theme-elements/CustomTextField';
+import CustomFormLabel from '../../forms/theme-elements/CustomFormLabel';
+import EditarFoto from './EditProfileComponentes/EditarFoto';
 import DadosPessoais from './EditProfileComponentes/DadosPessoais';
 
+
 const AccountTab = () => {
-  const [location, setLocation] = React.useState('india');
-  const [currency, setCurrency] = React.useState('india');
+
 
   return (
     <Grid container spacing={3}>
+      {/* Alterar Perfil */}
+      <EditarFoto />
+      {/*  Alterar Senha */}
       <Grid item xs={12} lg={6}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
-              Alterar Perfil
+              Alterar Senha
             </Typography>
-            <Typography color="textSecondary" mb={3}>
-              Altere sua foto de perfil aqui
-            </Typography>
-            <Avatar
-              src={user1}
-              alt="User Profile"
-              sx={{ width: 120, height: 120, margin: '0 auto' }}
-            />
-            <Stack direction="row" justifyContent="center" spacing={2} my={3}>
-              <Button variant="contained" component="label">
-                Enviar
-                <input hidden accept="image/*" multiple type="file" />
-              </Button>
-              <Button variant="outlined" color="error">
-                Redefinir
-              </Button>
-            </Stack>
-            <Typography variant="subtitle1" color="textSecondary" mb={4}>
-              Permitido JPG, GIF ou PNG. Tamanho máximo de 800K
-            </Typography>
+            <Typography color="textSecondary" mb={3}>Para alterar sua senha, por favor confirme aqui</Typography>
+            <form>
+              <CustomFormLabel
+                sx={{
+                  mt: 0,
+                }}
+                htmlFor="text-cpwd"
+              >
+                Senha Atual
+              </CustomFormLabel>
+              <CustomTextField
+                id="text-cpwd"
+                value="MathewAnderson"
+                variant="outlined"
+                fullWidth
+                type="password"
+              />
+              {/* 2 */}
+              <CustomFormLabel htmlFor="text-npwd">Nova Senha</CustomFormLabel>
+              <CustomTextField
+                id="text-npwd"
+                value="MathewAnderson"
+                variant="outlined"
+                fullWidth
+                type="password"
+              />
+              {/* 3 */}
+              <CustomFormLabel htmlFor="text-conpwd">Confirmar Senha</CustomFormLabel>
+              <CustomTextField
+                id="text-conpwd"
+                value="MathewAnderson"
+                variant="outlined"
+                fullWidth
+                type="password"
+              />
+            </form>
           </CardContent>
         </BlankCard>
       </Grid>
+      {/* Editar Detalhes */}
+      <DadosPessoais />
 
-      <Grid item xs={12}>
-        <BlankCard>
-          <CardContent>
-            <DadosPessoais
-              location={location}
-              setLocation={setLocation}
-              currency={currency}
-              setCurrency={setCurrency}
-            />
-          </CardContent>
-        </BlankCard>
-      </Grid>
     </Grid>
   );
 };
