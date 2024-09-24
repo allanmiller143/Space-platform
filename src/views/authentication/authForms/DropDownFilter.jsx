@@ -29,9 +29,7 @@ function DropDownFilter({ data, handleSelectChange, initialValue }) {
           value={selectedValue}
           initialValue={initialValue}
           onChange={handleChange}
-          sx={{
-            height: 40,
-          }}
+
         >
           {itens.map((item) => (
             <MenuItem key={item.value} value={item.value} sx={{ fontSize: '0.9rem !important' }}>
