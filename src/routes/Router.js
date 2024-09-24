@@ -92,12 +92,10 @@ const ReactDragDropTable = Loadable(lazy(() => import('../views/react-tables/dra
 const ReactEditableTable = Loadable(lazy(() => import('../views/react-tables/editable/page')));
 const ReactEmptyTable = Loadable(lazy(() => import('../views/react-tables/empty/page')));
 const ReactExpandingTable = Loadable(lazy(() => import('../views/react-tables/expanding/page')));
-const ReactFilterTable = Loadable(lazy(() => import('../views/react-tables/filtering/page')));
 const ReactPaginationTable = Loadable(lazy(() => import('../views/react-tables/pagination/page')));
 const ReactRowSelectionTable = Loadable(
   lazy(() => import('../views/react-tables/row-selection/page')),
 );
-const ReactSortingTable = Loadable(lazy(() => import('../views/react-tables/sorting/page')));
 const ReactStickyTable = Loadable(lazy(() => import('../views/react-tables/sticky/page')));
 
 // chart
@@ -230,10 +228,8 @@ const Router = [
       { path: '/react-tables/editable', element: <ReactEditableTable /> },
       { path: '/react-tables/empty', element: <ReactEmptyTable /> },
       { path: '/react-tables/expanding', element: <ReactExpandingTable /> },
-      { path: '/react-tables/filter', element: <ReactFilterTable /> },
       { path: '/react-tables/pagination', element: <ReactPaginationTable /> },
       { path: '/react-tables/row-selection', element: <ReactRowSelectionTable /> },
-      { path: '/react-tables/sorting', element: <ReactSortingTable /> },
       { path: '/react-tables/sticky', element: <ReactStickyTable /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
