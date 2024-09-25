@@ -63,7 +63,6 @@ const EditImovel = () => {
 
   useEffect(() => {
     if (mode === 'edit' && imovel) {
-      console.log(imovel)
       setFormData({
         ...formData,
         tipoDeAnuncio: imovel.announcementType,
@@ -276,7 +275,6 @@ const EditImovel = () => {
       
       form.append('cover', formData.coverImage);
       form.append('data', JSON.stringify(formJson));
-      console.log(formJson)
       try{
         const response = await postFormData('properties' , form, token);
         if(response.status === 201 || response.status === 200){
@@ -358,8 +356,10 @@ const EditImovel = () => {
     }else if(formData.tipoDeAnuncio === 'both' && (formData.precoDeAluguel === null || formData.precoDeVenda === ''|| formData.precoDeVenda === '' || formData.precoDeVenda === null)){
       toast.warning('Por favor, insira o valor de aluguel e venda!');
     }else{
+
+
       const form = new FormData();
-      if(formData.coverImage.url ){
+      if(formData.coverImage.url && formData.coverImage.url !== formData.otherImages[0].url){
         formJson.newCover = formData.coverImage.url;
       }else{
         form.append('cover', formData.coverImage);
@@ -377,7 +377,6 @@ const EditImovel = () => {
       formJson.oldPhotos = oldPhotos;
       setLoading(true);
       form.append('data', JSON.stringify(formJson));
-      console.log(formJson);
       try{
         const response = await putFormData(`properties/${formData.id}`, form, token);
         if(response.status === 201 || response.status === 200){
@@ -440,7 +439,7 @@ const EditImovel = () => {
   return (
     <PageContainer title="Criar Imóvel" description="Página para editar informações do imóvel">
       {loading && <Loading data = {{open:loading}}/>}
-      <ParentCard title="Criar Imóvel">
+      <ParentCard title ={ mode !== 'edit' ? "Criar Imóvel" : "Editar Imóvel"}>
         <Box>
           <Stepper activeStep={activeStep} alternativeLabel sx={{ pt: 3, pb: 4, borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}>
             {steps.map((label) => (
