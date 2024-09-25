@@ -70,11 +70,11 @@ const TwoSteps = () => {
         >
           <Box p={4}>
             <Typography variant="h4" fontWeight="700">
-              Two Step Verification
+              Verificação de duas etapas
             </Typography>
 
             <Typography variant="subtitle1" color="textSecondary" mt={2} mb={1}>
-              We sent a verification code to your mobile( {email}). Enter the code from the mobile in the field
+              Nós enviamos um código para o seu Email( {email}). Digite o código no campo abaixo!
               below.
             </Typography>
             <Typography variant="subtitle1" fontWeight="700" mb={1}>

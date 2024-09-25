@@ -73,7 +73,7 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
           <CheckboxesGroup  formData = {formData} setFormData={setFormData}
           data = {{label: '', 
             itens: [
-              {value: 'Piscina', label: 'Piscina',checked: formData.opcoesRapidas.piscina},
+              {value: 'Piscina', label: 'Piscina',checked: formData.opcoesRapidas.Piscina},
               {value: 'Churrasqueira', label: 'Churrasqueira',checked: formData.opcoesRapidas.Churrasqueira},
               {value: 'Ar_Condicionado', label: 'Ar Condicionado',checked: formData.opcoesRapidas.Ar_Condicionado},
               {value: 'Playground', label: 'Playground',checked: formData.opcoesRapidas.Playground},

@@ -77,7 +77,7 @@ const AuthTwoSteps = ({ email }) => {
     <>
       {loading && <Loading data={{ open: loading }} />}
       <Stack mb={2}>
-        <CustomFormLabel htmlFor="code">Enter the verification code</CustomFormLabel>
+        <CustomFormLabel htmlFor="code">Codigo de verifação</CustomFormLabel>
         <Stack spacing={1} direction="row">
           {code.map((digit, index) => (
             <CustomTextField
@@ -97,7 +97,7 @@ const AuthTwoSteps = ({ email }) => {
         </Stack>
       </Stack>
       <Box mb={2}>
-        <CustomFormLabel htmlFor="password">New Password</CustomFormLabel>
+        <CustomFormLabel htmlFor="password">Nova Senha</CustomFormLabel>
         <CustomTextField
           id="password"
           type="password"
@@ -108,7 +108,7 @@ const AuthTwoSteps = ({ email }) => {
         />
       </Box>
       <Box mb={3}>
-        <CustomFormLabel htmlFor="confirm-password">Confirm Password</CustomFormLabel>
+        <CustomFormLabel htmlFor="confirm-password">Confirmar Senha</CustomFormLabel>
         <CustomTextField
           id="confirm-password"
           type="password"
@@ -118,8 +118,8 @@ const AuthTwoSteps = ({ email }) => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </Box>
-      <Typography color="textSecondary" fontWeight="400" fontSize={12} mb={1}>
-        Your new password must be at least 8 characters long, with at least one uppercase, one lowercase letter, and one special character.
+      <Typography color="textSecondary" fontWeight="400" fontSize={12} mb={3}>
+        Sua nova senha deve conter pelo menos 8 caracteres, com pelo menos uma letra maiúscula, uma letra minúscula e um caractere especial.  
       </Typography>
       <Button
         color="primary"
@@ -128,7 +128,7 @@ const AuthTwoSteps = ({ email }) => {
         fullWidth
         onClick={handleVerifyCode}
       >
-        Change password
+        Continuar
       </Button>
     </>
   );
