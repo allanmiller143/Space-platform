@@ -4,7 +4,7 @@ import { CardContent } from '@mui/material';
 import BlankCard from '../../../shared/BlankCard';
 import { Box } from '@mui/system';
 import Loading from '../../../Loading/Loading';
-import { getData, putData } from '../../../../Services/Api'; // Ensure you have the updateBio function defined in your API
+import { getData, putFormData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 
 const EditarBio = () => {
@@ -12,7 +12,7 @@ const EditarBio = () => {
   const [bio, setBio] = useState('');
   const cuString = localStorage.getItem('currentUser');
   const token = localStorage.getItem('token');
-  const currentUserls = JSON.parse(cuString); // Parse to obtain the object
+  const currentUserls = JSON.parse(cuString);
 
   // Set initial bio state when the component mounts
   useState(() => {
@@ -24,21 +24,30 @@ const EditarBio = () => {
   };
 
   const handleBioSubmit = async () => {
+    const formData = new FormData();
+    const formJson = {
+      bio: bio
+    };
+
+    // Use JSON.stringify to convert formJson to a string
+    formData.append('data', JSON.stringify(formJson));
+
     try {
       setLoading(true);
-      const response = await putData(currentUserls.email, { bio }, token); // Assuming you have this function in your API
-      if (response.status === 200) {
-        toast.success('Bio atualizada com sucesso');
-        const userData = await getData(`/${currentUserls.email}`);
-        if (userData.status === 200) {
-          const user = userData.userInfo;
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
+      if (response.status === 200 || response.status === 201) {
+        const responseUserData = await getData(`find/${currentUserls.email}`);
+        if (responseUserData.status === 200) {
+          const user = responseUserData.userInfo;
           localStorage.setItem('currentUser', JSON.stringify(user));
+          setBio(user.info.bio); 
+          toast.success('Bio atualizada com sucesso');  // Corrected toast message
+        } else {
+          toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
         }
-      } else {
-        toast.error(`Erro ao atualizar bio:\n ${response.message}`);
       }
     } catch (error) {
-      toast.error(`Erro ao atualizar bio:\n ${error.message}`);
+      toast.error(`Erro ao atualizar bio:\n ${error.message}`); // Corrected error message
     } finally {
       setLoading(false);
     }
@@ -46,7 +55,7 @@ const EditarBio = () => {
 
   return (
     <>
-      <Grid item lg={6} xs={12} sm={12}>
+      <Grid item lg={8} xs={12} sm={12}>
         {loading && <Loading data={{ open: loading }} />}
         <BlankCard>
           <CardContent>

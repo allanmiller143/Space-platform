@@ -12,6 +12,7 @@ export async function getData(url= '',token = '') {
     );
     const status = response.status;
     const userInfo = response.data;
+    return {userInfo,status}
   } catch (error) {
     const message = error.response.data.message;
     const status = error.response.status;

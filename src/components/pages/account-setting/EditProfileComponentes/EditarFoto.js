@@ -1,22 +1,27 @@
-/* eslint-disable no-undef */
 import { Grid, Typography, Button, Stack, Dialog, DialogActions, DialogContent } from '@mui/material';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { CardContent } from '@mui/material';
 import BlankCard from '../../../shared/BlankCard';
 import Avatar from '@mui/material/Avatar';
 import { Box } from '@mui/system';
 import Loading from '../../../Loading/Loading';
-import { getData, putFormData } from '../../../../Services/Api'; // Certifique-se de que a função updateBio esteja definida na sua API
+import { getData, putFormData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 
 const EditarFoto = () => {
   const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState(null); // Estado para a URL da imagem do perfil
   const cuString = localStorage.getItem('currentUser');
   const token = localStorage.getItem('token');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
   const fileInputRefSingle = useRef(null);
+
+  // Atualizar o avatar do usuário a partir do localStorage na montagem do componente
+  useEffect(() => {
+    setProfileImageUrl(currentUserls.profile?.url || '/images/default-avatar.png');
+  }, [currentUserls]);
 
   const handleSingleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -40,16 +45,15 @@ const EditarFoto = () => {
       setLoading(true);
       const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
       if (response.status === 200 || response.status === 201) {
-        const userData = await getData(`${currentUserls.type}/${currentUserls.email}`);
-        if (userData.status === 200) {
-          const user = userData.userInfo;
+        const responseUserData = await getData(`find/${currentUserls.email}`);
+        if (responseUserData.status === 200) {
+          const user = responseUserData.userInfo;
           localStorage.setItem('currentUser', JSON.stringify(user));
+          setProfileImageUrl(user.profile?.url); // Atualiza a URL da imagem de perfil
           toast.success('Imagem inserida com sucesso');
         } else {
-          toast.error(`Erro ao obter dados do usuário:\n ${userData.message}`);
+          toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
         }
-      } else {
-        toast.error(`Erro ao inserir imagem:\n ${response.message}`);
       }
     } catch (error) {
       toast.error(`Erro ao inserir imagem:\n ${error.message}`);
@@ -67,13 +71,9 @@ const EditarFoto = () => {
     }
   };
 
-
-
-
-
   return (
     <>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={4}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
@@ -85,7 +85,7 @@ const EditarFoto = () => {
             <Box textAlign="center" display="flex" justifyContent="center">
               <Box width={'100%'}>
                 <Avatar
-                  src={currentUserls.profile?.url || '/images/default-avatar.png'} // Defina um avatar padrão
+                  src={profileImageUrl} // Agora usando o estado para a imagem de perfil
                   alt='Foto de usuario'
                   sx={{ width: 130, height: 130, margin: '0 auto' }}
                 />

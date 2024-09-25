@@ -5,7 +5,7 @@ import CustomTextField from '../../../forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../forms/theme-elements/CustomFormLabel';
 import { useState } from 'react';
 import BlankCard from '../../../shared/BlankCard';
-import { getData, putData } from '../../../../Services/Api';
+import { getData, putData, putFormData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 import Loading from '../../../Loading/Loading';
 
@@ -42,57 +42,40 @@ const DadosPessoais = () => {
   const handleSubmit = async () => {
     event.preventDefault();
     setLoading(true);
-    const updateInfoForm = {
+    const formJson = {
         'name': name,
-        'email': currentUserls.email,
         'phone': phone,
-        'type': currentUserls.type,
     };
 
-    if(currentUserls.type === 'realstate'){
-        updateInfoForm.cnpj = cnpj;
-        updateInfoForm.creci = creci;        
-    }else if(currentUserls.type === 'realtor'){
-        updateInfoForm.rg = rg;
-        updateInfoForm.cpf = cpf;
-        updateInfoForm.creci = creci;
-    }else{
-        updateInfoForm.rg = rg;
-        updateInfoForm.cpf = cpf;
-    }
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(formJson));
 
+    if(!name || !phone){
+      toast.warning("Por favor, preencha todos os campos de endereço: Nome, Telefone");
+      setLoading(false);
+      return;
+    }
 
     try {
-        const response = await putData(`${currentUserls.type}/${currentUserls.email}`,updateInfoForm,token);
-        if(response.status === 200 || response.status === 201){
-        const userData = await getData(`find/${currentUserls.email}`);
-        if(response.status === 200 || response.status === 201){
-            const user = userData.userInfo;
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            toast.success('dados atualizados');
+      setLoading(true);
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
+      if (response.status === 200 || response.status === 201) {
+        const responseUserData = await getData(`find/${currentUserls.email}`);
+        if (responseUserData.status === 200) {
+          const user = responseUserData.userInfo;
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          toast.success('Dados pessoais atualizados com sucesso'); 
+        } else {
+          toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
         }
-        else{
-            toast.error(`erro ao atualizar dados: ${response.message} - ${response.status}`);
-        } 
-        }
-        else{
-        toast.error(`erro ao atualizar dados: ${response.message}`);
-        }
-    }catch{
-        toast.error('ocorreu um erro inesperado');
-    }finally{
-        setLoading(false);
+      }else{
+        toast.error(`Erro ao atualizar dados pessoais:\n ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao atualizar bio:\n ${error.message}`);
+    } finally {
+      setLoading(false);
     }
-
-
-    console.log({
-      name,
-      phone,
-      cnpj,
-      creci,
-      rg,
-      cpf
-    });
   };
 
   return (

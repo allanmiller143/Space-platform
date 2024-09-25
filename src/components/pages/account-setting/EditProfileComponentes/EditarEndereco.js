@@ -5,7 +5,7 @@ import CustomTextField from '../../../forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../forms/theme-elements/CustomFormLabel';
 import { useState } from 'react';
 import BlankCard from '../../../shared/BlankCard';
-import { getData, putData } from '../../../../Services/Api';
+import { getData, putData, putFormData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 import Loading from '../../../Loading/Loading';
 import fetchCepData from '../../../../Services/SearchCep';
@@ -76,8 +76,7 @@ const EditarEndereco = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
-    const updateAddressForm = {
+    const formJson = {
       'cep': cep,
       'street':rua,
       'number':numero,
@@ -87,25 +86,34 @@ const EditarEndereco = () => {
       'complement' : complemento,
     };
 
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(formJson));
+
+    if(!cep || !rua || !numero || !bairro || !estado || !cidade){
+      toast.warning("Por favor, preencha todos os campos de endereço: Rua, Número, Bairro, Cidade, Estado e CEP");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await putData(`${currentUserls.type}/${currentUserls.email}/address`, updateAddressForm, token);
+      setLoading(true);
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
       if (response.status === 200 || response.status === 201) {
-        const userData = await getData(`find/${currentUserls.email}`);
-        if (userData.status === 200 || userData.status === 201) {
-          const user = userData.userInfo;
+        const responseUserData = await getData(`find/${currentUserls.email}`);
+        if (responseUserData.status === 200) {
+          const user = responseUserData.userInfo;
           localStorage.setItem('currentUser', JSON.stringify(user));
-          toast.success('Endereço atualizado');
+          toast.success('Endereço atualizado com sucesso'); 
         } else {
-          toast.error(`Erro ao atualizar endereço: ${response.message}`);
+          toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
         }
-      } else {
-        toast.error(`Erro ao atualizar endereço: ${response.message}`);
       }
     } catch (error) {
-      toast.error('Ocorreu um erro inesperado');
+      toast.error(`Erro ao atualizar bio:\n ${error.message}`);
     } finally {
       setLoading(false);
     }
+
   };
 
   const handleSelectChange = (event) => {
