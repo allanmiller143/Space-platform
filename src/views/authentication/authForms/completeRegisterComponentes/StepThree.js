@@ -99,7 +99,7 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <CustomFormLabel htmlFor="cep">cep</CustomFormLabel>
+            <CustomFormLabel htmlFor="cep">CEP</CustomFormLabel>
             <TextField id="cep" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>

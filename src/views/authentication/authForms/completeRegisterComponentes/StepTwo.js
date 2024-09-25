@@ -13,6 +13,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
       ...formData,
       email: currentUserls.email,
       phone: currentUserls.phone || formData.phone,
+      name : currentUserls.name || ''
     });
   }, []);
 

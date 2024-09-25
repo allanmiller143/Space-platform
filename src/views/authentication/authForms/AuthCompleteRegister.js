@@ -284,7 +284,6 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
             console.log(loginResponse)
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('currentUserFavorites',JSON.stringify([]));
             Navigate('/');
             toast.success('Agora você pode anunciar imóveis');
           } else {

@@ -35,19 +35,12 @@ const EditarFoto = () => {
   const insertProfilePic = async (file) => {
     const formData = new FormData();
     formData.append('photo', file);
-    let route = '';
-    if (currentUserls.type === 'realtor') {
-      route = 'realtors';
-    } else if (currentUserls.type === 'realstate') {
-      route = 'realstate';
-    } else {
-      route = 'owners';
-    }
+
     try {
       setLoading(true);
-      const response = await putFormData(`${route}/${currentUserls.email}`, formData, token);
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
       if (response.status === 200 || response.status === 201) {
-        const userData = await getData(`${route}/${currentUserls.email}`);
+        const userData = await getData(`${currentUserls.type}/${currentUserls.email}`);
         if (userData.status === 200) {
           const user = userData.userInfo;
           localStorage.setItem('currentUser', JSON.stringify(user));

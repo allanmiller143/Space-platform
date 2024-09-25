@@ -38,15 +38,8 @@ function GoogleSignIn() {
           const user = loginResponse.data.user;
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', JSON.stringify(user));
-          const favoritesResponse = await getData(`favorites/${user.email}`,token);
-          if(favoritesResponse.status === 200 || favoritesResponse.status === 201){
-            localStorage.setItem('currentUserFavorites', JSON.stringify(favoritesResponse.userInfo));
-            Navigate('/');
-            toast.success('Login efetuado com sucesso');
-          }
-          else{
-            toast.error('Ocorreu um erro inesperado, por favor tente novamente mais tarde');
-          }
+          Navigate('/');
+          toast.success('Login efetuado com sucesso');
         }else{
           toast.error(loginResponse.message);
         }
@@ -64,7 +57,6 @@ function GoogleSignIn() {
             const user = loginResponse.data.user;
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('currentUserFavorites',JSON.stringify([]));
             Navigate('/');
             toast.success('Conta criada e login feito com sucesso');
           }else{

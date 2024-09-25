@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://525d-177-37-233-144.ngrok-free.app/';
+const apiUrl = 'https://7822-177-37-233-144.ngrok-free.app/';
 
 export async function getData(url= '',token = '') {
   try {
@@ -12,7 +12,6 @@ export async function getData(url= '',token = '') {
     );
     const status = response.status;
     const userInfo = response.data;
-    return {status,userInfo}; 
   } catch (error) {
     const message = error.response.data.message;
     const status = error.response.status;
@@ -56,7 +55,6 @@ export async function postFormData(url = '', formData = {},token = '') {
       const message = response.message;
       const status = response.status;
       const data = response.data;
-      console.log(response);
       return { message, status,data };
     }).catch((error) => {
       const message = error.response.data.message;
