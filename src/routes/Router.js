@@ -49,78 +49,6 @@ const AccountSetting = Loadable(
 );
 const Faq = Loadable(lazy(() => import('../views/pages/faq/Faq')));
 
-// widget
-const WidgetCards = Loadable(lazy(() => import('../views/widgets/cards/WidgetCards')));
-const WidgetBanners = Loadable(lazy(() => import('../views/widgets/banners/WidgetBanners')));
-const WidgetCharts = Loadable(lazy(() => import('../views/widgets/charts/WidgetCharts')));
-
-// form elements
-const MuiAutoComplete = Loadable(
-  lazy(() => import('../views/forms/form-elements/MuiAutoComplete')),
-);
-const MuiButton = Loadable(lazy(() => import('../views/forms/form-elements/MuiButton')));
-const MuiCheckbox = Loadable(lazy(() => import('../views/forms/form-elements/MuiCheckbox')));
-const MuiRadio = Loadable(lazy(() => import('../views/forms/form-elements/MuiRadio')));
-const MuiSlider = Loadable(lazy(() => import('../views/forms/form-elements/MuiSlider')));
-const MuiDateTime = Loadable(lazy(() => import('../views/forms/form-elements/MuiDateTime')));
-const MuiSwitch = Loadable(lazy(() => import('../views/forms/form-elements/MuiSwitch')));
-
-// form layout
-const FormLayouts = Loadable(lazy(() => import('../views/forms/FormLayouts')));
-const FormCustom = Loadable(lazy(() => import('../views/forms/FormCustom')));
-const FormWizard = Loadable(lazy(() => import('../views/forms/FormWizard')));
-const FormValidation = Loadable(lazy(() => import('../views/forms/FormValidation')));
-const QuillEditor = Loadable(lazy(() => import('../views/forms/quill-editor/QuillEditor')));
-const FormHorizontal = Loadable(lazy(() => import('../views/forms/FormHorizontal')));
-const FormVertical = Loadable(lazy(() => import('../views/forms/FormVertical')));
-
-// tables
-const BasicTable = Loadable(lazy(() => import('../views/tables/BasicTable')));
-const CollapsibleTable = Loadable(lazy(() => import('../views/tables/CollapsibleTable')));
-const EnhancedTable = Loadable(lazy(() => import('../views/tables/EnhancedTable')));
-const FixedHeaderTable = Loadable(lazy(() => import('../views/tables/FixedHeaderTable')));
-const PaginationTable = Loadable(lazy(() => import('../views/tables/PaginationTable')));
-const SearchTable = Loadable(lazy(() => import('../views/tables/SearchTable')));
-
-//react tables
-const ReactBasicTable = Loadable(lazy(() => import('../views/react-tables/basic/page')));
-const ReactColumnVisibilityTable = Loadable(
-  lazy(() => import('../views/react-tables/columnvisibility/page')),
-);
-const ReactDenseTable = Loadable(lazy(() => import('../views/react-tables/dense/page')));
-const ReactDragDropTable = Loadable(lazy(() => import('../views/react-tables/drag-drop/page')));
-const ReactEditableTable = Loadable(lazy(() => import('../views/react-tables/editable/page')));
-const ReactEmptyTable = Loadable(lazy(() => import('../views/react-tables/empty/page')));
-const ReactExpandingTable = Loadable(lazy(() => import('../views/react-tables/expanding/page')));
-const ReactPaginationTable = Loadable(lazy(() => import('../views/react-tables/pagination/page')));
-const ReactRowSelectionTable = Loadable(
-  lazy(() => import('../views/react-tables/row-selection/page')),
-);
-const ReactStickyTable = Loadable(lazy(() => import('../views/react-tables/sticky/page')));
-
-// chart
-const LineChart = Loadable(lazy(() => import('../views/charts/LineChart')));
-const GredientChart = Loadable(lazy(() => import('../views/charts/GredientChart')));
-const DoughnutChart = Loadable(lazy(() => import('../views/charts/DoughnutChart')));
-const AreaChart = Loadable(lazy(() => import('../views/charts/AreaChart')));
-const ColumnChart = Loadable(lazy(() => import('../views/charts/ColumnChart')));
-const CandlestickChart = Loadable(lazy(() => import('../views/charts/CandlestickChart')));
-const RadialbarChart = Loadable(lazy(() => import('../views/charts/RadialbarChart')));
-
-// ui
-const MuiAlert = Loadable(lazy(() => import('../views/ui-components/MuiAlert')));
-const MuiAccordion = Loadable(lazy(() => import('../views/ui-components/MuiAccordion')));
-const MuiAvatar = Loadable(lazy(() => import('../views/ui-components/MuiAvatar')));
-const MuiChip = Loadable(lazy(() => import('../views/ui-components/MuiChip')));
-const MuiDialog = Loadable(lazy(() => import('../views/ui-components/MuiDialog')));
-const MuiList = Loadable(lazy(() => import('../views/ui-components/MuiList')));
-const MuiPopover = Loadable(lazy(() => import('../views/ui-components/MuiPopover')));
-const MuiRating = Loadable(lazy(() => import('../views/ui-components/MuiRating')));
-const MuiTabs = Loadable(lazy(() => import('../views/ui-components/MuiTabs')));
-const MuiTooltip = Loadable(lazy(() => import('../views/ui-components/MuiTooltip')));
-const MuiTransferList = Loadable(lazy(() => import('../views/ui-components/MuiTransferList')));
-const MuiTypography = Loadable(lazy(() => import('../views/ui-components/MuiTypography')));
-
 // authentication
 const Login = Loadable(lazy(() => import('../views/authentication/auth1/Login')));
 const Login2 = Loadable(lazy(() => import('../views/authentication/auth2/Login2')));
@@ -141,12 +69,21 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 // Paginas do projeto Space
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
 
+// Frontend Pages
+const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
+const About = Loadable(lazy(() => import('../views/pages/frontend-pages/About')));
+const Contact = Loadable(lazy(() => import('../views/pages/frontend-pages/Contact')));
+const Portfolio = Loadable(lazy(() => import('../views/pages/frontend-pages/Portfolio')));
+const PagePricing = Loadable(lazy(() => import('../views/pages/frontend-pages/Pricing')));
+const BlogPage = Loadable(lazy(() => import('../views/pages/frontend-pages/Blog')));
+const BlogPost = Loadable(lazy(() => import('../views/pages/frontend-pages/BlogPost')));
+
 const Router = [
   {
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/dashboards/modern" /> },
+      { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
       { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> }, // New route for Imoveis List
@@ -177,60 +114,6 @@ const Router = [
       { path: '/pages/pricing', element: <Pricing /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
       { path: '/pages/faq', element: <Faq /> },
-      { path: '/forms/form-elements/autocomplete', element: <MuiAutoComplete /> },
-      { path: '/forms/form-elements/button', element: <MuiButton /> },
-      { path: '/forms/form-elements/checkbox', element: <MuiCheckbox /> },
-      { path: '/forms/form-elements/radio', element: <MuiRadio /> },
-      { path: '/forms/form-elements/slider', element: <MuiSlider /> },
-      { path: '/forms/form-elements/date-time', element: <MuiDateTime /> },
-      { path: '/forms/form-elements/date-range', element: <MuiDateTime /> },
-      { path: '/forms/form-elements/switch', element: <MuiSwitch /> },
-      { path: '/forms/form-elements/switch', element: <MuiSwitch /> },
-      { path: '/forms/quill-editor', element: <QuillEditor /> },
-      { path: '/forms/form-layouts', element: <FormLayouts /> },
-      { path: '/forms/form-horizontal', element: <FormHorizontal /> },
-      { path: '/forms/form-vertical', element: <FormVertical /> },
-      { path: '/forms/form-custom', element: <FormCustom /> },
-      { path: '/forms/form-wizard', element: <FormWizard /> },
-      { path: '/forms/form-validation', element: <FormValidation /> },
-      { path: '/tables/basic', element: <BasicTable /> },
-      { path: '/tables/collapsible', element: <CollapsibleTable /> },
-      { path: '/tables/enhanced', element: <EnhancedTable /> },
-      { path: '/tables/fixed-header', element: <FixedHeaderTable /> },
-      { path: '/tables/pagination', element: <PaginationTable /> },
-      { path: '/tables/search', element: <SearchTable /> },
-      { path: '/charts/line-chart', element: <LineChart /> },
-      { path: '/charts/gredient-chart', element: <GredientChart /> },
-      { path: '/charts/doughnut-pie-chart', element: <DoughnutChart /> },
-      { path: '/charts/area-chart', element: <AreaChart /> },
-      { path: '/charts/column-chart', element: <ColumnChart /> },
-      { path: '/charts/candlestick-chart', element: <CandlestickChart /> },
-      { path: '/charts/radialbar-chart', element: <RadialbarChart /> },
-      { path: '/ui-components/alert', element: <MuiAlert /> },
-      { path: '/ui-components/accordion', element: <MuiAccordion /> },
-      { path: '/ui-components/avatar', element: <MuiAvatar /> },
-      { path: '/ui-components/chip', element: <MuiChip /> },
-      { path: '/ui-components/dialog', element: <MuiDialog /> },
-      { path: '/ui-components/list', element: <MuiList /> },
-      { path: '/ui-components/popover', element: <MuiPopover /> },
-      { path: '/ui-components/rating', element: <MuiRating /> },
-      { path: '/ui-components/tabs', element: <MuiTabs /> },
-      { path: '/ui-components/tooltip', element: <MuiTooltip /> },
-      { path: '/ui-components/transfer-list', element: <MuiTransferList /> },
-      { path: '/ui-components/typography', element: <MuiTypography /> },
-      { path: '/widgets/cards', element: <WidgetCards /> },
-      { path: '/widgets/banners', element: <WidgetBanners /> },
-      { path: '/widgets/charts', element: <WidgetCharts /> },
-      { path: '/react-tables/basic', element: <ReactBasicTable /> },
-      { path: '/react-tables/column-visiblity', element: <ReactColumnVisibilityTable /> },
-      { path: '/react-tables/drag-drop', element: <ReactDragDropTable /> },
-      { path: '/react-tables/dense', element: <ReactDenseTable /> },
-      { path: '/react-tables/editable', element: <ReactEditableTable /> },
-      { path: '/react-tables/empty', element: <ReactEmptyTable /> },
-      { path: '/react-tables/expanding', element: <ReactExpandingTable /> },
-      { path: '/react-tables/pagination', element: <ReactPaginationTable /> },
-      { path: '/react-tables/row-selection', element: <ReactRowSelectionTable /> },
-      { path: '/react-tables/sticky', element: <ReactStickyTable /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
@@ -251,6 +134,13 @@ const Router = [
       { path: '/auth/maintenance', element: <Maintenance /> },
       { path: '/landingpage', element: <Landingpage /> },
       { path: '/marketplace', element: <Marketplace /> },
+      { path: '/frontend-pages/homepage', element: <Homepage /> },
+      { path: '/frontend-pages/about', element: <About /> },
+      { path: '/frontend-pages/contact', element: <Contact /> },
+      { path: '/frontend-pages/portfolio', element: <Portfolio /> },
+      { path: '/frontend-pages/pricing', element: <PagePricing /> },
+      { path: '/frontend-pages/blog', element: <BlogPage /> },
+      { path: '/frontend-pages/blog/detail/:id', element: <BlogPost /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

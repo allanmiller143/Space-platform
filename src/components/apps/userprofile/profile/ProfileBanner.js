@@ -46,16 +46,16 @@ const ProfileBanner = () => {
       <BlankCard>
         {isLoading ? (
           <>
-            <Skeleton variant="square" animation="wave" width="100%" height={330}></Skeleton>
+            <Skeleton variant="rectangular" animation="wave" width="100%" height={330}></Skeleton>
           </>
         ) : (
           <CardMedia
+            component="img"
+            image={profilecover}
+            alt="Imagem de capa do perfil"
             sx={{
               height: '370px',
-              backgroundImage: `url(${profilecover})`,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
+              objectFit: 'cover',
             }}
           />
         )}

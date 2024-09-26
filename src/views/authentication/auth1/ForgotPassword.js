@@ -4,13 +4,13 @@ import { Grid, Box, Typography } from '@mui/material';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import PageContainer from 'src/components/container/PageContainer';
 
-import img1 from 'src/assets/images/backgrounds/login-bg.svg';
+import img1 from 'src/assets/images/posters/imagem-28.jpg';
 
 import AuthForgotPassword from '../authForms/AuthForgotPassword';
 
 const ForgotPassword = () => (
   <PageContainer title="Esqueceu a Senha" description="Recupere o acesso à sua conta">
-    <Grid container justifyContent="center" spacing={0} sx={{ overflowX: 'hidden' }}>
+    <Grid container spacing={0} sx={{ overflowX: 'hidden', minHeight: '100vh' }}>
       <Grid
         item
         xs={12}
@@ -19,42 +19,17 @@ const ForgotPassword = () => (
         xl={9}
         sx={{
           position: 'relative',
-          '&:before': {
-            content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            opacity: '0.3',
-          },
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundImage: `url(${img1})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
-        <Box position="relative">
-          <Box px={3}>
-            <Logo />
-          </Box>
-          <Box
-            alignItems="center"
-            justifyContent="center"
-            height={'calc(100vh - 75px)'}
-            sx={{
-              display: {
-                xs: 'none',
-                lg: 'flex',
-              },
-            }}
-          >
-            <img
-              src={img1}
-              alt="bg"
-              style={{
-                width: '100%',
-                maxWidth: '500px',
-              }}
-            />
-          </Box>
+        <Box position="absolute" top={0} left={0} p={3}>
+          <Logo />
         </Box>
       </Grid>
       <Grid
@@ -66,8 +41,12 @@ const ForgotPassword = () => (
         display="flex"
         justifyContent="center"
         alignItems="center"
+        sx={{
+          backgroundColor: 'background.paper',
+          boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+        }}
       >
-        <Box p={4}>
+        <Box p={4} width="100%" maxWidth="400px">
           <Typography variant="h4" fontWeight="700">
             Esqueceu sua senha?
           </Typography>
