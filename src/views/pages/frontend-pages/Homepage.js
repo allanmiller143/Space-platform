@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PageContainer from 'src/components/container/PageContainer';
 import Banner from '../../../components/frontend-pages/homepage/banner/Banner';
 import HeaderAlert from '../../../components/frontend-pages/shared/header/HeaderAlert';

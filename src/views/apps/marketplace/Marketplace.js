@@ -1,118 +1,121 @@
-import React, { useState } from 'react';
-import { Grid, Box, Typography, Button } from '@mui/material';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState, useRef } from 'react';
+import { Grid, Box, Pagination, Skeleton } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
 import CardImovel from '../../../components/spaceUI/card-imovel/cardImovel';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
-import { Checkbox, FormControl, InputLabel, MenuItem, Select, ListItemText } from '@mui/material';
-import { Stack } from '@mui/material';
-import { TextField } from '@mui/material';
 import FilterVitrine from 'src/components/marketplace/Filter';
+import { putData } from '../../../services/api';
+import { toast } from 'sonner';
 
 const Marketplace = () => {
-    const position = [51.505, -0.09];
     const [selected, setSelected] = useState([]);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage] = React.useState(6); // Definido para exibir 6 itens por página
+    const [loading, setLoading] = useState(false);
+    const [totalItens, setTotalItens] = useState(8);
+    const [properties, setProperties] = useState([]); // Dados retornados da API
 
-    const handleSelectChange = (event) => {
-        setSelected(event.target.value);
+    // Crie uma referência para o contêiner de rolagem
+    const scrollContainerRef = useRef(null);
+
+    const filter = async () => {
+        setLoading(true); // Iniciar o loading
+        try {
+            const response = await putData(`properties/filter?page=${currentPage}&verified=true`, {});
+            if (response.status === 200 || response.status === 201) {
+                setProperties(response.data.result); // Defina as propriedades retornadas
+            } else {
+                toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
+            }
+        } catch (error) {
+            toast.error(`Erro ao buscar as propriedades:\n ${error.message}`);
+        } finally {
+            setLoading(false); // Parar o loading
+        }
     };
+    
 
-    const generateRandomPosition = (center, radius) => {
-        const y0 = center[0];
-        const x0 = center[1];
-        const rd = radius / 111300; // about 111300 meters in one degree
+    useEffect(() => {
+        filter();
+    }, [currentPage]);
 
-        const u = Math.random();
-        const v = Math.random();
+    const handleChangePage = (event, newPage) => { // PAGINAÇÃO
+        setCurrentPage(newPage);
 
-        const w = rd * Math.sqrt(u);
-        const t = 2 * Math.PI * v;
-        const x = w * Math.cos(t);
-        const y = w * Math.sin(t);
-
-        const newLat = y + y0;
-        const newLon = x + x0;
-
-        return [newLat, newLon];
+        // Role o contêiner para o topo ao mudar de página
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth', // Rolagem suave
+            });
+        }
     };
-
-    const markers = [
-        "Casa Moderna em Condomínio. <br /> Rua das Flores, 123 - Jardim Primavera.",
-        "Apartamento Luxuoso. <br /> Avenida Beira Mar, 456 - Meireles.",
-        "Casa com Piscina. <br /> Rua das Palmeiras, 789 - Aldeota.",
-        "Cobertura Duplex. <br /> Rua dos Coqueiros, 101 - Praia de Iracema.",
-        "Casa de Praia. <br /> Rua do Sol, 202 - Praia do Futuro.",
-        "Apartamento Moderno. <br /> Rua das Ondas, 303 - Praia do Futuro.",
-        "Casa com Jardim. <br /> Rua das Árvores, 404 - Parque Manibura.",
-        "Apartamento Familiar. <br /> Rua das Crianças, 505 - Parque Manibura.",
-        "Casa de Campo. <br /> Rua do Campo, 606 - Parque Manibura.",
-        "Apartamento Estúdio. <br /> Rua do Estúdio, 707 - Aldeota.",
-        "Casa com Varanda. <br /> Rua da Varanda, 808 - Aldeota.",
-        "Apartamento Compacto. <br /> Rua Compacta, 909 - Aldeota.",
-        "Casa de Luxo. <br /> Rua do Luxo, 1010 - Meireles.",
-        "Apartamento com Vista. <br /> Rua da Vista, 1111 - Meireles.",
-        "Casa Aconchegante. <br /> Rua Aconchego, 1212 - Meireles.",
-        "Apartamento Amplo. <br /> Rua Ampla, 1313 - Meireles.",
-        "Casa com Quintal. <br /> Rua do Quintal, 1414 - Meireles.",
-        "Apartamento de Luxo. <br /> Rua do Luxo, 1515 - Meireles.",
-        "Casa Moderna. <br /> Rua Moderna, 1616 - Meireles.",
-        "Apartamento Novo. <br /> Rua Nova, 1717 - Meireles."
-    ];
 
     return (
         <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-
                 <FilterVitrine />
-
                 <Grid container sx={{ height: 'calc(100vh - 147px)', overflow: 'hidden' }}>
-
                     <Grid item xs={12} md={7} pt="0px !important">
-
-                        <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 147px)', overflow: 'scroll' }}>
-
+                        {/* Adicione a referência ao Box */}
+                        <Box 
+                            ref={scrollContainerRef} 
+                            sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 147px)', overflow: 'auto' }} // Altere 'scroll' para 'auto'
+                        >
                             <Grid container spacing={3} sx={{ p: 3 }}>
-                                {[...Array(20)].map((_, index) => (
-
-                                    <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <CardImovel
-                                            title="Casa Moderna em Condomínio"
-                                            description="Rua das Flores, 123 - Jardim Primavera"
-                                            imgsrc="/mobiliado/imagem-7.jpg"
-                                        />
-                                    </Grid>
-
-                                ))}
-
+                                {/* Render Skeletons when loading */}
+                                {loading ? (
+                                    Array.from(new Array(itemsPerPage)).map((_, index) => (
+                                        <Grid item xs={12} sm={6} md={4} key={index}>
+                                            <Skeleton variant="rectangular" height={200} />
+                                            <Skeleton height={50} sx={{ mt: 1 }} />
+                                            <Skeleton height={30} width="60%" />
+                                            <Skeleton width="40%" />
+                                            <Skeleton width="80%" />
+                                            <Skeleton width="50%" />
+                                            <Skeleton width="99%" height={60} sx={{ mt: 1, margin: 'auto' }} />
+                                        </Grid>
+                                    ))
+                                ) : (
+                                    properties
+                                        .map((property, index) => (
+                                            <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <CardImovel data={property} />
+                                            </Grid>
+                                        ))
+                                )}
                             </Grid>
-
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
+                                {(totalItens && currentPage && !loading) && (
+                                    <Pagination
+                                        count={Math.ceil(totalItens / itemsPerPage)}
+                                        page={currentPage}
+                                        onChange={handleChangePage}
+                                    />
+                                )}
+                            </Box>
                         </Box>
-
                     </Grid>
-
                     <Grid item xs={12} md={5}>
-                        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '0px'  }}>
+                        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '0px' }}>
                             <MapContainer center={[-3.71722, -38.5434]} zoom={13} scrollWheelZoom={false} style={{ height: '100%', width: '100%', borderRadius: '0px' }}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                {markers.map((description, index) => {
-                                    const position = generateRandomPosition([-3.71722, -38.5434], 4000);
-                                    return (
-                                        <Marker key={index} position={position}>
-                                            <Popup>{description}</Popup>
-                                        </Marker>
-                                    );
-                                })}
+                                {properties.slice(0, 10).map((property, index) => (
+                                    <Marker key={index} position={[-3.71722, -38.5434]}>
+                                        <Popup>{property.title}</Popup>
+                                    </Marker>
+                                ))}
                             </MapContainer>
                         </Box>
                     </Grid>
-
                 </Grid>
-
             </Box>
         </PageContainer>
     );
