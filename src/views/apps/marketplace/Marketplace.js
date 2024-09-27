@@ -16,7 +16,7 @@ const Marketplace = () => {
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage] = React.useState(6); // Definido para exibir 6 itens por página
     const [loading, setLoading] = useState(false);
-    const [totalItens, setTotalItens] = useState(8);
+    const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
 
     // Crie uma referência para o contêiner de rolagem
@@ -27,6 +27,7 @@ const Marketplace = () => {
         try {
             const response = await putData(`properties/filter?page=${currentPage}&verified=true`, {});
             if (response.status === 200 || response.status === 201) {
+                setTotalItens(response.data.pagination.total);
                 setProperties(response.data.result); // Defina as propriedades retornadas
             } else {
                 toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
