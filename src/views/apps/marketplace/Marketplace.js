@@ -9,6 +9,7 @@ import "leaflet/dist/leaflet.css";
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../services/api';
 import { toast } from 'sonner';
+import MarketplaceMaps from './MarcketPlaceMap';
 
 const Marketplace = () => {
     const [selected, setSelected] = useState([]);
@@ -37,14 +38,12 @@ const Marketplace = () => {
         }
     };
     
-
     useEffect(() => {
         filter();
     }, [currentPage]);
 
     const handleChangePage = (event, newPage) => { // PAGINAÇÃO
         setCurrentPage(newPage);
-
         // Role o contêiner para o topo ao mudar de página
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTo({
@@ -100,21 +99,7 @@ const Marketplace = () => {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={5}>
-                        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '0px' }}>
-                            <MapContainer center={[-3.71722, -38.5434]} zoom={13} scrollWheelZoom={false} style={{ height: '100%', width: '100%', borderRadius: '0px' }}>
-                                <TileLayer
-                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                                {properties.slice(0, 10).map((property, index) => (
-                                    <Marker key={index} position={[-3.71722, -38.5434]}>
-                                        <Popup>{property.title}</Popup>
-                                    </Marker>
-                                ))}
-                            </MapContainer>
-                        </Box>
-                    </Grid>
+                    <MarketplaceMaps properties={properties} />
                 </Grid>
             </Box>
         </PageContainer>
