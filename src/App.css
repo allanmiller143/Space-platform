@@ -1,3 +1,11 @@
-.css-1qmkl3-MuiFormControl-root-MuiTextField-root {
-    margin-top: 16px; 
+.custom-text-field {
+    margin-top: -2px !important; 
+}
+
+.css-clttge-MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-input {
+    padding: 0px 4px 0px 5px;
+}
+
+.css-clttge-MuiAutocomplete-root .MuiOutlinedInput-root {
+    padding: 0px 4px 0px 5px;
 }

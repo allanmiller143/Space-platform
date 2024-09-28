@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://9e26-2804-29b8-515c-19b-261a-6d3d-513d-29d2.ngrok-free.app/';
+const apiUrl = 'https://space-api-zsx7.onrender.com/';
 
 export async function getData(url= '',token = '') {
   try {

@@ -5,6 +5,7 @@ import RTL from './layouts/full/shared/customizer/RTL';
 import ScrollToTop from './components/shared/ScrollToTop';
 import Router from './routes/Router';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import '../src/App.css';
 
 function App() {
   const routing = useRoutes(Router);

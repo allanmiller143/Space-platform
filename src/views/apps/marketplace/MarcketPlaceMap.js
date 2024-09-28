@@ -12,7 +12,6 @@ const MarketplaceMaps = ({ properties }) => {
         try {
             const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`);
             const data = await response.json();
-            console.log("API Response:", data); // Verifique a resposta da API
             if (data && data.length > 0) {
                 const { lat, lon } = data[0];
                 return { lat, lon };
@@ -29,10 +28,8 @@ const MarketplaceMaps = ({ properties }) => {
         const coords = await Promise.all(
             properties.map(async (property) => {
                 const address = `${property.address.street}, ${property.address.number}, ${property.address.neighborhood}, ${property.address.city}, ${property.address.state}, ${property.address.cep}, Brasil`;
-                console.log("Address:", address); // Adicione esta linha para verificar o endereço
-    
+
                 const coords = await getCoordinatesFromAddress(address);
-                console.log("Coordinates:", coords); // Verifique os resultados das coordenadas
     
                 return {
                     ...property,

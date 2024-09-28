@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
-import { Grid, Box, Pagination, Skeleton } from '@mui/material';
+import { Grid, Box, Pagination, Skeleton, Typography } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
 import CardImovel from '../../../components/spaceUI/card-imovel/cardImovel';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import "leaflet/dist/leaflet.css";
-import FilterVitrine from 'src/components/marketplace/Filter';
-import { putData } from '../../../services/api';
 import { toast } from 'sonner';
 import MarketplaceMaps from './MarcketPlaceMap';
+import FilterVitrine from 'src/components/marketplace/Filter';
+import { putData } from '../../../Services/Api';
 
 const Marketplace = () => {
     const [selected, setSelected] = useState([]);
@@ -19,13 +17,61 @@ const Marketplace = () => {
     const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
 
+    const [formData, setFormData] = useState({
+        propertyType : "",
+        city : "",
+        state : "",
+        opcoesRapidas: {
+            pool: false,
+            grill: false,
+            airConditioning: false,
+            playground: false,
+            eventArea: false,
+            gym: false,
+            porch: false,
+            solarEnergy: false,
+            concierge: false,
+            yard: false,
+            gourmetArea: false,
+            balcony: false,
+            slab: false,
+            gatedCommunity: false,
+            garden: false
+        }
+    });
     // Crie uma referência para o contêiner de rolagem
     const scrollContainerRef = useRef(null);
 
     const filter = async () => {
         setLoading(true); // Iniciar o loading
+    
+        // Cria um novo objeto apenas com as opções que forem true
+        const opcoesRapidasTrue = Object.keys(formData.opcoesRapidas)
+            .filter(key => formData.opcoesRapidas[key] === true)
+            .reduce((obj, key) => {
+                obj[key] = true;
+                return obj;
+            }, {});
+    
+        // Crie o objeto para enviar, mesclando o formData com as opções filtradas
+        const formDataToSend = {
+            propertyType: formData.propertyType,
+            city: formData.city,
+            state: formData.state,
+            ...opcoesRapidasTrue // Adicione apenas as opções verdadeiras
+        };
+        formDataToSend.minRentPrice = formData.precoMinimo;
+        formDataToSend.minSellPrice = formData.precoMinimo;
+
+        if(formData.precoMinimo <= formData.precoMaximo){
+            formDataToSend.maxRentPrice = formData.precoMaximo;
+            formDataToSend.maxSellPrice = formData.precoMaximo;
+        }
+
+        console.log(formDataToSend);
+    
         try {
-            const response = await putData(`properties/filter?page=${currentPage}&verified=true`, {});
+            const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
                 setTotalItens(response.data.pagination.total);
                 setProperties(response.data.result); // Defina as propriedades retornadas
@@ -39,9 +85,10 @@ const Marketplace = () => {
         }
     };
     
+    
     useEffect(() => {
         filter();
-    }, [currentPage]);
+    }, [currentPage, formData]);
 
     const handleChangePage = (event, newPage) => { // PAGINAÇÃO
         setCurrentPage(newPage);
@@ -58,7 +105,7 @@ const Marketplace = () => {
         <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <FilterVitrine />
+                <FilterVitrine {...{ formData, setFormData }} />
                 <Grid container sx={{ height: 'calc(100vh - 147px)', overflow: 'hidden' }}>
                     <Grid item xs={12} md={7} pt="0px !important">
                         {/* Adicione a referência ao Box */}
@@ -80,16 +127,22 @@ const Marketplace = () => {
                                             <Skeleton width="99%" height={60} sx={{ mt: 1, margin: 'auto' }} />
                                         </Grid>
                                     ))
+                                ) : properties.length === 0 ? ( // Verifique se não há propriedades
+                                    <Grid item xs={12} sx = {{height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >
+                                        <Typography variant="h6" align="center">
+                                            Ops, não foram encontrados imóveis!
+                                        </Typography>
+                                    </Grid>
                                 ) : (
-                                    properties
-                                        .map((property, index) => (
-                                            <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                <CardImovel data={property} />
-                                            </Grid>
-                                        ))
+                                    properties.map((property, index) => (
+                                        <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <CardImovel data={property} />
+                                        </Grid>
+                                    ))
                                 )}
                             </Grid>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
+                            {
+                              properties.length > 0 ? <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
                                 {(totalItens && currentPage && !loading) && (
                                     <Pagination
                                         count={Math.ceil(totalItens / itemsPerPage)}
@@ -97,7 +150,9 @@ const Marketplace = () => {
                                         onChange={handleChangePage}
                                     />
                                 )}
-                            </Box>
+                            </Box> : 
+                            null
+                            }
                         </Box>
                     </Grid>
                     <MarketplaceMaps properties={properties} />
