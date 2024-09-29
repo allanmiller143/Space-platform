@@ -122,7 +122,7 @@ const EditarEndereco = () => {
   };
 
   return (
-    <Grid item xs={6} lg={12}>
+    <Grid item xs={12}>
       {loading && <Loading data={{ open: loading }} />}
 
       <BlankCard>

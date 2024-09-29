@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { Grid } from '@mui/material';
-
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { fetchPosts } from 'src/store/apps/userProfile/UserProfileSlice';
 import PostItem from './PostItem';
 import { PostTextBox } from './PostTextBox';
 
-const Post = () => {
+const Post = ( {loading, setLoading,progress, setProgress}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPosts());
@@ -18,7 +18,7 @@ const Post = () => {
   return (
     <Grid container spacing={3}>
       <Grid item sm={12}>
-        <PostTextBox />
+        <PostTextBox loading={loading} setLoading={setLoading} progress={progress} setProgress={setProgress} />
       </Grid>
       {getPosts.map((posts) => {
         return (

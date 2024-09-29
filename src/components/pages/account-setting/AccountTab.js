@@ -2,14 +2,12 @@
 import { CardContent, Grid, Typography } from '@mui/material';
 
 // componentes
-import BlankCard from '../../shared/BlankCard';
-import CustomTextField from '../../forms/theme-elements/CustomTextField';
-import CustomFormLabel from '../../forms/theme-elements/CustomFormLabel';
 import EditarFoto from './EditProfileComponentes/EditarFoto';
 import DadosPessoais from './EditProfileComponentes/DadosPessoais';
 import EditarEndereco from './EditProfileComponentes/EditarEndereco';
 import EditarBio from './EditProfileComponentes/EditarBio';
 import { Box } from '@mui/system';
+import EditarRedesSociais from './EditProfileComponentes/EditarRedesSociais';
 
 
 const AccountTab = () => {
@@ -20,6 +18,7 @@ const AccountTab = () => {
         <EditarFoto />      
         <EditarBio/>
         <DadosPessoais />
+        <EditarRedesSociais/>
         <EditarEndereco />
 
     </Grid>

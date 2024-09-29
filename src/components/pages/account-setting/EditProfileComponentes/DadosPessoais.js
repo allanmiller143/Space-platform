@@ -79,7 +79,7 @@ const DadosPessoais = () => {
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid item lg ={7} xs={12}>
       {loading && <Loading data = {{open:loading}}/>}
 
       <BlankCard>

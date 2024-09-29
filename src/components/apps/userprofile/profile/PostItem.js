@@ -1,19 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-
-import {
-  Stack,
-  Avatar,
-  Box,
-  Typography,
-  CardMedia,
-  Grid,
-  IconButton,
-  Fab,
-  Tooltip,
-  TextField,
-  Button,
-  Divider,
-} from '@mui/material';
+import {Stack,Avatar,Box,Typography,CardMedia,Grid,IconButton,Fab,Tooltip} from '@mui/material';
 import { IconCircle, IconMessage2, IconShare, IconThumbUp } from '@tabler/icons';
 import uniqueId from 'lodash/uniqueId';
 import { useDispatch, useSelector } from 'react-redux';

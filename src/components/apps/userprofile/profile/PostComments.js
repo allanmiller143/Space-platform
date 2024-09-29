@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import { Stack, Avatar, Box, Typography, Tooltip, Fab, TextField, Button } from '@mui/material';
 import { IconArrowBackUp, IconCircle, IconThumbUp } from '@tabler/icons';
 
