@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
-import { IconHeart, IconPhoto, IconUserCircle } from '@tabler/icons';
+import { IconHeart, IconUserCircle } from '@tabler/icons';
 import { Link, useLocation } from 'react-router-dom';
+
 
 const ProfileTab = () => {
   const location = useLocation();
