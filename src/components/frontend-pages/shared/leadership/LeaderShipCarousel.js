@@ -1,5 +1,7 @@
-import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
+import { Box, Grid } from '@mui/material';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import { styled } from '@mui/material/styles';
@@ -7,31 +9,30 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
 import './carousel.css';
 import { useTheme } from '@mui/material/styles';
 import CardImovel from '/src/components/spaceUI/card-imovel/cardImovel';
+import Loading from 'src/components/Loading/Loading';
+import { putData } from 'src/Services/Api';
+import { toast } from 'sonner';
 
-import user1 from 'src/assets/images/frontend-pages/homepage/user1.jpg';
-import user2 from 'src/assets/images/frontend-pages/homepage/user2.jpg';
-import user3 from 'src/assets/images/frontend-pages/homepage/user3.jpg';
-import user4 from 'src/assets/images/frontend-pages/homepage/user4.jpg';
-import user5 from 'src/assets/images/frontend-pages/homepage/user5.jpg';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
   return (
     <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
       className={className}
       sx={{
         cursor: 'pointer',
         position: 'absolute',
-        top: { xs: 'unset ', sm: '-100px' },
-        bottom: { xs: '-60px', sm: 'unset' },
-        right: 0,
+        top: '50%',
+        right: '-55px', // Offset from the right side
+        transform: 'translateY(-50%)',
         backgroundColor: (theme) => theme.palette.grey[100],
         width: '48px',
         height: '48px',
         borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1, // Make sure the arrow is on top of the slider content
       }}
       onClick={onClick}
     >
@@ -44,20 +45,21 @@ function SamplePrevArrow(props) {
   const { className, onClick } = props;
   return (
     <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
       className={className}
       sx={{
         cursor: 'pointer',
         position: 'absolute',
-        top: { xs: 'unset ', sm: '-100px' },
-        bottom: { xs: '-60px', sm: 'unset' },
-        right: '60px',
+        top: '50%',
+        left: '-55px', // Offset from the left side
+        transform: 'translateY(-50%)',
         backgroundColor: (theme) => theme.palette.grey[100],
         width: '48px',
         height: '48px',
         borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1, // Make sure the arrow is on top of the slider content
       }}
       onClick={onClick}
     >
@@ -65,30 +67,67 @@ function SamplePrevArrow(props) {
     </Box>
   );
 }
-
 const LeaderShipCarousel = () => {
   const theme = useTheme();
+  const [loading, setLoading] = useState(false);
+  const [properties, setProperties] = useState([]);
 
-  const slideStyle = {
-    padding: '0 30px', // Adicionar padding entre os slides
+  const filter = async () => {
+    setLoading(true); 
+    try {
+      const response = await putData(`properties/filter?page=${1}&verified=true`, {});
+      if (response.status === 200 || response.status === 201) {
+        setProperties(response.data.result);
+        console.log(response.data.result);
+      } else {
+        toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao buscar as propriedades:\n ${error.message}`);
+    } finally {
+      setLoading(false); 
+    }
   };
+
+  useEffect(() => {
+    filter();
+  }, []);
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    className: 'slider variable-width',
-    centerMode: false,
     slidesToScroll: 4,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280,
+        settings: {
+          nextArrow: null,
+          prevArrow: null,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 1130,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 780,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
+          arrows: false,
         },
       },
       {
@@ -96,79 +135,30 @@ const LeaderShipCarousel = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
+          arrows: false,
+          centerMode: true,
         },
       },
     ],
   };
 
-  const UserBox = styled(Box)(() => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.default : 'white',
-    maxWidth: 'calc(100% - 51px)',
-    marginLeft: '15px',
-    borderRadius: '8px',
-    marginTop: '-30px !important',
-    boxShadow: '0px 6px 12px rgba(127, 145, 156, 0.12)',
-    marginBottom: '10px',
-  }));
+  
+  if (loading) {
+    return <Loading data={{ open: loading }} />;
+  }
 
   return (
-    <Slider {...settings} className="leadership-carousel" style={{ marginLeft: '15px' }}>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      <div style={slideStyle}>
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , paddingRight: '15px' }}>
-          <CardImovel
-            title="Casa Moderna em Condomínio"
-            description="Rua das Flores, 123 - Jardim Primavera"
-            imgsrc="/mobiliado/imagem-7.jpg"
-          />
-        </Grid>
-      </div>
-      
-    </Slider>
+    <Box sx={{ marginLeft: '15px' }}>
+      <Slider {...settings} className="leadership-carousel">
+        {properties.map((property, index) => (
+          <Box key={index} sx={{ padding: '0 15px' }}>
+            <CardImovel data={property} />
+          </Box>
+        ))}
+      </Slider>
+    </Box>
   );
 };
 

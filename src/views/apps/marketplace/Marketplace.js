@@ -67,14 +67,13 @@ const Marketplace = () => {
             formDataToSend.maxRentPrice = formData.precoMaximo;
             formDataToSend.maxSellPrice = formData.precoMaximo;
         }
-
-        console.log(formDataToSend);
     
         try {
             const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
                 setTotalItens(response.data.pagination.total);
                 setProperties(response.data.result); // Defina as propriedades retornadas
+                console.log(response.data.result);
             } else {
                 toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
             }

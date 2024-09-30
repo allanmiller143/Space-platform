@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Grid, Typography, Container } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 

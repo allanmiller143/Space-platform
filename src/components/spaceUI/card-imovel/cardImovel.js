@@ -33,7 +33,7 @@ const CardImovel = ({ data }) => {
                     position: 'relative',
                     width: '100%',
                     height: 200,
-                    backgroundImage: `url(${data.pictures[0].url})`,
+                    backgroundImage: `url(${ data.pictures.length > 0 && data.pictures[0].url || ''})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     cursor: 'pointer',
