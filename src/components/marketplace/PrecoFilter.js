@@ -5,7 +5,7 @@ import CustomFormLabel from '../forms/theme-elements/CustomFormLabel';
 
 const PriceRangeSelector = ({ formData, setFormData }) => {
     useEffect(() => {
-        // Você pode adicionar qualquer lógica que precisar ao alterar o formData
+
     }, [formData]);
 
     const formatPrice = (value) => {
@@ -20,7 +20,6 @@ const PriceRangeSelector = ({ formData, setFormData }) => {
     const handleChangePrice = (fieldName) => (event) => {
         const inputValue = event.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
         const numericValue = parseFloat(inputValue) / 100; // Converte para float
-        // Atualiza o formData com o valor numérico sem formatação
         setFormData({ ...formData, [fieldName]: numericValue });
     };
 
@@ -35,8 +34,8 @@ const PriceRangeSelector = ({ formData, setFormData }) => {
                         fullWidth
                         margin="normal"
                         className="custom-text-field" // Classe CSS personalizada
-                        value={formatPrice(formData.precoMinimo)} // Formata o valor para exibição
-                        onChange={handleChangePrice('precoMinimo')} // Atualiza o formData com o valor bruto
+                        value={formatPrice(formData.minPrice)} // Formata o valor para exibição
+                        onChange={handleChangePrice('minPrice')} // Atualiza o formData com o valor bruto
                     />
                 </Box>
                 <Box>
@@ -47,8 +46,8 @@ const PriceRangeSelector = ({ formData, setFormData }) => {
                         fullWidth
                         margin="normal"
                         className="custom-text-field" // Classe CSS personalizada
-                        value={formatPrice(formData.precoMaximo)} // Formata o valor para exibição
-                        onChange={handleChangePrice('precoMaximo')} // Atualiza o formData com o valor bruto
+                        value={formatPrice(formData.maxPrice)} // Formata o valor para exibição
+                        onChange={handleChangePrice('maxPrice')} // Atualiza o formData com o valor bruto
                     />
                 </Box>
             </Box>

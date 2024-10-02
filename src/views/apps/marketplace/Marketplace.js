@@ -37,14 +37,18 @@ const Marketplace = () => {
             slab: false,
             gatedCommunity: false,
             garden: false
-        }
+        },
+        minPrice : '',
+        maxPrice : '',
+        announcementType : '',
     });
     // Crie uma referência para o contêiner de rolagem
     const scrollContainerRef = useRef(null);
 
     const filter = async () => {
+
         setLoading(true); // Iniciar o loading
-    
+
         // Cria um novo objeto apenas com as opções que forem true
         const opcoesRapidasTrue = Object.keys(formData.opcoesRapidas)
             .filter(key => formData.opcoesRapidas[key] === true)
@@ -52,7 +56,7 @@ const Marketplace = () => {
                 obj[key] = true;
                 return obj;
             }, {});
-    
+        
         // Crie o objeto para enviar, mesclando o formData com as opções filtradas
         const formDataToSend = {
             propertyType: formData.propertyType,
@@ -60,14 +64,21 @@ const Marketplace = () => {
             state: formData.state,
             ...opcoesRapidasTrue // Adicione apenas as opções verdadeiras
         };
-        formDataToSend.minRentPrice = formData.precoMinimo;
-        formDataToSend.minSellPrice = formData.precoMinimo;
 
-        if(formData.precoMinimo <= formData.precoMaximo){
-            formDataToSend.maxRentPrice = formData.precoMaximo;
-            formDataToSend.maxSellPrice = formData.precoMaximo;
+        if (formData.announcementType === 'rent' || formData.announcementType === 'sell') {
+            formDataToSend.announcementType = formData.announcementType;
         }
     
+        // Sempre arredondar os valores de minPrice e maxPrice antes de enviar
+        if (parseInt(formData.minPrice) > 1) {
+            formDataToSend.minPrice = Math.round(parseFloat(formData.minPrice)); // Arredondar minPrice
+        }
+        if (formData.minPrice <= formData.maxPrice && parseInt(formData.maxPrice) > 1 && formData.minPrice > 1) {
+            formDataToSend.maxPrice = Math.round(parseFloat(formData.maxPrice)); // Arredondar maxPrice
+        }
+    
+        console.log(formDataToSend);
+        
         try {
             const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
@@ -83,6 +94,7 @@ const Marketplace = () => {
             setLoading(false); // Parar o loading
         }
     };
+    
     
     
     useEffect(() => {

@@ -7,6 +7,7 @@ import CaracteristicasFilter from './CaracteristicasFilter';
 import TipoFilter from './TipoFilter';
 import '../../../src/App.css';
 import PriceRangeSelector from './PrecoFilter';
+import TipoAnuncioFIlter from './TipoAnuncioFIlter';
 
 const FilterVitrine = ({formData, setFormData}) => {
 
@@ -20,6 +21,7 @@ const FilterVitrine = ({formData, setFormData}) => {
                 <LocalidadeFilter {...{ formData, setFormData }}  />
                 <TipoFilter  {...{ formData, setFormData }} />
                 <CaracteristicasFilter  {...{ formData, setFormData }} />
+                <TipoAnuncioFIlter {...{ formData, setFormData }} />
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent : 'space-between', alignItems : 'end', mt : 0 }}>
                 <PriceRangeSelector {...{ formData, setFormData }}/>
