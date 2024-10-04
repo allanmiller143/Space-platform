@@ -20,27 +20,56 @@ const EditarRedesSociais = () => {
   const [whatsapp, setWhatsapp] = useState(currentUserls.info.phone || '');
   const [instagram, setInstagram] = useState(currentUserls.social?.instagram || '');
 
+  const isValidSocialHandle = (value) => {
+    if(value === ''){
+      return true;
+    }
+    return value.startsWith('@') && !/http|www/.test(value);
+  };
+
+
+
+  const formatPhoneNumber = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if (cleaned.length <= 2) {
+      return `(${cleaned}`;
+    } else if (cleaned.length <= 7) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+    } else if (cleaned.length <= 11) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+    }
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    
-    const socialMediaData = {
-      facebook,
-      whatsapp,
-      instagram,
-    };
 
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(socialMediaData));
-
-    if (!facebook || !whatsapp || !instagram) {
-      toast.warning('Por favor, preencha todos os campos de redes sociais: Facebook, WhatsApp, Instagram');
+    // Validações
+    if (!isValidSocialHandle(facebook)) {
+      toast.error('Por favor, insira apenas o nome de usuário do Facebook, começando com "@", sem links.');
+      setLoading(false);
+      return;
+    }
+    if (!isValidSocialHandle(instagram)) {
+      toast.error('Por favor, insira apenas o nome de usuário do Instagram, começando com "@", sem links.');
       setLoading(false);
       return;
     }
 
+    const formJson = {
+      socials : [
+        {type : 'instagram', url : instagram},
+        {type : 'whatsapp', url : whatsapp}
+      ],
+    };
+  
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(formJson));
+
     try {
-      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}/social`, formData, token);
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
       if (response.status === 200 || response.status === 201) {
         const updatedUser = await getData(`find/${currentUserls.email}`);
         if (updatedUser.status === 200) {
@@ -82,6 +111,12 @@ const EditarRedesSociais = () => {
                   onChange={(e) => setFacebook(e.target.value)}
                   variant="outlined"
                   fullWidth
+                  error={!isValidSocialHandle(facebook) && facebook !== ''}
+                  helperText={
+                    !isValidSocialHandle(facebook) && facebook !== ''
+                      ? 'Insira apenas o @, sem links.'
+                      : ''
+                  }
                 />
               </Grid>
 
@@ -90,9 +125,10 @@ const EditarRedesSociais = () => {
                 <CustomTextField
                   id="whatsapp"
                   value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
+                  onChange={(e) => setWhatsapp(formatPhoneNumber(e.target.value))}
                   variant="outlined"
                   fullWidth
+
                 />
               </Grid>
 
@@ -104,6 +140,12 @@ const EditarRedesSociais = () => {
                   onChange={(e) => setInstagram(e.target.value)}
                   variant="outlined"
                   fullWidth
+                  error={!isValidSocialHandle(instagram) && instagram !== ''}
+                  helperText={
+                    !isValidSocialHandle(instagram) && instagram !== ''
+                      ? 'Insira apenas o @, sem links.'
+                      : ''
+                  }
                 />
               </Grid>
             </Grid>

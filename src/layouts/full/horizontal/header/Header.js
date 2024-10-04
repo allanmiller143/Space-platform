@@ -24,7 +24,6 @@ const Header = () => {
     background: theme.palette.background.paper,
     justifyContent: 'center',
     backdropFilter: 'blur(4px)',
-
     [theme.breakpoints.up('lg')]: {
       minHeight: customizer.TopbarHeight,
     },
@@ -41,9 +40,7 @@ const Header = () => {
         <Box sx={{ width: lgDown ? '45px' : 'auto', overflow: 'hidden' }}>
           <Logo />
         </Box>
-        {/* ------------------------------------------- */}
-        {/* Toggle Button Sidebar */}
-        {/* ------------------------------------------- */}
+
         {lgDown ? (
           <IconButton
             color="inherit"
@@ -55,10 +52,6 @@ const Header = () => {
         ) : (
           ''
         )}
-        {/* ------------------------------------------- */}
-        {/* Search Dropdown */}
-        {/* ------------------------------------------- */}
-        {/* <Search /> */}
         {lgUp ? (
           <>
             <Navigation />
@@ -66,18 +59,9 @@ const Header = () => {
         ) : null}
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          {/* <Language /> */}
-          {/* ------------------------------------------- */}
-          {/* Ecommerce Dropdown */}
-          {/* ------------------------------------------- */}
-          {/* <Cart /> */}
-          {/* ------------------------------------------- */}
-          {/* End Ecommerce Dropdown */}
-          {/* ------------------------------------------- */}
-          {/* <Notifications /> */}
           <Button color="primary"
             fullWidth component={Link} to="/auth/complete-register2">
-            Criar conta
+            Criar conta 
           </Button>
           <Button variant="contained" color="primary" component={Link} to="/auth/login">
             Login

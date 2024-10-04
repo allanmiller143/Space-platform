@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { Grid, Box, Typography, Button, Avatar, Stack, CardMedia, styled, Fab, Skeleton } from '@mui/material';
@@ -8,11 +9,9 @@ import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { getData } from '../../../../Services/Api';
 
-const ProfileBanner = () => {
-  const token = localStorage.getItem('token') || '';
-  const cuString = localStorage.getItem('currentUser');
-  const currentUserls = cuString ? JSON.parse(cuString) : null;
+const ProfileBanner = ({userData}) => {
 
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
@@ -25,39 +24,22 @@ const ProfileBanner = () => {
   }));
 
   const seePhone = () => {
-    if (currentUserls) {
-      const phoneNumber = currentUserls.info.phone.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-      // Redirecionar para o link do WhatsApp
+      const phoneNumber = userData.info.phone.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
       window.open(`https://wa.me/55${phoneNumber}`, '_blank');
-    } else {
-      toast.success('Faça um cadastro para enviar uma mensagem');
-    }
+
   };
-
-  const [isLoading, setLoading] = React.useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
       <BlankCard>
-        {isLoading ? (
-          <>
-            <Skeleton variant="rectangular" animation="wave" width="100%" height={330}></Skeleton>
-          </>
-        ) : (
-          <CardMedia
-            component="img"
-            image={profilecover}
-            alt="Imagem de capa do perfil"
-            sx={{ height: '370px', objectFit: 'cover' }}
-          />
-        )}
+      
+        <CardMedia
+          component="img"
+          image={profilecover}
+          alt="Imagem de capa do perfil"
+          sx={{ height: '370px', objectFit: 'cover' }}
+        />
+        
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           {/* Post | Followers | Following */}
           <Grid item lg={4} sm={12} md={5} xs={12} sx={{ order: { xs: '2', sm: '2', lg: '1' } }}>
@@ -67,11 +49,11 @@ const ProfileBanner = () => {
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>Publicações</Typography>
               </Box>
               <Box>
-                <Typography variant="h4" fontWeight="600">{currentUserls.followers.length}</Typography>
+                <Typography variant="h4" fontWeight="600">{userData.followers.length}</Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>Seguidores</Typography>
               </Box>
               <Box>
-                <Typography variant="h4" fontWeight="600">{currentUserls.follow.length}</Typography>
+                <Typography variant="h4" fontWeight="600">{userData.follow.length}</Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>Seguindo</Typography>
               </Box>
             </Stack>
@@ -82,14 +64,14 @@ const ProfileBanner = () => {
               <Box>
                 <ProfileImage>
                   <Avatar
-                    src={currentUserls.profile.url}
+                    src={userData.profile.url}
                     alt={userimg}
                     sx={{ borderRadius: '50%', width: '100px', height: '100px', border: '4px solid #fff' }}
                   />
                 </ProfileImage>
                 <Box mt={1}>
-                  <Typography fontWeight={600} variant="h5">@{currentUserls.handler}</Typography>
-                  <Typography color="gray" variant="h6" fontWeight={400}>{currentUserls.name}</Typography>
+                  <Typography fontWeight={600} variant="h5">@{userData.handler}</Typography>
+                  <Typography color="gray" variant="h6" fontWeight={400}>{userData.name}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -102,7 +84,7 @@ const ProfileBanner = () => {
                 size="small"
                 color="primary"
                 sx={{ backgroundColor: '#1877F2' }}
-                onClick={() => window.open(currentUserls.social.facebook, '_blank')}
+                onClick={() => window.open(userData.social.facebook, '_blank')}
               >
                 <IconBrandFacebook size="16" />
               </Fab>
@@ -118,7 +100,7 @@ const ProfileBanner = () => {
                 size="small"
                 color="error"
                 sx={{ backgroundColor: '#E4405F' }}
-                onClick={() => window.open(currentUserls.social.instagram, '_blank')}
+                onClick={() => window.open(userData.social.instagram, '_blank')}
               >
                 <IconBrandInstagram size="18" />
               </Fab>
@@ -129,9 +111,9 @@ const ProfileBanner = () => {
           </Grid>
         </Grid>
 
-        {/** Tab Content **/}
-        <ProfileTab />
+        {/** Tab Content **/} 
       </BlankCard>
+      <ProfileTab email={userData.email} />
     </>
   );
 };

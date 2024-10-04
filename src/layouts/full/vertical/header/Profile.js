@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui/material';
 import * as dropdownData from './data';
-
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
-
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+  const [profileImageUrl] = useState(currentUserls.profile?.url || '/images/default-avatar.png'); // Estado para a URL da imagem do perfil
+  const [name] = useState(currentUserls.name);
+  const [type] = useState(currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
+  const [email] = useState(currentUserls.email);
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -35,7 +39,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
+          src={profileImageUrl}
           alt={ProfileImg}
           sx={{
             width: 35,
@@ -43,9 +47,6 @@ const Profile = () => {
           }}
         />
       </IconButton>
-      {/* ------------------------------------------- */}
-      {/* Menu de Perfil */}
-      {/* ------------------------------------------- */}
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
@@ -64,13 +65,13 @@ const Profile = () => {
           <Box p={3}>
             <Typography variant="h5">Perfil</Typography>
             <Stack direction="row" py={3} spacing={2} alignItems="center">
-              <Avatar src={ProfileImg} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
+              <Avatar src={profileImageUrl} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
               <Box>
                 <Typography variant="subtitle2" color="textPrimary" fontWeight={600}>
-                  Fernando Dias
+                  {name}
                 </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Corretor de Imóveis
+                  {type}
                 </Typography>
                 <Typography
                   variant="subtitle2"
@@ -80,7 +81,7 @@ const Profile = () => {
                   gap={1}
                 >
                   <IconMail width={15} height={15} />
-                  fernando.dias@imoveis.com
+                  {email}
                 </Typography>
               </Box>
             </Stack>
@@ -88,8 +89,8 @@ const Profile = () => {
             {dropdownData.profile.map((profile) => (
               <Box key={profile.title}>
                 <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
-                  <Link to={profile.href}>
-                    <Stack direction="row" spacing={2}>
+                <Link to={`/user-profile/${email}`}>
+                  <Stack direction="row" spacing={2}>
                       <Box
                         width="45px"
                         height="45px"

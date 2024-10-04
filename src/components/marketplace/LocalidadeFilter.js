@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useCallback } from 'react';
-import { Box, TextField, CircularProgress, FormControl } from '@mui/material';
+import { Box, TextField, FormControl } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import CustomFormLabel from '../forms/theme-elements/CustomFormLabel';
+import '../../App.css';
 
 const LocalidadeFilter = ({ formData, setFormData }) => {
     const [localidades, setLocalidades] = useState([]); // Localidades retornadas pela API
@@ -93,12 +94,6 @@ const LocalidadeFilter = ({ formData, setFormData }) => {
                                     alignItems: 'center', // Centraliza o conteúdo verticalmente
                                     textAlign: 'center', // Centraliza o texto horizontalmente
                                 },
-                                endAdornment: (
-                                    <>
-                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                        {params.InputProps.endAdornment}
-                                    </>
-                                ),
                             }}
                         />
                     )}

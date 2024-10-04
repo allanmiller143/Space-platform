@@ -1,45 +1,50 @@
-import { useState } from 'react';
-import { Grid, LinearProgress, Typography, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
-import ProfileBanner from 'src/components/apps/userprofile/profile/ProfileBanner';
-import IntroCard from 'src/components/apps/userprofile/profile/IntroCard';
-import InfoCard from 'src/components/apps/userprofile/profile/InfoCard';
-import Post from 'src/components/apps/userprofile/profile/Post';
+import ProfileBanner from 'src/components/apps/userprofile/feed/ProfileBanner';
+
+import { useParams } from 'react-router-dom';
+import { getData } from '../../../Services/Api';
+import { toast } from 'sonner';
+import Spinner from '../../spinner/Spinner';
 
 const UserProfile = () => {
-  const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [loadingUserData, setLoadingUserData] = useState(true); // Inicializando como true
+  const { email } = useParams(); // Captura o email da URL
+  const [userData, setUserData] = useState({});
 
+  useEffect(() => {
+    loadUserInfo();
+  }, []);
 
+  const loadUserInfo = async () => {
+    setLoadingUserData(true); // Ativando o estado de carregamento
+
+    try {
+      const response = await getData(`find/${email}`);
+      if (response.status === 200 || response.status === 201) {
+        setUserData(response.userInfo);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error('Ocorreu um erro inesperado! Por favor, tente novamente mais tarde ou entre em contato com o suporte.');
+    } finally {
+      setLoadingUserData(false); // Desativando o estado de carregamento
+    }
+  };
+
+  // Exibe o componente de Loading enquanto carrega os dados do usuário
+  if (loadingUserData) {
+    return <Spinner/>
+  }
+  
   return (
     <PageContainer title="User Profile" description="this is User Profile page">
-
       <Grid container spacing={3}>
         <Grid item sm={12}>
-          <ProfileBanner />
+          <ProfileBanner userData={userData} />
         </Grid>
-        <Grid item lg={12}>
-          {loading ? (
-            <Box sx={{ width: '100%' }}>
-              <Typography variant="h6" gutterBottom>Publicando...</Typography>
-              <LinearProgress variant="determinate" value={progress} />
-            </Box>
-          ) : null}
-        </Grid>
-      <Grid item sm={12} lg={4} xs={12}>
-        <Grid container spacing={3}>
-          <Grid item sm={12}>
-            <IntroCard />
-          </Grid>
-          <Grid item sm={12}>
-            <InfoCard />
-          </Grid>
-        </Grid>
-      </Grid>
-      {/* Posts Card */}
-      <Grid item sm={12} lg={8} xs={12}>
-        <Post loading={loading} setLoading={setLoading} setProgress={setProgress} progress={progress} />
-      </Grid>
       </Grid>
     </PageContainer>
   );
