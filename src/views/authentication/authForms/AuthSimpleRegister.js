@@ -14,10 +14,10 @@ import Loading from '../../../components/Loading/Loading';
 import GoogleSignIn from './AuthGoogleSignIn';
 
 const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
-  const [name, setName] = useState('allan');
-  const [email, setEmail] = useState('miller@gmail.com');
-  const [password, setPassword] = useState('32172528A');
-  const [confirmPassword, setConfirmPassword] = useState('32172528A');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const Navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

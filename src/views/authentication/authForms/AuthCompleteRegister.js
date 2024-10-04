@@ -105,8 +105,6 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     cpf: '',
     creci: '',
     cnpj: '',
-    socialOne: '',
-    socialTwo: '',
     street: '',
     number: '',
     neighborhood: '',
@@ -118,6 +116,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     password: '',
     confirmPassword: '',
     profilePhotoFile: null,
+
 
   });
   const [ dropdownLocaleValue,setDropdownLocaleValue] = useState('');
@@ -227,9 +226,12 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'city':formData.city,
         'neighborhood':formData.neighborhood,
         'state':formData.state,
-        'socialOne':formData.socialOne,
-        'socialTwo':formData.socialTwo,
-        'bio': formData.bio
+        'bio': formData.bio,
+        'socials': [
+          {type : 'facebook', url : '.'},
+          {type : 'whatsapp', url : formData.phone},
+          {type : 'instagram', url :  '.'},
+        ]
       };
       userRoute = 'realtors';
     }else if(selectedType === 'Vendedor'){
@@ -262,12 +264,17 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'creci':formData.creci,
         'cnpj':formData.cnpj,
         'state':formData.state,
-        'socialOne':formData.socialOne,
-        'socialTwo':formData.socialTwo,
-        'bio': formData.bio
+        'bio': formData.bio,
+        'socials': [
+          {type : 'facebook', url : '.'},
+          {type : 'whatsapp', url : formData.phone},
+          {type : 'instagram', url :  '.'},
+        ]
       };
       userRoute = 'realstate';
     }
+
+    postDataExample.socials
 
     try {
         setLoading(true);
