@@ -10,6 +10,7 @@ import BlankCard from '../../../shared/BlankCard';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getData } from '../../../../Services/Api';
+import { use } from 'i18next';
 
 const ProfileBanner = ({userData}) => {
 
@@ -24,7 +25,11 @@ const ProfileBanner = ({userData}) => {
   }));
 
   const seePhone = () => {
-      const phoneNumber = userData.info.phone.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if(userData.socials[1].url === '.'){
+      toast.error('Este perfil ainda não possui telefone cadastrado!');
+      return;
+    }
+      const phoneNumber = userData.socials[1].url.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
       window.open(`https://wa.me/55${phoneNumber}`, '_blank');
 
   };
@@ -84,7 +89,13 @@ const ProfileBanner = ({userData}) => {
                 size="small"
                 color="primary"
                 sx={{ backgroundColor: '#1877F2' }}
-                onClick={() => window.open(userData.social.facebook, '_blank')}
+                onClick={() => {
+                  if(userData.socials[0].url === '.'){
+                    toast.error('Este perfil ainda não possui Facebook cadastrado!');
+                    return;
+                  }
+                  window.open(`https://www.facebook.com/${userData.socials[0].url.replace('@', '')}`, '_blank')}
+                }
               >
                 <IconBrandFacebook size="16" />
               </Fab>
@@ -100,7 +111,13 @@ const ProfileBanner = ({userData}) => {
                 size="small"
                 color="error"
                 sx={{ backgroundColor: '#E4405F' }}
-                onClick={() => window.open(userData.social.instagram, '_blank')}
+                onClick={() =>{
+                  if(userData.socials[2].url === '.'){
+                    toast.error('Este perfil ainda não possui Instagram cadastrado!');
+                    return;
+                  }
+                  window.open(`https://www.instagram.com/${userData.socials[2].url.replace('@', '')}`, '_blank')}
+                } 
               >
                 <IconBrandInstagram size="18" />
               </Fab>

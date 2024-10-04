@@ -16,9 +16,9 @@ const EditarRedesSociais = () => {
   const [loading, setLoading] = useState(false);
 
   // Estados para cada campo de redes sociais
-  const [facebook, setFacebook] = useState(currentUserls.social?.facebook || '');
-  const [whatsapp, setWhatsapp] = useState(currentUserls.info.phone || '');
-  const [instagram, setInstagram] = useState(currentUserls.social?.instagram || '');
+  const [facebook, setFacebook] = useState(currentUserls.socials[0].url === '.' ? '' : currentUserls.socials[0].url);
+  const [whatsapp, setWhatsapp] = useState(currentUserls.socials[1].url === '.' ? '' : currentUserls.socials[1].url);
+  const [instagram, setInstagram] = useState(currentUserls.socials[2].url === '.' ? '' : currentUserls.socials[2].url);
 
   const isValidSocialHandle = (value) => {
     if(value === ''){
@@ -60,10 +60,14 @@ const EditarRedesSociais = () => {
 
     const formJson = {
       socials : [
-        {type : 'instagram', url : instagram},
-        {type : 'whatsapp', url : whatsapp}
+        {type : 'facebook', url : facebook || '.'},
+        {type : 'whatsapp', url : whatsapp || '.'},
+        {type : 'instagram', url : instagram || '.'},
       ],
     };
+
+
+    console.log(formJson);
   
     const formData = new FormData();
     formData.append('data', JSON.stringify(formJson));
