@@ -6,10 +6,10 @@ import Scrollbar from '../../custom-scroll/Scrollbar';
 import { IconSearch } from '@tabler/icons';
 import ChatConversationButtomItem from './ChatSideBar/ChatConversationButtomItem';
 import { getData } from '../../../Services/Api';
-
+import { useContext } from 'react';
+import ChatContext from './ChatContext/ChatContext';
 const ChatListing = ({ socket }) => {
-  const [userChats, setUserChats] = useState([]);
-  const [filteredChats, setFilteredChats] = useState([]);
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, } = useContext(ChatContext);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const cuString = localStorage.getItem('currentUser');

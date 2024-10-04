@@ -21,11 +21,10 @@ const Chats = ({ socket }) => {
           onSidebarClose={() => setMobileSidebarOpen(false)}
           socket={socket}
         />
-        {/* <Box flexGrow={1}>
+        <Box flexGrow={1} >
           <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} />
-          <Divider />
-          <ChatMsgSent />
-        </Box> */}
+
+        </Box>
       </AppCard>
     </PageContainer>
   );

@@ -5,9 +5,9 @@ import RTL from './layouts/full/shared/customizer/RTL';
 import ScrollToTop from './components/shared/ScrollToTop';
 import Router from './routes/Router';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-
 import '../src/App.css';
 import '../src/index.css'
+import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
 
 
 function App() {
@@ -17,10 +17,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <RTL direction={customizer.activeDir}>
-        <CssBaseline />
-        <ScrollToTop>{routing}</ScrollToTop>
-      </RTL>
+      <ChatContextProvider> 
+        <RTL direction={customizer.activeDir}>
+          <CssBaseline />
+          <ScrollToTop>{routing}</ScrollToTop>
+        </RTL>
+      </ChatContextProvider>
     </ThemeProvider>
   );
 }
