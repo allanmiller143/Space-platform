@@ -6,8 +6,7 @@ function ChatContextProvider({children}){
   const [userChats, setUserChats] = useState([]);
   const [filteredChats, setFilteredChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
-
-  const [messages, setMessages] = React.useState([]);
+  const [messages,setMessages] = useState([]);
   const [currentChat, setCurrentChat] = React.useState({});
   const [chats, setChats] = React.useState('oi');
   const [chatsFilterActivated, setChatsFilterActivated] = React.useState(false);

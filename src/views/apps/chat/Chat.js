@@ -22,7 +22,7 @@ const Chats = ({ socket }) => {
           socket={socket}
         />
         <Box flexGrow={1} >
-          <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} />
+          <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} socket={socket} />
 
         </Box>
       </AppCard>

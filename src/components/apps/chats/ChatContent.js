@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Typography, Divider, Avatar, ListItem, ListItemText, ListItemAvatar, IconButton, Box, Stack, Badge, useMediaQuery } from '@mui/material';
 import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
 import { useSelector } from 'react-redux';
@@ -8,15 +8,33 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import ChatNoConversationSelected from './ChatNoConversationSelected';
 import ChatMsgSent from './ChatMsgSent';
+import ChatContext from './ChatContext/ChatContext';
+import MessageSender from './MessageSender';
 
-const ChatContent = ({ toggleChatSidebar, open, setOpen }) => {
+const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, } = useContext(ChatContext);
+
+  useEffect(() => {
+    console.log(activeChat);
+  }, [activeChat]);
+
   const chatDetails = useSelector(
     (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
   );
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
-      {chatDetails ? (
+
+      {
+        activeChat ? (
+          <Box flexGrow={1} display= "flex" alignItems="center" justifyContent={"center"} p={2} >  
+            <Typography variant="h5">{activeChat}</Typography>
+          </Box>
+        ) : (
+          <ChatNoConversationSelected />
+        )
+      }
+      {/* {chatDetails ? (
         <>
           <Box>
             <Box display="flex" alignItems="center" p={2}>
@@ -41,7 +59,6 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen }) => {
             <Divider />
           </Box>
 
-          {/* O conteúdo flexível que ocupa o espaço restante */}
           <Box flexGrow={1} overflow="hidden">
             <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
               <Box p={3}>
@@ -139,13 +156,13 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen }) => {
           </Box>
           <ChatNoConversationSelected />
         </Box>
-      )}
+      )} */}
 
       {/* ChatMsgSent sempre fixo na parte inferior */}
       <Box>
         <Divider />
-        <ChatMsgSent />
-      </Box>
+        <MessageSender socket = {socket} sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 1 }} />
+        </Box>
     </Box>
   );
 };
