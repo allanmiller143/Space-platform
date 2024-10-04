@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
+import {io} from 'socket.io-client';
+const socket = io('https://space-api-zsx7.onrender.com/');
+
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -85,7 +87,7 @@ const Router = [
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> }, // New route for Imoveis List
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> }, // New route for Imoveis Edit
-      { path: '/apps/chats', element: <Chats /> },
+      { path: '/apps/chats', element: <Chats socket={socket} /> },
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/apps/email', element: <Email /> },

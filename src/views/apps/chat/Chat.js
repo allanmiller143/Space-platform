@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import  { useState } from 'react';
 import { Divider, Box } from '@mui/material';
 import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from '../../../components/container/PageContainer';
@@ -7,30 +9,23 @@ import ChatContent from '../../../components/apps/chats/ChatContent';
 import ChatMsgSent from '../../../components/apps/chats/ChatMsgSent';
 import AppCard from 'src/components/shared/AppCard';
 
-const Chats = () => {
+const Chats = ({ socket }) => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
     <PageContainer title="Chat" description="Converse com corretores, proprietários e imobiliárias">
       <Breadcrumb title="Mensagens" subtitle="Converse com corretores, proprietários e imobiliárias" />
       <AppCard>
-        {/* ------------------------------------------- */}
-        {/* Left part */}
-        {/* ------------------------------------------- */}
-
         <ChatSidebar
           isMobileSidebarOpen={isMobileSidebarOpen}
           onSidebarClose={() => setMobileSidebarOpen(false)}
+          socket={socket}
         />
-        {/* ------------------------------------------- */}
-        {/* Right part */}
-        {/* ------------------------------------------- */}
-
-        <Box flexGrow={1}>
+        {/* <Box flexGrow={1}>
           <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} />
           <Divider />
           <ChatMsgSent />
-        </Box>
+        </Box> */}
       </AppCard>
     </PageContainer>
   );

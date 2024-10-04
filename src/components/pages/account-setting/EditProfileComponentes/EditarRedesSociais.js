@@ -16,9 +16,9 @@ const EditarRedesSociais = () => {
   const [loading, setLoading] = useState(false);
 
   // Estados para cada campo de redes sociais
-  const [facebook, setFacebook] = useState(currentUserls.socials[0].url === '.' ? '' : currentUserls.socials[0].url);
-  const [whatsapp, setWhatsapp] = useState(currentUserls.socials[1].url === '.' ? '' : currentUserls.socials[1].url);
-  const [instagram, setInstagram] = useState(currentUserls.socials[2].url === '.' ? '' : currentUserls.socials[2].url);
+  const [facebook, setFacebook] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[0].url === '.' ? '' : currentUserls.socials[0].url);
+  const [whatsapp, setWhatsapp] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[1].url === '.' ? '' : currentUserls.socials[1].url);
+  const [instagram, setInstagram] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[2].url === '.' ? '' : currentUserls.socials[2].url);
 
   const isValidSocialHandle = (value) => {
     if(value === ''){

@@ -55,6 +55,7 @@ export const fetchChats = () => async (dispatch) => {
   try {
     const response = await axios.get(`${API_URL}`);
     dispatch(getChats(response.data));
+    console.log(response.data);
   } catch (err) {
     throw new Error(err);
   }

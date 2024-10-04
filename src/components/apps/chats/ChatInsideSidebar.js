@@ -1,15 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  Box,
-  useMediaQuery,
-  Typography,
-  Stack,
-  Avatar,
-  Grid,
-  Alert,
-  IconButton,
-  styled,
-} from '@mui/material';
+import {Box,useMediaQuery,Typography,Stack,Avatar,Grid,Alert,IconButton,styled,} from '@mui/material';
 import { uniq, flatten } from 'lodash';
 import { IconDownload } from '@tabler/icons';
 
@@ -21,7 +12,6 @@ const ChatInsideSidebar = ({ isInSidebar, chat }) => {
   const totalMedia =
     uniq(flatten(chat?.messages.map((item) => (item?.type === 'image' ? item.msg : null)))).length -
     1;
-
   const StyledStack = styled(Stack)(() => ({
     '.showOnHover': {
       display: 'none',

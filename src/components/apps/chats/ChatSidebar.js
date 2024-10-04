@@ -1,10 +1,11 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { Drawer, useMediaQuery } from '@mui/material';
 import ChatListing from './ChatListing';
+import Teste from './teste';
 
 const drawerWidth = 320;
 
-const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose }) => {
+const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose, socket }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   return (
@@ -19,7 +20,8 @@ const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose }) => {
         [`& .MuiDrawer-paper`]: { position: 'relative' },
       }}
     >
-      <ChatListing />
+      <Teste socket={socket}/>
+      <ChatListing socket={socket} />
     </Drawer>
   );
 };

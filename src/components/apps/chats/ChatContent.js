@@ -1,27 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  Typography,
-  Divider,
-  Avatar,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  IconButton,
-  Box,
-  Stack,
-  Badge,
-  useMediaQuery,
-} from '@mui/material';
-import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
-import { useSelector } from 'react-redux';
-
-import { formatDistanceToNowStrict } from 'date-fns';
-import ChatInsideSidebar from './ChatInsideSidebar';
+import {Typography,Divider,Avatar,ListItem,ListItemText,ListItemAvatar,IconButton,Box,Stack,Badge,useMediaQuery, } from '@mui/material';
+import {IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
+import {useSelector } from 'react-redux';
+import {formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 
-const ChatContent = ({ toggleChatSidebar }) => {
-  const [open, setOpen] = React.useState(true);
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+const ChatContent = ({ toggleChatSidebar, open, setOpen }) => {
 
   const chatDetails = useSelector(
     (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
@@ -31,9 +17,6 @@ const ChatContent = ({ toggleChatSidebar }) => {
     <Box>
       {chatDetails ? (
         <Box>
-          {/* ------------------------------------------- */}
-          {/* Header Part */}
-          {/* ------------------------------------------- */}
           <Box>
             <Box display="flex" alignItems="center" p={2}>
               <Box
@@ -44,40 +27,11 @@ const ChatContent = ({ toggleChatSidebar }) => {
               >
                 <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
               </Box>
-              <ListItem key={chatDetails.id} dense disableGutters>
-                <ListItemAvatar>
-                  <Badge
-                    color={
-                      chatDetails.status === 'online'
-                        ? 'success'
-                        : chatDetails.status === 'busy'
-                        ? 'error'
-                        : chatDetails.status === 'away'
-                        ? 'warning'
-                        : 'secondary'
-                    }
-                    variant="dot"
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    overlap="circular"
-                  >
-                    <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
-                  </Badge>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={<Typography variant="h5">{chatDetails.name}</Typography>}
-                  secondary={chatDetails.status}
-                />
+              <ListItem key={chatDetails.id} dense disableGutters sx={{gap: 1 }}>
+                <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
+                <Typography variant="h5">{chatDetails.name}</Typography>
               </ListItem>
               <Stack direction={'row'}>
-                <IconButton aria-label="telefone">
-                  <IconPhone stroke={1.5} />
-                </IconButton>
-                <IconButton aria-label="vídeo">
-                  <IconVideo stroke={1.5} />
-                </IconButton>
                 <IconButton aria-label="mais opções" onClick={() => setOpen(!open)}>
                   <IconDotsVertical stroke={1.5} />
                 </IconButton>
@@ -85,15 +39,7 @@ const ChatContent = ({ toggleChatSidebar }) => {
             </Box>
             <Divider />
           </Box>
-          {/* ------------------------------------------- */}
-          {/* Chat Content */}
-          {/* ------------------------------------------- */}
-
           <Box display="flex">
-            {/* ------------------------------------------- */}
-            {/* Chat mensagens */}
-            {/* ------------------------------------------- */}
-
             <Box width="100%">
               <Scrollbar sx={{ height: '650px', overflow: 'auto', maxHeight: '800px' }}>
                 <Box p={3}>
@@ -183,17 +129,11 @@ const ChatContent = ({ toggleChatSidebar }) => {
               </Scrollbar>
             </Box>
 
-            {/* ------------------------------------------- */}
-            {/* Chat conteúdo da barra lateral direita */}
-            {/* ------------------------------------------- */}
-            <ChatInsideSidebar isInSidebar={lgUp ? open : !open} chat={chatDetails} />
           </Box>
         </Box>
       ) : (
         <Box display="flex" alignItems="center" p={2} pb={1} pt={1}>
-          {/* ------------------------------------------- */}
-          {/* se não houver conteúdo de chat */}
-          {/* ------------------------------------------- */}
+
           <Box
             sx={{
               display: { xs: 'flex', md: 'flex', lg: 'none' },
