@@ -1,149 +1,285 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect } from 'react';
-import { Typography, Divider, Avatar, ListItem, ListItemText, ListItemAvatar, IconButton, Box, Stack, Badge, useMediaQuery } from '@mui/material';
+import React, { useContext, useEffect,useRef, useState } from 'react';
+import { Typography, Divider, Avatar, ListItem, ListItemText, ListItemAvatar, IconButton, Box, Stack, Badge, useMediaQuery, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import ChatNoConversationSelected from './ChatNoConversationSelected';
-import ChatMsgSent from './ChatMsgSent';
 import ChatContext from './ChatContext/ChatContext';
 import MessageSender from './MessageSender';
+import { openNewChat } from './ChatService/Api';
+import ChatPreViewDialog from './ChatPreViewDialog';
+import Spinner from '../../../views/spinner/Spinner';
+
 
 const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
-  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, } = useContext(ChatContext);
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
+  const [dragging, setDragging] = useState(false);
+  const chatId = localStorage.getItem('chatId');
+  const messagesEndRef = useRef(null);
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString);
+  const [previewOpen, setPreviewOpen] = useState(false); // Controle do diálogo de pré-visualização
+  const [previewFiles, setPreviewFiles] = useState([]);
+  const [loadingChat, setLoadingChat] = useState(false);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+  };
+
+  
+  useEffect(() => {
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages]);
 
   useEffect(() => {
-    console.log(activeChat);
-  }, [activeChat]);
+    console.log('chamei o componente!');
+    if (socket) {
+      socket.on('message', (data) => {
+        setMessages((prevMessages) => {
+          const filteredMessages = prevMessages.filter((message) => message.id !== 1);
+          return [...filteredMessages, data];
+        });
+        scrollToBottom();
+      });
+      console.log(messages);
+
+      socket.on('deleted_message', (data) => {
+        setMessages((prevMessages) => {
+          return prevMessages.filter((message) => message.id !== data.id);
+        });
+        scrollToBottom();
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off('message');
+        socket.off('deleted_message');
+      }
+    };
+  }, [socket, setMessages]);
+
+  useEffect(() => {
+    if (selectedUser !== undefined || selectedUser !== null) {
+      loadMessages();
+    }
+  }, [selectedUser]);
+
+  const loadMessages = async () => {
+    setLoadingChat(true);
+    try {
+      const response = await openNewChat(socket, selectedUser.email);
+      setMessages(response);
+      console.log(response);
+      scrollToBottom();
+    } catch (err) {
+      console.log('Error loading messages:', err);
+    } finally {
+      setLoadingChat(false);
+    }
+  };
 
   const chatDetails = useSelector(
     (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
   );
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    setPreviewFiles(files); // Armazena os arquivos para pré-visualização
+    setPreviewOpen(true); // Abre o diálogo de pré-visualização
+  };
+
+  const whoSent = (sender) => sender === currentUserls.email;
+
+  const picture = (message) => {
+    if (message.senderProfile && message.senderProfile.url !== null && message.senderProfile.url !== '') {
+      return message.senderProfile.url;
+    } else {
+      return '';
+    }
+  };
+
+  // const formatTime = (isoString) => {
+  //   const timeZone = 'America/Sao_Paulo';
+  //   return formatInTimeZone(isoString, timeZone, 'HH:mm');
+  // };
 
   return (
-    <Box display="flex" flexDirection="column" height="100%">
-
+    <Box display="flex" flexDirection="column" height="100%" sx = {{position : 'relative'}} >
       {
-        activeChat ? (
-          <Box flexGrow={1} display= "flex" alignItems="center" justifyContent={"center"} p={2} >  
-            <Typography variant="h5">{activeChat}</Typography>
-          </Box>
-        ) : (
+        activeChat && messages.length > 0 ? (
+          <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
+            <>
+            <Box>
+              <Box display="flex" alignItems="center" p={2}>
+                <Box
+                  sx={{
+                    display: { xs: 'block', md: 'block', lg: 'none' },
+                    mr: '10px',
+                  }}
+                >
+                  <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
+                </Box>
+                <ListItem  dense disableGutters sx={{ gap: 1 }}>
+                  <Avatar alt="imagem de perfil" src={selectedUser.profile.url} />
+                  <Typography variant="h5">{selectedUser.name}</Typography>
+                </ListItem>
+                <Stack direction={'row'}>
+                  <IconButton aria-label="mais opções" onClick={() => setOpen(!open)}>
+                    <IconDotsVertical stroke={1.5} />
+                  </IconButton>
+                </Stack>
+              </Box>
+              <Divider />
+            </Box>
+
+            <Box flexGrow={1} overflow="hidden">
+              <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
+                <Box p={3}>
+                  {messages.map((message) => (
+                    <Box key={message.id}>
+                      {message.senderEmail !== currentUserls.email ? (
+                        <Box display="flex">
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={selectedUser.profile.url}
+                              src={selectedUser.profile.url}
+                              sx={{ width: 40, height: 40 }}
+                            />
+                          </ListItemAvatar>
+                          <Box>
+                            {message.createdAt ? (
+                              <Typography variant="body2" color="grey.400" mb={1}>
+                                {selectedUser.name},{' '}
+                                {formatDistanceToNowStrict(new Date(message.createdAt), {
+                                  addSuffix: false,
+                                })}{' '}
+                                atrás
+                              </Typography>
+                            ) : null}
+                            {message.type === 'text' ? (
+                              <Box
+                                mb={2}
+                                sx={{
+                                  p: 1,
+                                  backgroundColor: 'grey.100',
+                                  mr: 'auto',
+                                  maxWidth: '320px',
+                                }}
+                              >
+                                {message.text}
+                              </Box>
+                            ) : null}
+                            {message.type === 'image' ? (
+                              <Box mb={1} sx={{ overflow: 'hidden', lineHeight: '0px' }}>
+                                <img src={message.url} alt="anexo" width="150" />
+                              </Box>
+                            ) : null}
+                          </Box>
+                        </Box>
+                      ) : (
+                        <Box
+                          mb={1}
+
+                          display="flex"
+                          flexDirection="row-reverse"
+                          gap={2}
+                        >
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={currentUserls.profile.url}
+                              src={currentUserls.profile.url}
+                              sx={{ width: 40, height: 40 }}
+                            />
+                          </ListItemAvatar>
+                          <Box alignItems="flex-end" display="flex" flexDirection={'column'}>
+                            {message.createdAt ? (
+                              <Typography variant="body2" color="grey.400" mb={1}>
+                                {currentUserls.name},{' '}
+                                {formatDistanceToNowStrict(new Date(message.createdAt), {
+                                  addSuffix: false,
+                                })}{' '}
+                                atrás
+                              </Typography>
+                            ) : null}
+                            {message.type === 'text' ? (
+                              <Box
+                                mb={1}
+                                key={message.id}
+                                sx={{
+                                  p: 1,
+                                  backgroundColor: 'primary.light',
+                                  ml: 'auto',
+                                  maxWidth: '320px',
+                                }}
+                              >
+                                {message.text}
+                              </Box>
+                            ) : null}
+                            {message.type === 'image' ? (
+                              <Box mb={1} sx={{ overflow: 'hidden', lineHeight: '0px' }}>
+                                <img src={message.url} alt="anexo" width="250" />
+                              </Box>
+                            ) : null}
+                          </Box>
+                       
+                        </Box>
+                      )}
+                    </Box>
+                  ))}
+                </Box>     
+                <div ref={messagesEndRef} />
+              </Scrollbar>
+
+            </Box>
+          </>
+
+            {dragging && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 9999,
+                background: 'rgba(0, 0, 0, 0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                pointerEvents: 'none',
+              }}
+            >
+              <Typography variant="h6" color="primary">
+                Solte o arquivo aqui
+              </Typography>
+            </Box>
+          )}
+          <ChatPreViewDialog previewOpen={previewOpen} setPreviewOpen = {setPreviewOpen} previewFiles={previewFiles}setPreviewFiles = {setPreviewFiles} socket={socket} />
+          </Box >
+        ) 
+        : 
+        loadingChat ? <Spinner height='100%'/> :
+        (
           <ChatNoConversationSelected />
         )
       }
       {/* {chatDetails ? (
-        <>
-          <Box>
-            <Box display="flex" alignItems="center" p={2}>
-              <Box
-                sx={{
-                  display: { xs: 'block', md: 'block', lg: 'none' },
-                  mr: '10px',
-                }}
-              >
-                <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
-              </Box>
-              <ListItem key={chatDetails.id} dense disableGutters sx={{ gap: 1 }}>
-                <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
-                <Typography variant="h5">{chatDetails.name}</Typography>
-              </ListItem>
-              <Stack direction={'row'}>
-                <IconButton aria-label="mais opções" onClick={() => setOpen(!open)}>
-                  <IconDotsVertical stroke={1.5} />
-                </IconButton>
-              </Stack>
-            </Box>
-            <Divider />
-          </Box>
-
-          <Box flexGrow={1} overflow="hidden">
-            <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
-              <Box p={3}>
-                {chatDetails.messages.map((chat) => (
-                  <Box key={chat.id + chat.msg + chat.createdAt}>
-                    {chatDetails.id === chat.senderId ? (
-                      <Box display="flex">
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={chatDetails.name}
-                            src={chatDetails.thumb}
-                            sx={{ width: 40, height: 40 }}
-                          />
-                        </ListItemAvatar>
-                        <Box>
-                          {chat.createdAt ? (
-                            <Typography variant="body2" color="grey.400" mb={1}>
-                              {chatDetails.name},{' '}
-                              {formatDistanceToNowStrict(new Date(chat.createdAt), {
-                                addSuffix: false,
-                              })}{' '}
-                              atrás
-                            </Typography>
-                          ) : null}
-                          {chat.type === 'text' ? (
-                            <Box
-                              mb={2}
-                              sx={{
-                                p: 1,
-                                backgroundColor: 'grey.100',
-                                mr: 'auto',
-                                maxWidth: '320px',
-                              }}
-                            >
-                              {chat.msg}
-                            </Box>
-                          ) : null}
-                          {chat.type === 'image' ? (
-                            <Box mb={1} sx={{ overflow: 'hidden', lineHeight: '0px' }}>
-                              <img src={chat.msg} alt="anexo" width="150" />
-                            </Box>
-                          ) : null}
-                        </Box>
-                      </Box>
-                    ) : (
-                      <Box
-                        mb={1}
-                        display="flex"
-                        alignItems="flex-end"
-                        flexDirection="row-reverse"
-                      >
-                        <Box alignItems="flex-end" display="flex" flexDirection={'column'}>
-                          {chat.createdAt ? (
-                            <Typography variant="body2" color="grey.400" mb={1}>
-                              atrás
-                            </Typography>
-                          ) : null}
-                          {chat.type === 'text' ? (
-                            <Box
-                              mb={1}
-                              key={chat.id}
-                              sx={{
-                                p: 1,
-                                backgroundColor: 'primary.light',
-                                ml: 'auto',
-                                maxWidth: '320px',
-                              }}
-                            >
-                              {chat.msg}
-                            </Box>
-                          ) : null}
-                          {chat.type === 'image' ? (
-                            <Box mb={1} sx={{ overflow: 'hidden', lineHeight: '0px' }}>
-                              <img src={chat.msg} alt="anexo" width="250" />
-                            </Box>
-                          ) : null}
-                        </Box>
-                      </Box>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </Scrollbar>
-          </Box>
-        </>
+        
       ) : (
         <Box display="flex" alignItems="center" p={2} pb={1} pt={1} flexGrow={1}>
           <Box
@@ -158,11 +294,12 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
         </Box>
       )} */}
 
-      {/* ChatMsgSent sempre fixo na parte inferior */}
+      {activeChat ?  
       <Box>
         <Divider />
         <MessageSender socket = {socket} sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 1 }} />
-        </Box>
+      </Box> : null}    
+   
     </Box>
   );
 };

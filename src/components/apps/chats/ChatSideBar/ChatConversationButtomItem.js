@@ -7,7 +7,7 @@ import ChatContext from '../ChatContext/ChatContext';
 const ChatConversationButtomItem = ({ chat }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
-  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, } = useContext(ChatContext);
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat,selectedUser, setSelectedUser,messages,setMessages } = useContext(ChatContext);
 
   const user = chat.user1.email === currentUserls.email ? chat.user2 : chat.user1;
 
@@ -16,7 +16,11 @@ const ChatConversationButtomItem = ({ chat }) => {
 
   return (
     <ListItemButton
-      onClick={() => setActiveChat(chat.id)} // Define o chat como ativo ao clicar
+      onClick={() => {    
+        setMessages([]);
+        setActiveChat(chat.id);
+        setSelectedUser(user);
+      }} // Define o chat como ativo ao clicar
       sx={{
         py: 1,
         px: 3,

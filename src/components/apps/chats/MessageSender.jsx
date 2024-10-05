@@ -5,8 +5,8 @@ import { Button, Input, Space } from 'antd';
 import SendIcon from '@mui/icons-material/Send';
 import styled from 'styled-components';
 import PlaygroundSpeedDial from './ChatFIleOptions';
-// import PlaygroundSpeedDial from '../ChatFIleOptions/ChatFIleOptions';
-// import AudioRecorder from '../Message/AudioMessage/AudioRecorder';
+import AudioRecorder from './AudioMessage/AudioRecorder';
+
 
 const { TextArea } = Input;
 
@@ -27,7 +27,8 @@ const MessageSender = ({ socket }) => {
   const chatId = localStorage.getItem('chatId');
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
-  const [chosenEmoji, setChosenEmoji] = React.useState();
+  const [recording, setRecording] = useState(false);
+
 
   const sendMessage = () => {
     if (message.trim() !== '') {
@@ -62,7 +63,7 @@ const MessageSender = ({ socket }) => {
   return (
     <div style={{ display: 'flex', alignItems: 'end', padding: 10, position: 'relative', width: '100%',justifyContent: 'center'}}>
       <PlaygroundSpeedDial socket={socket} />
-      <div style={{ flexGrow: 1, display: 'flex', paddingLeft: 50,paddingBottom: 8, alignItems: 'end'}}>
+      <div style={{ flexGrow: 1, display: 'flex', paddingLeft: 50,paddingBottom: 8, alignItems: 'end', paddingRight: 10 }}>
         <StyledTextArea
           placeholder="Digite uma mensagem"
           value={message}
@@ -71,11 +72,13 @@ const MessageSender = ({ socket }) => {
           autoSize={{ minRows: 1, maxRows: 5 }}
           style={{ flex: 1, paddingLeft: 20, marginTop: 5, resize: 'none' }}
         />
-        <Button type="primary" onClick={handleSendClick} style={{ height: '35px', backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none', }}>
-          <SendIcon color='primary'/>
-        </Button>
+        {
+          !recording &&
+          <Button type="primary" onClick={handleSendClick} style={{ height: '35px',width: '35px', backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none',marginLeft: 15,marginRight: 5 }}><SendIcon color='primary'/></Button>  
+        }
+        <AudioRecorder socket={socket} recording={recording} setRecording={setRecording} />
+
       </div>        
-      {/* <AudioRecorder socket={socket} /> */}
 
     </div>
   );

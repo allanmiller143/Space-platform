@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { postData } from "../../../../Services/Api";
 
 export async function openNewChat(socket, email) {
@@ -8,6 +9,7 @@ export async function openNewChat(socket, email) {
     if (response.status === 200 || response.status === 201) {
       chatId = response.data.id;
       localStorage.setItem('chatId', chatId);
+      console.log(`Deu bom ${response}`);
     } else {
       console.log(`Deu ruim ${response}`);
     }

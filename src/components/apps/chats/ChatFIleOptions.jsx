@@ -50,7 +50,7 @@ export default function PlaygroundSpeedDial({ socket }) {
   
         setMessages(prevMessages => [
           ...prevMessages,
-          { ...data, isLoading: true, id: 1, sender: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
+          { ...data, isLoading: true, id: 1, senderEmail: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
         ]);
   
         socket.emit('upload', data, (error) => {
