@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
-import { Grid, Box, Pagination, Skeleton, Typography } from '@mui/material';
+import { Grid, Box, Pagination, Skeleton, Typography, Button, Drawer } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
 import CardImovel from '../../../components/spaceUI/card-imovel/cardImovel';
@@ -16,6 +16,7 @@ const Marketplace = () => {
     const [loading, setLoading] = useState(false);
     const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
+    const [drawerOpen, setDrawerOpen] = useState(false); // Estado para controlar a abertura do Drawer
 
     const [formData, setFormData] = useState({
         propertyType : "",
@@ -116,7 +117,14 @@ const Marketplace = () => {
         <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <FilterVitrine {...{ formData, setFormData }} />
+                <Button variant="text" color="primary" onClick={() => setDrawerOpen(true)} sx={{ borderRadius: 0 }}>
+                    Abrir Filtros
+                </Button>
+                <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                    <Box sx={{ width: 300, p: 2 }}>
+                        <FilterVitrine {...{ formData, setFormData }} />
+                    </Box>
+                </Drawer>
                 <Grid container sx={{ height: 'calc(100vh - 147px)', overflow: 'hidden' }}>
                     <Grid item xs={12} md={7} pt="0px !important">
                         {/* Adicione a referência ao Box */}
