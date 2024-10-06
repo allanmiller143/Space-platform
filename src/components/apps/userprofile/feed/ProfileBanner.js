@@ -25,10 +25,11 @@ const ProfileBanner = ({userData}) => {
   }));
 
   const seePhone = () => {
-    if(userData.socials[1].url === '.'){
+    if(userData.socials.length === 0 ||  userData.socials[1].url === '.'){
       toast.error('Este perfil ainda não possui telefone cadastrado!');
       return;
     }
+
       const phoneNumber = userData.socials[1].url.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
       window.open(`https://wa.me/55${phoneNumber}`, '_blank');
 
@@ -69,7 +70,7 @@ const ProfileBanner = ({userData}) => {
               <Box>
                 <ProfileImage>
                   <Avatar
-                    src={userData.profile.url}
+                    src={userData.profile && userData.profile.url}
                     alt={userimg}
                     sx={{ borderRadius: '50%', width: '100px', height: '100px', border: '4px solid #fff' }}
                   />

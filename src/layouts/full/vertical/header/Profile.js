@@ -12,7 +12,7 @@ const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
-  const [profileImageUrl] = useState(currentUserls.profile?.url || '/images/default-avatar.png'); // Estado para a URL da imagem do perfil
+  const [profileImageUrl] = useState(currentUserls.profile?.url || ''); // Estado para a URL da imagem do perfil
   const [name] = useState(currentUserls.name);
   const [type] = useState(currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
   const [email] = useState(currentUserls.email);

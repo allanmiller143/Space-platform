@@ -233,7 +233,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
           {type : 'instagram', url :  '.'},
         ]
       };
-      userRoute = 'realtors';
+      userRoute = 'realtor';
     }else if(selectedType === 'Vendedor'){
       postDataExample = { 
         'name':formData.name,
@@ -248,8 +248,13 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'city':formData.city,
         'neighborhood':formData.neighborhood,
         'state':formData.state,
+        'socials': [
+          {type : 'facebook', url : '.'},
+          {type : 'whatsapp', url : formData.phone},
+          {type : 'instagram', url :  '.'},
+        ]
       };
-      userRoute = 'owners';
+      userRoute = 'owner';
     }else{
       postDataExample = {
         'name':formData.name,

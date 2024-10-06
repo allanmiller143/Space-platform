@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';

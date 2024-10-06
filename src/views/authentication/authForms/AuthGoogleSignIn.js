@@ -48,7 +48,7 @@ function GoogleSignIn() {
         userData.type = 'client';
         const form = new FormData();
         form.append('data', JSON.stringify(userData));
-        const response = await postFormData('clients', form);
+        const response = await postFormData('client', form);
         if(response.status === 200 || response.status === 201){
           const tokenData = { 'googleToken': token };
           const loginResponse = await postData('google', tokenData);

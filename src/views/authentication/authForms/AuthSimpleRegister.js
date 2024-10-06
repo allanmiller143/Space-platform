@@ -37,12 +37,11 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
           'email': email,
           'password': password,
           'phone': '',
-          'type': 'client'
         };
 
         const form = new FormData();
         form.append('data', JSON.stringify(postDataExample));
-        const response = await postFormData('clients', form);
+        const response = await postFormData('client', form);
         if (response.status === 201 || response.status === 200) {
           const data = { 'email': email, 'password': password };
           const loginResponse = await postData('login', data);
