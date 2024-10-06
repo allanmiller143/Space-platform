@@ -121,7 +121,10 @@ const Marketplace = () => {
                     Abrir Filtros
                 </Button>
                 <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                    <Box sx={{ width: 300, p: 2 }}>
+                    <Box sx={{ width: 600, p: 4 }}>
+                        <Typography variant="h3" gutterBottom>
+                            Filtros
+                        </Typography>
                         <FilterVitrine {...{ formData, setFormData }} />
                     </Box>
                 </Drawer>
@@ -130,7 +133,7 @@ const Marketplace = () => {
                         {/* Adicione a referência ao Box */}
                         <Box 
                             ref={scrollContainerRef} 
-                            sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 147px)', overflow: 'auto' }} // Altere 'scroll' para 'auto'
+                            sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 107px)', overflow: 'auto' }} // Altere 'scroll' para 'auto'
                         >
                             <Grid container spacing={3} sx={{ p: 3 }}>
                                 {/* Render Skeletons when loading */}
