@@ -236,7 +236,7 @@ const ImoveisTableList = () => {
                   </TableRow>
                 ) : filteredImoveis.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={12} align="center">
+                    <TableCell colSpan={12} align="center" sx={{ height: 250 }}>
                       Nenhum imóvel encontrado.
                     </TableCell>
                   </TableRow>

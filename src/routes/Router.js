@@ -104,7 +104,7 @@ const Router = [
       { path: '/apps/invoice/create', element: <InvoiceCreate /> },
       { path: '/apps/invoice/detail/:id', element: <InvoiceDetail /> },
       { path: '/apps/invoice/edit/:id', element: <InvoiceEdit /> },
-      { path: '/user-profile/:email', element: <UserProfile /> },
+      { path: '/user-profile/:email', element: <UserProfile socket={socket} /> },
       { path: '/pages/casl', element: <RollbaseCASL /> },
       { path: '/pages/treeview', element: <Treeview /> },
       { path: '/pages/pricing', element: <Pricing /> },

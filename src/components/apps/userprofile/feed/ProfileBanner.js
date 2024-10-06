@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import { getData } from '../../../../Services/Api';
 import { use } from 'i18next';
 
-const ProfileBanner = ({userData}) => {
+const ProfileBanner = ({userData,socket}) => {
 
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
@@ -131,7 +131,7 @@ const ProfileBanner = ({userData}) => {
 
         {/** Tab Content **/} 
       </BlankCard>
-      <ProfileTab email={userData.email} />
+      <ProfileTab email={userData.email} socket={socket} />
     </>
   );
 };

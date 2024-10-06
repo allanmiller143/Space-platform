@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
@@ -8,7 +10,7 @@ import { getData } from '../../../Services/Api';
 import { toast } from 'sonner';
 import Spinner from '../../spinner/Spinner';
 
-const UserProfile = () => {
+const UserProfile = ({socket}) => {
   const [loadingUserData, setLoadingUserData] = useState(true); // Inicializando como true
   const { email } = useParams(); // Captura o email da URL
   const [userData, setUserData] = useState({});
@@ -43,7 +45,7 @@ const UserProfile = () => {
     <PageContainer title="User Profile" description="this is User Profile page">
       <Grid container spacing={3}>
         <Grid item sm={12}>
-          <ProfileBanner userData={userData} />
+          <ProfileBanner userData={userData} socket={socket} />
         </Grid>
       </Grid>
     </PageContainer>

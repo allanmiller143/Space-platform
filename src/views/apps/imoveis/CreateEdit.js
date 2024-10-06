@@ -35,29 +35,29 @@ const EditImovel = () => {
   const [openAdviceDialog, setOpenAdviceDialog] = useState(false);
 
   const [formData, setFormData] = useState({
-    tipoDeAnuncio: '',
-    tipoDeImovel : '',
-    descricao : '',
+    tipoDeAnuncio: 'sell',
+    tipoDeImovel : 'house',
+    descricao : 'Casa muito boa',
     andar : '',
-    precoDeVenda: '',
+    precoDeVenda: '3000000',
     precoDeAluguel: '',
     negociavel: '',
     iptu: '',
     taxasExtras: '',
-    quartos: '',
-    banheiros: '',
-    vaga: '',
-    suites : '',
-    mobiliado : '',
-    cep : '',
-    rua: '',
-    numero: '',
-    cidade: '',
-    estado: '',
-    bairro: '',
+    quartos: '3',
+    banheiros: '3',
+    vaga: '3',
+    suites : '2',
+    mobiliado : 'yes',
+    cep : '55750000',
+    rua: 'Sergio Emerson da Silva Carlos',
+    numero: '10',
+    cidade: 'Surubim',
+    estado: 'PE',
+    bairro: 'Centro',
     complemento: '',
     opcoesRapidas : {},
-    area: '',
+    area: '300',
     aceitaFinanciamento : true,
   });
 
@@ -283,6 +283,7 @@ const EditImovel = () => {
         else{
           toast.error(response.message);
         }
+        console.log(response);
       }catch(error){
         toast.error(error.message);
       }finally{
