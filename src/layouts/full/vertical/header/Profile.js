@@ -1,11 +1,10 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui/material';
+import { Box, Menu, Avatar, Typography, Divider, IconButton } from '@mui/material';
 import * as dropdownData from './data';
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
-import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 
 const Profile = () => {
