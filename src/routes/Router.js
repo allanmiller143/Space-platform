@@ -67,7 +67,7 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 
 // Paginas do projeto Space
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
-
+const ImovelPage = Loadable(lazy(() => import('../views/apps/marketplace/imovelPage')));
 // Frontend Pages
 const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
 const About = Loadable(lazy(() => import('../views/pages/frontend-pages/About')));
@@ -130,6 +130,7 @@ const Router = [
       { path: '/auth/maintenance', element: <Maintenance /> },
       { path: '/landingpage', element: <Landingpage /> },
       { path: '/marketplace', element: <Marketplace /> },
+      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/frontend-pages/about', element: <About /> },
       { path: '/frontend-pages/contact', element: <Contact /> },
