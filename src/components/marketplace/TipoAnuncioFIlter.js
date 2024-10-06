@@ -11,7 +11,7 @@ const TipoAnuncioFilter = ( {formData, setFormData}) => {
         setFormData({ ...formData, announcementType: event.target.value });
       };
     return (
-        <Box sx={{ flex: '1 1 200px' }}>
+        <Box>
             <FormControl fullWidth margin="none"> {/* Remove margem */}
                 <CustomFormLabel htmlFor="tipo-imovel">Tipo de anúncio</CustomFormLabel>
                 <CustomSelect

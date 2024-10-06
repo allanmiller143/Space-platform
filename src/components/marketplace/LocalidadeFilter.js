@@ -70,7 +70,7 @@ const LocalidadeFilter = ({ formData, setFormData }) => {
     };
 
     return (
-        <Box sx={{ flex: '1 1 200px' }}>
+        <Box>
             <FormControl fullWidth margin="none">
                 <CustomFormLabel htmlFor="Localidade">Localidade</CustomFormLabel>
                 <Autocomplete

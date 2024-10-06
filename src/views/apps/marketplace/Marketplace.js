@@ -118,17 +118,17 @@ const Marketplace = () => {
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Button variant="text" color="primary" onClick={() => setDrawerOpen(true)} sx={{ borderRadius: 0 }}>
-                    Abrir Filtros
+                    {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length} Filtros aplicados - Ver filtros`}
                 </Button>
                 <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                    <Box sx={{ width: 600, p: 4 }}>
+                    <Box sx={{ width: 600, p: 4, flexGrow: 0 }}>
                         <Typography variant="h3" gutterBottom>
                             Filtros
                         </Typography>
                         <FilterVitrine {...{ formData, setFormData }} />
                     </Box>
                 </Drawer>
-                <Grid container sx={{ height: 'calc(100vh - 147px)', overflow: 'hidden' }}>
+                <Grid container sx={{ height: 'calc(100vh - 107px )', overflow: 'hidden' }}>
                     <Grid item xs={12} md={7} pt="0px !important">
                         {/* Adicione a referência ao Box */}
                         <Box 
