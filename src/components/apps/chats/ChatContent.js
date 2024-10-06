@@ -115,7 +115,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
                   <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
                 </Box>
                 <ListItem  dense disableGutters sx={{ gap: 1 }}>
-                  <Avatar alt="imagem de perfil" src={selectedUser.profile.url} />
+                  <Avatar alt="imagem de perfil" src={selectedUser.profile ? selectedUser.profile.url : ''} />
                   <Typography variant="h5">{selectedUser.name}</Typography>
                 </ListItem>
                 <Stack direction={'row'}>

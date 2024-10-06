@@ -26,8 +26,8 @@ const ChatsMessages = ({ message }) => {
           />
           <Box>
             {message.createdAt ? (<TimeText name = {selectedUser.name} createdAt={message.createdAt}/>) : null}
-            {message.type === 'text' ? (<TextMessage/>) : null}
-            {message.type === 'image' ? (<ImageMessage/>) : null}
+            {message.type === 'text' ? (<TextMessage message={message}/>) : null}
+            {message.type === 'image' ? (<ImageMessage message={message}/>) : null}
           </Box>
         </Box>
       ) : (
@@ -39,8 +39,8 @@ const ChatsMessages = ({ message }) => {
           />
           <Box alignItems="flex-end" display="flex" flexDirection={'column'}>
             {message.createdAt ? (<TimeText name = {currentUserls.name} createdAt={message.createdAt}/>) : null}
-            {message.type === 'text' ? (<TextMessage/>) : null}
-            {message.type === 'image' ? (<ImageMessage/>) : null}
+            {message.type === 'text' ? (<TextMessage message={message}/>) : null}
+            {message.type === 'image' ? (<ImageMessage message={message}/>) : null}
           </Box>
         </Box>
       )}
