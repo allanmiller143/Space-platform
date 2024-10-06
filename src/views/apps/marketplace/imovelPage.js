@@ -1,114 +1,285 @@
 import React, { useEffect, useState } from 'react';
-import React from 'react';
 import { Container, Grid, Box, Typography, Button, Card, CardMedia, CardContent, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import RoomIcon from '@mui/icons-material/Room';
+import Gallery from 'src/components/lightbox/lightbox';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import "leaflet/dist/leaflet.css";
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import Modal from '@mui/material/Modal';
+import VerifiedIcon from '@mui/icons-material/Verified';
+
+
 
 const ImovelPage = () => {
+    const [openGallery, setOpenGallery] = useState(false);
+    const [openMapModal, setOpenMapModal] = useState(false);
+    const pictures = [
+        { url: '/mobiliado/imagem-12.jpg', name: 'Imagem 12', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-13.jpg', name: 'Imagem 13', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-14.jpg', name: 'Imagem 14', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-1.jpg', name: 'Imagem 1', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-2.jpg', name: 'Imagem 2', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-3.jpg', name: 'Imagem 3', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-4.jpg', name: 'Imagem 4', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-5.jpg', name: 'Imagem 5', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-6.jpg', name: 'Imagem 6', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-7.jpg', name: 'Imagem 7', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-8.jpg', name: 'Imagem 8', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-9.jpg', name: 'Imagem 9', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-10.jpg', name: 'Imagem 10', width: 800, height: 600 },
+        { url: '/mobiliado/imagem-11.jpg', name: 'Imagem 11', width: 800, height: 600 },
+    ];
+
     return (
         <Container sx={{ my: 5 }}>
             <Grid container spacing={3}>
                 {/* Coluna principal com título, preço e botões */}
                 <Grid item lg={8}>
-                    <Typography variant="h4" component="h1">Studio para alugar com 21m², 1 quarto e sem vaga</Typography>
-                    <Typography variant="h5" component="p">Total R$ 3.151<br />Aluguel R$ 2.500</Typography>
+                    <>
+                        <Typography variant="h1" component="h1" sx={{ mb: 3 }}>Studio para alugar com 21m², 1 quarto e sem vaga</Typography>
+                        <Typography variant="h3" component="p" sx={{ mb: 3 }}>Total R$ 3.151<br />Aluguel R$ 2.500</Typography>
+                        <Typography variant="body1"><strong>21 m²</strong> · 1 quarto · 1 banheiro · Sem mobília · Metrô próx.</Typography>
+
+                        <Box
+                            sx={{ backgroundImage: `url(${pictures[0].url})`, backgroundSize: 'cover', height: 400, mb: 3 }}
+                            onClick={() => setOpenGallery(true)}
+                        ></Box>
+                        {openGallery && <Gallery onClose={() => setOpenGallery(false)} pictures={pictures} />}
+                    </>
+                    <Box sx={{ display: 'flex', gap: 2, mb: 3, alignItems: 'center', opacity: 0.7, mt: 2 }}>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
+                            <CameraAltIcon fontSize="small" sx={{ mr: 0.5, color: 'grey.600' }} /> 44 Fotos
+                        </Typography>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
+                            <VideocamIcon fontSize="small" sx={{ mr: 0.5, color: 'grey.600' }} /> Vídeo
+                        </Typography>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
+                            <RoomIcon fontSize="small" sx={{ mr: 0.5, color: 'grey.600' }} /> Mapa
+                        </Typography>
+                    </Box>
+
+
+
+                    {/* Descrição do imóvel */}
+                    <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
+                        Imóvel aconchegante para alugar com 1 quarto e 1 banheiro no total. O condomínio fica localizado em Rua Vergueiro no bairro Vila Firmiano Pinto em São Paulo. Está bem localizado, próximo a pontos de interesse de Vila Firmiano Pinto, tais como Estação Santos-Imigrantes, SESC Ipiranga, Universidade São Judas e Instituto de Medicina Física e Reabilitação.
+                    </Typography>
+                    <Box sx={{ mb: 3 }}>
+                        <Typography variant="h6">Itens disponíveis</Typography>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Box</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Armários nos banheiros</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Armários na cozinha</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Chuveiro a gás</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Cozinha americana</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Box>
+                    <Box sx={{ mb: 3 }}>
+                        <Typography variant="h6">Itens indisponíveis</Typography>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell><CancelIcon /></TableCell>
+                                    <TableCell>Banheira de hidromassagem</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CancelIcon /></TableCell>
+                                    <TableCell>Ar-condicionado</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CancelIcon /></TableCell>
+                                    <TableCell>Lavanderia no prédio</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CancelIcon /></TableCell>
+                                    <TableCell>Vaga de garagem</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Box>
+                    <Box sx={{ mb: 3 }}>
+                        <Typography variant="h6">Condomínio</Typography>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Academia</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Portaria 24h</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><CheckCircleIcon /></TableCell>
+                                    <TableCell>Elevador</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Box>
+
+
                     <Box sx={{ display: 'flex', gap: 3, my: 4 }}>
                         <Button variant="contained" color="primary">Agendar visita</Button>
                         <Button variant="outlined" color="primary">Fazer proposta</Button>
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-                        <Typography variant="body1"><CameraAltIcon /> 44 Fotos</Typography>
-                        <Typography variant="body1"><VideocamIcon /> Vídeo</Typography>
-                        <Typography variant="body1"><RoomIcon /> Mapa</Typography>
-                    </Box>
-                    <Box sx={{ backgroundColor: '#d0d0d0', height: 325 }}></Box>
-                    {/* Descrição do imóvel */}
-                    <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
-                        Imóvel aconchegante para alugar com 1 quarto e 1 banheiro no total. O condomínio fica localizado em Rua Vergueiro no bairro Vila Firmiano Pinto em São Paulo. Está bem localizado, próximo a pontos de interesse de Vila Firmiano Pinto, tais como Estação Santos-Imigrantes, SESC Ipiranga, Universidade São Judas e Instituto de Medicina Física e Reabilitação.
-                    </Typography>
+
+
                 </Grid>
                 {/* Coluna lateral com endereço, informações e itens */}
                 <Grid item lg={4}>
-                    <Box sx={{ border: 1, p: 3, mb: 3 }}>
-                        <Typography variant="h6" component="h4" fontWeight="bold">Rua Vergueiro</Typography>
-                        <Typography variant="body1">Vila Firmiano Pinto, São Paulo</Typography>
-                        <Typography variant="body1"><strong>21 m²</strong> · 1 quarto · 1 banheiro · Sem mobília · Metrô próx.</Typography>
-                        <Box sx={{ backgroundColor: '#d0d0d0', height: 144, mt: 2 }}></Box>
-                    </Box>
-                    <Box sx={{ border: 1, p: 3, mb: 3 }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <Box sx={{ backgroundColor: '#d0d0d0', height: 60, width: 60, borderRadius: '50%' }}></Box>
-                            <Typography variant="h6" component="h4" fontWeight="bold" sx={{ mt: 2 }}>Nome do anunciante</Typography>
+                    <Box sx={{ 
+                        p: 0, 
+                        borderColor: '#e2e2e2', 
+                        boxShadow: '0px 2px 4px #0000002b', 
+                        overflow: 'hidden', 
+                        pt: '13px', 
+                        mb: 3 
+                    }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Box>
+                                <Typography variant="h6" component="h4" sx={{ 
+                                    pl: '10px', 
+                                    pr: '10px' 
+                                }}>
+                                    Rua Vergueiro
+                                </Typography>
+                                <Typography variant="body1" sx={{ 
+                                    pl: '10px', 
+                                    pr: '10px', 
+                                    mb: '10px' 
+                                }}>
+                                    Vila Firmiano Pinto, São Paulo
+                                </Typography>
+                            </Box>
+                            <Button 
+                                sx={{ 
+                                    left: '-8px', 
+                                    top: '-8px' 
+                                }} 
+                                onClick={() => setOpenMapModal(true)}
+                            >
+                                <FullscreenIcon />
+                            </Button>
                         </Box>
-                        <Typography variant="body1">Tipo de conta</Typography>
-                        <Button variant="contained" color="secondary" fullWidth>Ver perfil</Button>
+                            <Modal
+                                open={openMapModal}
+                                onClose={() => setOpenMapModal(false)}
+                                aria-labelledby="map-modal-title"
+                                aria-describedby="map-modal-description"
+                            >
+                                <Box sx={{ 
+                                    position: 'absolute', 
+                                    top: '50%', 
+                                    left: '50%', 
+                                    transform: 'translate(-50%, -50%)', 
+                                    width: '80%', 
+                                    height: '80%', 
+                                    bgcolor: 'background.paper', 
+                                    boxShadow: 24, 
+                                    p: 4 
+                                }}>
+                                    <MapContainer center={[-23.589616, -46.634797]} zoom={15} style={{ height: '100%', width: '100%' }}>
+                                        <TileLayer
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        />
+                                        <Marker position={[-23.589616, -46.634797]}>
+                                            <Popup>
+                                                Rua Vergueiro, Vila Firmiano Pinto, São Paulo
+                                            </Popup>
+                                        </Marker>
+                                    </MapContainer>
+                                </Box>
+                            </Modal>
+                        <MapContainer center={[-23.589616, -46.634797]} zoom={7} style={{ height: 214, position: 'relative' }}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={[-23.589616, -46.634797]}>
+                                <Popup>
+                                    Rua Vergueiro, Vila Firmiano Pinto, São Paulo
+                                </Popup>
+                            </Marker>
+                        </MapContainer>
                     </Box>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="h6">Itens disponíveis</Typography>
-                        <List>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Box" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Armários nos banheiros" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Armários na cozinha" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Chuveiro a gás" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Cozinha americana" />
-                            </ListItem>
-                        </List>
+                    
+                    <Box sx={{ 
+                        p: 0, 
+                        borderColor: '#e2e2e2', 
+                        boxShadow: '0px 2px 4px #0000002b', 
+                        overflow: 'hidden', 
+                        pt: '13px', 
+                        mb: 3,
+                        backgroundColor: '#fff', 
+                        borderRadius: '8px', 
+                        padding: '16px', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center' 
+                    }}>
+                        <Box sx={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            alignItems: 'center', 
+                            marginBottom: '16px' 
+                        }}>
+                            <Box sx={{ 
+                                backgroundColor: '#d0d0d0', 
+                                height: 60, 
+                                width: 60, 
+                                borderRadius: '50%' 
+                            }}></Box>
+                            <Typography variant="h6" component="h4" fontWeight="bold" sx={{ mt: 2 }}>
+                                <VerifiedIcon sx={{ mr: 1 }} />
+                                Nome do anunciante
+                            </Typography>
+                        </Box>
+                        <Typography variant="body1" sx={{ 
+                            marginBottom: '8px', 
+                            color: '#757575' 
+                        }}>@username</Typography>
+                        <Typography variant="body1" sx={{ 
+                            marginBottom: '16px', 
+                            color: '#757575' 
+                        }}>Corretor</Typography>
+                        <Button variant="contained" color="secondary" fullWidth sx={{ 
+                            backgroundColor: '#f50057', 
+                            color: '#fff', 
+                            '&:hover': { 
+                                backgroundColor: '#c51162' 
+                            } 
+                        }}>Ver perfil</Button>
                     </Box>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="h6">Itens indisponíveis</Typography>
-                        <List>
-                            <ListItem>
-                                <ListItemIcon><CancelIcon /></ListItemIcon>
-                                <ListItemText primary="Banheira de hidromassagem" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CancelIcon /></ListItemIcon>
-                                <ListItemText primary="Ar-condicionado" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CancelIcon /></ListItemIcon>
-                                <ListItemText primary="Lavanderia no prédio" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CancelIcon /></ListItemIcon>
-                                <ListItemText primary="Vaga de garagem" />
-                            </ListItem>
-                        </List>
-                    </Box>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="h6">Condomínio</Typography>
-                        <List>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Academia" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Portaria 24h" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon><CheckCircleIcon /></ListItemIcon>
-                                <ListItemText primary="Elevador" />
-                            </ListItem>
-                        </List>
-                    </Box>
+
                 </Grid>
             </Grid>
             {/* Comparativo de Imóveis na região */}

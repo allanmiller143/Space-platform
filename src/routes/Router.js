@@ -110,6 +110,8 @@ const Router = [
       { path: '/pages/pricing', element: <Pricing /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
       { path: '/pages/faq', element: <Faq /> },
+      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
+
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
@@ -130,7 +132,6 @@ const Router = [
       { path: '/auth/maintenance', element: <Maintenance /> },
       { path: '/landingpage', element: <Landingpage /> },
       { path: '/marketplace', element: <Marketplace /> },
-      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/frontend-pages/about', element: <About /> },
       { path: '/frontend-pages/contact', element: <Contact /> },
