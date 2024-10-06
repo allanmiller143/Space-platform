@@ -18,12 +18,13 @@ const ChatsMessages = ({ message }) => {
   return (
     <Box>
       {message.senderEmail !== currentUserls.email ? (
-        <Box display="flex">
+        <Box display="flex" gap={2}>
           <Avatar
             alt={selectedUser.profile.url}
             src={selectedUser.profile.url}
             sx={{ width: 40, height: 40 }}
           />
+          
           <Box>
             {message.createdAt ? (<TimeText name = {selectedUser.name} createdAt={message.createdAt}/>) : null}
             {message.type === 'text' ? (<TextMessage message={message}/>) : null}
@@ -33,8 +34,8 @@ const ChatsMessages = ({ message }) => {
       ) : (
         <Box mb={1} display="flex" flexDirection="row-reverse" gap={2}>
           <Avatar
-            alt={currentUserls.profile.url}
-            src={currentUserls.profile.url}
+            alt={currentUserls.profile && currentUserls.profile.url}
+            src={currentUserls.profile && currentUserls.profile.url}
             sx={{ width: 40, height: 40 }}
           />
           <Box alignItems="flex-end" display="flex" flexDirection={'column'}>

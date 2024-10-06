@@ -161,8 +161,6 @@ const ChatPreViewDialog = ({ previewOpen, setPreviewOpen, previewFiles, setPrevi
             textTransform: 'none',
             borderRadius: '8px',
             padding: '8px 16px',
-            backgroundColor: '#3f51b5',
-            color: 'white',
           }}
         >
           Enviar

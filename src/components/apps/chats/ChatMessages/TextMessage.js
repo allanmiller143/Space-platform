@@ -4,21 +4,16 @@
 import React, { useState } from 'react';
 import { Box, Popover, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
-import MessageActions from './MessageActions ';
+import MessageActions from './Actions/MessageActions ';
 
-const TextMessage = ({ message, onDelete, onEdit }) => {
+const TextMessage = ({ message }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [showIcon, setShowIcon] = useState(false); // Controla a visibilidade do ícone
-
+    const cuString = localStorage.getItem('currentUser');
+    const currentUserls = JSON.parse(cuString);
     const handlePopoverOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
-    const handlePopoverClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
 
     return (
         <Box 
@@ -32,13 +27,16 @@ const TextMessage = ({ message, onDelete, onEdit }) => {
                 position: 'relative', 
             }}
             // Exibe o ícone quando o mouse está sobre a mensagem
-            onMouseEnter={() => setShowIcon(true)}
+            onMouseEnter={() => {
+                if(message.senderEmail === currentUserls.email){
+                    setShowIcon(true)
+                }
+            }}
             onMouseLeave={() => setShowIcon(false)}
         >
             {message.text}
-
             {/* Popover Trigger (Ícone que só aparece com hover) */}
-            {showIcon && (
+            {showIcon && currentUserls.email === message.senderEmail &&  (
                 
                 <ArrowDropDown 
                     onClick={handlePopoverOpen}

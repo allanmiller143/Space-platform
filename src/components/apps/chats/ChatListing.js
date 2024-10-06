@@ -59,7 +59,7 @@ const ChatListing = ({ socket }) => {
   return (
     <div>
       <Box display={'flex'} alignItems="center" gap="10px" p={3}>
-        <Avatar alt="Remy Sharp" src={currentUserls?.profile.url} sx={{ width: 54, height: 54 }} />
+        <Avatar alt="Remy Sharp" src={currentUserls.profile && currentUserls?.profile.url} sx={{ width: 54, height: 54 }} />
         <Box>
           <Typography variant="body1" fontWeight={600}>
             {currentUserls?.name}
