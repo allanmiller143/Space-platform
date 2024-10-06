@@ -22,11 +22,6 @@ const Feed = () => {
             </Box>
           ) : null}
         </Grid>
-        <Grid item xs={12}>
-            <Typography variant="h3">
-                Feed &nbsp;
-            </Typography>
-        </Grid>
         <Grid item sm={12} lg={4} xs={12}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
