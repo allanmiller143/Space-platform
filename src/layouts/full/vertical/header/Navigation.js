@@ -45,7 +45,7 @@ const AppDD = () => {
           onClick={handleClick2}
           endIcon={<IconChevronDown size="15" style={{ marginLeft: '-5px', marginTop: '2px' }} />}
         >
-          Produtos
+          Ferramentas
         </Button>
         {/* ------------------------------------------- */}
         {/* Message Dropdown */}

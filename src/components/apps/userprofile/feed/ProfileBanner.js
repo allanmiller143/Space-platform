@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getData } from '../../../../Services/Api';
 import { use } from 'i18next';
+import { useDropzone } from 'react-dropzone';
 
 const ProfileBanner = ({userData,socket}) => {
 
@@ -39,13 +40,34 @@ const ProfileBanner = ({userData,socket}) => {
     <>
       <BlankCard>
       
-        <CardMedia
-          component="img"
-          image={profilecover}
-          alt="Imagem de capa do perfil"
-          sx={{ height: '370px', objectFit: 'cover' }}
-        />
-        
+        <Box
+          sx={{
+            height: '260px',
+            // backgroundImage: `url(${profilecover})`,
+            backgroundColor: '#d4d4d4',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            position: 'relative',
+            borderBottomLeftRadius: '0px',
+            borderBottomRightRadius: '0px'
+          }}
+        >
+          <Stack direction="column" spacing={2} sx={{ position: 'absolute', top: 16, right: 16 }}>
+            <Button
+              variant="text"
+              startIcon={<IconBrandInstagram size="18" />}
+            >
+              Enviar imagem de capa
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<IconBrandInstagram size="18" />}
+            >
+              Remover imagem de capa
+            </Button>
+          </Stack>
+        </Box>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           {/* Post | Followers | Following */}
           <Grid item lg={4} sm={12} md={5} xs={12} sx={{ order: { xs: '2', sm: '2', lg: '1' } }}>
