@@ -138,7 +138,7 @@ const Profile = () => {
                 </Box>
               </Box>
             ))}
-            <Box mt={2}>
+            {/* <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
                   <Box>
@@ -162,7 +162,7 @@ const Profile = () => {
               >
                 Sair
               </Button>
-            </Box>
+            </Box> */}
           </Box>
         </Scrollbar>
       </Menu>

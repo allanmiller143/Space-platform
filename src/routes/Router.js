@@ -82,7 +82,7 @@ const Router = [
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
+      { path: '/', element: <Navigate to="/marketplace" /> },
       { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> }, // New route for Imoveis List
