@@ -20,8 +20,8 @@ const ChatsMessages = ({ message }) => {
       {message.senderEmail !== currentUserls.email ? (
         <Box display="flex" gap={2}>
           <Avatar
-            alt={selectedUser.profile.url}
-            src={selectedUser.profile.url}
+            alt={selectedUser.profile && selectedUser.profile.url}
+            src={selectedUser.profile && selectedUser.profile.url}
             sx={{ width: 40, height: 40 }}
           />
           

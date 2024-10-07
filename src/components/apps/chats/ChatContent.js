@@ -11,17 +11,16 @@ import { openNewChat } from './ChatService/Api';
 import ChatPreViewDialog from './ChatPreViewDialog';
 import Spinner from '../../../views/spinner/Spinner';
 import ChatsMessages from './ChatMessages/ChatsMessages';
+import ChatInsideSidebar from './ChatInsideSidebar';
 
 const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
   const [dragging, setDragging] = useState(false);
   const messagesEndRef = useRef(null);
-  const cuString = localStorage.getItem('currentUser');
-  const currentUserls = JSON.parse(cuString);
   const [previewOpen, setPreviewOpen] = useState(false); // Controle do diálogo de pré-visualização
   const [previewFiles, setPreviewFiles] = useState([]);
   const [loadingChat, setLoadingChat] = useState(false);
-
+  const [isInSidebar, setIsInSidebar] = useState(false);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
   };
@@ -105,7 +104,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
           <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
             <>
             <Box>
-              <Box display="flex" alignItems="center" p={2}>
+              <Box display="flex" alignItems="center" p={2} position={'relative'}>
                 <Box
                   sx={{
                     display: { xs: 'block', md: 'block', lg: 'none' },
@@ -119,7 +118,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
                   <Typography variant="h5">{selectedUser.name}</Typography>
                 </ListItem>
                 <Stack direction={'row'}>
-                  <IconButton aria-label="mais opções" onClick={() => setOpen(!open)}>
+                  <IconButton aria-label="mais opções" onClick={() => setIsInSidebar(!isInSidebar)}>
                     <IconDotsVertical stroke={1.5} />
                   </IconButton>
                 </Stack>
@@ -169,22 +168,9 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
           <ChatNoConversationSelected />
         )
       }
-      {/* {chatDetails ? (
-        
-      ) : (
-        <Box display="flex" alignItems="center" p={2} pb={1} pt={1} flexGrow={1}>
-          <Box
-            sx={{
-              display: { xs: 'flex', md: 'flex', lg: 'none' },
-              mr: '10px',
-            }}
-          >
-            <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
-          </Box>
-          <ChatNoConversationSelected />
-        </Box>
-      )} */}
+      <ChatInsideSidebar isInSidebar={isInSidebar} setIsInSidebar = {setIsInSidebar} />
 
+  
       {activeChat ?  
       <Box>
         <Divider />
