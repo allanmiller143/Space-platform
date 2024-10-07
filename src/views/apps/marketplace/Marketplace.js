@@ -177,7 +177,7 @@ const Marketplace = () => {
                             }
                         </Box>
                     </Grid>
-                    <MarketplaceMaps properties={properties} />
+                    <MarketplaceMaps properties={properties} formData={formData} />
                 </Grid>
             </Box>
         </PageContainer>

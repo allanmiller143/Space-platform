@@ -4,17 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, Box, Button, CircularProgress } from '@mui/material';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
+import L from 'leaflet'; // Importar o Leaflet para criar o ícone
+import Pino from '../../../assets/images/svgs/pino-de-localizacao.png';
+// Criar um ícone personalizado para o usuário
+const userIcon = new L.Icon({
+    iconUrl: Pino,
+    iconSize: [38, 38], // Tamanho do ícone
+    iconAnchor: [19, 38], // Ponto de ancoragem do ícone (base)
+    popupAnchor: [0, -38], // Ponto de ancoragem do popup
+});
 
-
-const MarketplaceMaps = ({ properties }) => {
+const MarketplaceMaps = ({ properties, formData }) => {
     const [userLocation, setUserLocation] = useState([0, 0]);
     const [isLocationLoaded, setIsLocationLoaded] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log('houve uma alteração');
+    }, [formData.city, formData.state]);
+
     const GetPropertyType = (type) => {
         switch (type) {
             case 'apartment':
-                return 'Apartmento';
+                return 'Apartamento';
             case 'house':
                 return 'Casa';
             case 'land':
@@ -22,11 +34,10 @@ const MarketplaceMaps = ({ properties }) => {
             case 'farm':
                 return 'Fazenda/Chácara';
             default:
-                return 'Other';
+                return 'Outro';
         }
     };
 
-    // Função para pegar a localização do usuário e salvar no localStorage
     const requestUserLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -34,52 +45,46 @@ const MarketplaceMaps = ({ properties }) => {
                     const { latitude, longitude } = position.coords;
                     const location = [latitude, longitude];
                     const savedLocation = localStorage.getItem('userLocation');
-                    
+
                     if (savedLocation) {
                         const [savedLat, savedLon] = JSON.parse(savedLocation);
-                        // Verificar se a nova localização difere significativamente da salva
-                        const tolerance = 0.01; // Tolerância de 0.01 graus (~1.1 km)
+                        const tolerance = 0.01;
                         if (Math.abs(savedLat - latitude) > tolerance || Math.abs(savedLon - longitude) > tolerance) {
-                            // Atualiza apenas se a diferença for maior que a tolerância
                             setUserLocation(location);
                             localStorage.setItem('userLocation', JSON.stringify(location));
                         }
                     } else {
-                        // Se não houver localização salva, armazenar a nova
                         setUserLocation(location);
                         localStorage.setItem('userLocation', JSON.stringify(location));
                     }
-                    setIsLocationLoaded(true); // Marcar como carregado
+                    setIsLocationLoaded(true);
                 },
                 (error) => {
                     console.error("Error getting user location:", error);
-                    setIsLocationLoaded(true); // Marcar como carregado mesmo com erro
+                    setIsLocationLoaded(true);
                 }
             );
         }
     };
 
-    // Usar o useEffect para carregar a localização do localStorage ou pedir permissão
     useEffect(() => {
         const savedLocation = localStorage.getItem('userLocation');
         if (savedLocation) {
-            setUserLocation(JSON.parse(savedLocation)); // Carregar localização salva
-            setIsLocationLoaded(true); // Marcar como carregado
+            setUserLocation(JSON.parse(savedLocation));
+            setIsLocationLoaded(true);
         }
-        // Pedir a localização sempre que o componente for montado
         requestUserLocation();
     }, []);
 
-    // Função para navegar para a página do imóvel
     const handleOpenProperty = (propertyId) => {
-        navigate(`/property/${propertyId}`); // Redireciona para a página do imóvel com o ID correspondente
+        navigate(`/property/${propertyId}`);
     };
 
     return (
         <Grid item xs={12} md={5}>
             <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '0px' }}>
                 {!isLocationLoaded ? (
-                    <CircularProgress /> // Spinner de loading
+                    <CircularProgress />
                 ) : (
                     <MapContainer center={userLocation} zoom={10} scrollWheelZoom={false} style={{ height: '100%', width: '100%', borderRadius: '0px' }}>
                         <TileLayer
@@ -87,11 +92,13 @@ const MarketplaceMaps = ({ properties }) => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
 
-                        <Marker position={userLocation} draggable onDragend={() => requestUserLocation()} sx ={{ cursor: 'pointer', zIndex: 100, color : 'red' }} >
-                            <Popup sx={{ padding: '10px' }}>
-                                <strong style={{ fontWeight: 'bold', paddingRight: '10px' }}>Você está aqui</strong>
+                        {/* Marcador para a localização do usuário com ícone personalizado */}
+                        <Marker position={userLocation} icon={userIcon} draggable>
+                            <Popup>
+                                <strong>Você está aqui</strong>
                             </Popup>
                         </Marker>
+
                         {properties.map((property, index) => (
                             <Marker
                                 key={index}
@@ -100,13 +107,13 @@ const MarketplaceMaps = ({ properties }) => {
                                     property.address.longitude ? property.address.longitude : ''
                                 ]}
                             >
-                                <Popup sx={{ maxWidth: '300px' }} >
+                                <Popup>
                                     <div>
                                         <strong>{GetPropertyType(property.propertyType)}</strong><br />
                                         {property.description}
                                         <br/>
                                         <Button
-                                            sx={{mt: 2, ml: 9}}
+                                            sx={{ mt: 2, ml: 9 }}
                                             variant="text"
                                             size="small"
                                             color="primary"
