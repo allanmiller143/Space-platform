@@ -176,7 +176,7 @@ const ImovelPage = () => {
 
                         <Typography variant="h2" component="h1" sx={{ mb: 3 }}>Tipo de imóvel com X Quartos e X vagas próximo do Bairro, Cidade</Typography>
                         <Typography variant="h3" component="p" sx={{ mb: 3 }}>Total R$ 3.151<br />Aluguel R$ 2.500</Typography>
-
+                                
 
 
 

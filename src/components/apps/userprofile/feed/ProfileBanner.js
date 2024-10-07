@@ -71,7 +71,7 @@ const ProfileBanner = ({userData,socket}) => {
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           {/* Post | Followers | Following */}
           <Grid item lg={4} sm={12} md={5} xs={12} sx={{ order: { xs: '2', sm: '2', lg: '1' } }}>
-            <Stack direction="row" textAlign="center" justifyContent="center" gap={6} m={3}>
+            <Stack direction="row" textAlign="center" justifyContent="center" gap={6} m={3} sx={{ display: 'none' }}>
               <Box>
                 <Typography variant="h4" fontWeight="600">0</Typography>
                 <Typography color="textSecondary" variant="h6" fontWeight={400}>Publicações</Typography>
@@ -99,7 +99,7 @@ const ProfileBanner = ({userData,socket}) => {
                 </ProfileImage>
                 <Box mt={1}>
                   <Typography fontWeight={600} variant="h5">@{userData.handler}</Typography>
-                  <Typography color="gray" variant="h6" fontWeight={400}>{userData.name}</Typography>
+                  <Typography color="gray" variant="h6" fontWeight={400} mb={2}>{userData.name}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -108,42 +108,44 @@ const ProfileBanner = ({userData,socket}) => {
           {/* Friends following buttons */}
           <Grid item lg={4} sm={12} xs={12} sx={{ order: { xs: '3', sm: '3', lg: '3' } }}>
             <Stack direction={'row'} gap={2} alignItems="center" justifyContent="end" my={2} mr={2}>
-              <Fab
-                size="small"
-                color="primary"
-                sx={{ backgroundColor: '#1877F2' }}
-                onClick={() => {
-                  if(userData.socials[0].url === '.'){
-                    toast.error('Este perfil ainda não possui Facebook cadastrado!');
-                    return;
+              <Box sx={{ display: 'none' }}>
+                <Fab
+                  size="small"
+                  color="primary"
+                  sx={{ backgroundColor: '#1877F2' }}
+                  onClick={() => {
+                    if(userData.socials[0].url === '.'){
+                      toast.error('Este perfil ainda não possui Facebook cadastrado!');
+                      return;
+                    }
+                    window.open(`https://www.facebook.com/${userData.socials[0].url.replace('@', '')}`, '_blank')}
                   }
-                  window.open(`https://www.facebook.com/${userData.socials[0].url.replace('@', '')}`, '_blank')}
-                }
-              >
-                <IconBrandFacebook size="16" />
-              </Fab>
-              <Fab
-                size="small"
-                color="success"
-                sx={{ backgroundColor: '#25D366' }}
-                onClick={() => seePhone()}
-              >
-                <IconBrandWhatsapp size="18" />
-              </Fab>
-              <Fab
-                size="small"
-                color="error"
-                sx={{ backgroundColor: '#E4405F' }}
-                onClick={() =>{
-                  if(userData.socials[2].url === '.'){
-                    toast.error('Este perfil ainda não possui Instagram cadastrado!');
-                    return;
-                  }
-                  window.open(`https://www.instagram.com/${userData.socials[2].url.replace('@', '')}`, '_blank')}
-                } 
-              >
-                <IconBrandInstagram size="18" />
-              </Fab>
+                >
+                  <IconBrandFacebook size="16" />
+                </Fab>
+                <Fab
+                  size="small"
+                  color="success"
+                  sx={{ backgroundColor: '#25D366' }}
+                  onClick={() => seePhone()}
+                >
+                  <IconBrandWhatsapp size="18" />
+                </Fab>
+                <Fab
+                  size="small"
+                  color="error"
+                  sx={{ backgroundColor: '#E4405F' }}
+                  onClick={() =>{
+                    if(userData.socials[2].url === '.'){
+                      toast.error('Este perfil ainda não possui Instagram cadastrado!');
+                      return;
+                    }
+                    window.open(`https://www.instagram.com/${userData.socials[2].url.replace('@', '')}`, '_blank')}
+                  } 
+                >
+                  <IconBrandInstagram size="18" />
+                </Fab>
+              </Box>
               <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">
                 Editar Perfil
               </Button>
