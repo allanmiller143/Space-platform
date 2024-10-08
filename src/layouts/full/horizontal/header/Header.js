@@ -1,18 +1,17 @@
+/* eslint-disable no-unused-vars */
 import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleMobileSidebar } from 'src/store/customizer/CustomizerSlice';
 import { IconMenu2 } from '@tabler/icons';
-// import Notifications from 'src/layouts/full/vertical/header/Notifications';
-// import Cart from 'src/layouts/full/vertical/header/Cart';
 import Profile from 'src/layouts/full/vertical/header/Profile';
-// import Search from 'src/layouts/full/vertical/header/Search';
-// import Language from 'src/layouts/full/vertical/header/Language';
 import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se existe um currentUser
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
@@ -59,14 +58,30 @@ const Header = () => {
         ) : null}
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          <Button color="primary"
-            fullWidth component={Link} to="/auth/complete-register2">
-            Criar conta 
-          </Button>
-          <Button variant="contained" color="primary" component={Link} to="/auth/login">
-            Login
-          </Button>
-          <Profile />
+          {!currentUserls && (
+            <Button variant="contained" color="primary" component={Link} to="/auth/login">
+              Login
+            </Button>
+          )}
+          {!currentUserls && (
+            <Button color="primary"
+              fullWidth component={Link} to="/auth/register2">
+              Criar conta 
+            </Button>
+          )}
+
+          {currentUserls && currentUserls.type === 'client' && (
+            <Button color="primary"
+              fullWidth component={Link} to="/auth/complete-register2">
+              Completar Cadastro 
+            </Button>
+          )}  
+
+          {
+            currentUserls && (
+              <Profile />
+            )
+          }
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

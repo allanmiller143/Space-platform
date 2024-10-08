@@ -7,7 +7,7 @@ import ChildCard from 'src/components/shared/ChildCard';
 import { toast } from 'sonner';
 import { postFormData, postFormLoadingData } from '../../../../Services/Api';
 
-export const PostTextBox = ({ loading, setLoading, setProgress }) => {
+export const PostTextBox = ({ loading, setLoading, setProgress, myPost, setMyPost }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [postText, setPostText] = useState('');
   const token = localStorage.getItem('token');
@@ -58,6 +58,7 @@ export const PostTextBox = ({ loading, setLoading, setProgress }) => {
       const response = await postFormLoadingData('posts', form, token, setLoading, setProgress);
       if (response.status === 200 || response.status === 201) {
         toast.success('Post publicado com sucesso!');
+        setMyPost([response.data ,...myPost ]);
         setPostText('');
         setSelectedImages([]);
         console.log(response);

@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 import {io} from 'socket.io-client';
-const socket = io('https://1a19-177-37-233-192.ngrok-free.app/');
+const socket = io('https://space-api-zsx7.onrender.com/');
 
 
 /* ***Layouts**** */
@@ -67,7 +67,7 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 
 // Paginas do projeto Space
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
-const ImovelPage = Loadable(lazy(() => import('../views/apps/marketplace/imovelPage')));
+
 // Frontend Pages
 const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
 const About = Loadable(lazy(() => import('../views/pages/frontend-pages/About')));
@@ -130,7 +130,6 @@ const Router = [
       { path: '/auth/maintenance', element: <Maintenance /> },
       { path: '/landingpage', element: <Landingpage /> },
       { path: '/marketplace', element: <Marketplace /> },
-      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/frontend-pages/about', element: <About /> },
       { path: '/frontend-pages/contact', element: <Contact /> },

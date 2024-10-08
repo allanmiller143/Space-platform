@@ -1,26 +1,42 @@
 import  { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Menu, Avatar, Typography, Divider, IconButton } from '@mui/material';
+import { Box, Menu, Avatar, Typography, Divider, IconButton, Button } from '@mui/material';
 import * as dropdownData from './data';
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
-  const [profileImageUrl] = useState(currentUserls.profile?.url || ''); // Estado para a URL da imagem do perfil
-  const [name] = useState(currentUserls.name);
-  const [type] = useState(currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
-  const [email] = useState(currentUserls.email);
+  const [profileImageUrl] = useState( (currentUserls && currentUserls.type !== 'client' && currentUserls.profile) ? currentUserls.profile?.url : ''); // Estado para a URL da imagem do perfil
+  const [name] = useState(!currentUserls ? '' : currentUserls.name || '');
+  const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
+  const [email] = useState(currentUserls ? currentUserls.email : '');
+  const navigate = useNavigate();
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  const toProfilePage = () => {
+    if(currentUserls && currentUserls.type !== 'client') {
+      navigate(`/user-profile/${email}`);
+    }else{
+      toast.warning('Por favor, complete seu perfil para acessar esta página');
+    }
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+    toast.success('Sessão encerrada com sucesso');
+  }
 
   return (
     <Box>
@@ -88,7 +104,7 @@ const Profile = () => {
             {dropdownData.profile.map((profile) => (
               <Box key={profile.title}>
                 <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
-                <Link to={`/user-profile/${email}`}>
+                <Box onClick={toProfilePage}>
                   <Stack direction="row" spacing={2}>
                       <Box
                         width="45px"
@@ -129,14 +145,18 @@ const Profile = () => {
                           }}
                           noWrap
                         >
-                          {profile.subtitle}
+                          {profile.subtitle}sdiuguydf
                         </Typography>
                       </Box>
                     </Stack>
-                  </Link>
+                  </Box>
                 </Box>
               </Box>
             ))}
+
+            <Button  variant="outlined" color="error" onClick={logout} fullWidth sx={{ mt: 2 }}>
+              <Typography> sair </Typography>
+            </Button>
             {/* <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
