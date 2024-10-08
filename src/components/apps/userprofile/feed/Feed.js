@@ -16,7 +16,7 @@ const Feed = () => {
 
         <Grid item lg={12}>
           {loading ? (
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%' ,mt: 3 }}>
               <Typography variant="h6" gutterBottom>Publicando...</Typography>
               <LinearProgress variant="determinate" value={progress} />
             </Box>

@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 import {io} from 'socket.io-client';
-const socket = io('https://space-api-zsx7.onrender.com/');
+const socket = io('https://1a19-177-37-233-192.ngrok-free.app/');
 
 
 /* ***Layouts**** */

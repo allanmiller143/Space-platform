@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://space-api-zsx7.onrender.com/';
+const apiUrl = 'https://1a19-177-37-233-192.ngrok-free.app/';
 
 export async function getData(url= '',token = '') {
   try {
@@ -64,6 +64,35 @@ export async function postFormData(url = '', formData = {},token = '') {
     });
   return response;
 }
+
+
+export async function postFormLoadingData(url = '', formData = {}, token = '', setLoading, setProgress) {
+  try {
+    setLoading(true); // Start loading
+
+    const response = await axios.post(`${apiUrl}${url}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'x-access-token': token,
+      },
+      onUploadProgress: (progressEvent) => {
+        const total = progressEvent.total || 1; // Fallback in case total is 0
+        const currentProgress = Math.round((progressEvent.loaded * 100) / total);
+        setProgress(currentProgress); // Update progress state
+      },
+    });
+
+    setLoading(false); // Stop loading after completion
+    return response.data; // Return the response data
+  } catch (error) {
+    setLoading(false); // Stop loading if there is an error
+    const message = error.response?.data?.message || 'An error occurred';
+    const status = error.response?.status || 500;
+    console.log('tomada de cu');
+    return { message, status }; // Return error details
+  }
+}
+
 
 export async function putFormData(url = '', formData = {}, token = '') {
   const response = await axios.put(`${apiUrl}${url}`, formData, { headers: { 'Content-Type': 'multipart/form-data', 'x-access-token': token } })  

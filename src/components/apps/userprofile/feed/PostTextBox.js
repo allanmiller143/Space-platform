@@ -5,10 +5,12 @@ import { Stack, Fab, TextField, Button, Box, Grid, IconButton, LinearProgress } 
 import { IconPhoto, IconTrash } from '@tabler/icons';
 import ChildCard from 'src/components/shared/ChildCard';
 import { toast } from 'sonner';
+import { postFormData, postFormLoadingData } from '../../../../Services/Api';
 
 export const PostTextBox = ({ loading, setLoading, progress, setProgress }) => {
   const [selectedImages, setSelectedImages] = useState([]);
-  const [postText, setPostText] = useState('');
+  const [postText, setPostText] = useState('Segundo post hihi');
+  const token = localStorage.getItem('token');
 
   // Função para lidar com a seleção de imagens
   const handleImageChange = (event) => {
@@ -25,37 +27,37 @@ export const PostTextBox = ({ loading, setLoading, progress, setProgress }) => {
   };
 
   // Simula o envio para a API com validação e progresso
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!postText && selectedImages.length === 0) {
       toast.warning('Por favor, adicione texto ou imagens para publicar.');
       return;
     }
+  
+    setLoading(true);
+    setProgress(0);
+  
+    const formData = {
+      text : postText,
+    }
 
-    setLoading(true); // Inicia o loading
-    setProgress(0); // Reseta o progresso
+    const form = new FormData();
 
-    const postData = {
-      text: postText,
-      images: selectedImages,
-    };
-
-    // Simulação de progresso de envio
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(timer);
-          setLoading(false); // Finaliza o loading
-          toast.success('Post publicado com sucesso!');
-          
-          // Limpar os campos após a publicação
-          setPostText('');
-          setSelectedImages([]);
-        }
-        return prevProgress + 20; // Incrementa o progresso em 20%
-      });
-    }, 500); // Atualiza a cada 500ms
-
-    console.log('Enviando para API:', postData);
+    form.append('data', JSON.stringify(formData));
+    selectedImages.forEach((image) => {
+      form.append('photo', image); // Add images to form
+    });
+  
+    try {
+      const response = await postFormLoadingData('posts', form, token, setLoading, setProgress);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Post publicado com sucesso!');
+      } else {
+        console.log(response);
+        toast.error('Erro ao publicar o post.');
+      }
+    } catch (error) {
+      toast.error('Erro ao publicar o post. Tente novamente mais tarde.');
+    }
   };
 
   return (

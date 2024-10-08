@@ -6,10 +6,7 @@ import { IconCircle, IconMessage2, IconShare, IconThumbUp } from '@tabler/icons'
 import uniqueId from 'lodash/uniqueId';
 import { useDispatch, useSelector } from 'react-redux';
 import { likePosts, addComment } from 'src/store/apps/userProfile/UserProfileSlice';
-import PostComments from './PostComments';
 import BlankCard from '../../../shared/BlankCard';
-
-
 
 const PostItem = ({ post }) => {
   const dispatch = useDispatch();
