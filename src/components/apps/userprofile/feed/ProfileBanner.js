@@ -9,11 +9,9 @@ import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getData } from '../../../../Services/Api';
-import { use } from 'i18next';
-import { useDropzone } from 'react-dropzone';
 
-const ProfileBanner = ({userData,socket}) => {
+
+const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
 
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
@@ -155,7 +153,7 @@ const ProfileBanner = ({userData,socket}) => {
 
         {/** Tab Content **/} 
       </BlankCard>
-      <ProfileTab email={userData.email} socket={socket} />
+      <ProfileTab email={userData.email} socket={socket} myPost={myPost} setMyPost={setMyPost} />
     </>
   );
 };

@@ -84,7 +84,7 @@ const Agendamentos = () => (
   </Box>
 );
 
-const ProfileTab = ({ email, socket }) => {
+const ProfileTab = ({ email, socket, myPost, setMyPost }) => {
   const [value, setValue] = useState(0);
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
@@ -100,7 +100,7 @@ const ProfileTab = ({ email, socket }) => {
     {
       label: 'Meu perfil',
       icon: <IconUserCircle size="20" />,
-      component: <Feed />
+      component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} />
     },
     {
       label: 'Meus Imóveis',

@@ -1,25 +1,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { Stack, Fab, TextField, Button, Box, Grid, IconButton, LinearProgress } from '@mui/material';
+import { Stack, Fab, TextField, Button, Box, Grid, IconButton } from '@mui/material';
 import { IconPhoto, IconTrash } from '@tabler/icons';
 import ChildCard from 'src/components/shared/ChildCard';
 import { toast } from 'sonner';
 import { postFormData, postFormLoadingData } from '../../../../Services/Api';
 
-export const PostTextBox = ({ loading, setLoading, progress, setProgress }) => {
+export const PostTextBox = ({ loading, setLoading, setProgress }) => {
   const [selectedImages, setSelectedImages] = useState([]);
-  const [postText, setPostText] = useState('Segundo post hihi');
+  const [postText, setPostText] = useState('');
   const token = localStorage.getItem('token');
 
   // Função para lidar com a seleção de imagens
   const handleImageChange = (event) => {
     const files = event.target.files;
     if (files) {
-      const imageUrls = Array.from(files).map((file) => URL.createObjectURL(file));
-      setSelectedImages((prevImages) => [...prevImages, ...imageUrls]);
+      setSelectedImages((prevImages) => [...prevImages, ...files]); // Guarda os arquivos de imagem reais
     }
+    console.log(selectedImages);
   };
+  
 
   // Função para remover uma imagem selecionada
   const handleRemoveImage = (index) => {
@@ -33,24 +34,33 @@ export const PostTextBox = ({ loading, setLoading, progress, setProgress }) => {
       return;
     }
   
+    if (selectedImages.length > 4) {
+      toast.warning('Você pode selecionar no máximo 4 imagens.');
+      return;
+    }
+  
     setLoading(true);
     setProgress(0);
   
     const formData = {
-      text : postText,
-    }
-
+      text: postText,
+    };
+  
     const form = new FormData();
-
     form.append('data', JSON.stringify(formData));
+  
+    // Adiciona os arquivos de imagem ao form
     selectedImages.forEach((image) => {
-      form.append('photo', image); // Add images to form
+      form.append('photos', image); // 'photos' deve ser o nome do campo esperado pelo backend
     });
   
     try {
       const response = await postFormLoadingData('posts', form, token, setLoading, setProgress);
       if (response.status === 200 || response.status === 201) {
         toast.success('Post publicado com sucesso!');
+        setPostText('');
+        setSelectedImages([]);
+        console.log(response);
       } else {
         console.log(response);
         toast.error('Erro ao publicar o post.');
@@ -100,7 +110,7 @@ export const PostTextBox = ({ loading, setLoading, progress, setProgress }) => {
               <Grid item xs={4} sm={3} md={2} key={index}>
                 <Box sx={{ position: 'relative' }}>
                   <img
-                    src={image}
+                    src={URL.createObjectURL(image)}
                     alt={`selected-img-${index}`}
                     style={{
                       width: '100px', // largura fixa

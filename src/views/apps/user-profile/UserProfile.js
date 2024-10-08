@@ -12,6 +12,7 @@ import Spinner from '../../spinner/Spinner';
 
 const UserProfile = ({socket}) => {
   const [loadingUserData, setLoadingUserData] = useState(true); // Inicializando como true
+  const [myPost, setMyPost] = useState([]);
   const { email } = useParams(); // Captura o email da URL
   const [userData, setUserData] = useState({});
 
@@ -45,7 +46,7 @@ const UserProfile = ({socket}) => {
     <PageContainer title="User Profile" description="this is User Profile page">
       <Grid container spacing={3}>
         <Grid item sm={12}>
-          <ProfileBanner userData={userData} socket={socket} />
+          <ProfileBanner userData={userData} socket={socket} myPost = {myPost} setMyPost = {setMyPost} />
         </Grid>
       </Grid>
     </PageContainer>

@@ -83,7 +83,7 @@ export async function postFormLoadingData(url = '', formData = {}, token = '', s
     });
 
     setLoading(false); // Stop loading after completion
-    return response.data; // Return the response data
+    return {data: response.data, status :response.status}; // Return the response data
   } catch (error) {
     setLoading(false); // Stop loading if there is an error
     const message = error.response?.data?.message || 'An error occurred';
