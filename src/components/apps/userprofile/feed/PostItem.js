@@ -15,23 +15,20 @@ const PostItem = ({ post, setMyPost, myPost }) => {
   const currentUserls = JSON.parse(cuString);
   const customizer = useSelector((state) => state.customizer);
   const [anchorEl, setAnchorEl] = useState(null);
-  const isPostLiked = post.PostLikes.map((item) => item.email === currentUserls.email);
+  const isPostLiked = post.PostLikes.some((item) => item.email === currentUserls.email);
   const [postLiked, setPostLiked] = useState(isPostLiked);
   const [linkesLength, setLinkesLength] = useState(post.likes);
 
   const handleLike = async (postId) => {
+    setPostLiked(!postLiked);
+
+    if (postLiked) {
+      setLinkesLength(linkesLength - 1);
+    } else {
+      setLinkesLength(linkesLength + 1);
+    }
     try {
-      const response = await postData(`posts/like/${postId}`, {}, token);
-      if (response.status === 200 || response.status === 201) {
-        setPostLiked(!postLiked);
-        if(response.data.liked){
-          setLinkesLength(linkesLength + 1);
-        }else{
-          setLinkesLength(linkesLength - 1);
-        }
-      } else {
-        toast.error(response.message);
-      }
+      await postData(`posts/like/${postId}`, {}, token);
     } catch (err) {
       console.log(err);
     }
