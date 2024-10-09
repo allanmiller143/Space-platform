@@ -17,6 +17,7 @@ const UserProfile = ({socket}) => {
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
+
     loadUserInfo();
   }, []);
 
@@ -24,7 +25,7 @@ const UserProfile = ({socket}) => {
     setLoadingUserData(true); // Ativando o estado de carregamento
 
     try {
-      const response = await getData(`find/${email}`);
+      const response = await getData(`find/${email.replace('-', '.')}`);
       if (response.status === 200 || response.status === 201) {
         setUserData(response.userInfo);
       } else {

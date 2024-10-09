@@ -1,4 +1,3 @@
-import React from 'react';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from 'src/components/container/PageContainer';
 import EditInvoicePage from 'src/components/apps/invoice/Edit-invoice/index';

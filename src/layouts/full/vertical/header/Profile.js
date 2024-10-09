@@ -26,7 +26,7 @@ const Profile = () => {
 
   const toProfilePage = () => {
     if(currentUserls && currentUserls.type !== 'client') {
-      navigate(`/user-profile/${email}`);
+      navigate(`/user-profile/${email.replace(/[.]/g, '-')}`);
     }else{
       toast.warning('Por favor, complete seu perfil para acessar esta página');
     }
