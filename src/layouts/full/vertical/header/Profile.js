@@ -39,7 +39,8 @@ const Profile = () => {
   }
 
   return (
-    <Box>
+    <Box display="flex"   alignItems="center">
+      <Typography variant="caption"><strong>{name}</strong> </Typography>
       <IconButton
         size="large"
         aria-label="mostrar novas notificações"
@@ -62,6 +63,7 @@ const Profile = () => {
           }}
         />
       </IconButton>
+      
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
