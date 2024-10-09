@@ -25,9 +25,10 @@ const UserProfile = ({socket}) => {
     setLoadingUserData(true); // Ativando o estado de carregamento
 
     try {
-      const response = await getData(`find/${email.replace('-', '.')}`);
+      const response = await getData(`find/${email.replaceAll('-', '.')}`);
       if (response.status === 200 || response.status === 201) {
         setUserData(response.userInfo);
+        console.log(response.userInfo);
       } else {
         toast.error(response.message);
       }

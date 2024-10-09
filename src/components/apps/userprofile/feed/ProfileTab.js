@@ -84,7 +84,7 @@ const Agendamentos = () => (
   </Box>
 );
 
-const ProfileTab = ({ email, socket, myPost, setMyPost }) => {
+const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const [value, setValue] = useState(0);
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
@@ -93,6 +93,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost }) => {
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
+    setMyPost([]);
     setValue(newValue);
   };
 
@@ -100,7 +101,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost }) => {
     {
       label: 'Meu perfil',
       icon: <IconUserCircle size="20" />,
-      component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} />
+      component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
     },
     {
       label: 'Meus Imóveis',

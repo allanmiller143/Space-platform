@@ -7,7 +7,7 @@ import Post from 'src/components/apps/userprofile/feed/Post';
 import { useState } from 'react';
 
 
-const Feed = ( {myPost, setMyPost}) => {
+const Feed = ( {myPost, setMyPost,userData}) => {
 
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
@@ -28,10 +28,10 @@ const Feed = ( {myPost, setMyPost}) => {
         <Grid item sm={12} lg={4} xs={12}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
-              <IntroCard />
+              <IntroCard userData={userData}  />
             </Grid>
             <Grid item sm={12}>
-              <InfoCard />
+              <InfoCard userData={userData} />
             </Grid>
           </Grid>
         </Grid>

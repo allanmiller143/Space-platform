@@ -284,7 +284,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     try {
         setLoading(true);
         const form = new FormData();  
-        form.append('photo', formData.profilePhotoFile);
+        form.append('profile', formData.profilePhotoFile);
         form.append('data', JSON.stringify(postDataExample)); //
         const elevateTypeResponse = await putFormData(`${userRoute}/elevate/${currentUserls.email}`, form, token);
         if(elevateTypeResponse.status == 200 || elevateTypeResponse.status == 201){

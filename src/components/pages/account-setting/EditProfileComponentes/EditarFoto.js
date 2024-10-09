@@ -39,7 +39,7 @@ const EditarFoto = () => {
 
   const insertProfilePic = async (file) => {
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('profile', file);
 
     try {
       setLoading(true);

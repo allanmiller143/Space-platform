@@ -19,7 +19,10 @@ const EditarRedesSociais = () => {
   const [facebook, setFacebook] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[0].url === '.' ? '' : currentUserls.socials[0].url);
   const [whatsapp, setWhatsapp] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[1].url === '.' ? '' : currentUserls.socials[1].url);
   const [instagram, setInstagram] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[2].url === '.' ? '' : currentUserls.socials[2].url);
-
+  const [site, setSite] = useState( currentUserls.socials.length === 0 ? '.' : currentUserls.socials[3].url === '.' ? '.' : currentUserls.socials[3].url);
+  const [email, setEmail] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[4].url === '.' ? '' : currentUserls.socials[4].url);
+  const [phone, setPhone] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[5].url === '.' ? '' : currentUserls.socials[5].url);
+  
   const isValidSocialHandle = (value) => {
     if(value === ''){
       return true;
@@ -63,6 +66,9 @@ const EditarRedesSociais = () => {
         {type : 'facebook', url : facebook || '.'},
         {type : 'whatsapp', url : whatsapp || '.'},
         {type : 'instagram', url : instagram || '.'},
+        {type : 'site', url : site || '.'},
+        {type : 'email', url : email || '.'},
+        {type : 'otherPhone', url : phone || '.'},
       ],
     };
 

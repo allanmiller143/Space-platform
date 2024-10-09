@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
-import { Grid, Box, Typography, Button, Avatar, Stack, CardMedia, styled, Fab, Skeleton } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid, Box, Typography, Button, Avatar, Stack, CardMedia, styled, Fab, Skeleton, Dialog, DialogContent, DialogActions } from '@mui/material';
 import profilecover from '/mobiliado/imagem-1.jpg';
 import userimg from 'src/assets/images/profile/user-1.jpg';
 import { IconBrandFacebook, IconBrandInstagram, IconBrandWhatsapp } from '@tabler/icons';
@@ -9,10 +9,20 @@ import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { getData, putFormData } from '../../../../Services/Api';
+import Loading from '../../../Loading/Loading';
+
 
 
 const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
-
+  const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const cuString = localStorage.getItem('currentUser');
+  const token = localStorage.getItem('token');
+  const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+  const [coverImageUrl, setCoverImageUrl] = useState(userData.banner && userData.banner.url ? userData.banner?.url : '/images/default-cover.jpg');
+  const fileInputRefCover = useRef(null);
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
     width: '110px',
@@ -28,20 +38,67 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
       toast.error('Este perfil ainda não possui telefone cadastrado!');
       return;
     }
-
       const phoneNumber = userData.socials[1].url.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
       window.open(`https://wa.me/55${phoneNumber}`, '_blank');
-
   };
+
+
+  const handleCoverFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreviewImage(objectUrl);
+      setOpenDialog(true);
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setPreviewImage(null);
+  };
+
+  const uploadCoverImage = async (file) => {
+    const formData = new FormData();
+    formData.append('banner', file);
+
+    try {
+      setLoading(true);
+      const response = await putFormData(`${currentUserls.type}/${currentUserls.email}`, formData, token);
+      if (response.status === 200 || response.status === 201) {
+        const responseUserData = await getData(`find/${currentUserls.email}`);
+        if (responseUserData.status === 200) {
+          const user = responseUserData.userInfo;
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          setCoverImageUrl(user.banner?.url); // Atualiza a URL da imagem de perfil
+          toast.success('Imagem inserida com sucesso');
+        } else {
+          toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
+        }
+      }
+    } catch (error) {
+      toast.error(`Erro ao inserir imagem:\n ${error.message}`);
+    } finally {
+      fileInputRefCover.current.value = null;
+      setLoading(false);
+      handleCloseDialog(); // Fechar o dialog após o envio
+    }
+  };
+
+  const handleSubmitCoverImage = () => {
+    const file = fileInputRefCover.current.files[0];
+    if (file) {
+      uploadCoverImage(file);
+    }
+  };
+
 
   return (
     <>
       <BlankCard>
-      
         <Box
           sx={{
             height: '260px',
-            // backgroundImage: `url(${profilecover})`,
+            backgroundImage: `url(${coverImageUrl})`,
             backgroundColor: '#d4d4d4',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -51,18 +108,10 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
             borderBottomRightRadius: '0px'
           }}
         >
-          <Stack direction="column" spacing={2} sx={{ position: 'absolute', top: 16, right: 16 }}>
-            <Button
-              variant="text"
-              startIcon={<IconBrandInstagram size="18" />}
-            >
+         <Stack direction="column" spacing={2} sx={{ position: 'absolute', top: 16, right: 16 }}>
+            <Button variant="text" component="label" startIcon={<IconBrandInstagram size="18" />}>
               Enviar imagem de capa
-            </Button>
-            <Button
-              variant="text"
-              startIcon={<IconBrandInstagram size="18" />}
-            >
-              Remover imagem de capa
+              <input type="file" accept="image/jpeg,image/png" onChange={handleCoverFileChange} style={{ display: 'none' }} ref={fileInputRefCover} />
             </Button>
           </Stack>
         </Box>
@@ -103,14 +152,13 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
             </Box>
           </Grid>
 
-          {/* Friends following buttons */}
           <Grid item lg={4} sm={12} xs={12} sx={{ order: { xs: '3', sm: '3', lg: '3' } }}>
             <Stack direction={'row'} gap={2} alignItems="center" justifyContent="end" my={2} mr={2}>
-              <Box sx={{ display: 'none' }}>
+              <Box sx={{ display: userData.socials.length === 0 ? 'none' : 'flex', gap: 2 }}>
                 <Fab
                   size="small"
                   color="primary"
-                  sx={{ backgroundColor: '#1877F2' }}
+                  sx={{ backgroundColor: '#1877F2', display: (userData.socials[0] && userData.socials[0].url === '.') ? 'none' : ' ' }}
                   onClick={() => {
                     if(userData.socials[0].url === '.'){
                       toast.error('Este perfil ainda não possui Facebook cadastrado!');
@@ -124,7 +172,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="success"
-                  sx={{ backgroundColor: '#25D366' }}
+                  sx={{ backgroundColor: '#25D366', display: (userData.socials[1] && userData.socials[1].url === '.') ? 'none' : ' '  }}
                   onClick={() => seePhone()}
                 >
                   <IconBrandWhatsapp size="18" />
@@ -132,7 +180,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="error"
-                  sx={{ backgroundColor: '#E4405F' }}
+                  sx={{ backgroundColor: '#E4405F', display: (userData.socials[0] && userData.socials[2].url === '.') ? 'none' : ' '  }}
                   onClick={() =>{
                     if(userData.socials[2].url === '.'){
                       toast.error('Este perfil ainda não possui Instagram cadastrado!');
@@ -153,7 +201,17 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
 
         {/** Tab Content **/} 
       </BlankCard>
-      <ProfileTab email={userData.email} socket={socket} myPost={myPost} setMyPost={setMyPost} />
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        {loading && <Loading data={{ open: loading }} />}
+        <DialogContent>
+          {previewImage && <img src={previewImage} alt="Preview" style={{ width: '100%', height: 'auto' }} />}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">Cancelar</Button>
+          <Button onClick={handleSubmitCoverImage} color="primary">Enviar</Button>
+        </DialogActions>
+      </Dialog>
+      <ProfileTab email={userData.email} socket={socket} myPost={myPost} setMyPost={setMyPost} userData = {userData} />
     </>
   );
 };

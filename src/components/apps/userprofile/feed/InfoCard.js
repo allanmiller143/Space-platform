@@ -1,159 +1,192 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import  { useState } from 'react';
 import { Stack, Typography, TextField, IconButton, Box, Button } from '@mui/material';
 import ChildCard from 'src/components/shared/ChildCard';
-import { IconBriefcase, IconMail, IconMapPin, IconEdit, IconPhone, IconBrandWhatsapp, IconGlobe } from '@tabler/icons';
+import { IconMail, IconMapPin, IconEdit, IconPhone, IconBrandWhatsapp, IconGlobe } from '@tabler/icons';
+import { toast } from 'sonner';
+import { getData, putFormData } from '../../../../Services/Api';
+import Loading from '../../../Loading/Loading';
 
-const InfoCard = () => {
+const InfoCard = ( {userData}) => {
   const [isEditing, setIsEditing] = useState({ site: false, email: false, phone: false, whatsapp: false, address: false });
-  const [site, setSite] = useState('https://meusite.com');
-  const [email, setEmail] = useState('meuemail@exemplo.com');
-  const [phone, setPhone] = useState('(11) 99999-9999');
-  const [whatsapp, setWhatsapp] = useState('(11) 98888-8888');
-  const [address, setAddress] = useState({ city: 'São Paulo', state: 'SP' });
+  const [site, setSite] = useState((userData.socials.length === 0 || userData.socials.length === 3) ? 'https://meusite.com' : userData.socials[3].url === '.' ? 'https://meusite.com' : userData.socials[3].url );
+  const [email, setEmail] = useState( (userData.socials.length === 0 || userData.socials.length === 3) ? 'meuemail@exemplo.com' : userData.socials[4].url === '.' ? 'meuemail@exemplo.com': userData.socials[4].url);
+  const [phone, setPhone] = useState((userData.socials.length === 0 || userData.socials.length === 3) ? '(11) 99999-9999' : userData.socials[5].url === '.' ? '(11) 99999-9999' : userData.socials[5].url );
+  const [whatsapp, setWhatsapp] = useState((userData.socials && userData.socials.length > 0) ? userData.socials[1].url : '(11) 99999-9999');
+  const [address] = useState({ city: userData.address.city, state: userData.address.state });
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
 
-  const handleSave = (field) => {
-    setIsEditing({ ...isEditing, [field]: false });
-    // Aqui você pode adicionar lógica para salvar as informações no localStorage ou em um backend
+  const formatPhoneNumber = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+  
+    if (cleaned.length <= 2) {
+      return `(${cleaned}`;
+    } else if (cleaned.length <= 7) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+    } else if (cleaned.length <= 11) {
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+    }
+  
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
+  };
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsEditing({ site: false, email: false, phone: false, whatsapp: false, address: false });
+    setLoading(true);
+    const formJson = {
+      socials : [
+        {type : 'facebook', url : (userData.socials && userData.socials.length > 0 && userData.socials[0].url) ? userData.socials[0].url : '.'},
+        {type : 'whatsapp', url : whatsapp !== '(11) 99999-9999' ? whatsapp : '.'},
+        {type : 'instagram', url : (userData.socials && userData.socials.length > 0 && userData.socials[2].url) ? userData.socials[2].url : '.'},
+        {type : 'site', url : site !== 'https://meusite.com' ? site : '.'},
+        {type : 'email', url : email !== 'meuemail@exemplo.com' ? email : '.'},
+        {type : 'otherPhone', url : phone !== '(11) 99999-9999' ? phone : '.'},
+      ],
+    };
+
+
+    console.log(formJson);
+  
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(formJson));
+
+    try {
+      const response = await putFormData(`${userData.type}/${userData.email}`, formData, token);
+      if (response.status === 200 || response.status === 201) {
+        const updatedUser = await getData(`find/${userData.email}`);
+        if (updatedUser.status === 200) {
+          const user = updatedUser.userInfo;
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          toast.success('Redes sociais atualizadas com sucesso');
+        } else {
+          toast.error(`Erro ao obter dados do usuário:\n ${updatedUser.message}`);
+        }
+      } else {
+        toast.error(`Erro ao atualizar redes sociais:\n ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao atualizar redes sociais:\n ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <ChildCard sx={{ mt: 3, position: 'relative' }}>
-      <Typography color="gray" fontWeight={600} variant="h6" mb={2}>
-        Informações gerais
-      </Typography>
-      <Stack direction="row" marginTop={3} gap={2} alignItems="center" mb={3}>
-        <IconGlobe size="21" />
-        {isEditing.site ? (
-          <Box>
-            <TextField
-              value={site}
-              onChange={(e) => setSite(e.target.value)}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <Button onClick={() => setIsEditing({ ...isEditing, site: false })}>Cancelar</Button>
-            <Button onClick={() => handleSave('site')} color="primary" sx={{ ml: 1 }}>
-              Salvar
-            </Button>
-          </Box>
-        ) : (
-          <Typography>
-            {site}
-            <IconButton onClick={() => setIsEditing({ ...isEditing, site: true })} size="small">
-              <IconEdit size="16" />
-            </IconButton>
-          </Typography>
-        )}
-      </Stack>
-      <Stack direction="row" gap={2} alignItems="center" mb={3}>
-        <IconMail size="21" />
-        {isEditing.email ? (
-          <Box>
-            <TextField
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <Button onClick={() => setIsEditing({ ...isEditing, email: false })}>Cancelar</Button>
-            <Button onClick={() => handleSave('email')} color="primary" sx={{ ml: 1 }}>
-              Salvar
-            </Button>
-          </Box>
-        ) : (
-          <Typography>
-            {email}
-            <IconButton onClick={() => setIsEditing({ ...isEditing, email: true })} size="small">
-              <IconEdit size="16" />
-            </IconButton>
-          </Typography>
-        )}
-      </Stack>
-      <Stack direction="row" gap={2} alignItems="center" mb={3}>
-        <IconPhone size="21" />
-        {isEditing.phone ? (
-          <Box>
-            <TextField
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <Button onClick={() => setIsEditing({ ...isEditing, phone: false })}>Cancelar</Button>
-            <Button onClick={() => handleSave('phone')} color="primary" sx={{ ml: 1 }}>
-              Salvar
-            </Button>
-          </Box>
-        ) : (
-          <Typography>
-            {phone}
-            <IconButton onClick={() => setIsEditing({ ...isEditing, phone: true })} size="small">
-              <IconEdit size="16" />
-            </IconButton>
-          </Typography>
-        )}
-      </Stack>
-      <Stack direction="row" gap={2} alignItems="center" mb={3}>
-        <IconBrandWhatsapp size="21" />
-        {isEditing.whatsapp ? (
-          <Box>
-            <TextField
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <Button onClick={() => setIsEditing({ ...isEditing, whatsapp: false })}>Cancelar</Button>
-            <Button onClick={() => handleSave('whatsapp')} color="primary" sx={{ ml: 1 }}>
-              Salvar
-            </Button>
-          </Box>
-        ) : (
-          <Typography>
-            {whatsapp}
-            <IconButton onClick={() => setIsEditing({ ...isEditing, whatsapp: true })} size="small">
-              <IconEdit size="16" />
-            </IconButton>
-          </Typography>
-        )}
-      </Stack>
-      <Stack direction="row" gap={2} alignItems="center" mb={1}>
-        <IconMapPin size="21" />
-        {isEditing.address ? (
-          <Box>
-            <TextField
-              value={address.city}
-              onChange={(e) => setAddress({ ...address, city: e.target.value })}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              value={address.state}
-              onChange={(e) => setAddress({ ...address, state: e.target.value })}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1 }}
-            />
-            <Button onClick={() => setIsEditing({ ...isEditing, address: false })}>Cancelar</Button>
-            <Button onClick={() => handleSave('address')} color="primary" sx={{ ml: 1 }}>
-              Salvar
-            </Button>
-          </Box>
-        ) : (
+    <Box position={'relative'}>
+      {loading && <Loading data={{ open: loading, absolute: true }} />}
+      <ChildCard sx={{ mt: 3, position: 'relative' }}>
+        <Typography color="gray" fontWeight={600} variant="h6" mb={2}>
+          Informações gerais
+        </Typography>
+        <Stack direction="row" marginTop={3} gap={2} alignItems="center" mb={3}>
+          <IconGlobe size="21" />
+          {isEditing.site ? (
+            <Box>
+              <TextField
+                value={site}
+                onChange={(e) => setSite(e.target.value)}
+                variant="outlined"
+                size="small"
+                sx={{ mb: 1 }}
+              />
+              <Button onClick={() => setIsEditing({ ...isEditing, site: false })}>Cancelar</Button>
+              <Button onClick={ handleSubmit} color="primary" sx={{ ml: 1 }}>
+                Salvar
+              </Button>
+            </Box>
+          ) : (
+            <Typography>
+              {site}
+              {
+                currentUserls.email === userData.email ? <IconButton onClick={() => setIsEditing({ ...isEditing, site: true })} size="small"> <IconEdit size="16" /> </IconButton> : null
+              }
+            </Typography>
+          )}
+        </Stack>
+        <Stack direction="row" gap={2} alignItems="center" mb={3}>
+          <IconMail size="21" />
+          {isEditing.email ? (
+            <Box>
+              <TextField
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                variant="outlined"
+                size="small"
+                sx={{ mb: 1 }}
+              />
+              <Button onClick={() => setIsEditing({ ...isEditing, email: false })}>Cancelar</Button>
+              <Button onClick={ handleSubmit} color="primary" sx={{ ml: 1 }}>
+                Salvar
+              </Button>
+            </Box>
+          ) : (
+            <Typography>
+              {email}
+              {currentUserls.email === userData.email ? <IconButton onClick={() => setIsEditing({ ...isEditing, email: true })} size="small"> <IconEdit size="16" /> </IconButton> : null}
+            </Typography>
+          )}
+        </Stack>
+        <Stack direction="row" gap={2} alignItems="center" mb={3}>
+          <IconPhone size="21" />
+          {isEditing.phone ? (
+            <Box>
+              <TextField
+                value={phone}
+                onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
+                variant="outlined"
+                size="small"
+                sx={{ mb: 1 }}
+              />
+              <Button onClick={() => setIsEditing({ ...isEditing, phone: false })}>Cancelar</Button>
+              <Button onClick={ handleSubmit} color="primary" sx={{ ml: 1 }}>
+                Salvar
+              </Button>
+            </Box>
+          ) : (
+            <Typography>
+              {phone}
+              {currentUserls.email === userData.email ? <IconButton onClick={() => setIsEditing({ ...isEditing, phone: true })} size="small"> <IconEdit size="16" /> </IconButton> : null}
+            </Typography>
+          )}
+        </Stack>
+        <Stack direction="row" gap={2} alignItems="center" mb={3}>
+          <IconBrandWhatsapp size="21" />
+          {isEditing.whatsapp ? (
+            <Box>
+              <TextField
+                value={whatsapp}
+                onChange={(e) => setWhatsapp(formatPhoneNumber(e.target.value))}
+                variant="outlined"
+                size="small"
+                sx={{ mb: 1 }}
+              />
+              <Button onClick={() => setIsEditing({ ...isEditing, whatsapp: false })}>Cancelar</Button>
+              <Button onClick={ handleSubmit} color="primary" sx={{ ml: 1 }}>
+                Salvar
+              </Button>
+            </Box>
+          ) : (
+            <Typography>
+              {whatsapp}
+              {currentUserls.email === userData.email ? <IconButton onClick={() => setIsEditing({ ...isEditing, whatsapp: true })} size="small"> <IconEdit size="16" /> </IconButton> : null}
+            </Typography>
+          )}
+        </Stack>
+        <Stack direction="row" gap={2} alignItems="center" mb={1}>
+          <IconMapPin size="21" />
           <Typography>
             {address.city} - {address.state} - Brasil
-            <IconButton onClick={() => setIsEditing({ ...isEditing, address: true })} size="small">
-              <IconEdit size="16" />
-            </IconButton>
           </Typography>
-        )}
-      </Stack>
-    </ChildCard>
+    
+        </Stack>
+      </ChildCard>
+    </Box>
   );
 };
 
