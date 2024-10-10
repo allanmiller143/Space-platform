@@ -91,7 +91,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="creci">CRECI</CustomFormLabel>
-                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} />
+                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} helperText="Ex. CRECI-XX 00000" />
                 </Grid>
               </Grid>
               {/* <Typography variant="h6" gutterBottom mt={3}>
