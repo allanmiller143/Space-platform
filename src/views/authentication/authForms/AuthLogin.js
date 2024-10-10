@@ -88,7 +88,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           />
         </Box>
         <Box>
-          <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+          <CustomFormLabel htmlFor="password">Senha</CustomFormLabel>
           <CustomTextField
             id="password"
             type="password"
