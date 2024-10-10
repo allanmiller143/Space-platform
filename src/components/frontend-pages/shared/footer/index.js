@@ -14,26 +14,26 @@ const footerLinks = [
     children: [
       {
         title: true,
-        titleText: 'Planos',
+        titleText: 'Carece de dados',
       },
       {
         title: false,
-        titleText: 'Grátis',
+        titleText: 'Dados de negócio...',
         link: '/planos/gratis',
       },
       {
         title: false,
-        titleText: 'Corretor',
+        titleText: 'Dados de negócio...',
         link: '/planos/corretor',
       },
       {
         title: false,
-        titleText: 'Imobiliária',
+        titleText: 'Dados de negócio...',
         link: '/planos/imobiliaria',
       },
       {
         title: false,
-        titleText: 'Pro',
+        titleText: 'Dados de negócio...',
         link: '/planos/pro',
       },
     ],
@@ -43,36 +43,36 @@ const footerLinks = [
     children: [
       {
         title: true,
-        titleText: 'Ferramentas',
+        titleText: 'Carece de dados',
       },
       {
         title: false,
-        titleText: 'Calendário',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/calendario',
       },
       {
         title: false,
-        titleText: 'Mensagens',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/mensagens',
       },
       {
         title: false,
-        titleText: 'Agenda',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/agenda',
       },
       {
         title: false,
-        titleText: 'Rede Social',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/rede-social',
       },
       {
         title: false,
-        titleText: 'Gestão de Imóveis',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/gestao-imoveis',
       },
       {
         title: false,
-        titleText: 'Gestão de Anúncios',
+        titleText: 'Dados de negócio...',
         link: '/ferramentas/gestao-anuncios',
       },
     ],
@@ -82,31 +82,31 @@ const footerLinks = [
     children: [
       {
         title: true,
-        titleText: 'Empresa',
+        titleText: 'Carece de dados',
       },
       {
         title: false,
-        titleText: 'Sobre Nós',
+        titleText: 'Dados de negócio...',
         link: '/sobre',
       },
       {
         title: false,
-        titleText: 'Contato',
+        titleText: 'Dados de negócio...',
         link: '/contato',
       },
       {
         title: false,
-        titleText: 'Blog',
+        titleText: 'Dados de negócio...',
         link: '/blog',
       },
       {
         title: false,
-        titleText: 'Carreiras',
+        titleText: 'Dados de negócio...',
         link: '/carreiras',
       },
       {
         title: false,
-        titleText: 'Parceiros',
+        titleText: 'Dados de negócio...',
         link: '/parceiros',
       },
     ],

@@ -108,29 +108,29 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
       icon: <IconHome size="20" />,
       component: <MeusImoveis />
     },
+    // {
+    //   label: 'Anúncios',
+    //   icon: <IconAd2 size="20" />,
+    //   component: <Anuncios />
+    // },
+    // {
+    //   label: 'Mensagens',
+    //   icon: <IconMessage size="20" />,
+    //   component: <Mensagens />
+    // },
+    // {
+    //   label: 'Agendamentos',
+    //   icon: <IconCalendarEvent size="20" />,
+    //   component: <Agendamentos />
+    // },
     {
-      label: 'Anúncios',
-      icon: <IconAd2 size="20" />,
-      component: <Anuncios />
-    },
-    {
-      label: 'Mensagens',
-      icon: <IconMessage size="20" />,
-      component: <Mensagens />
-    },
-    {
-      label: 'Agendamentos',
-      icon: <IconCalendarEvent size="20" />,
-      component: <Agendamentos />
-    },
-    {
-      label: 'Amigos',
+      label: 'Seguindo',
       icon: <IconUserCircle size="20" />,
       component: <FriendsCard />
     },
     {
       label: 'Seguidores',
-      icon: <IconHeart size="20" />,
+      icon: <IconUserCircle size="20" />,
       component: <FollowerCard />
     },
   ];
@@ -171,7 +171,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     <>
       <Loading data={{ open: loading }} />
       <Box sx={{ mt: 2, backgroundColor: (theme) => theme.palette.grey[100] }}>
-        <Box justifyContent={'center'} alignItems={'center'} display="flex" sx={{ overflow: 'auto', width: { xs: '333px', sm: 'auto' } }}>
+        <Box justifyContent={'end'} alignItems={'center'} display="flex" sx={{ overflow: 'auto', width: { xs: '333px', sm: 'auto' } }}>
           <Tabs
             value={value}
             onChange={handleChange}

@@ -5,7 +5,7 @@ import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthLogin from '../authForms/AuthLogin';
 
 const Login = () => (
-  <PageContainer title="Login" description="Esta é a página de Login">
+  <PageContainer title="Login" description="Acesse sua conta">
     <Grid
       container
       spacing={0}
