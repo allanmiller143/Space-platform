@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { Box, Popover, List, ListItem, ListItemText, IconButton, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { ArrowDropDown, Cancel } from '@mui/icons-material';
-import { Typography } from 'antd';
 import EditMessageDialog from './EditMessageDialog';
 import DeleteMessageDialog from './DeleteMessageDialog';
 

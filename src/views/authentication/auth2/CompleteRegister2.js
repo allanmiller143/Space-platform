@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Grid, Box, Card, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // Ícone de voltar
-import { useNavigate } from 'react-router-dom'; // Hook para navegação
 import PageContainer from 'src/components/container/PageContainer';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthCompleteRegister from '../authForms/AuthCompleteRegister';
+import BackScreenAdviceDialog from '../authForms/completeRegisterComponentes/BackScreenAdviceDialog';
 
 const CompleteRegister2 = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const navigate = useNavigate(); // Hook de navegação
+  const [openDialog, setOpenDialog] = useState(false);
 
   const images = [
     '/src/assets/images/posters/imagem-28.jpg',
@@ -31,7 +31,7 @@ const CompleteRegister2 = () => {
 
   // Função para navegar para a página anterior
   const handleGoBack = () => {
-    navigate(-1); // Voltar uma página no histórico
+    setOpenDialog(true);
   };
 
   return (
@@ -109,6 +109,7 @@ const CompleteRegister2 = () => {
           </Grid>
         </Grid>
       </Box>
+      <BackScreenAdviceDialog openDialog={openDialog} setOpenDialog={setOpenDialog}/>
     </PageContainer>
   );
 };
