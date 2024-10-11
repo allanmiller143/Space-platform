@@ -40,6 +40,8 @@ const isValidCPF = (cpf) => {
   return true;
 };
 
+
+// Função para validar CNPJ
 // Função para validar CNPJ
 const isValidCNPJ = (cnpj) => {
   cnpj = cnpj.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
@@ -49,24 +51,25 @@ const isValidCNPJ = (cnpj) => {
   // Elimina CNPJs inválidos conhecidos
   if (/^(\d)\1{13}$/.test(cnpj)) return false;
 
-  // Valida CNPJ
-  let sum = 0;
-  let remainder;
+  // Valida os dois primeiros dígitos verificadores
+  const validateCNPJDigits = (cnpj, length) => {
+    let sum = 0;
+    let pos = length - 7;
 
-  for (let i = 1; i <= 12; i++) sum += parseInt(cnpj[i - 1]) * (13 - i);
-  remainder = (sum % 11);
-  if (remainder < 2) remainder = 0;
-  else remainder = 11 - remainder;
-  if (remainder !== parseInt(cnpj[12])) return false;
+    for (let i = length; i >= 1; i--) {
+      sum += cnpj[length - i] * pos--;
+      if (pos < 2) pos = 9;
+    }
 
-  sum = 0;
-  for (let i = 1; i <= 13; i++) sum += parseInt(cnpj[i - 1]) * (14 - i);
-  remainder = (sum % 11);
-  if (remainder < 2) remainder = 0;
-  else remainder = 11 - remainder;
-  if (remainder !== parseInt(cnpj[13])) return false;
+    const result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+    return result == cnpj[length];
+  };
 
-  return true;
+  // Verifica os dois dígitos verificadores
+  const firstVerifierValid = validateCNPJDigits(cnpj, 12);
+  const secondVerifierValid = validateCNPJDigits(cnpj, 13);
+
+  return firstVerifierValid && secondVerifierValid;
 };
 
 const validatePassword = (password, confirmPassword) => {
@@ -166,13 +169,18 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         return false;
       }
     } else if (selectedType === 'Imobiliária') {
-      if (!cnpj || !creci || !isValidCRECI(creci)) {
-         if(!isValidCRECI(creci)){
-          toast.warning("Para 'Imobiliária', CRECI deve estar no formato: CRECI-XX 12345.");
+      if (selectedType === 'Imobiliária') {
+        if (!cnpj || !creci || !isValidCRECI(creci) || !isValidCNPJ(cnpj)) {
+          if(!isValidCRECI(creci)){
+            toast.warning("Para 'Imobiliária', CRECI deve estar no formato: CRECI-XX 12345.");
+            return false;
+          }else if(!isValidCNPJ(cnpj)){
+            toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos válidos.");
+            return false;
+          }
+          toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
           return false;
         }
-        toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
-        return false;
       }
     }
     return true;
@@ -217,10 +225,10 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'email':formData.email,
         'password':formData.password,
         'phone':formData.phone,
-        'rg':formData.rg,
+        'rg':formData.rg.replace(/[^\d]+/g, ''),
         'creci':formData.creci,
         'cep':formData.cep,
-        'cpf':formData.cpf,
+        'cpf':formData.cpf.replace(/[^\d]+/g, ''),
         'street':formData.street,
         'number':formData.number,
         'city':formData.city,
@@ -240,9 +248,9 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'email':formData.email,
         'password':formData.password,
         'phone':formData.phone,
-        'rg':formData.rg,
+        'rg':formData.rg.replace(/[^\d]+/g, ''),
         'cep':formData.cep,
-        'cpf':formData.cpf,
+        'cpf':formData.cpf.replace(/[^\d]+/g, ''),
         'street':formData.street,
         'number':formData.number,
         'city':formData.city,
@@ -267,7 +275,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         'city':formData.city,
         'neighborhood':formData.neighborhood,
         'creci':formData.creci,
-        'cnpj':formData.cnpj,
+        'cnpj':formData.cnpj.replace(/[^\d]+/g, ''),
         'state':formData.state,
         'bio': formData.bio,
         'socials': [
@@ -296,7 +304,8 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
             console.log(loginResponse)
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            Navigate('/');
+            Navigate(`/user-profile/${formData.email.replaceAll(/[.]/g, '-')}`);
+
             toast.success('Agora você pode anunciar imóveis');
           } else {
             toast.error(` erro no login ${userRoute}`); 

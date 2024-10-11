@@ -40,11 +40,84 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
     return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
   };
 
+  const formatCNPJ = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+  
+    if (cleaned.length <= 2) {
+      return cleaned;
+    } else if (cleaned.length <= 5) {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2)}`;
+    } else if (cleaned.length <= 8) {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5)}`;
+    } else if (cleaned.length <= 12) {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}/${cleaned.slice(8)}`;
+    } else {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}/${cleaned.slice(8, 12)}-${cleaned.slice(12, 14)}`;
+    }
+  };
+  
+  const handleCNPJChange = (event) => {
+    const formattedCNPJ = formatCNPJ(event.target.value);
+    setFormData({
+      ...formData,
+      cnpj: formattedCNPJ,
+    });
+  };
+
   const handlePhoneChange = (event) => {
     const formattedPhone = formatPhoneNumber(event.target.value);
     setFormData({
       ...formData,
       phone: formattedPhone,
+    });
+  };
+
+  const formatCPF = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+    if (cleaned.length <= 3) {
+      return cleaned;
+    } else if (cleaned.length <= 6) {
+      return `${cleaned.slice(0, 3)}.${cleaned.slice(3)}`;
+    } else if (cleaned.length <= 9) {
+      return `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6)}`;
+    } else if (cleaned.length <= 11) {
+      return `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6, 9)}-${cleaned.slice(9)}`;
+    }
+
+    return `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6, 9)}-${cleaned.slice(9, 11)}`;
+  };
+
+  const handleCPFChange = (event) => {
+    const formattedCPF = formatCPF(event.target.value);
+    setFormData({
+      ...formData,
+      cpf: formattedCPF,
+    });
+  };
+
+  const formatRG = (value) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    
+    if (cleaned.length <= 2) {
+      return cleaned;
+    } else if (cleaned.length <= 5) {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2)}`;
+    } else if (cleaned.length <= 8) {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5)}`;
+    } else {
+      return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}-${cleaned.slice(8, 9)}`;
+    }
+  };
+  
+  const handleRGChange = (event) => {
+    const formattedRG = formatRG(event.target.value);
+    setFormData({
+      ...formData,
+      rg: formattedRG,
     });
   };
 
@@ -81,32 +154,19 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="rg">RG</CustomFormLabel>
-                  <TextField id="rg" variant="outlined" fullWidth value={formData.rg} onChange={handleChange} />
+                  <TextField id="rg" variant="outlined" fullWidth value={formData.rg} onChange={handleRGChange} />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="cpf">CPF</CustomFormLabel>
-                  <TextField id="cpf" variant="outlined" fullWidth value={formData.cpf} onChange={handleChange} />
+                  <TextField id="cpf" variant="outlined" fullWidth value={formData.cpf} onChange={handleCPFChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="creci">CRECI</CustomFormLabel>
                   <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} helperText="Ex. CRECI-XX 00000" />
                 </Grid>
               </Grid>
-              {/* <Typography variant="h6" gutterBottom mt={3}>
-                Redes Sociais
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="instagram">Instagram (opcional)</CustomFormLabel>
-                  <TextField id="instagram" variant="outlined" fullWidth value={formData.instagram} onChange={handleChange} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="facebook">Facebook (opcional)</CustomFormLabel>
-                  <TextField id="facebook" variant="outlined" fullWidth value={formData.facebook} onChange={handleChange} />
-                </Grid>
-              </Grid> */}
             </Paper>
           </Stack>
         );
@@ -141,13 +201,13 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="rg">RG</CustomFormLabel>
-                  <TextField id="rg" variant="outlined" fullWidth value={formData.rg} onChange={handleChange} />
+                  <TextField id="rg" variant="outlined" fullWidth value={formData.rg} onChange={handleRGChange} />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="cpf">CPF</CustomFormLabel>
-                  <TextField id="cpf" variant="outlined" fullWidth value={formData.cpf} onChange={handleChange} />
+                  <TextField id="cpf" variant="outlined" fullWidth value={formData.cpf} onChange={handleCPFChange} />
                 </Grid>
               </Grid>
             </Paper>
@@ -184,28 +244,15 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="creci">Creci</CustomFormLabel>
-                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} />
+                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange}  helperText="Ex. CRECI-XX 00000" />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="cnpj">CNPJ</CustomFormLabel>
-                  <TextField id="cnpj" variant="outlined" fullWidth value={formData.cnpj} onChange={handleChange} />
+                  <TextField id="cnpj" variant="outlined" fullWidth value={formData.cnpj} onChange={handleCNPJChange}  />
                 </Grid>
               </Grid>
-              {/* <Typography variant="h6" gutterBottom mt={3}>
-                Redes Sociais
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="socialOne">Instagram (opcional)</CustomFormLabel>
-                  <TextField id="socialOne" variant="outlined" fullWidth value={formData.socialOne} onChange={handleChange} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="socialTwo">Facebook (opcional)</CustomFormLabel>
-                  <TextField id="socialTwo" variant="outlined" fullWidth value={formData.socialTwo} onChange={handleChange} />
-                </Grid>
-              </Grid> */}
             </Paper>
           </Stack>
         );
