@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem } from '@mui/material';
+import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField } from '@mui/material';
 import { IconCircle, IconMessage2, IconShare, IconThumbUp, IconDotsVertical } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import {toast } from 'sonner';
@@ -8,6 +8,7 @@ import BlankCard from '../../../shared/BlankCard';
 import { ptBR } from 'date-fns/locale';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { deleteData, postData } from '../../../../Services/Api';
+import { Button } from 'antd';
 
 const PostItem = ({ post, setMyPost, myPost }) => {
   const token = localStorage.getItem('token');
@@ -18,6 +19,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
   const isPostLiked = post.PostLikes.some((item) => item.email === currentUserls.email);
   const [postLiked, setPostLiked] = useState(isPostLiked);
   const [linkesLength, setLinkesLength] = useState(post.likes);
+  const [comment, setComment] = useState('');
 
   const handleLike = async (postId) => {
     setPostLiked(!postLiked);
@@ -146,6 +148,25 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             </Tooltip>
           </Stack>
         </Box>
+      </Box>
+      <Box p={2}>
+        <Stack direction={'row'} gap={2} alignItems="center">
+          <Avatar
+            src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''}
+            sx={{ width: '33px', height: '33px' }}
+          />
+          <TextField
+            placeholder="Comentar"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            variant="outlined"
+            size='small'
+            fullWidth
+          />
+          <Button variant="contained">
+            Comentar
+          </Button>
+        </Stack>
       </Box>
     </BlankCard>
   );
