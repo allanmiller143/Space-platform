@@ -9,7 +9,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 export const NavLinks = [
   {
     title: 'Feed',
-    to: '/Feed',
+    to: '/templates/feed',
   },
   {
     title: 'Buscar Imóveis',
@@ -17,19 +17,19 @@ export const NavLinks = [
   },
   {
     title: 'Produtos',
-    to: '/Feed',
+    to: '/templates/produtos',
   },
   {
     title: 'Sobre nós',
-    to: '/frontend-pages/about',
+    to: '/templates/sobre',
   },
   {
     title: 'Planos e preços',
-    to: '/frontend-pages/pricing',
+    to: '/templates/precos',
   },
   {
     title: 'Fale conosco',
-    to: '/frontend-pages/contact',
+    to: '/templates/contato',
   },
 ];
 

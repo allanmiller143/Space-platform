@@ -30,8 +30,15 @@ const ForgotPassword2 = Loadable(lazy(() => import('../views/authentication/auth
 const TwoSteps = Loadable(lazy(() => import('../views/authentication/auth1/TwoSteps')));
 const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoSteps2')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
+
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
+
 const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
+const ContatoPage = Loadable(lazy(() => import('../views/templates/contato/contato')));
+const PrecosPage = Loadable(lazy(() => import('../views/templates/precos/precos')));
+const SobreNosPage = Loadable(lazy(() => import('../views/templates/sobrenos/sobrenos')));
+const ProdutosPage = Loadable(lazy(() => import('../views/templates/produtos/produtos')));
+const FeedPage = Loadable(lazy(() => import('../views/templates/feed/feed')));
 
 // *** Templates Erick ***
 const Home = Loadable(lazy(() => import('../views/templates/home'))); 
@@ -73,8 +80,14 @@ const Router = [
 
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
-      { path: '/templates/home', element: <Home /> },
 
+      { path: '/templates/contato', element: <ContatoPage /> },
+      { path: '/templates/home', element: <Home /> },
+      { path: '/templates/precos', element: <PrecosPage /> },
+      { path: '/templates/sobre', element: <SobreNosPage /> },
+      { path: '/templates/produtos', element: <ProdutosPage /> },
+      { path: '/templates/feed', element: <FeedPage /> },
+      
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
