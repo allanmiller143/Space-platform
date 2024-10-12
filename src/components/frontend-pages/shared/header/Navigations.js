@@ -7,27 +7,30 @@ import { Chip } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export const NavLinks = [
-  // {
-  //   title: 'Sobre nós',
-  //   to: '/frontend-pages/about',
-  // },
-  // {
-  //   title: 'Ferramentas',
-  //   to: '/Feed',
-  // },
-  // {
-  //   title: 'Buscar Imóveis',
-  //   new: true,
-  //   to: '/marketplace',
-  // },
-  // {
-  //   title: 'Preço',
-  //   to: '/frontend-pages/pricing',
-  // },
-  // {
-  //   title: 'Contato',
-  //   to: '/frontend-pages/contact',
-  // },
+  {
+    title: 'Feed',
+    to: '/Feed',
+  },
+  {
+    title: 'Buscar Imóveis',
+    to: '/marketplace',
+  },
+  {
+    title: 'Produtos',
+    to: '/Feed',
+  },
+  {
+    title: 'Sobre nós',
+    to: '/frontend-pages/about',
+  },
+  {
+    title: 'Planos e preços',
+    to: '/frontend-pages/pricing',
+  },
+  {
+    title: 'Fale conosco',
+    to: '/frontend-pages/contact',
+  },
 ];
 
 const Navigations = () => {
