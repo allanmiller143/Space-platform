@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState,useRef } from 'react';
-import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField, Divider, Button, Pagination } from '@mui/material';
+import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField, Divider, Button, Pagination, CircularProgress } from '@mui/material';
 import { IconCircle, IconMessage2, IconShare, IconThumbUp, IconDotsVertical } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import {toast } from 'sonner';
@@ -26,16 +26,18 @@ const PostItem = ({ post, setMyPost, myPost }) => {
   const [totalItems, setTotalItems] = useState(post.PostComments.length);
   const scrollContainerRef = useRef(null);
   const commentsPerPage = 5; // Número de comentários por página
+  const [loadingComment, setLoadingComment] = useState(false); // Novo estado para o carregamento
 
   const handleComment = async () => {
     if (comment === '') {
       return;
     }
-    toast.warning(comment);
-  
+
     const data = {
       text: comment,
     };
+    setLoadingComment(true); // Inicia o carregamento
+
   
     try {
       const response = await postData(`posts/comment/${post.id}`, data, token);
@@ -56,6 +58,8 @@ const PostItem = ({ post, setMyPost, myPost }) => {
       }
     } catch (err) {
       console.log(err);
+    }finally {
+      setLoadingComment(false); // Finaliza o carregamento
     }
   };
 
@@ -246,9 +250,14 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             size='small'
             fullWidth
           />
-          <Button variant="contained" color='primary' size='small' onClick={handleComment}>
-            <Typography variant='body1' sx = {{fontSize: '12px'}} > Comentar </Typography>
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleComment}
+              disabled={loadingComment} // Desativa o botão durante o carregamento
+            >
+              {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
+            </Button>
         </Stack>
       </Box>
     </BlankCard>
