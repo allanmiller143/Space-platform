@@ -17,22 +17,28 @@ import {
   CardMedia,
   CardActions
 } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import HomeIcon from '@mui/icons-material/Home';
-import BuildingIcon from '@mui/icons-material/Business';
-import CalendarEventIcon from '@mui/icons-material/Event';
-import UsersIcon from '@mui/icons-material/Group';
-import BuildingStoreIcon from '@mui/icons-material/Store';
-import HeadsetIcon from '@mui/icons-material/Headset';
-import BuildingCommunityIcon from '@mui/icons-material/Apartment';
-import BathtubIcon from '@mui/icons-material/Bathtub';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import {
+  LocationOn as LocationOnIcon,
+  Home as HomeIcon,
+  Business as BuildingIcon,
+  Event as CalendarEventIcon,
+  Group as UsersIcon,
+  Store as BuildingStoreIcon,
+  Headset as HeadsetIcon,
+  Apartment as BuildingCommunityIcon,
+  Bathtub as BathtubIcon,
+  DirectionsCar as DirectionsCarIcon
+} from '@mui/icons-material';
 import PageContainer from 'src/components/container/PageContainer';
-// import HeaderAlert from '../../components/frontend-pages/shared/header/HeaderAlert';
 import HpHeader from '../../components/frontend-pages/shared/header/HpHeader';
 import Footer from '../../components/frontend-pages/shared/footer';
 import ScrollToTop from '../../components/frontend-pages/shared/scroll-to-top';
 import SimpleParallax from "simple-parallax-js";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const HomePage = () => {
   return (
@@ -198,34 +204,50 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      <Box sx={{ width: '100%', backgroundColor: '#f5f5f5', py: 6 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h4" component="h2" align="center" gutterBottom>
-            Imóveis em Destaque
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={4}>
+      <Container maxWidth="false" sx={{ py: 4, px: 0, backgroundColor: 'grey.100', paddingRight: '0px !important', paddingLeft: '0px !important' }}>
+        <Typography variant="h4" component="h2" align="center" gutterBottom sx={{ fontSize: '40px', marginBottom: '80px', marginTop: '36px' }}>
+          Imóveis em Destaque
+        </Typography>
+
+
+        <Swiper
+          modules={[Navigation, Pagination]}
+          style={{ paddingRight: '0px !important' }}
+          slidesPerView={4}
+          spaceBetween={30}
+          pagination={{ clickable: false }}
+          scrollbar={{ draggable: true }}
+          className="mySwiper"
+          style={{ paddingBottom: '52px', paddingRight: '0px !important' }}
+        >
+          {[
+            'imagem-2.jpg', 'imagem-3.jpg', 'imagem-4.jpg', 'imagem-5.jpg',
+            'imagem-6.jpg', 'imagem-7.jpg', 'imagem-8.jpg', 'imagem-9.jpg',
+            'imagem-10.jpg', 'imagem-11.jpg', 'imagem-12.jpg', 'imagem-13.jpg',
+            'imagem-14.jpg', 'imagem-1.jpg'
+          ].map((imagem, index) => (
+            <SwiperSlide key={index} style={index === 0 ? { marginLeft: '50px', paddingLeft: 0, paddingRight: 0 } : { paddingLeft: 0, paddingRight: 0 }}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardMedia
                   component="img"
                   height="200"
-                  image="/images/imoveis/imovel-1.jpg"
-                  alt="Imóvel em destaque"
+                  image={`/mobiliado/${imagem}`}
+                  alt={`Imóvel em destaque ${index + 1}`}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="div">
-                    Apartamento Moderno
+                    Apartamento Moderno {index + 1}
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                    <Chip icon={<HomeIcon />} label="3 Quartos" size="small" />
-                    <Chip icon={<BathtubIcon />} label="2 Banheiros" size="small" />
-                    <Chip icon={<DirectionsCarIcon />} label="1 Vaga" size="small" />
+                    <Chip icon={<HomeIcon />} label={`${index + 2} Quartos`} size="small" />
+                    <Chip icon={<BathtubIcon />} label={`${index + 1} Banheiros`} size="small" />
+                    <Chip icon={<DirectionsCarIcon />} label={`${index + 1} Vaga`} size="small" />
                   </Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Área: 120 m²
+                    Área: {100 + index * 10} m²
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Rua das Flores, 123 - Jardim Primavera
+                    Rua das Flores, {123 + index} - Jardim Primavera
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -234,10 +256,10 @@ const HomePage = () => {
                   </Button>
                 </CardActions>
               </Card>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Container>
 
       <Box sx={{ py: { xs: 5, lg: 8 } }}>
         <Container maxWidth="lg">
@@ -251,46 +273,34 @@ const HomePage = () => {
             <Grid item xs={12} xl={12}>
               <Grid container spacing={3}>
                 {[
-                  {
-                    title: "Gestão de Imóveis",
-                    description: "Publique e gerencie seus anúncios de imóveis com facilidade.",
-                    icon: <BuildingIcon />
-                  },
-                  {
-                    title: "Agendamentos",
-                    description: "Organize visitas a diversos imóveis em diferentes locais.",
-                    icon: <CalendarEventIcon />
-                  },
-                  {
-                    title: "SpaceHub",
-                    description: "Conecte-se com corretores e outros usuários através da nossa rede social imobiliária.",
-                    icon: <UsersIcon />
-                  },
-                  {
-                    title: "CRM Imobiliário",
-                    description: "Gerencie todas as operações da sua imobiliária em um só lugar.",
-                    icon: <BuildingStoreIcon />
-                  },
-                  {
-                    title: "HelpDesk",
-                    description: "Gerencie tickets e chamados relacionados a aluguéis e outras operações.",
-                    icon: <HeadsetIcon />
-                  },
-                  {
-                    title: "Classificados de Imóveis",
-                    description: "Acesse nosso marketplace de imóveis e encontre as melhores oportunidades.",
-                    icon: <BuildingCommunityIcon />
-                  }
+                  { icon: "icon-dd-lifebuoy.svg", alt: "Suporte", title: "Ferramenta de Suporte e HelpDesk", description: "Gerencie tickets e chamados relacionados a aluguéis e outras operações." },
+                  { icon: "icon-dd-message-box.svg", alt: "Mensagens", title: "Ferramenta de mensagens", description: "Envie e receba mensagens diretamente pela plataforma." },
+                  { icon: "icon-inbox.svg", alt: "Caixa de Entrada", title: "Ferramenta de E-mail", description: "Gerencie seus e-mails de forma integrada." },
+                  { icon: "icon-office-bag.svg", alt: "Escritório", title: "Ferramenta de Gestão de Imóveis", description: "Publique e gerencie seus anúncios de imóveis com facilidade." },
+                  { icon: "icon-office-bag-2.svg", alt: "Escritório 2", title: "CRM Imobiliário", description: "Gerencie todas as operações da sua imobiliária em um só lugar." },
+                  { icon: "icon-pie.svg", alt: "Gráfico", title: "Gestão de anúncios e leads multiplataforma", description: "Acompanhe o desempenho dos seus anúncios e leads." },
+                  { icon: "icon-tasks.svg", alt: "Tarefas", title: "Ferramenta de Gerenciamento de Tarefas", description: "Organize e gerencie suas tarefas diárias." },
+                  { icon: "icon-account.svg", alt: "Conta", title: "Página de perfil público", description: "Crie e gerencie seu perfil público na plataforma." },
+                  { icon: "icon-briefcase.svg", alt: "Portfólio", title: "Ferramenta de Portfólio de imóveis", description: "Mantenha um portfólio atualizado dos seus imóveis." },
+                  { icon: "icon-connect.svg", alt: "Conectar", title: "Rede social integrada", description: "Conecte-se com corretores e outros usuários através da nossa rede social imobiliária." },
+                  { icon: "icon-dd-application.svg", alt: "Aplicação", title: "Marketplace de imóveis", description: "Acesse nosso marketplace de imóveis e encontre as melhores oportunidades." },
+                  { icon: "icon-dd-chat.svg", alt: "Bate-papo", title: "Ferramenta de Mensagens", description: "Envie e receba mensagens diretamente pela plataforma." },
+                  { icon: "icon-dd-date.svg", alt: "Data", title: "Ferramenta de Agendamentos", description: "Organize visitas a diversos imóveis em diferentes locais." },
+                  { icon: "icon-dd-invoice.svg", alt: "Fatura", title: "Ferramenta de Gestão de Faturas", description: "Gerencie suas faturas e pagamentos de forma eficiente." }
                 ].map((item, index) => (
                   <Grid item xs={12} md={6} lg={4} key={index}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', p: 3, border: 1, borderColor: 'grey.300', boxShadow: 'none' }}>
-                      <Box sx={{ mb: 2, color: 'primary.main' }}>
-                        {item.icon}
-                      </Box>
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', p: 3, border: 1, borderColor: 'grey.300', boxShadow: 'none', position: 'relative', overflow: 'unset' }}>
+                      <div style={{ marginBottom: '10px', width: '60px', height: '60px', backgroundColor: '#f5f5f5', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '8px', border: '1px solid #e1e1e1' }}>
+                        <img
+                          src={`/images/svgs/${item.icon}`}
+                          alt={item.alt}
+                          style={{ width: '40px', height: 'auto' }}
+                        />
+                      </div>
                       <Typography variant="h5" component="h3" gutterBottom>
                         {item.title}
                       </Typography>
-                      <Chip label="Em breve" color="primary" size="small" sx={{ mb: 2, alignSelf: 'flex-start' }} />
+                      <Chip label="Em breve" color="default" size="small" sx={{ position: 'absolute', top: '-6px', right: '-7px', zIndex: 99, background: '#fff2db', borderRadius: '20px', border: '1px solid #ffdea0', color: '#84652d' }} />
                       <Typography variant="body1">{item.description}</Typography>
                     </Card>
                   </Grid>
@@ -302,7 +312,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ bgcolor: 'background.default', width: '100%', borderRadius: 0 }}>
-     
+
         <Box sx={{ bgcolor: 'background.paper', py: 5, textAlign: 'center', color: 'text.secondary' }}>
           <Container maxWidth="lg" sx={{ py: 5 }} mb={4}>
             <Grid container spacing={4} alignItems="center">

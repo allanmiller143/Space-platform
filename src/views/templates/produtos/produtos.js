@@ -19,7 +19,7 @@ const ContatoPage = () => {
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={4}>
                         <img
-                            src="/src/assets/images/ilustracoes/imobiliaria.jpg"
+                            src="/images/ilustracoes/imobiliaria.jpg"
                             alt="Imobiliárias e Corretores"
                             style={{
                                 width: '250px',
@@ -59,7 +59,7 @@ const ContatoPage = () => {
                                         <CardContent sx={{ height: '170px' }}>
                                             <div style={{ marginBottom: '10px', width: '60px', height: '60px', backgroundColor: '#f5f5f5', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '8px', border: '1px solid #e1e1e1' }}>
                                                 <img
-                                                    src={`/src/assets/images/svgs/${item.icon}`}
+                                                    src={`/images/svgs/${item.icon}`}
                                                     alt={item.alt}
                                                     style={{ width: '40px', height: 'auto' }}
                                                 />
@@ -95,7 +95,7 @@ const ContatoPage = () => {
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={4}>
                         <img
-                            src="/src/assets/images/ilustracoes/corretor.jpg"
+                            src="/images/ilustracoes/corretor.jpg"
                             alt="Imobiliárias e Corretores"
                             style={{
                                 width: '250px',
@@ -135,7 +135,7 @@ const ContatoPage = () => {
                                         <CardContent sx={{ height: '170px' }}>
                                             <div style={{ marginBottom: '10px', width: '60px', height: '60px', backgroundColor: '#f5f5f5', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '8px', border: '1px solid #e1e1e1' }}>
                                                 <img
-                                                    src={`/src/assets/images/svgs/${item.icon}`}
+                                                    src={`/images/svgs/${item.icon}`}
                                                     alt={item.alt}
                                                     style={{ width: '40px', height: 'auto' }}
                                                 />
@@ -172,7 +172,7 @@ const ContatoPage = () => {
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={4}>
                         <img
-                            src="/src/assets/images/ilustracoes/user.jpg"
+                            src="/images/ilustracoes/user.jpg"
                             alt="Para quem quer comprar e vender"
                             style={{
                                 width: '250px',
@@ -212,7 +212,7 @@ const ContatoPage = () => {
                                         <CardContent sx={{ height: '170px' }}>
                                             <div style={{ marginBottom: '10px', width: '60px', height: '60px', backgroundColor: '#f5f5f5', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '8px', border: '1px solid #e1e1e1' }}>
                                                 <img
-                                                    src={`/src/assets/images/svgs/${item.icon}`}
+                                                    src={`/images/svgs/${item.icon}`}
                                                     alt={item.alt}
                                                     style={{ width: '40px', height: 'auto' }}
                                                 />
