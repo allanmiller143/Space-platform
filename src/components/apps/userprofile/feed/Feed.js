@@ -8,15 +8,12 @@ import { useState } from 'react';
 
 
 const Feed = ( {myPost, setMyPost,userData}) => {
-
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [progress, setProgress] = useState(0);
-
   return (
     <Box >
       <Grid container spacing={3}>
-
         <Grid item lg={12}>
           {loading ? (
             <Box sx={{ width: '100%' ,mt: 3 }}>

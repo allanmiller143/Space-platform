@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField } from '@mui/material';
+import { useState,useRef } from 'react';
+import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField, Divider, Button, Pagination, CircularProgress } from '@mui/material';
 import { IconCircle, IconMessage2, IconShare, IconThumbUp, IconDotsVertical } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import {toast } from 'sonner';
@@ -8,8 +8,9 @@ import BlankCard from '../../../shared/BlankCard';
 import { ptBR } from 'date-fns/locale';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { deleteData, postData } from '../../../../Services/Api';
-import { Button, Divider } from 'antd';
 import PostComments from './PostComments';
+
+
 const PostItem = ({ post, setMyPost, myPost }) => {
   const token = localStorage.getItem('token');
   const cuString = localStorage.getItem('currentUser');
@@ -20,6 +21,47 @@ const PostItem = ({ post, setMyPost, myPost }) => {
   const [postLiked, setPostLiked] = useState(isPostLiked);
   const [linkesLength, setLinkesLength] = useState(post.likes);
   const [comment, setComment] = useState('');
+  const [showComments, setShowComments] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(post.PostComments.length);
+  const scrollContainerRef = useRef(null);
+  const commentsPerPage = 5; // Número de comentários por página
+  const [loadingComment, setLoadingComment] = useState(false); // Novo estado para o carregamento
+
+  const handleComment = async () => {
+    if (comment === '') {
+      return;
+    }
+
+    const data = {
+      text: comment,
+    };
+    setLoadingComment(true); // Inicia o carregamento
+
+  
+    try {
+      const response = await postData(`posts/comment/${post.id}`, data, token);
+      if (response.status === 200 || response.status === 201) {
+        console.log(response);
+        // Adiciona o novo comentário no topo da lista de comentários
+        setTotalItems(totalItems + 1);
+        setMyPost(myPost.map((item) => (item.id === post.id 
+          ? { 
+              ...item, 
+              PostComments: [response.data, ...item.PostComments] // Novo comentário na frente
+            } 
+          : item)));
+        setComment('');
+        setShowComments(true);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }finally {
+      setLoadingComment(false); // Finaliza o carregamento
+    }
+  };
 
   const handleLike = async (postId) => {
     setPostLiked(!postLiked);
@@ -57,6 +99,23 @@ const PostItem = ({ post, setMyPost, myPost }) => {
     }
   };
 
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.offsetTop, // Rolar para o topo da caixa de comentários
+        behavior: 'smooth', // Rolagem suave
+      });
+    }
+  };
+
+  // Calcular os comentários a serem exibidos com base na página atual
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const currentComments = post.PostComments.slice(indexOfFirstComment, indexOfLastComment);
+
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -70,8 +129,8 @@ const PostItem = ({ post, setMyPost, myPost }) => {
     >
       <Box p={3}>
         <Stack direction={'row'} gap={2} alignItems="center" position={'relative'}>
-          <Avatar alt="Fernando Dias" src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''} />
-          <Typography variant="h6">{currentUserls.name}</Typography>
+          <Avatar alt="Fernando Dias" src={post.photo !== null ? post.photo : ''} />
+          <Typography variant="h6">{post.name}</Typography>
           <Typography variant="caption" color="textSecondary">
             <IconCircle size="7" fill="" fillOpacity={'0.1'} strokeOpacity="0.1" />{' '}
             {formatDistanceToNowStrict(new Date(post.createdAt), {
@@ -134,12 +193,12 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             </Typography>
 
             <Tooltip title="Comentar" placement="top">
-              <Fab sx={{ ml: 2 }} size="small" color="secondary">
+              <Fab sx={{ ml: 2 }} size="small" color="secondary" onClick={() => setShowComments(!showComments)}>
                 <IconMessage2 size="16" />
               </Fab>
             </Tooltip>
             <Typography variant="body1" fontWeight={600}>
-              0
+              {post.PostComments.length}
             </Typography>
             <Tooltip title="Compartilhar" placement="top">
               <IconButton sx={{ ml: 'auto' }}>
@@ -151,19 +210,31 @@ const PostItem = ({ post, setMyPost, myPost }) => {
       </Box>
 
       { <Box>
-          {post.PostComments ? (
-            <>
-              {post.PostComments.map((comment) => {
-                return <PostComments comment={comment} key={comment.id} post={post} />;
-              })}
-            </>
-          ) : (
-            ''
-          )}
+        {showComments ? (
+          <Box ref={scrollContainerRef}>
+            <Box display={'flex'} justifyContent={'space-between'}>
+              <Typography variant="h6" sx={{ mt: 2, ml: 2.5 }}>Comentários</Typography>
+              <Typography variant="h6" sx={{ mt: 2, mr: 3 }}>{totalItems}</Typography>
+            </Box>
+            {currentComments.map((comment) => (
+              <PostComments comment={comment} key={comment.id} post={post} />
+            ))}
+            {totalItems > commentsPerPage && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
+                <Pagination
+                  count={Math.ceil(totalItems / commentsPerPage)}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                />
+              </Box>
+            )}
+          </Box>
+        ) : (
+          ''
+        )}
+
         </Box>
-    
        }
-      
       <Divider/>
       <Box p={2}>
         <Stack direction={'row'} gap={2} alignItems="center">
@@ -179,12 +250,16 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             size='small'
             fullWidth
           />
-          <Button variant="contained">
-            Comentar
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleComment}
+              disabled={loadingComment} // Desativa o botão durante o carregamento
+            >
+              {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
+            </Button>
         </Stack>
       </Box>
-      
     </BlankCard>
   );
 };
