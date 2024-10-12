@@ -41,4 +41,12 @@ export default defineConfig({
   // })],
 
   plugins: [svgr(), react()],
+
+  build: {
+    rollupOptions: {
+      external: [
+        '**/*.jpg', '**/*.jpeg', '**/*.png', '**/*.gif', '**/*.svg',
+      ]
+    }
+  }
 });
