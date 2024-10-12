@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography, Container } from "@mui/material";
-import DozensCarousel from "./DozensCarousel";
+// import DozensCarousel from "./DozensCarousel";
 
 const features = [
     {
