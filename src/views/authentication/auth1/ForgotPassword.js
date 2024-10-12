@@ -4,7 +4,7 @@ import { Grid, Box, Typography } from '@mui/material';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import PageContainer from 'src/components/container/PageContainer';
 
-import img1 from 'src/assets/images/posters/imagem-28.jpg';
+import img1 from '/images/posters/imagem-28.jpg';
 
 import AuthForgotPassword from '../authForms/AuthForgotPassword';
 

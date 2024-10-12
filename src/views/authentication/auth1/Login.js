@@ -26,7 +26,7 @@ const Login = () => (
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundImage: 'url("/src/assets/images/posters/imagem-9.jpg")',
+          backgroundImage: 'url("/images/posters/imagem-9.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

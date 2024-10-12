@@ -9,16 +9,15 @@ import AuthSimpleRegister from '../authForms/AuthSimpleRegister';
 const Register2 = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate(); // Hook de navegação
-
   const images = [
-    '/src/assets/images/posters/imagem-28.jpg',
-    '/src/assets/images/posters/imagem-29.jpg',
-    '/src/assets/images/posters/imagem-30.jpg',
-    '/src/assets/images/posters/imagem-31.jpg',
-    '/src/assets/images/posters/imagem-32.jpg',
-    '/src/assets/images/posters/imagem-10.jpg',
-    '/src/assets/images/posters/imagem-11.jpg',
-    '/src/assets/images/posters/imagem-19.jpg'
+    '/images/posters/imagem-28.jpg',
+    '/images/posters/imagem-29.jpg',
+    '/images/posters/imagem-30.jpg',
+    '/images/posters/imagem-31.jpg',
+    '/images/posters/imagem-32.jpg',
+    '/images/posters/imagem-10.jpg',
+    '/images/posters/imagem-11.jpg',
+    '/images/posters/imagem-19.jpg'
   ];
 
   useEffect(() => {
