@@ -42,7 +42,7 @@ const HomePage = () => {
 
       <SimpleParallax>
         <img
-          src="/src/assets/images/posters/imagem-7.jpg"
+          src="/images/posters/imagem-7.jpg"
           alt="Fundo da página inicial"
           style={{
             width: '100%',
@@ -209,7 +209,7 @@ const HomePage = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image="/src/assets/images/imoveis/imovel-1.jpg"
+                  image="/images/imoveis/imovel-1.jpg"
                   alt="Imóvel em destaque"
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
@@ -308,7 +308,7 @@ const HomePage = () => {
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={3}>
                 <img
-                  src="/src/assets/images/ilustracoes/corretor.jpg"
+                  src="/images/ilustracoes/corretor.jpg"
                   alt="Imobiliárias e Corretores"
                   style={{
                     width: '100%',
@@ -342,7 +342,7 @@ const HomePage = () => {
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={3}>
                 <img
-                  src="/src/assets/images/ilustracoes/imobiliaria.jpg"
+                  src="/images/ilustracoes/imobiliaria.jpg"
                   alt="Imobiliárias e Corretores"
                   style={{
                     width: '100%',
@@ -376,7 +376,7 @@ const HomePage = () => {
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={3}>
                 <img
-                  src="/src/assets/images/ilustracoes/user.jpg"
+                  src="/images/ilustracoes/user.jpg"
                   alt="Imobiliárias e Corretores"
                   style={{
                     width: '100%',
