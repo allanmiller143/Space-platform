@@ -43,6 +43,16 @@ const FeedPage = Loadable(lazy(() => import('../views/templates/feed/feed')));
 // *** Templates Erick ***
 const Home = Loadable(lazy(() => import('../views/templates/home'))); 
 
+
+// Apps
+const Chats = Loadable(lazy(() => import('../views/apps/chat/Chat')));
+const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
+const Calendar = Loadable(lazy(() => import('../views/apps/calendar/BigCalendar')));
+const Email = Loadable(lazy(() => import('../views/apps/email/Email')));
+const Tickets = Loadable(lazy(() => import('../views/apps/tickets/Tickets')));
+const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));
+
+
 const Router = [
   {
     path: '/',
@@ -61,6 +71,15 @@ const Router = [
 
       { path: '/user-profile/:email', element: <UserProfile socket={socket} /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
+
+      // Apps
+      { path: '/apps/chats', element: <Chats /> },
+      { path: '/apps/notes', element: <Notes /> },
+      { path: '/apps/calendar', element: <Calendar /> },
+      { path: '/apps/email', element: <Email /> },
+      { path: '/apps/tickets', element: <Tickets /> },
+      { path: '/apps/contacts', element: <Contacts /> },
+      
 
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

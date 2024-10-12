@@ -4,9 +4,12 @@ import * as dropdownData from './data';
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
+import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
+
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -102,6 +105,7 @@ const Profile = () => {
                 </Typography>
               </Box>
             </Stack>
+            
             <Divider />
             {dropdownData.profile.map((profile) => (
               <Box key={profile.title}>
@@ -147,7 +151,7 @@ const Profile = () => {
                           }}
                           noWrap
                         >
-                          {profile.subtitle}sdiuguydf
+                          {profile.subtitle}
                         </Typography>
                       </Box>
                     </Stack>
@@ -159,7 +163,8 @@ const Profile = () => {
             <Button  variant="outlined" color="error" onClick={logout} fullWidth sx={{ mt: 2 }}>
               <Typography> sair </Typography>
             </Button>
-            {/* <Box mt={2}>
+
+            <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
                   <Box>
@@ -183,7 +188,8 @@ const Profile = () => {
               >
                 Sair
               </Button>
-            </Box> */}
+            </Box>
+
           </Box>
         </Scrollbar>
       </Menu>

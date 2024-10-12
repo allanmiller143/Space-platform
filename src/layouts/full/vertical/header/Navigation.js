@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Menu, Typography, Button, Divider, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { IconChevronDown, IconHelp } from '@tabler/icons';
 import AppLinks from './AppLinks';
 import QuickLinks from './QuickLinks';
@@ -8,6 +8,7 @@ import React from 'react';
 
 const AppDD = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const location = useLocation();
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -19,18 +20,6 @@ const AppDD = () => {
 
   return (
     <>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/marketplace" component={Link}>
-        Buscar imóveis
-      </Button>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/" component={Link}>
-        Feed
-      </Button>
-      {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/calendar" component={Link}>
-        Calendário
-      </Button> */}
-      {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/email" component={Link}>
-        Email
-      </Button> */}
       <Box>
         <Button
           aria-label="Exibir 11 notificacoes"
@@ -99,10 +88,72 @@ const AppDD = () => {
               </Box>
             </Grid>
           </Grid>
-
-          
         </Menu>
       </Box>
+
+      
+
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/user-profile' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to={`/user-profile/`}
+        component={Link}
+      >
+        Minha página
+      </Button>
+      
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/apps/imoveis/list' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to="/apps/imoveis/list"
+        component={Link}
+      >
+        Meus imóveis
+      </Button>
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/apps/chats' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to="/apps/chats"
+        component={Link}
+      >
+        Mensagens
+      </Button>
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/marketplace' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to="/marketplace"
+        component={Link}
+      >
+        Buscar imóveis
+      </Button>
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/templates/feed' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to="/templates/feed"
+        component={Link}
+      >
+        Feed
+      </Button>
     </>
   );
 };

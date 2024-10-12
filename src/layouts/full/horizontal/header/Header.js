@@ -8,7 +8,7 @@ import Profile from 'src/layouts/full/vertical/header/Profile';
 import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
-
+import Notifications from 'src/layouts/full/vertical/header/Notifications';
 const Header = () => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se existe um currentUser
@@ -66,20 +66,23 @@ const Header = () => {
           {!currentUserls && (
             <Button color="primary"
               fullWidth component={Link} to="/auth/register2">
-              Criar conta 
+              Criar conta
             </Button>
           )}
 
           {currentUserls && currentUserls.type === 'client' && (
             <Button color="primary"
               fullWidth component={Link} to="/auth/complete-register2">
-              Completar Cadastro 
+              Completar Cadastro
             </Button>
-          )}  
+          )}
 
           {
             currentUserls && (
-              <Profile />
+              <>
+                <Notifications />
+                <Profile />
+              </>
             )
           }
         </Stack>
