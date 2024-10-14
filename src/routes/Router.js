@@ -21,6 +21,8 @@ const Kanban = Loadable(lazy(() => import('../views/apps/kanban/Kanban')));
 const ImoveisList = Loadable(lazy(() => import('../views/apps/imoveis/List')));
 const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/CreateEdit')));
 const AccountSetting = Loadable(lazy(() => import('../views/pages/account-setting/AccountSetting')));
+const EcommerceDetail = Loadable(lazy(() => import('../views/apps/eCommerce/EcommerceDetail')));
+
 
 // authentication
 const Login = Loadable(lazy(() => import('../views/authentication/auth1/Login')));
@@ -80,6 +82,7 @@ const Router = [
       { path: '/apps/tickets', element: <Tickets /> },
       { path: '/apps/contacts', element: <Contacts /> },
       
+      { path: '/apps/ecommerce/detail/:id', element: <EcommerceDetail /> },
 
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

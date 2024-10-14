@@ -216,8 +216,8 @@ const PostItem = ({ post, setMyPost, myPost }) => {
               <Typography variant="h6" sx={{ mt: 2, ml: 2.5 }}>Comentários</Typography>
               <Typography variant="h6" sx={{ mt: 2, mr: 3 }}>{totalItems}</Typography>
             </Box>
-            {currentComments.map((comment) => (
-              <PostComments comment={comment} key={comment.id} post={post} />
+            {currentComments.map((comment, index) => (
+              <PostComments comment={comment} key={comment.id} post={post} isLast={index === currentComments.length - 1} />
             ))}
             {totalItems > commentsPerPage && (
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
