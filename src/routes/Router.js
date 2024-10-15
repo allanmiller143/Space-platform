@@ -35,6 +35,7 @@ const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoS
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
+const ImovelPage = Loadable(lazy(() => import('../views/apps/marketplace/imovelPage')));
 
 const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
 const ContatoPage = Loadable(lazy(() => import('../views/templates/contato/contato')));
@@ -100,6 +101,7 @@ const Router = [
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
 
       { path: '/marketplace', element: <Marketplace /> },
+      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
 
       { path: '/templates/contato', element: <ContatoPage /> },
