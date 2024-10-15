@@ -4,8 +4,9 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 import {io} from 'socket.io-client';
-const socket = io('https://space-api-zsx7.onrender.com/');
+//const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
 
+const socket = io('https://space-api-zsx7.onrender.com/');
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -81,9 +82,7 @@ const Router = [
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/tickets', element: <Tickets /> },
       { path: '/apps/contacts', element: <Contacts /> },
-      
-      { path: '/apps/ecommerce/detail/:id', element: <EcommerceDetail /> },
-
+      { path: '/apps/post/:id', element: <EcommerceDetail /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState,useRef } from 'react';
 import { Stack, Avatar, Box, Typography, CardMedia, Grid, IconButton, Fab, Tooltip, Popover, MenuItem, TextField, Divider, Button, Pagination, CircularProgress } from '@mui/material';
-import { IconCircle, IconMessage2, IconShare, IconThumbUp, IconDotsVertical } from '@tabler/icons';
+import { IconCircle, IconMessage2, IconThumbUp, IconDotsVertical } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import {toast } from 'sonner';
 import BlankCard from '../../../shared/BlankCard';
@@ -9,7 +9,8 @@ import { ptBR } from 'date-fns/locale';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { deleteData, postData } from '../../../../Services/Api';
 import PostComments from './PostComments';
-
+import ShareComponent from './ShareComponent';
+import { useNavigate } from 'react-router';
 
 const PostItem = ({ post, setMyPost, myPost }) => {
   const token = localStorage.getItem('token');
@@ -27,6 +28,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
   const scrollContainerRef = useRef(null);
   const commentsPerPage = 5; // Número de comentários por página
   const [loadingComment, setLoadingComment] = useState(false); // Novo estado para o carregamento
+  const Navigate = useNavigate();
 
   const handleComment = async () => {
     if (comment === '') {
@@ -38,7 +40,6 @@ const PostItem = ({ post, setMyPost, myPost }) => {
     };
     setLoadingComment(true); // Inicia o carregamento
 
-  
     try {
       const response = await postData(`posts/comment/${post.id}`, data, token);
       if (response.status === 200 || response.status === 201) {
@@ -99,6 +100,11 @@ const PostItem = ({ post, setMyPost, myPost }) => {
     }
   };
 
+  const seePost = () => {
+    console.log(post.id);
+    Navigate(`/apps/post/${post.id}`);
+  };
+
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   
@@ -157,6 +163,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             <Box p={2}>
               <MenuItem onClick={() => { /* Função de Editar */ handleClose(); }}>Editar</MenuItem>
               <MenuItem onClick={() => { handleClose(); deletePost(); }}>Excluir</MenuItem>
+              <MenuItem onClick={() => { handleClose(); seePost(); }}> Ver publicação </MenuItem>
             </Box>
           </Popover>
         </Stack>
@@ -182,28 +189,28 @@ const PostItem = ({ post, setMyPost, myPost }) => {
         )}
 
         <Box>
-          <Stack direction="row" gap={1} alignItems="center">
-            <Tooltip title="Curtir" placement="top" onClick={() => handleLike(post.id)}>
-              <Fab size="small" color={postLiked ? 'primary' : 'default'}>
-                <IconThumbUp size="16"  />
-              </Fab>
-            </Tooltip>
-            <Typography variant="body1" fontWeight={600} >
-              {linkesLength}
-            </Typography>
+          <Stack direction="row" gap={1} alignItems="center" justifyContent={'space-between'} > 
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Tooltip title="Curtir" placement="top" onClick={() => handleLike(post.id)}>
+                <Fab size="small" color={postLiked ? 'primary' : 'default'}>
+                  <IconThumbUp size="16"  />
+                </Fab>
+              </Tooltip>
+              <Typography variant="body1" fontWeight={600} >
+                {linkesLength}
+              </Typography>
 
-            <Tooltip title="Comentar" placement="top">
-              <Fab sx={{ ml: 2 }} size="small" color="secondary" onClick={() => setShowComments(!showComments)}>
-                <IconMessage2 size="16" />
-              </Fab>
-            </Tooltip>
-            <Typography variant="body1" fontWeight={600}>
-              {post.PostComments.length}
-            </Typography>
+              <Tooltip title="Comentar" placement="top">
+                <Fab sx={{ ml: 2 }} size="small" color="secondary" onClick={() => setShowComments(!showComments)}>
+                  <IconMessage2 size="16" />
+                </Fab>
+              </Tooltip>
+              <Typography variant="body1" fontWeight={600}>
+                {post.PostComments.length}
+              </Typography>
+            </Box>
             <Tooltip title="Compartilhar" placement="top">
-              <IconButton sx={{ ml: 'auto' }}>
-                <IconShare size="16" />
-              </IconButton>
+              <ShareComponent post={post} sx={{ ml: 'auto' }} />
             </Tooltip>
           </Stack>
         </Box>

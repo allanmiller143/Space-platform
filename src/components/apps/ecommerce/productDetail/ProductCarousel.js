@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef } from 'react';
-import { Box } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carousel.css';
+import noData from '../../../../assets/images/svgs/no-data.webp';
 
 
 const ProductCarousel = ({post}) => {
   const [state, setState] = React.useState({ nav1: null, nav2: null });
   const slider1 = useRef();
   const slider2 = useRef();
+  const [slidesToShow] = useState(post.PostMedia.length);
 
   useEffect(() => {
     setState({
@@ -23,7 +25,7 @@ const ProductCarousel = ({post}) => {
   const settings = {
     focusOnSelect: true,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: slidesToShow,
     arrows: false,
     swipeToSlide: true,
     slidesToScroll: 1,
@@ -35,7 +37,6 @@ const ProductCarousel = ({post}) => {
   return (
     <Box>
       <Slider asNavFor={nav2} ref={(slider) => (slider1.current = slider)}>
-
         {post.PostMedia.map((step) => (
           <Box key={step.id}>
             <img
@@ -47,9 +48,22 @@ const ProductCarousel = ({post}) => {
           </Box>
         ))}
       </Slider>
-      <Slider asNavFor={nav1} ref={(slider) => (slider2.current = slider)} {...settings}>
 
-        {post.PostMedia.map((step) => (
+      {
+        slidesToShow === 0 &&
+        <Box position={'relative'}>
+          <img
+            src= {noData}
+            alt=''
+            width="100%"
+            style={{ borderRadius: '5px',maxHeight:'480px' }}
+            />
+            <Typography sx={{textAlign:'center', mt:2, fontSize:'20px', position:'absolute', top:'90%', left:'50%', transform:'translate(-50%, -50%)'}}>Post sem imagens</Typography>
+        </Box>
+      }
+
+      <Slider asNavFor={nav1} ref={(slider) => (slider2.current = slider)} {...settings}>
+        {slidesToShow > 1 && post.PostMedia.map((step) => (
           <Box key={step.id} sx={{ p: 1, cursor: 'pointer' }}>
             <img
               src={step.url}

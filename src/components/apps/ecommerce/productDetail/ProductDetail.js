@@ -1,45 +1,56 @@
 /* eslint-disable react/prop-types */
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Pagination,
-  TextField,
-  Typography,
-} from '@mui/material';
+import {Avatar,Box,Button,CircularProgress,Divider,Fab,Pagination,TextField,Tooltip,Typography,} from '@mui/material';
 
 import PostComments from '../../userprofile/feed/PostComments';
 import { useRef, useState } from 'react';
 import { Stack } from '@mui/system';
 import { postData } from '../../../../Services/Api';
 import { toast } from 'sonner';
-const ProductDetail = ({post}) => {
+import { IconThumbUp } from '@tabler/icons';
+
+const ProductDetail = ({ post }) => {
   const scrollContainerRef = useRef(null);
   const commentsPerPage = 5; // Número de comentários por página
   const [loadingComment, setLoadingComment] = useState(false); // Novo estado para o carregamento
   const [totalItems, setTotalItems] = useState(post.PostComments.length);
   const [currentPage, setCurrentPage] = useState(1);
   const [comment, setComment] = useState('');
+  const [postComments, setPostComments] = useState(post.PostComments); // Estado para os comentários
   const token = localStorage.getItem('token');
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
+  const isPostLiked = post.PostLikes.some((item) => item.email === currentUserls.email);
+  const [postLiked, setPostLiked] = useState(isPostLiked);
+  const [linkesLength, setLinkesLength] = useState(post.likes);
 
   // Calcular os comentários a serem exibidos com base na página atual
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = post.PostComments.slice(indexOfFirstComment, indexOfLastComment);
-
+  const currentComments = postComments.slice(indexOfFirstComment, indexOfLastComment);
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
-  
+
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         top: scrollContainerRef.current.offsetTop, // Rolar para o topo da caixa de comentários
         behavior: 'smooth', // Rolagem suave
       });
+    }
+  };
+
+  const handleLike = async (postId) => {
+    setPostLiked(!postLiked);
+
+    if (postLiked) {
+      setLinkesLength(linkesLength - 1);
+    } else {
+      setLinkesLength(linkesLength + 1);
+    }
+    try {
+      await postData(`posts/like/${postId}`, {}, token);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -53,60 +64,88 @@ const ProductDetail = ({post}) => {
     };
     setLoadingComment(true); // Inicia o carregamento
 
-  
     try {
       const response = await postData(`posts/comment/${post.id}`, data, token);
       if (response.status === 200 || response.status === 201) {
         console.log(response);
-        // Adiciona o novo comentário no topo da lista de comentários
-        setTotalItems(totalItems + 1);
-        // setMyPost(myPost.map((item) => (item.id === post.id 
-        //   ? { 
-        //       ...item, 
-        //       PostComments: [response.data, ...item.PostComments] // Novo comentário na frente
-        //     } 
-        //   : item)));
-        setComment('');
+        const newComment = response.data; // Pegue o novo comentário da resposta
+        setPostComments([newComment, ...postComments]); // Adiciona o novo comentário ao topo da lista
+        setTotalItems(totalItems + 1); // Atualiza o total de comentários
+        setComment(''); // Limpa o campo de comentário
       } else {
         toast.error(response.message);
       }
     } catch (err) {
       console.log(err);
-    }finally {
+    } finally {
       setLoadingComment(false); // Finaliza o carregamento
     }
   };
 
   return (
-    <Box p={2}>    
-      <Typography variant="h2"> Detalhes do post</Typography>
-      <Box pt={2} pb={2}>
-        <Typography variant="body1">{post.text}</Typography>
-      </Box>
-      <Box ref={scrollContainerRef} p={-2}>
-      <Box display={'flex'} justifyContent={'space-between'}>
-        <Typography variant="h6">Comentários</Typography>
-        <Typography variant="h6">{totalItems}</Typography>
-      </Box>
-      {currentComments.map((comment, index) => (
-        <PostComments
-          comment={comment}
-          key={comment.id}
-          isLast={index === currentComments.length - 1} // Verifica se é o último comentário
-        />
-      ))}
-      {totalItems > commentsPerPage && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
-          <Pagination
-            count={Math.ceil(totalItems / commentsPerPage)}
-            page={currentPage}
-            onChange={handleChangePage}
-          />
+    <Box p={2} height={'100%'} display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
+      <Box>
+        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}> 
+          <Typography variant="h2">Detalhes do post</Typography>
+          <Box display={'flex'} alignItems={'center'} gap={1}>
+            <Tooltip title="Curtir" placement="top" onClick={() => handleLike(post.id)}>
+              <Fab size="small" color={postLiked ? 'primary' : 'default'}>
+                  <IconThumbUp size="16"  />
+              </Fab>
+            </Tooltip>
+            <Typography variant="body1" fontWeight={600} >
+              {linkesLength}
+            </Typography>
+          </Box>
         </Box>
-      )}
-    </Box> 
-      <Divider/>
+        <Box pt={2} pb={2}>
+          <Typography variant="body1">{post.text}</Typography>
+        </Box>
+        <Divider/>
+        <Box pt={2}></Box>
+        <Box ref={scrollContainerRef} p={-2}>
+          <Box display={'flex'} justifyContent={'space-between'} pb={2}>
+            <Typography variant="h6">Comentários</Typography>
+            <Typography variant="h6">{totalItems}</Typography>
+          </Box>
+          {currentComments.map((comment, index) => (
+            <PostComments
+              comment={comment}
+              key={comment.id}
+              isLast={index === currentComments.length - 1} // Verifica se é o último comentário
+            />
+          ))}
+          {currentComments.length === 0 && (
+            <Box
+              pt={2}
+              pb={2}
+              height={'100%'}
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              flexGrow={1}
+              backgroundColor={'#f6f6f6'}
+            >
+              {' '}
+              <Typography variant="body1">Nenhum comentário, seja o primeiro a comentar</Typography>{' '}
+            </Box>
+          )}
+
+          {totalItems > commentsPerPage && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 4 }}>
+              <Pagination
+                count={Math.ceil(totalItems / commentsPerPage)}
+                page={currentPage}
+                onChange={handleChangePage}
+              />
+            </Box>
+          )}
+        </Box>
+      </Box>
+
       <Box p={2}>
+        <Divider />
+        <Box height={10}></Box>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
             src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''}
@@ -117,20 +156,20 @@ const ProductDetail = ({post}) => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             variant="outlined"
-            size='small'
+            size="small"
             fullWidth
           />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleComment}
-              disabled={loadingComment} // Desativa o botão durante o carregamento
-            >
-              {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
-            </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleComment}
+            disabled={loadingComment} // Desativa o botão durante o carregamento
+          >
+            {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
+          </Button>
         </Stack>
       </Box>
-   </Box>
+    </Box>
   );
 };
 
