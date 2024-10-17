@@ -77,9 +77,7 @@ const Marketplace = () => {
         if (formData.minPrice <= formData.maxPrice && parseInt(formData.maxPrice) > 1 && formData.minPrice > 1) {
             formDataToSend.maxPrice = Math.round(parseFloat(formData.maxPrice)); // Arredondar maxPrice
         }
-    
-        console.log(formDataToSend);
-        
+            
         try {
             const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
