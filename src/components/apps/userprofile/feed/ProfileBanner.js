@@ -109,10 +109,12 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
           }}
         >
          <Stack direction="column" spacing={2} sx={{ position: 'absolute', top: 16, right: 16 }}>
-            <Button variant="text" component="label" startIcon={<IconBrandInstagram size="18" />}>
-              Enviar imagem de capa
-              <input type="file" accept="image/jpeg,image/png" onChange={handleCoverFileChange} style={{ display: 'none' }} ref={fileInputRefCover} />
-            </Button>
+            {userData.email === currentUserls.email ? 
+              <Button variant="text" component="label" startIcon={<IconBrandInstagram size="18" />}>
+                Enviar imagem de capa 
+                <input type="file" accept="image/jpeg,image/png" onChange={handleCoverFileChange} style={{ display: 'none' }} ref={fileInputRefCover} />
+              </Button> : null
+            }
           </Stack>
         </Box>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
@@ -192,9 +194,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                   <IconBrandInstagram size="18" />
                 </Fab>
               </Box>
-              <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">
-                Editar Perfil
-              </Button>
+              {userData.email === currentUserls.email ? <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">Editar Perfil</Button> : null} 
             </Stack>
           </Grid>
         </Grid>

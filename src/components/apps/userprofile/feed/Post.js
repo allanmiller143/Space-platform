@@ -6,9 +6,8 @@ import PostItem from './PostItem';
 import { PostTextBox } from './PostTextBox';
 import { getData } from '../../../../Services/Api';
 import { Box } from '@mui/system';
-import { use } from 'i18next';
 
-const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, loadingData, setLoadingData }) => {
+const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, loadingData, setLoadingData, userData }) => {
   const token = localStorage.getItem('token');
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
@@ -23,7 +22,7 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
   const GetPosts = async (page) => {
     setLoadingData(true);
     try {
-      const response = await getData(`posts/${currentUserls.email}?page=${page}&limit=3`, token); // Adicionando paginação
+      const response = await getData(`posts/${userData.email}?page=${page}&limit=3`, token); // Adicionando paginação
       if (response.status === 200 || response.status === 201) {
         console.log(response);
         if (response.userInfo.result.length === 0) {
@@ -61,14 +60,17 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
 
   return (
     <Grid container spacing={3}>
-      <Grid item sm={12}>
-        <PostTextBox loading={loading} setLoading={setLoading} progress={progress} setProgress={setProgress} myPost={myPost} setMyPost={setMyPost}/>
-      </Grid>
-
+      
+      {
+        currentUserls.email === userData.email ?
+        <Grid item sm={12}>
+          <PostTextBox loading={loading} setLoading={setLoading} progress={progress} setProgress={setProgress} myPost={myPost} setMyPost={setMyPost} userData={userData}/>
+        </Grid> : null
+      }
       <Grid item sm={12} lg={12}>
         {myPost.map((post) => (
           <Box key={post.id} sx={{ mb: 3 }}>
-            <PostItem post={post} setMyPost={setMyPost} myPost={myPost} />
+            <PostItem post={post} setMyPost={setMyPost} myPost={myPost} userData={userData} />
           </Box>
         ))}
 

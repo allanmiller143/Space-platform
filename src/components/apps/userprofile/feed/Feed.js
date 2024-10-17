@@ -34,7 +34,7 @@ const Feed = ( {myPost, setMyPost,userData}) => {
         </Grid>
         {/* Posts Card */}
         <Grid item sm={12} lg={8} xs={12}>
-          <Post loading={loading} setLoading={setLoading} setLoadingData={setLoadingData} loadingData={loadingData} setProgress={setProgress} progress={progress}  setMyPost={setMyPost} myPost={myPost}/>
+          <Post loading={loading} setLoading={setLoading} setLoadingData={setLoadingData} loadingData={loadingData} setProgress={setProgress} progress={progress}  setMyPost={setMyPost} myPost={myPost} userData={userData}/>
         </Grid>
       </Grid>
     </Box>

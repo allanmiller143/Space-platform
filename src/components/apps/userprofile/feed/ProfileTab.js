@@ -97,17 +97,34 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     setValue(newValue);
   };
 
+
+
+
   const ProfileTabs = [
     {
-      label: 'Meu perfil',
+      label: 'Feed',
       icon: <IconUserCircle size="20" />,
       component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
     },
-    {
+  
+    // Condicional para adicionar "Meus Imóveis"
+    ...(userData.email === currentUserls.email ? [{
       label: 'Meus Imóveis',
       icon: <IconHome size="20" />,
       component: <MeusImoveis />
+    }] : []),
+  
+    {
+      label: 'Seguindo',
+      icon: <IconUserCircle size="20" />,
+      component: <FriendsCard />
     },
+    {
+      label: 'Seguidores',
+      icon: <IconUserCircle size="20" />,
+      component: <FollowerCard />
+    },
+
     // {
     //   label: 'Anúncios',
     //   icon: <IconAd2 size="20" />,
@@ -123,16 +140,6 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     //   icon: <IconCalendarEvent size="20" />,
     //   component: <Agendamentos />
     // },
-    {
-      label: 'Seguindo',
-      icon: <IconUserCircle size="20" />,
-      component: <FriendsCard />
-    },
-    {
-      label: 'Seguidores',
-      icon: <IconUserCircle size="20" />,
-      component: <FollowerCard />
-    },
   ];
 
   const seePhone = async () => {
