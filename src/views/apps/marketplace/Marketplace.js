@@ -47,6 +47,7 @@ const Marketplace = () => {
     const scrollContainerRef = useRef(null);
 
     const filter = async () => {
+        console.log(formData)
 
         setLoading(true); // Iniciar o loading
 
@@ -116,7 +117,7 @@ const Marketplace = () => {
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Button variant="text" color="primary" onClick={() => setDrawerOpen(true)} sx={{ borderRadius: 0 }}>
-                    {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length} Filtros aplicados - Ver filtros`}
+                    {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length - 1} Filtros aplicados - Ver filtros`}
                 </Button>
                 <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                     <Box sx={{ width: 600, p: 4, flexGrow: 0 }}>
