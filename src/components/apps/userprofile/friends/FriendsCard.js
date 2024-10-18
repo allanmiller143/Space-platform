@@ -148,7 +148,14 @@ const FriendsCard = ({ userData }) => {
                 <CardContent sx = {{height : '30vh', display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
                   <Stack direction={'column'} gap={2} alignItems="center">
                     <Typography variant="h6" color="textSecondary">
-                      Você ainda não está seguindo ninguém.
+                    {
+                      search ? 
+                      'Usuário não encontrado' : // Mostra esta mensagem se a busca não retornar resultados
+                      currentUserls.email === userData.email ? 
+                      'Você ainda não está seguindo ninguém' :
+                      'Este perfil ainda não está seguindo ninguém.'
+                    }
+                      
                     </Typography>
                   </Stack>
                 </CardContent>
