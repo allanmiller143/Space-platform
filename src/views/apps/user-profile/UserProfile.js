@@ -15,19 +15,40 @@ const UserProfile = ({socket}) => {
   const [myPost, setMyPost] = useState([]);
   const { email } = useParams(); // Captura o email da URL
   const [userData, setUserData] = useState({});
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString); 
 
   useEffect(() => {
-
     loadUserInfo();
-  }, []);
+    
+  }, [email]);
 
   const loadUserInfo = async () => {
-    setLoadingUserData(true); // Ativando o estado de carregamento
 
+    setLoadingUserData(true); // Ativando o estado de carregamento
     try {
       const response = await getData(`find/${email.replaceAll('-', '.')}`);
       if (response.status === 200 || response.status === 201) {
         setUserData(response.userInfo);
+        console.log(response.userInfo);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error('Ocorreu um erro inesperado! Por favor, tente novamente mais tarde ou entre em contato com o suporte.');
+    }
+
+    loadMyUserInfo();
+
+    
+  };
+
+  const loadMyUserInfo = async () => {
+    try {
+      const response = await getData(`find/${currentUserls.email}`);
+      if (response.status === 200 || response.status === 201) {
+        const newCurrentUserls = response.userInfo;
+        localStorage.setItem('currentUser', JSON.stringify(newCurrentUserls));
         console.log(response.userInfo);
       } else {
         toast.error(response.message);

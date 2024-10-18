@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Avatar } from '@mui/material';
 import { Box } from '@mui/system';
 import { IconCheck } from '@tabler/icons';
 import { useEffect, useState } from 'react';
@@ -69,20 +69,21 @@ const AdvertiserCard = ({advertiser}) => {
                         borderBottomLeftRadius: 0,
                         borderBottomRightRadius: 0
                     }}>
-                        <Box sx={{
+
+                        <Avatar 
+                          sx={{
                             position: 'absolute',
                             bottom: -40,
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            backgroundColor: 'transparent',
                             height: 60,
                             width: 60,
                             borderRadius: '50%',
-                            zIndex: 4,
+                            zIndex: 1000,
                             marginBottom: '16px'
-                        }}>
-                            <img src={ advertiser.profile ? advertiser.profile.url : ''} alt={advertiser.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
-                        </Box>
+                          }}   
+                          src={ advertiser.profile ? advertiser.profile.url : ''}                     
+                        />
                     </Box>
                     <Typography variant="h6" component="h4" fontWeight="bold" sx={{ mt: 3,display: 'flex', alignItems: 'center' }}>
                         <IconCheck sx={{

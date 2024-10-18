@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Grid, Skeleton, Typography } from '@mui/material';
+import { Grid, Skeleton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PostItem from './PostItem';
 import { PostTextBox } from './PostTextBox';
 import { getData } from '../../../../Services/Api';
 import { Box } from '@mui/system';
-import noData from '../../../../assets/images/svgs/no-data.webp'
-const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, loadingData, setLoadingData, userData }) => {
+
+const OtherPosts = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, loadingData, setLoadingData, userData }) => {
   const token = localStorage.getItem('token');
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
@@ -22,7 +22,7 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
   const GetPosts = async (page) => {
     setLoadingData(true);
     try {
-      const response = await getData(`posts/${userData.email}?page=${page}&limit=3`, token); // Adicionando paginação
+      const response = await getData(`posts/followed/user?page=${page}&limit=3`, token); // Adicionando paginação
       if (response.status === 200 || response.status === 201) {
         console.log(response);
         if (response.userInfo.result.length === 0) {
@@ -60,7 +60,7 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
 
   return (
     <Grid container spacing={3}>
-
+      
       {
         currentUserls.email === userData.email ?
         <Grid item sm={12}>
@@ -73,15 +73,6 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
             <PostItem post={post} setMyPost={setMyPost} myPost={myPost} userData={userData} />
           </Box>
         ))}
-
-        {!loadingData && myPost.length === 0 && (
-          <Box sx={{ mb: 3 }} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} height='50vh' flexGrow={1}>
-            <img src={noData} alt="no-data" style={{width: '50%', height: 'auto'}}  />
-            <Typography variant="h6" gutterBottom >Esse usuário ainda  não possui publicações</Typography>
-
-          </Box>
-        // Se o usuário logado for o mesmo do perfil, exibe a caixa de texto para postar
-        )}
 
         {loadingData && (
           // Exibe múltiplos skeletons enquanto está carregando
@@ -101,4 +92,4 @@ const Post = ({ loading, setLoading, progress, setProgress, myPost, setMyPost, l
   );
 };
 
-export default Post;
+export default OtherPosts;

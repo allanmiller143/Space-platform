@@ -5,10 +5,9 @@ import IntroCard from 'src/components/apps/userprofile/feed/IntroCard';
 import InfoCard from 'src/components/apps/userprofile/feed/InfoCard';
 import Post from 'src/components/apps/userprofile/feed/Post';
 import { useState } from 'react';
-import OtherPosts from './otherPosts';
 
 
-const Feed = ( {myPost, setMyPost,userData}) => {
+const MinhasPublicacoes = ( {myPost, setMyPost,userData}) => {
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -35,11 +34,11 @@ const Feed = ( {myPost, setMyPost,userData}) => {
         </Grid>
         {/* Posts Card */}
         <Grid item sm={12} lg={8} xs={12}>
-          <OtherPosts loading={loading} setLoading={setLoading} setLoadingData={setLoadingData} loadingData={loadingData} setProgress={setProgress} progress={progress}  setMyPost={setMyPost} myPost={myPost} userData={userData}/>
+          <Post loading={loading} setLoading={setLoading} setLoadingData={setLoadingData} loadingData={loadingData} setProgress={setProgress} progress={progress}  setMyPost={setMyPost} myPost={myPost} userData={userData}/>
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-export default Feed;
+export default MinhasPublicacoes;

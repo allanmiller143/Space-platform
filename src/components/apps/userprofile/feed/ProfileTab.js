@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import FilteringTable from "src/components/react-tables/filter/imoveisTabela";
 import houseImage from 'src/assets/images/ilustracoes/house.png';
+import MinhasPublicacoes from './MinhasPublicacoes';
 
 const MeusImoveis = () => {
   const navigate = useNavigate();
@@ -85,9 +86,10 @@ const Agendamentos = () => (
 );
 
 const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
-  const [value, setValue] = useState(0);
   const cuString = localStorage.getItem('currentUser');
-  const currentUserls = JSON.parse(cuString);
+  const currentUserls = JSON.parse(cuString);  
+  const [value, setValue] = useState(0);
+
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -101,28 +103,39 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
 
 
   const ProfileTabs = [
-    {
+
+    // Condicional para adicionar "Meus Imóveis"
+    ...(userData.email === currentUserls.email ? [{
       label: 'Feed',
       icon: <IconUserCircle size="20" />,
       component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
+    }] : []),
+
+    {
+      label: userData.email === currentUserls.email ? 'Minhas Publicações' : 'Publicações',
+      icon: <IconUserCircle size="20" />,
+      component: <MinhasPublicacoes email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
     },
-  
+
     // Condicional para adicionar "Meus Imóveis"
     ...(userData.email === currentUserls.email ? [{
       label: 'Meus Imóveis',
       icon: <IconHome size="20" />,
-      component: <MeusImoveis />
+      component: <MeusImoveis  />
     }] : []),
+
+
+
   
     {
       label: 'Seguindo',
       icon: <IconUserCircle size="20" />,
-      component: <FriendsCard />
+      component: <FriendsCard userData={userData}  />
     },
     {
       label: 'Seguidores',
       icon: <IconUserCircle size="20" />,
-      component: <FollowerCard />
+      component: <FollowerCard userData={userData} />
     },
 
     // {
