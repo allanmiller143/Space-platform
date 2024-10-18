@@ -13,7 +13,8 @@ const FriendsCard = ({ userData }) => {
   const [loading, setLoading] = React.useState(false);
   const cuString = localStorage.getItem('currentUser');
   const token = localStorage.getItem('token');
-  const currentUserls = JSON.parse(cuString);  const [followingUsers, setFollowingUsers] = React.useState([]);
+  const currentUserls = JSON.parse(cuString); 
+  const [followingUsers, setFollowingUsers] = React.useState([]);
   const [search, setSearch] = React.useState('');
   const [loadFollowing, setLoadFollowing] = useState(false);
   const [loadUnfollowing, setLoadUnfollowing] = useState(false);
@@ -29,7 +30,7 @@ const FriendsCard = ({ userData }) => {
         setFollowingUsers(response.userInfo.result);
         console.log(response.userInfo);
       } else {
-        toast.error('Não foi possível carregar os seus amigos');
+        toast.error('Não foi possível carregar os seus seguidores');
       }
     } catch (e) {
       console.log(e);

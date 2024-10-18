@@ -88,7 +88,7 @@ const Agendamentos = () => (
 const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);  
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(4);
 
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
