@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { CardContent, Box, Stack, Avatar, Grid, Typography, Chip, TextField, InputAdornment, Button, Skeleton, CircularProgress } from '@mui/material';
@@ -7,7 +8,6 @@ import { IconSearch } from '@tabler/icons';
 import { deleteData, getData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
-import { height } from '@mui/system';
 
 const FriendsCard = ({ userData }) => {
   const [loading, setLoading] = React.useState(false);
