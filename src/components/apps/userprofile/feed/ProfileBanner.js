@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import { Grid, Box, Typography, Button, Avatar, Stack, CardMedia, styled, Fab, Skeleton, Dialog, DialogContent, DialogActions } from '@mui/material';
+import { Grid, Box, Typography, Button, Avatar, Stack, CardMedia, styled, Fab, Skeleton, Dialog, DialogContent, DialogActions, CircularProgress } from '@mui/material';
 import profilecover from '/mobiliado/imagem-1.jpg';
 import userimg from 'src/assets/images/profile/user-1.jpg';
 import { IconBrandFacebook, IconBrandInstagram, IconBrandWhatsapp } from '@tabler/icons';
@@ -9,7 +10,7 @@ import ProfileTab from './ProfileTab';
 import BlankCard from '../../../shared/BlankCard';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getData, putFormData } from '../../../../Services/Api';
+import { deleteData, getData, postData, putFormData } from '../../../../Services/Api';
 import Loading from '../../../Loading/Loading';
 
 
@@ -23,6 +24,17 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
   const [coverImageUrl, setCoverImageUrl] = useState(userData.banner && userData.banner.url ? userData.banner?.url : '/images/default-cover.jpg');
   const fileInputRefCover = useRef(null);
+  const [following, setFollowing] = useState(false);
+  const [loadFollowing, setLoadFollowing] = useState(false);
+
+  useEffect(() => {
+    if (currentUserls.email !== userData.email) {
+      const isFollowing = currentUserls.follow.some(follow => follow.followedEmail === userData.email);
+      setFollowing(isFollowing);
+    }
+  }, [currentUserls.follow, userData.email]);
+
+
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
     width: '110px',
@@ -42,6 +54,50 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
       window.open(`https://wa.me/55${phoneNumber}`, '_blank');
   };
 
+
+  const follow = async () => {
+    setLoadFollowing(true);
+    try {
+      setLoading(true);
+      const response = await postData(`follow/${userData.email}`,{},token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Seguido com sucesso');
+
+        currentUserls.follow.push(response.data);
+        localStorage.setItem('currentUser', JSON.stringify(currentUserls));
+        setFollowing(true);
+
+
+      } else {
+        toast.error('Erro ao seguir');
+      }
+      console.log(response);
+      setLoadFollowing(false);
+    } catch (error) {
+      toast.error('Erro ao seguir');
+      setLoadFollowing(false);
+    }
+  }
+
+  const unfollow = async () => {
+    setLoadFollowing(true);
+    try {
+      setLoading(true);
+      const response = await deleteData(`follow/${userData.email}`,token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Deixou de Seguir com sucesso');
+        currentUserls.follow = currentUserls.follow.filter(follow => follow.followedEmail !== userData.email);
+        localStorage.setItem('currentUser', JSON.stringify(currentUserls));
+      } else {
+        toast.error('Erro ao deixar de seguir');
+      }
+      console.log(response);
+      setLoadFollowing(false);
+    } catch (error) {
+      toast.error('Erro ao deixar de seguir');
+      setLoadFollowing(false);
+    }
+  }
 
   const handleCoverFileChange = (event) => {
     const file = event.target.files[0];
@@ -109,10 +165,12 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
           }}
         >
          <Stack direction="column" spacing={2} sx={{ position: 'absolute', top: 16, right: 16 }}>
-            <Button variant="text" component="label" startIcon={<IconBrandInstagram size="18" />}>
-              Enviar imagem de capa
-              <input type="file" accept="image/jpeg,image/png" onChange={handleCoverFileChange} style={{ display: 'none' }} ref={fileInputRefCover} />
-            </Button>
+            {userData.email === currentUserls.email ? 
+              <Button variant="text" component="label" startIcon={<IconBrandInstagram size="18" />}>
+                Enviar imagem de capa 
+                <input type="file" accept="image/jpeg,image/png" onChange={handleCoverFileChange} style={{ display: 'none' }} ref={fileInputRefCover} />
+              </Button> : null
+            }
           </Stack>
         </Box>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
@@ -192,9 +250,17 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                   <IconBrandInstagram size="18" />
                 </Fab>
               </Box>
-              <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">
-                Editar Perfil
-              </Button>
+              {userData.email === currentUserls.email ? 
+                <Button color="primary" variant="contained" component={Link} to="/pages/account-settings">Editar Perfil</Button> 
+                : 
+                <Button 
+                  disabled={loadFollowing}
+                  color="primary"
+                  variant="contained" 
+                  onClick={ following ? unfollow : follow}>
+                  {following ? 'Deixar de seguir' : 'Seguir'} {loadFollowing ? <span style={{ marginLeft: '5px', display: 'inline-flex', alignItems: 'center' }}>  <CircularProgress size={20} pl ={2} color="inherit" />  </span>: ''}
+                </Button> 
+              } 
             </Stack>
           </Grid>
         </Grid>

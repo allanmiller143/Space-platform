@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from 'react';
@@ -32,7 +33,7 @@ const PostComments = ({ comment, isLast }) => {
               <Box py={2}>
                 <Typography color="textSecondary">{comment.text}</Typography>
               </Box>
-              <Stack direction="row" gap={1} alignItems="center">
+              {/* <Stack direction="row" gap={1} alignItems="center">
                 <Tooltip title="Curtir" placement="top">
                   <Fab size="small" color="primary" onClick={() => toast.warning('Ainda em desenvolvimento!')}>
                     <IconThumbUp size="16" />
@@ -41,7 +42,7 @@ const PostComments = ({ comment, isLast }) => {
                 <Typography variant="body1" fontWeight={600}>
                   0
                 </Typography>
-              </Stack>
+              </Stack> */}
             </Box>
           </Box>
         </Stack>

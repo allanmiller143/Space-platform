@@ -1,65 +1,86 @@
-import {
-  CardContent,
-  Box,
-  Stack,
-  Avatar,
-  Grid,
-  Typography,
-  Chip,
-  TextField,
-  InputAdornment,
-  Divider,
-  IconButton,
-} from '@mui/material';
-import React, { useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { CardContent, Box, Stack, Avatar, Grid, Typography, Chip, TextField, InputAdornment, Button, Skeleton, CircularProgress } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import BlankCard from 'src/components/shared/BlankCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchFollwores } from 'src/store/apps/userProfile/UserProfileSlice';
-import {
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBrandWhatsapp,
-  IconSearch,
-} from '@tabler/icons';
+import { IconSearch } from '@tabler/icons';
+import { deleteData, getData } from '../../../../Services/Api';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router';
 
-const SocialIcons = [
-  {
-    name: 'Facebook',
-    icon: <IconBrandFacebook size="18" color="#1877F2" />,
-  },
-  {
-    name: 'Instagram',
-    icon: <IconBrandInstagram size="18" color="#D7336D" />,
-  },
-  {
-    name: 'Github',
-    icon: <IconBrandLinkedin size="18" color="#006097" />,
-  },
-  {
-    name: 'Twitter',
-    icon: <IconBrandWhatsapp size="18" color="green" />,
-  },
-];
+const FriendsCard = ({ userData }) => {
+  const [loading, setLoading] = React.useState(false);
+  const cuString = localStorage.getItem('currentUser');
+  const token = localStorage.getItem('token');
+  const currentUserls = JSON.parse(cuString); 
+  const [followingUsers, setFollowingUsers] = React.useState([]);
+  const [search, setSearch] = React.useState('');
+  const [loadFollowing, setLoadFollowing] = useState(false);
+  const [loadUnfollowing, setLoadUnfollowing] = useState(false);
 
-const FriendsCard = () => {
-  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const loadFollowingUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await getData(`follow/following/${userData.email}`, token);
+      if (response.status === 200 || response.status === 201) {
+        setFollowingUsers(response.userInfo.result);
+        console.log(response.userInfo);
+      } else {
+        toast.error('Não foi possível carregar os seus seguidores');
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error('Erro ao carregar dados');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchFollwores());
-  }, [dispatch]);
+    loadFollowingUsers();
+  }, []);
 
-  const filterFriends = (friends, cSearch) => {
-    if (friends)
-      return friends.filter((t) =>
-        t.name.toLocaleLowerCase().includes(cSearch.toLocaleLowerCase()),
+  // Função para filtrar amigos com base na pesquisa
+  const filterFriends = (friends, searchQuery) => {
+    if (searchQuery) {
+      return friends.filter((friend) =>
+        friend.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
-
+    }
     return friends;
   };
-  const [search, setSearch] = React.useState('');
-  const getFriends = useSelector((state) =>
-    filterFriends(state.userpostsReducer.followers, search),
-  );
+
+  const openProfile = (email) => {
+    navigate(`/user-profile/${email.replaceAll(/[.]/g, '-')}`);
+  };
+
+  const unfollow = async ( email) => {
+    setLoadFollowing(true);
+    try {
+      setLoadUnfollowing(true);
+      const response = await deleteData(`follow/${email}?page=1&limit=40`,token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Deixou de Seguir com sucesso');
+        currentUserls.follow = currentUserls.follow.filter(follow => follow.followedEmail !== userData.email);
+        localStorage.setItem('currentUser', JSON.stringify(currentUserls));
+        setFollowingUsers(followingUsers.filter(follow => follow.email !== email));
+      } else {
+        toast.error('Erro ao deixar de seguir');
+      }
+      console.log(response);
+    } catch (error) {
+      toast.error('Erro ao deixar de seguir');
+    }finally {
+      setLoadUnfollowing(false);
+    }
+  }
+
+  // Aplica o filtro à lista de usuários seguindo
+  const filteredFriends = filterFriends(followingUsers, search);
 
   return (
     <>
@@ -69,7 +90,7 @@ const FriendsCard = () => {
             <Box>
               <Typography variant="h3">
                 Amigos &nbsp;
-                <Chip label={getFriends.length} color="secondary" size="small" />
+                <Chip label={filteredFriends.length} color="secondary" size="small" />
               </Typography>
             </Box>
             <Box ml="auto">
@@ -93,33 +114,93 @@ const FriendsCard = () => {
             </Box>
           </Stack>
         </Grid>
-        {getFriends.map((profile) => {
-          return (
-            <Grid item xs={12} lg={4} key={profile.id}>
-              <BlankCard className="hoverCard">
+
+        {loading ? (
+          // Exibe Skeleton enquanto os dados estão sendo carregados
+          Array.from(new Array(3)).map((_, index) => (
+            <Grid item xs={12} lg={4} key={index}>
+              <BlankCard>
                 <CardContent>
                   <Stack direction={'column'} gap={2} alignItems="center">
-                    <Avatar
-                      alt="Fernando Dias"
-                      src={profile.avatar}
-                      sx={{ width: '80px', height: '80px' }}
-                    />
-                    <Box textAlign={'center'}>
-                      <Typography variant="h5">{profile.name}</Typography>
-                      <Typography variant="caption">{profile.role}</Typography>
+                    <Skeleton variant="circular" width={80} height={80} />
+                    <Box
+                      textAlign={'center'}
+                      width={'100%'}
+                      display={'flex'}
+                      flexDirection={'column'}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                    >
+                      <Skeleton width="50%" height={30} />
+                      <Box display={'flex'} gap={2} mt={1}>
+                        <Skeleton width={100} height={40} />
+                        <Skeleton width={100} height={40} />
+                      </Box>
                     </Box>
                   </Stack>
                 </CardContent>
-                <Divider />
-                <Box p={2} py={1} textAlign={'center'} sx={{ backgroundColor: 'grey.100' }}>
-                  {SocialIcons.map((sicon) => {
-                    return <IconButton key={sicon.name}>{sicon.icon}</IconButton>;
-                  })}
-                </Box>
               </BlankCard>
             </Grid>
-          );
-        })}
+          ))
+        ) : (
+          filteredFriends.length === 0 ? (
+            <Grid item xs={12}>
+              <BlankCard >
+                <CardContent sx = {{height : '30vh', display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
+                  <Stack direction={'column'} gap={2} alignItems="center">
+                    <Typography variant="h6" color="textSecondary">
+                    {
+                      search ? 
+                      'Usuário não encontrado' : // Mostra esta mensagem se a busca não retornar resultados
+                      currentUserls.email === userData.email ? 
+                      'Você ainda não está seguindo ninguém' :
+                      'Este perfil ainda não está seguindo ninguém.'
+                    }
+                      
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </BlankCard>
+            </Grid>
+          ) : (
+            filteredFriends.map((user) => (
+              <Grid item xs={12} lg={4} key={user.id}>
+                <BlankCard className="hoverCard">
+                  <CardContent>
+                    <Stack direction={'column'} gap={2} alignItems="center">
+                      <Avatar
+                        alt={user.name}
+                        src={user.profile ? user.profile.url : ''}
+                        sx={{ width: '80px', height: '80px' }}
+                      />
+                      <Box textAlign={'center'}>
+                        <Typography variant="h5">{user.name}</Typography>
+                        <Box display={'flex'} gap={2} mt={1}>
+                          {
+                            currentUserls.email === userData.email ? 
+                            <Button variant="outlined" color="error" size="small" onClick={() => unfollow(user.email)} disabled={loadFollowing}>
+                              Deixar de seguir
+                              {loadUnfollowing ? (
+                                <span style={{ marginLeft: '5px', display: 'inline-flex', alignItems: 'center' }}>
+                                  <CircularProgress size={20} pl={2} color="inherit" />
+                                </span>
+                              ) : ''}
+                            </Button> :  null
+                          }
+
+                          <Button variant="outlined" color="primary" size="small" onClick={() => openProfile(user.email)}>
+                            Abrir perfil
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Stack>
+                  </CardContent>
+                </BlankCard>
+              </Grid>
+            ))
+          )
+        )}
+
       </Grid>
     </>
   );

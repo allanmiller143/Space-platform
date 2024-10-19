@@ -173,8 +173,8 @@ const PostItem = ({ post, setMyPost, myPost }) => {
         {post.PostMedia && post.PostMedia.length > 0 && (
           <Box>
             <Grid container spacing={3} mb={2}>
-              {post.PostMedia.map((photo) => (
-                <Grid item sm={12} key={photo.id}>
+              {post.PostMedia.map((photo,index) => (
+                <Grid item sm={12} lg={ (post.PostMedia.length%2 === 0 ) ? 6 : (index > 0 ) ? 6 : 12} key={photo.id}>
                   <CardMedia
                     component="img"
                     sx={{ borderRadius: customizer.borderRadius / 4, height: 360 }}
@@ -187,6 +187,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             </Grid>
           </Box>
         )}
+
 
         <Box>
           <Stack direction="row" gap={1} alignItems="center" justifyContent={'space-between'} > 

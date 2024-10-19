@@ -8,11 +8,11 @@ import { toast } from 'sonner';
 import MarketplaceMaps from './MarcketPlaceMap';
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
-
+// import nodata from "../../"
 const Marketplace = () => {
     const [selected, setSelected] = useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage] = React.useState(6); // Definido para exibir 6 itens por página
+    const [itemsPerPage] = React.useState(40); // Definido para exibir 6 itens por página
     const [loading, setLoading] = useState(false);
     const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
@@ -47,6 +47,7 @@ const Marketplace = () => {
     const scrollContainerRef = useRef(null);
 
     const filter = async () => {
+        console.log(formData)
 
         setLoading(true); // Iniciar o loading
 
@@ -77,11 +78,9 @@ const Marketplace = () => {
         if (formData.minPrice <= formData.maxPrice && parseInt(formData.maxPrice) > 1 && formData.minPrice > 1) {
             formDataToSend.maxPrice = Math.round(parseFloat(formData.maxPrice)); // Arredondar maxPrice
         }
-    
-        console.log(formDataToSend);
-        
+            
         try {
-            const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
+            const response = await putData(`properties/filter?page=${currentPage}&limit=40&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
                 setTotalItens(response.data.pagination.total);
                 setProperties(response.data.result); // Defina as propriedades retornadas
@@ -118,7 +117,7 @@ const Marketplace = () => {
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Button variant="text" color="primary" onClick={() => setDrawerOpen(true)} sx={{ borderRadius: 0 }}>
-                    {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length} Filtros aplicados - Ver filtros`}
+                    {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length - 1} Filtros aplicados - Ver filtros`}
                 </Button>
                 <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                     <Box sx={{ width: 600, p: 4, flexGrow: 0 }}>

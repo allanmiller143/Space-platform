@@ -77,7 +77,7 @@ const MarketplaceMaps = ({ properties, formData }) => {
     }, []);
 
     const handleOpenProperty = (propertyId) => {
-        navigate(`/property/${propertyId}`);
+        navigate(`/marketplace/imovel/${propertyId}`);
     };
 
     return (

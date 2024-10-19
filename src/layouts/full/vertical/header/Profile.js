@@ -8,8 +8,6 @@ import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Link } from 'react-router-dom';
-
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -179,15 +177,6 @@ const Profile = () => {
                   <img src={unlimitedImg} alt="ilimitado" className="signup-bg"></img>
                 </Box>
               </Box>
-              <Button
-                to="/auth/login"
-                variant="outlined"
-                color="primary"
-                component={Link}
-                fullWidth
-              >
-                Sair
-              </Button>
             </Box>
 
           </Box>

@@ -7,7 +7,7 @@ import ChildCard from 'src/components/shared/ChildCard';
 import { toast } from 'sonner';
 import { postFormData, postFormLoadingData } from '../../../../Services/Api';
 
-export const PostTextBox = ({ loading, setLoading, setProgress, myPost, setMyPost }) => {
+export const PostTextBox = ({ loading, setLoading, setProgress, myPost, setMyPost, userData }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [postText, setPostText] = useState('');
   const token = localStorage.getItem('token');

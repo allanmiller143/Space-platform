@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import FilteringTable from "src/components/react-tables/filter/imoveisTabela";
 import houseImage from 'src/assets/images/ilustracoes/house.png';
+import MinhasPublicacoes from './MinhasPublicacoes';
 
 const MeusImoveis = () => {
   const navigate = useNavigate();
@@ -85,9 +86,10 @@ const Agendamentos = () => (
 );
 
 const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
-  const [value, setValue] = useState(0);
   const cuString = localStorage.getItem('currentUser');
-  const currentUserls = JSON.parse(cuString);
+  const currentUserls = JSON.parse(cuString);  
+  const [value, setValue] = useState(0);
+
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -95,19 +97,48 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const handleChange = (event, newValue) => {
     setMyPost([]);
     setValue(newValue);
+    setMyPost([]);
   };
 
+
+
+
   const ProfileTabs = [
-    {
-      label: 'Meu perfil',
+
+    // Condicional para adicionar "Meus Imóveis"
+    ...(userData.email === currentUserls.email ? [{
+      label: 'Feed',
       icon: <IconUserCircle size="20" />,
       component: <Feed email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
-    },
+    }] : []),
+
     {
+      label: userData.email === currentUserls.email ? 'Minhas Publicações' : 'Publicações',
+      icon: <IconUserCircle size="20" />,
+      component: <MinhasPublicacoes email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
+    },
+
+    // Condicional para adicionar "Meus Imóveis"
+    ...(userData.email === currentUserls.email ? [{
       label: 'Meus Imóveis',
       icon: <IconHome size="20" />,
-      component: <MeusImoveis />
+      component: <MeusImoveis  />
+    }] : []),
+
+
+
+  
+    {
+      label: 'Seguindo',
+      icon: <IconUserCircle size="20" />,
+      component: <FriendsCard userData={userData}  />
     },
+    {
+      label: 'Seguidores',
+      icon: <IconUserCircle size="20" />,
+      component: <FollowerCard userData={userData} />
+    },
+
     // {
     //   label: 'Anúncios',
     //   icon: <IconAd2 size="20" />,
@@ -123,49 +154,8 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     //   icon: <IconCalendarEvent size="20" />,
     //   component: <Agendamentos />
     // },
-    {
-      label: 'Seguindo',
-      icon: <IconUserCircle size="20" />,
-      component: <FriendsCard />
-    },
-    {
-      label: 'Seguidores',
-      icon: <IconUserCircle size="20" />,
-      component: <FollowerCard />
-    },
   ];
 
-  const seePhone = async () => {
-    if (currentUserls) {
-      setLoading(true);
-      try {
-        await openNewChat(socket, 'allan.miller@upe.br');
-      } catch (err) {
-        console.log('Erro ao carregar mensagens:', err);
-      }
-
-      try {
-        const response = await getData('chat', token);
-        if (response.status === 200 || response.status === 201) {
-          const selectedChat = response.userInfo.find(chat => chat.user1.email === 'allan.miller@upe.br' || chat.user2.email === 'allan.miller@upe.br');
-          if (selectedChat) {
-            console.log('Chat encontrado:', selectedChat);
-          } else {
-            console.log('Usuário não encontrado nos chats carregados.');
-          }
-
-          navigate('/apps/chats');
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      navigate('/google-form');
-      toast.success('Faça um cadastro para enviar uma mensagem');
-    }
-  };
 
   return (
     <>

@@ -26,7 +26,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   };
  
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages && messages.length > 0) {
       scrollToBottom();
     }
   }, [messages]);
@@ -100,7 +100,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   return (
     <Box display="flex" flexDirection="column" height="100%" sx = {{position : 'relative'}} >
       {
-        activeChat && messages.length > 0 ? (
+        activeChat && messages && messages.length > 0 ? (
           <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
             <>
             <Box>

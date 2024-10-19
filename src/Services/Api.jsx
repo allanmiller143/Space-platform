@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-// const apiUrl = 'https://advanced-mosquito-usually.ngrok-free.app/';
+//const apiUrl = 'https://advanced-mosquito-usually.ngrok-free.app/';
 const apiUrl = 'https://space-api-zsx7.onrender.com/';
 
 export async function getData(url= '',token = '') {
