@@ -8,11 +8,11 @@ import { toast } from 'sonner';
 import MarketplaceMaps from './MarcketPlaceMap';
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
-
+// import nodata from "../../"
 const Marketplace = () => {
     const [selected, setSelected] = useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage] = React.useState(6); // Definido para exibir 6 itens por página
+    const [itemsPerPage] = React.useState(40); // Definido para exibir 6 itens por página
     const [loading, setLoading] = useState(false);
     const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
@@ -80,7 +80,7 @@ const Marketplace = () => {
         }
             
         try {
-            const response = await putData(`properties/filter?page=${currentPage}&verified=true`, formDataToSend);
+            const response = await putData(`properties/filter?page=${currentPage}&limit=40&verified=true`, formDataToSend);
             if (response.status === 200 || response.status === 201) {
                 setTotalItens(response.data.pagination.total);
                 setProperties(response.data.result); // Defina as propriedades retornadas

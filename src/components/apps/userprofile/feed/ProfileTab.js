@@ -88,7 +88,7 @@ const Agendamentos = () => (
 const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);  
-  const [value, setValue] = useState(4);
+  const [value, setValue] = useState(0);
 
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
@@ -97,6 +97,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const handleChange = (event, newValue) => {
     setMyPost([]);
     setValue(newValue);
+    setMyPost([]);
   };
 
 
@@ -155,37 +156,6 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     // },
   ];
 
-  const seePhone = async () => {
-    if (currentUserls) {
-      setLoading(true);
-      try {
-        await openNewChat(socket, 'allan.miller@upe.br');
-      } catch (err) {
-        console.log('Erro ao carregar mensagens:', err);
-      }
-
-      try {
-        const response = await getData('chat', token);
-        if (response.status === 200 || response.status === 201) {
-          const selectedChat = response.userInfo.find(chat => chat.user1.email === 'allan.miller@upe.br' || chat.user2.email === 'allan.miller@upe.br');
-          if (selectedChat) {
-            console.log('Chat encontrado:', selectedChat);
-          } else {
-            console.log('Usuário não encontrado nos chats carregados.');
-          }
-
-          navigate('/apps/chats');
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      navigate('/google-form');
-      toast.success('Faça um cadastro para enviar uma mensagem');
-    }
-  };
 
   return (
     <>
