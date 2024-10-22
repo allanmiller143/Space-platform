@@ -212,13 +212,12 @@ const HomePage = () => {
 
         <Swiper
           modules={[Navigation, Pagination]}
-          style={{ paddingRight: '0px !important' }}
           slidesPerView={4}
           spaceBetween={30}
           pagination={{ clickable: false }}
           scrollbar={{ draggable: true }}
           className="mySwiper"
-          style={{ paddingBottom: '52px', paddingRight: '0px !important' }}
+          style={{ paddingBottom: '52px', paddingRight: '0 !important' }}
         >
           {[
             'imagem-2.jpg', 'imagem-3.jpg', 'imagem-4.jpg', 'imagem-5.jpg',
