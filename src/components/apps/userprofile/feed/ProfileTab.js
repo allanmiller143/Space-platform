@@ -100,11 +100,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     setMyPost([]);
   };
 
-
-
-
   const ProfileTabs = [
-
     // Condicional para adicionar "Meus Imóveis"
     ...(userData.email === currentUserls.email ? [{
       label: 'Feed',
