@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, Box, Grid, Button, Typography, Container, Stack } from '@mui/material';
 import { IconHeart, IconUserCircle, IconHome, IconAd2, IconMessage, IconCalendarEvent, IconPlus, IconInfoCircle } from '@tabler/icons';
 import FriendsCard from 'src/components/apps/userprofile/friends/FriendsCard';
@@ -99,6 +99,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     setValue(newValue);
     setMyPost([]);
   };
+
 
   const ProfileTabs = [
     // Condicional para adicionar "Meus Imóveis"

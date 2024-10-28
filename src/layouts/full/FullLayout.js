@@ -1,12 +1,12 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { styled, Container, Box, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-
 import Header from './vertical/header/Header';
 import HorizontalHeader from '../full/horizontal/header/Header';
 import Sidebar from './vertical/sidebar/Sidebar';
 import Customizer from './shared/customizer/Customizer';
-import Navigation from './horizontal/navbar/Navbar';
 
 const MainWrapper = styled('div')(() => ({
   display: 'flex',
@@ -24,7 +24,7 @@ const PageWrapper = styled('div')(() => ({
   backgroundColor: 'transparent',
 }));
 
-const FullLayout = () => {
+const FullLayout = ( { socket } ) => {
   const customizer = useSelector((state) => state.customizer);
 
   const theme = useTheme();
@@ -51,7 +51,7 @@ const FullLayout = () => {
         {/* ------------------------------------------- */}
         {/* Header */}
         {/* ------------------------------------------- */}
-        {customizer.isHorizontal ? <HorizontalHeader /> : <Header />}
+        {customizer.isHorizontal ? <HorizontalHeader  socket={socket}/> : <Header socket={socket} />}
         {/* ------------------------------------------- */}
         {/* PageContent */}
         {/* ------------------------------------------- */}

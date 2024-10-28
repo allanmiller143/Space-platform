@@ -60,7 +60,7 @@ const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')))
 const Router = [
   {
     path: '/',
-    element: <FullLayout />,
+    element: <FullLayout socket={socket} />,
     children: [
       { path: '/', element: <Navigate to="/templates/home" /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
@@ -77,7 +77,7 @@ const Router = [
       { path: '/pages/account-settings', element: <AccountSetting /> },
 
       // Apps
-      { path: '/apps/chats', element: <Chats /> },
+      { path: '/apps/chats', element: <Chats socket={socket} /> },
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/apps/email', element: <Email /> },

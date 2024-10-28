@@ -36,9 +36,6 @@ const AppDD = () => {
         >
           Ferramentas
         </Button>
-        {/* ------------------------------------------- */}
-        {/* Message Dropdown */}
-        {/* ------------------------------------------- */}
         <Menu
           id="msgs-menu"
           anchorEl={anchorEl2}

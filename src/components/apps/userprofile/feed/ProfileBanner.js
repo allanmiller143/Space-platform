@@ -35,6 +35,8 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
   }, [currentUserls.follow, userData.email]);
 
 
+
+
   const ProfileImage = styled(Box)(() => ({
     borderRadius: '50%',
     width: '110px',

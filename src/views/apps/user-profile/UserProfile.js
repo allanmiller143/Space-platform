@@ -10,6 +10,8 @@ import { getData } from '../../../Services/Api';
 import { toast } from 'sonner';
 import Spinner from '../../spinner/Spinner';
 
+
+
 const UserProfile = ({socket}) => {
   const [loadingUserData, setLoadingUserData] = useState(true); // Inicializando como true
   const [myPost, setMyPost] = useState([]);
@@ -20,6 +22,7 @@ const UserProfile = ({socket}) => {
 
   useEffect(() => {
     loadUserInfo();
+    console.log(socket);
     
   }, [email]);
 

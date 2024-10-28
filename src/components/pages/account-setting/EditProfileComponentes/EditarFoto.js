@@ -54,6 +54,8 @@ const EditarFoto = () => {
         } else {
           toast.error(`Erro ao obter dados do usuário:\n ${responseUserData.message}`);
         }
+      }else{
+        toast.error(console.log(response));
       }
     } catch (error) {
       toast.error(`Erro ao inserir imagem:\n ${error.message}`);
