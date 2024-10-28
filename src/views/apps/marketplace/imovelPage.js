@@ -11,7 +11,7 @@ import Spinner from '../../spinner/Spinner';
 import PropertyGallery from './Componentes/Gallery';
 import DadosGerais from './Componentes/DadosGerais';
 import Map from './Componentes/Map';
-import AdvertiserCard from './Componentes/advertiserCard';
+import AdvertiserCard from './Componentes/AdvertiserCard';
 
 const ImovelPage = () => {
     const [loading, setLoading] = useState(false);
