@@ -63,11 +63,11 @@ const OtherPosts = ({ loading, setLoading, progress, setProgress, myPost, setMyP
       
       {
         currentUserls.email === userData.email ?
-        <Grid item sm={12}>
+        <Grid item xs={12}>
           <PostTextBox loading={loading} setLoading={setLoading} progress={progress} setProgress={setProgress} myPost={myPost} setMyPost={setMyPost} userData={userData}/>
         </Grid> : null
       }
-      <Grid item sm={12} lg={12}>
+      <Grid item xs={12}>
         {myPost.map((post) => (
           <Box key={post.id} sx={{ mb: 3 }}>
             <PostItem post={post} setMyPost={setMyPost} myPost={myPost} userData={userData} />

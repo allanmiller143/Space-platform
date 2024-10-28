@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
@@ -14,10 +15,10 @@ import { toast } from 'sonner';
 import FilteringTable from "src/components/react-tables/filter/imoveisTabela";
 import houseImage from 'src/assets/images/ilustracoes/house.png';
 import MinhasPublicacoes from './MinhasPublicacoes';
-
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 const MeusImoveis = () => {
   const navigate = useNavigate();
-
   return (
     <Box p={3} px={0}>
       <Container maxWidth="lg" sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
@@ -89,6 +90,9 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);  
   const [value, setValue] = useState(0);
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md')); // Verifica se a tela é md ou maior
+
 
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
@@ -115,16 +119,12 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
       component: <MinhasPublicacoes email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
     },
 
-    // Condicional para adicionar "Meus Imóveis"
-    ...(userData.email === currentUserls.email ? [{
+    ...((userData.email === currentUserls.email && isMdUp) ? [{
       label: 'Meus Imóveis',
       icon: <IconHome size="20" />,
-      component: <MeusImoveis  />
+      component: <MeusImoveis />
     }] : []),
 
-
-
-  
     {
       label: 'Seguindo',
       icon: <IconUserCircle size="20" />,
@@ -158,7 +158,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     <>
       <Loading data={{ open: loading }} />
       <Box sx={{ mt: 2, backgroundColor: (theme) => theme.palette.grey[100] }}>
-        <Box justifyContent={'end'} alignItems={'center'} display="flex" sx={{ overflow: 'auto', width: { xs: '333px', sm: 'auto' } }}>
+        <Box justifyContent={'end'} alignItems={'center'} display="flex" sx={{ overflow: 'auto', width: {  xs: 'auto' } }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -180,7 +180,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
         </Box>
       </Box>
 
-      <Grid backgroundColor="transparent" sm={12} sx={{ paddingX: '0 !important' }}>
+      <Grid backgroundColor="transparent" xs={12} sx={{ paddingX: '0 !important' }}>
         {ProfileTabs[value].component}
       </Grid>
     </>

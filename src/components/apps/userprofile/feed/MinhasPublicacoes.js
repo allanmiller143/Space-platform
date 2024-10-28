@@ -22,18 +22,18 @@ const MinhasPublicacoes = ( {myPost, setMyPost,userData}) => {
             </Box>
           ) : null}
         </Grid>
-        <Grid item sm={12} lg={4} xs={12}>
+        <Grid item xs={12} lg={4} sx={{display: {xs: 'none',lg: 'block' }}}>
           <Grid container spacing={3}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <IntroCard userData={userData}  />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <InfoCard userData={userData} />
             </Grid>
           </Grid>
         </Grid>
         {/* Posts Card */}
-        <Grid item sm={12} lg={8} xs={12}>
+        <Grid item xs={12} lg={8}>
           <Post loading={loading} setLoading={setLoading} setLoadingData={setLoadingData} loadingData={loadingData} setProgress={setProgress} progress={progress}  setMyPost={setMyPost} myPost={myPost} userData={userData}/>
         </Grid>
       </Grid>

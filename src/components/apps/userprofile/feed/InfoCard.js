@@ -78,7 +78,7 @@ const InfoCard = ( {userData}) => {
   };
 
   return (
-    <Box position={'relative'}>
+    <Box position={'relative'}  sx={{display: {xs: 'none',lg: 'block' }}}>
       {loading && <Loading data={{ open: loading, absolute: true }} />}
       <ChildCard sx={{ mt: 3, position: 'relative' }}>
         <Typography color="gray" fontWeight={600} variant="h6" mb={2}>

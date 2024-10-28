@@ -50,7 +50,7 @@ const IntroCard = ({userData}) => {
   };
 
   return (
-    <Box position={'relative'} >
+    <Box position={'relative'} sx={{display: {xs: 'none',lg: 'block' }}} >
       {loading && <Loading data={{ open: loading, absolute: true }} />}
       <ChildCard sx={{ mb: 3, position: 'relative' }} position="relative" >
         {

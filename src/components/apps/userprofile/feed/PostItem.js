@@ -174,10 +174,10 @@ const PostItem = ({ post, setMyPost, myPost }) => {
           <Box>
             <Grid container spacing={3} mb={2}>
               {post.PostMedia.map((photo,index) => (
-                <Grid item sm={12} lg={ (post.PostMedia.length%2 === 0 ) ? 6 : (index > 0 ) ? 6 : 12} key={photo.id}>
+                <Grid item  xs={ (post.PostMedia.length%2 === 0 ) ? 6 : (index > 0 ) ? 6 : 12} key={photo.id}>
                   <CardMedia
                     component="img"
-                    sx={{ borderRadius: customizer.borderRadius / 4, height: 360 }}
+                    sx={{ borderRadius: customizer.borderRadius / 4, height: { xs: 200, sm: 360 }, }}
                     image={photo ? photo.url : ''}
                     alt="capa"
                     width={'100%'}
