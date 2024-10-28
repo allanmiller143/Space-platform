@@ -11,21 +11,18 @@ import Spinner from '../../spinner/Spinner';
 import PropertyGallery from './Componentes/Gallery';
 import DadosGerais from './Componentes/DadosGerais';
 import Map from './Componentes/Map';
-import AdvertiserCard from './Componentes/advertiserCard';
-
+import AdvertiserCard from './Componentes/AdvertiserCard';
 
 const ImovelPage = () => {
-    const [loading,setLoading] = useState(false);
-    const [property,setProperty] = useState(null);
-    const [advertiser,setAdvertiser] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [property, setProperty] = useState(null);
+    const [advertiser, setAdvertiser] = useState(null);
     const { id } = useParams();
 
     async function loadPropertyData() {
         setLoading(true);
-        console.log(id)
         try {
             const response = await getData(`properties/${id}`);
-            console.log(response)
             if (response.status === 200 || response.status === 201) {
                 setProperty(response.userInfo);
                 setAdvertiser(response.userInfo.seller);
@@ -43,12 +40,11 @@ const ImovelPage = () => {
         loadPropertyData();
     }, []);
 
-   // Exibe o componente de Loading enquanto carrega os dados do usuário
-   if (loading) {
-    return <Spinner/>
-   }
-    return (
+    if (loading) {
+        return <Spinner />;
+    }
 
+    return (
         <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
             <Header />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -58,13 +54,13 @@ const ImovelPage = () => {
                         xs={12}
                         md={8}
                         sx={{
-                        borderRight: '1px solid #d4d4d4',
-                        padding: '50px !important',
-                        overflowY: 'scroll', // Only vertical scroll if necessary
-                        height: '100%',
-                        boxShadow: '1px 0px 4px #2121211f',
-                        zIndex: 9,
-                        width: '100%', // Make sure it doesn't overflow
+                            borderRight: '1px solid #d4d4d4',
+                            padding: '50px !important',
+                            overflowY: 'scroll',
+                            height: '100%',
+                            boxShadow: '1px 0px 4px #2121211f',
+                            zIndex: 9,
+                            width: '100%',
                         }}
                     >
                         <PropertyGallery property={property} />
@@ -74,18 +70,18 @@ const ImovelPage = () => {
                         item
                         md={4}
                         sx={{
-                        padding: 5,
-                        backgroundColor: '#fafafa',
-                        overflow: 'auto', // Use auto if you want scroll when content exceeds container
+                            padding: 5,
+                            backgroundColor: '#fafafa',
+                            overflow: 'auto',
                         }}
                     >
                         <Box sx={{ display: 'flex', gap: 3, my: 4 }}>
-                        <Button variant="contained" color="primary">
-                            Agendar visita
-                        </Button>
-                        <Button variant="outlined" color="primary">
-                            Fazer proposta
-                        </Button>
+                            <Button variant="contained" color="primary">
+                                Agendar visita
+                            </Button>
+                            <Button variant="outlined" color="primary">
+                                Fazer proposta
+                            </Button>
                         </Box>
                         <Map property={property} />
                         <AdvertiserCard property={property} advertiser={advertiser} />
