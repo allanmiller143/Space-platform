@@ -71,7 +71,7 @@ const UserProfile = ({socket}) => {
   return (
     <PageContainer title="User Profile" description="this is User Profile page">
       <Grid container spacing={3}>
-        <Grid item sm={12}>
+        <Grid item xs={12}>
           <ProfileBanner userData={userData} socket={socket} myPost = {myPost} setMyPost = {setMyPost} />
         </Grid>
       </Grid>

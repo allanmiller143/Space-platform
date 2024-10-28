@@ -85,9 +85,9 @@ const FriendsCard = ({ userData }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item sm={12} lg={12}>
-          <Stack direction="row" alignItems={'center'} mt={2}>
-            <Box>
+        <Grid item xs={12}>
+        <Box  sx={{ display: 'flex', flexDirection: { sm:'row', xs: 'column'}, alignItems: 'center',width: '100%', justifyContent: 'space-between'}} alignItems={'center'} mt={2}>
+            <Box sx={{ display: 'flex', alignItems: 'center',alignSelf: 'flex-start', paddingBottom : {xs: 1, sm: 0}}}>
               <Typography variant="h3">
                 Amigos &nbsp;
                 <Chip label={filteredFriends.length} color="secondary" size="small" />
@@ -112,7 +112,7 @@ const FriendsCard = ({ userData }) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Box>
-          </Stack>
+          </Box>
         </Grid>
 
         {loading ? (

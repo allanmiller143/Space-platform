@@ -104,10 +104,10 @@ const FollowerCard = ({userData}) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item sm={12} lg={12}>
-          <Stack direction="row" alignItems={'center'} mt={2}>
-            <Box>
-              <Typography variant="h3">
+        <Grid item xs={12} lg={12}>
+          <Box  sx={{ display: 'flex', flexDirection: { sm:'row', xs: 'column'}, alignItems: 'center',width: '100%', justifyContent: 'space-between'}} alignItems={'center'} mt={2}>
+            <Box sx={{ display: 'flex', alignItems: 'center',alignSelf: 'flex-start', paddingBottom : {xs: 1, sm: 0}}}>
+              <Typography variant="h3" >
                 Seguidores &nbsp;
                 <Chip label={filteredFriends.length} color="secondary" size="small" />
               </Typography>
@@ -131,7 +131,7 @@ const FollowerCard = ({userData}) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Box>
-          </Stack>
+          </Box>
         </Grid>
         {loading ? (
           Array.from(new Array(3)).map((_, index) => (

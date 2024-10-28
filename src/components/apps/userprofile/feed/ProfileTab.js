@@ -21,7 +21,7 @@ const MeusImoveis = () => {
   const navigate = useNavigate();
   return (
     <Box p={3} px={0}>
-      <Container maxWidth="lg" sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
+      <Container  sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={8}>
             <Typography variant="h2" component="h1" gutterBottom>
@@ -158,7 +158,7 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     <>
       <Loading data={{ open: loading }} />
       <Box sx={{ mt: 2, backgroundColor: (theme) => theme.palette.grey[100] }}>
-        <Box justifyContent={'end'} alignItems={'center'} display="flex" sx={{ overflow: 'auto', width: {  xs: 'auto' } }}>
+        <Box justifyContent={'end'} alignItems={'center'} display="flex" sx={{ overflow: 'auto',}}>
           <Tabs
             value={value}
             onChange={handleChange}
