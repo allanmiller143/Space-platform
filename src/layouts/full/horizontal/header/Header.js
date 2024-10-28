@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -9,7 +10,7 @@ import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
 import Notifications from 'src/layouts/full/vertical/header/Notifications';
-const Header = () => {
+const Header = ( { socket } ) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se existe um currentUser
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -39,7 +40,6 @@ const Header = () => {
         <Box sx={{ width: lgDown ? '45px' : 'auto', overflow: 'hidden' }}>
           <Logo />
         </Box>
-
         {lgDown ? (
           <IconButton
             color="inherit"
@@ -53,7 +53,7 @@ const Header = () => {
         )}
         {lgUp ? (
           <>
-            <Navigation />
+            <Navigation socket={socket} />
           </>
         ) : null}
         <Box flexGrow={1} />

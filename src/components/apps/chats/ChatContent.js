@@ -32,6 +32,7 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   }, [messages]);
 
   useEffect(() => {
+    console.log(socket);
     if (socket) {
       socket.on('message', (data) => {
         setMessages((prevMessages) => {
@@ -40,8 +41,6 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
         });
         scrollToBottom();
       });
-      console.log(messages);
-
       socket.on('deleted_message', (data) => {
         setMessages((prevMessages) => {
           return prevMessages.filter((message) => message.id !== data.id);
@@ -69,7 +68,6 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
     try {
       const response = await openNewChat(socket, selectedUser.email);
       setMessages(response);
-      console.log(response);
       scrollToBottom();
     } catch (err) {
       console.log('Error loading messages:', err);
