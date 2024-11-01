@@ -9,6 +9,8 @@ import ChatContext from '../ChatContext/ChatContext';
 import ImageMessage from './ImageMassege';
 import TextMessage from './TextMessage';
 import TimeText from './TimeText';
+import FileMessage from './FileMessage';
+import AudioCard from '../AudioMessage/AudioMessage';
 
 const ChatsMessages = ({ message }) => {
   const { selectedUser } = useContext(ChatContext);
@@ -29,6 +31,8 @@ const ChatsMessages = ({ message }) => {
             {message.createdAt ? (<TimeText name = {selectedUser.name} createdAt={message.createdAt}/>) : null}
             {message.type === 'text' ? (<TextMessage message={message}/>) : null}
             {message.type === 'image' ? (<ImageMessage message={message}/>) : null}
+            {message.type === 'file' ? (<FileMessage message={message}/>) : null}
+            {message.type === 'audio' ? (<AudioCard message={message}/>) : null}
           </Box>
         </Box>
       ) : (
@@ -42,6 +46,9 @@ const ChatsMessages = ({ message }) => {
             {message.createdAt ? (<TimeText name = {currentUserls.name} createdAt={message.createdAt}/>) : null}
             {message.type === 'text' ? (<TextMessage message={message}/>) : null}
             {message.type === 'image' ? (<ImageMessage message={message}/>) : null}
+            {message.type === 'file' ? (<FileMessage message={message}/>) : null}
+            {message.type === 'audio' ? (<AudioCard message={message}/>) : null}
+
           </Box>
         </Box>
       )}

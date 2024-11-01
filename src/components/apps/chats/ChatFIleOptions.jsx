@@ -8,6 +8,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import ImageIcon from '@mui/icons-material/Image';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ChatContext from './ChatContext/ChatContext';
+import ChatPreViewDialog from './ChatPreViewDialog';
 
 const StyledSpeedDial = styled(SpeedDial)(() => ({
   position: 'absolute',
@@ -28,39 +29,14 @@ export default function PlaygroundSpeedDial({ socket }) {
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
   const chatId = localStorage.getItem('chatId');
+  const [previewOpen, setPreviewOpen] = React.useState(false); // Controle do diálogo de pré-visualização
+  const [previewFiles, setPreviewFiles] = React.useState([]);
 
   const handleMultipleFileInputChange = (event) => {
-    const files = event.target.files;
-  
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-  
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];  
-        const data = {
-          'email': currentUser.email,
-          'chatId': chatId,
-          'file': base64String,
-          'text': 'teste',
-          'type': 'image',
-          'fileName': file.name,
-          'contentType': file.type
-        };
-  
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { ...data, isLoading: true, id: 1, senderEmail: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
-        ]);
-  
-        socket.emit('upload', data, (error) => {
-          console.log(error);
-        });
-      };
-  
-      reader.readAsDataURL(file); // Converte o arquivo em Base64
-    }
-  };
+    event.preventDefault();
+    const files = Array.from(event.target.files); // Use target.files for manual selection
+    setPreviewFiles(files);
+    setPreviewOpen(true);  };
   
 
   const handleDocumentInputChange = (event) => {
@@ -78,11 +54,13 @@ export default function PlaygroundSpeedDial({ socket }) {
   
       setMessages(prevMessages => [
         ...prevMessages,
-        { ...data, isLoading: true, id: 1, sender: currentUser.email, createdAt: Date.now() },
+        { ...data, isLoading: true, id: 1, senderEmail: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
       ]);
-      socket.emit('upload', data);
+
+      socket.emit('upload', data, (error) => {
+        console.log(error);
+      });   
     }
-  
   };
 
   const handleImageClick = () => {
@@ -93,8 +71,11 @@ export default function PlaygroundSpeedDial({ socket }) {
     fileInputRefDocument.current.click();
   };
 
+
+
   return (
     <div>
+      <ChatPreViewDialog previewOpen={previewOpen} setPreviewOpen = {setPreviewOpen} previewFiles={previewFiles} setPreviewFiles = {setPreviewFiles} socket={socket} />
       <StyledSpeedDial
         ariaLabel="SpeedDial playground example"
         icon={<SpeedDialIcon />}

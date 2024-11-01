@@ -8,7 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { MicRounded, StopRounded } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 
-const AudioRecorder = ({ socket,recording, setRecording }) => {
+const AudioRecorder = ({ socket, recording, setRecording }) => {
   const mediaRecorderRef = useRef(null);
   const [mediaStream, setMediaStream] = useState(null);
   const { setMessages } = useContext(ChatContext);
@@ -55,16 +55,12 @@ const AudioRecorder = ({ socket,recording, setRecording }) => {
 
               setMessages(prevMessages => [
                 ...prevMessages,
-                { ...data, isLoading: true, id: 1, sender: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
+                { ...data, isLoading: true, id: 1, senderEmail: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
               ]);
 
-              socket.emit('upload', {
-                email: currentUser.email,
-                chatId: chatId,
-                type: 'audio',
-                fileName: 'audio.wav',
-                file: arrayBuffer
-              });
+              socket.emit('upload', data, (error) => {
+                console.log(error);
+              });            
             };
 
 
@@ -104,10 +100,10 @@ const AudioRecorder = ({ socket,recording, setRecording }) => {
   return (
    
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
-      {recording && <Typography>Gravando...</Typography>}
+      {recording && <Typography pl = {2} > Gravando...</Typography>}
       {recording && (
         <Button type="primary" onClick={handleCancelClick} style={{ height: '35px', backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none', }}>
-          <StopRounded color='disabled'/>
+          <StopRounded sx ={{ color: 'red', fontSize: '35px' }}/>
         </Button>
       )}
       <Button type="primary" onClick={handleStartStopClick} style={{ height: '35px', width: '25px',backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none', }}>

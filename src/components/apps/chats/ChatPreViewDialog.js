@@ -12,24 +12,59 @@ const ChatPreViewDialog = ({ previewOpen, setPreviewOpen, previewFiles, setPrevi
 
   const handleSendFiles = () => {
     previewFiles.forEach((file) => {
-      let data;
-      if (file.type.includes('image')) {
-        data = {
-          email: currentUserls.email,
-          chatId: chatId,
-          file: file,
-          text: 'teste',
-          type: 'image',
-          fileName: file.name,
-          contentType: file.type,
+      if(file.type.includes('image')){
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result.split(',')[1];  
+          const data = {
+            'email': currentUserls.email,
+            'chatId': chatId,
+            'file': base64String,
+            'text': 'teste',
+            'type': 'image',
+            'fileName': file.name,
+            'contentType': file.type,
+          };
+  
+          console.log(data);
+    
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { ...data, isLoading: true, id: 1, senderEmail: currentUserls.email, createdAt: '2024-07-20T00:00:00.394Z' },
+          ]);
+    
+          socket.emit('upload', data, (error) => {
+            console.log(error);
+          });
         };
+    
+        reader.readAsDataURL(file); // Converte o arquivo em Base64
       }
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { ...data, isLoading: true, id: 1, sender: currentUserls.email, createdAt: new Date().toISOString() },
-      ]);
-      socket.emit('upload', data);
+      else if (file.type.includes('pdf') ||file.type.includes('doc') ||file.type.includes('docx') ||file.type.includes('txt') ||file.type.includes('odt') ||file.type.includes('text')) {
+        const data = {
+          'email': currentUserls.email,
+          'chatId': chatId,
+          'file': file,
+          'text': 'teste',
+          'type': 'file',
+          'fileName': file.name,
+          'contentType': file.type
+        };
+    
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { ...data, isLoading: true, id: 1, senderEmail: currentUserls.email, createdAt: '2024-07-20T00:00:00.394Z' },
+        ]);
+        socket.emit('upload', data);
+      } 
+      else if (file.type.includes('audio') ||file.type.includes('mp3') ||file.type.includes('mp4') ||file.type.includes('wav') ||file.type.includes('ogg')){
+        console.log('audio');
+      }
+      else {
+        console.log('unknown');
+      }
     });
+
     setPreviewOpen(false); // Fecha o diálogo após o envio
   };
 

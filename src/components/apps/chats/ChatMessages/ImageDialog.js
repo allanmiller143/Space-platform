@@ -30,18 +30,7 @@ const ImageDialog = ({ open, onClose, imageUrl, fileName }) => {
     >
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          backgroundColor: 'white',
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 4,
           position: 'relative',
-          transition: 'all 0.3s ease-in-out',
-          maxWidth: '90vw',
-          maxHeight: '90vh',
-          overflow: 'hidden',
         }}
       >
         <IconButton

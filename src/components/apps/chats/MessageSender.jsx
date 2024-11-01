@@ -76,8 +76,8 @@ const MessageSender = ({ socket }) => {
           !recording &&
           <Button type="primary" onClick={handleSendClick} style={{ height: '35px',width: '35px', backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none',marginLeft: 15,marginRight: 5 }}><SendIcon color='primary'/></Button>  
         }
-        <AudioRecorder socket={socket} recording={recording} setRecording={setRecording} />
-
+        <AudioRecorder socket={socket} recording={recording} setRecording={setRecording}/>
+        
       </div>        
 
     </div>

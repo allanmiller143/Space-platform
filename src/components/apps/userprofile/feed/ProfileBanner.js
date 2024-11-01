@@ -263,6 +263,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                   {following ? 'Deixar de seguir' : 'Seguir'} {loadFollowing ? <span style={{ marginLeft: '5px', display: 'inline-flex', alignItems: 'center' }}>  <CircularProgress size={20} pl ={2} color="inherit" />  </span>: ''}
                 </Button> 
               } 
+
             </Stack>
           </Grid>
         </Grid>

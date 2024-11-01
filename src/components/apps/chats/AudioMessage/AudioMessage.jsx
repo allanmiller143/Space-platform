@@ -1,103 +1,67 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { Avatar, Typography, Box, CircularProgress } from '@mui/material';
-import { styled } from '@mui/system';
-import MessagePopover from '../PopOver/PopOver';
-
-const StyledAudioCard = styled('div')(({ sent }) => ({
-  display: 'flex',
-  alignItems: 'flex-start', // Alinha os elementos ao topo
-  justifyContent: sent ? 'flex-end' : 'flex-start', // Inverte a ordem da foto
-  flexDirection: sent ? 'row-reverse' : 'row',
-  marginTop: 10,
-  gap: 5,
-}));
-
-const AvatarContainer = styled('div')(({ sent }) => ({
-  marginTop: 'auto', // Alinha o Avatar na base da caixa
-  marginBottom: 'auto', // Alinha o Avatar na base da caixa
-}));
-
-const AudioCard = ({ text, createdAt, sent, url, audioUrl, isDeleted, chatId, socket, id,sender }) => {
-  const [audioLoaded, setAudioLoaded] = useState(false);
-
-  useEffect(() => {
-    if (id !== 1) {
-      setAudioLoaded(true);
-    }
-  }, [audioUrl]);
+import React, {useState } from 'react';
+import {Typography, Box, CircularProgress } from '@mui/material';
+import { ArrowDropDown } from '@mui/icons-material';
+import MessageActions from '../ChatMessages/Actions/MessageActions ';
 
 
+
+const AudioCard = ({ message }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [showIcon, setShowIcon] = useState(false); // Controla a visibilidade do ícone
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString);
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+};
 
   return (
-    <StyledAudioCard sent={sent}>
-      <AvatarContainer sent={sent}>
-        <Avatar alt="avatar" src={url} style={{ marginLeft: sent ? 'auto' : 10, marginRight: sent ? 10 : 'auto' }} />
-      </AvatarContainer>
-      <Box
-        sx={{
-          maxWidth: '100%',
-          backgroundColor: '#f5f5f5',
-          height: '55px',
-          borderRadius: 2,
-          marginLeft: sent ? 'auto' : 0,
-          marginRight: sent ? 0 : 'auto',
-          position: 'relative',
-          
-        }}
+    <Box 
+      mb={1}
+      p={1}
+      pr={2.5}
+      sx={{ 
+          backgroundColor: 'primary.light', 
+          ml: 'auto', 
+          maxWidth: '320px', 
+          position: 'relative', 
+      }}
+      // Exibe o ícone quando o mouse está sobre a mensagem
+      onMouseEnter={() => {
+          if(message.senderEmail === currentUserls.email){
+              setShowIcon(true)
+          }
+      }}
+      onMouseLeave={() => setShowIcon(false)}
       >
-        {!audioLoaded && (
-          <Box
-            sx={{
-              maxWidth: '100%',
-              minWidth: '100px',
-              height: '55px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10
-            }}
-          >
-            <CircularProgress size={24} />
+      {showIcon && currentUserls.email === message.senderEmail &&  (
+          
+          <ArrowDropDown
+              onClick={handlePopoverOpen}
+              sx={{ 
+                  position: 'absolute', 
+                  top: -2, 
+                  right: 0,
+                  color: 'primary.dark',
+                  cursor: 'pointer',
+                  
+          }}/>
+      )}
+      {message.id !== 1 ? 
+          <Box>
+            <audio src={message.url} controls controlsList="download noinfer " />
           </Box>
-        )}
+      : 
+          <Box display="flex" justifyContent="center" alignItems="center" gap={4}>
+              <Typography> Enviando arquivo... </Typography>
+              <CircularProgress />  
+          </Box>                
+          
+      }
 
-        {audioUrl && audioLoaded && !isDeleted && (
-          <audio src={audioUrl} controls controlsList="download noinfer " />
-        )}
-
-        {
-          isDeleted && <Typography variant="body1" sx={{ fontSize: '0.9rem', color:  'red', paddingBottom: 1}}>Mensagem excluída</Typography> 
-        }
-
-
-        {
-          !audioLoaded ? null : 
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              sx={{ fontSize: '0.6rem', position: 'absolute', bottom: 0, left: 20 }}
-            >
-              {createdAt}
-            </Typography>
-        }
-        
-        
-        {/* {
-          sent && !isDeleted && audioUrl &&
-        <div  style={{ position: 'absolute', top: 5, right: 8 }}>
-          <MessagePopover
-            chatId={chatId}
-            messageId={id}
-            sender={sender}
-            socket={socket}
-          />
-        </div>
-        }  */}
-        
-      </Box>
-    </StyledAudioCard>
+      <MessageActions message={message} anchorEl={anchorEl} setAnchorEl={setAnchorEl} showIcon={showIcon} setShowIcon={setShowIcon}/>
+    </Box>
   );
 };
 

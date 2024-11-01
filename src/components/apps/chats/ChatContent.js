@@ -28,11 +28,14 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   useEffect(() => {
     if (messages && messages.length > 0) {
       scrollToBottom();
+      console.log(messages);
+
     }
   }, [messages]);
 
   useEffect(() => {
     console.log(socket);
+    console.log(messages);
     if (socket) {
       socket.on('message', (data) => {
         setMessages((prevMessages) => {
@@ -76,13 +79,11 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
     }
   };
 
-  const chatDetails = useSelector(
-    (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
-  );
   const handleDragOver = (e) => {
     e.preventDefault();
     setDragging(true);
   };
+
   const handleDragLeave = () => {
     setDragging(false);
   };
