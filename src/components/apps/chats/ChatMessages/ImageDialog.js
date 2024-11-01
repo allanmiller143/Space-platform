@@ -54,8 +54,6 @@ const ImageDialog = ({ open, onClose, imageUrl, fileName }) => {
           style={{
             maxWidth: '100%',
             maxHeight: '80vh',
-            borderRadius: '10px',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
           }}
         />
       </Box>
