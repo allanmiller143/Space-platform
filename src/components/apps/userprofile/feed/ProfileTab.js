@@ -6,7 +6,7 @@ import { Tabs, Tab, Box, Grid, Button, Typography, Container, Stack } from '@mui
 import { IconHeart, IconUserCircle, IconHome, IconAd2, IconMessage, IconCalendarEvent, IconPlus, IconInfoCircle } from '@tabler/icons';
 import FriendsCard from 'src/components/apps/userprofile/friends/FriendsCard';
 import FollowerCard from 'src/components/apps/userprofile/followers/FollowerCard';
-import Feed from 'src/components/apps/userprofile/feed/Feed';
+import Feed from './Feed';
 import Loading from '../../../Loading/Loading';
 import { openNewChat } from '../../chats/ChatService/Api';
 import { getData } from '../../../../Services/Api';
