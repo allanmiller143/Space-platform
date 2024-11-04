@@ -72,7 +72,7 @@ const FullLayout = ( { socket } ) => {
           {/* End Page */}
           {/* ------------------------------------------- */}
         </Container>
-        <Customizer />
+        {/* <Customizer /> */}
       </PageWrapper>
     </MainWrapper>
   );

@@ -224,7 +224,7 @@ const Profile = () => {
               <Typography> sair </Typography>
             </Button>
 
-            <Box mt={2}>
+            {/* <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
                   <Box>
@@ -239,7 +239,7 @@ const Profile = () => {
                   <img src={unlimitedImg} alt="ilimitado" className="signup-bg"></img>
                 </Box>
               </Box>
-            </Box>
+            </Box> */}
 
           </Box>
         </Scrollbar>

@@ -13,6 +13,7 @@ import Language from './Language';
 import Navigation from './Navigation';
 import MobileRightSidebar from './MobileRightSidebar';
 
+
 const Header = () => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -70,7 +71,7 @@ const Header = () => {
           {/* End Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
           <Notifications />
-           {/* ------------------------------------------- */}
+          {/* ------------------------------------------- */}
           {/* Toggle Right Sidebar for mobile */}
           {/* ------------------------------------------- */}
           {lgDown ? <MobileRightSidebar /> : null}

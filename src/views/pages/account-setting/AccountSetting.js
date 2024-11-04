@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { Grid, Tabs, Tab, Box, CardContent, Divider } from '@mui/material';
 
 // componentes
@@ -13,15 +12,7 @@ import NotificationTab from '../../../components/pages/account-setting/Notificat
 import BillsTab from '../../../components/pages/account-setting/BillsTab';
 import SecurityTab from '../../../components/pages/account-setting/SecurityTab';
 
-const BCrumb = [
-  {
-    to: '/',
-    title: 'Início',
-  },
-  {
-    title: 'Configurações da Conta',
-  },
-];
+
 
 
 function TabPanel(props) {
@@ -55,10 +46,7 @@ const AccountSetting = () => {
   };
 
   return (
-    <PageContainer title="Configurações da Conta" description="Esta é a página de Configurações da Conta">
-      {/* breadcrumb */}
-      <Breadcrumb title="Configurações da Conta" items={BCrumb} />
-      {/* fim do breadcrumb */}
+    <PageContainer title="Configurações da Conta" description="">
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -89,12 +77,12 @@ const AccountSetting = () => {
                   label="Faturas"
                   {...a11yProps(2)}
                 /> */}
-                <Tab
+                {/* <Tab
                   iconPosition="start"
                   icon={<IconLock size="22" />}
                   label="Segurança"
                   {...a11yProps(3)}
-                />
+                /> */}
               </Tabs>
             </Box>
             <Divider />

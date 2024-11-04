@@ -10,13 +10,14 @@ import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
 import Notifications from 'src/layouts/full/vertical/header/Notifications';
-const Header = ( { socket } ) => {
+import MyAppsDrawer from './myappsDrawer';
+
+const Header = ({ socket }) => {
   const cuString = localStorage.getItem('currentUser');
-  const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se existe um currentUser
+  const currentUserls = cuString ? JSON.parse(cuString) : null;
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
-  // drawer
   const customizer = useSelector((state) => state.customizer);
   const dispatch = useDispatch();
 
@@ -28,7 +29,12 @@ const Header = ( { socket } ) => {
       minHeight: customizer.TopbarHeight,
     },
   }));
-  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({ margin: '0 auto', width: '100%', color: `${theme.palette.text.secondary} !important`, }));
+
+  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
+    margin: '0 auto',
+    width: '100%',
+    color: `${theme.palette.text.secondary} !important`,
+  }));
 
   return (
     <AppBarStyled position="sticky" color="default" elevation={8}>
@@ -40,6 +46,7 @@ const Header = ( { socket } ) => {
         <Box sx={{ width: lgDown ? '45px' : 'auto', overflow: 'hidden' }}>
           <Logo />
         </Box>
+
         {lgDown ? (
           <IconButton
             color="inherit"
@@ -48,43 +55,53 @@ const Header = ( { socket } ) => {
           >
             <IconMenu2 />
           </IconButton>
-        ) : (
-          ''
-        )}
-        {lgUp ? (
-          <>
-            <Navigation socket={socket} />
-          </>
         ) : null}
+
+        {lgUp && <Navigation socket={socket} />}
+
         <Box flexGrow={1} />
+
         <Stack spacing={1} direction="row" alignItems="center">
           {!currentUserls && (
-            <Button variant="contained" color="primary" component={Link} to="/auth/login">
-              Login
-            </Button>
-          )}
-          {!currentUserls && (
-            <Button color="primary"
-              fullWidth component={Link} to="/auth/register2">
-              Criar conta
-            </Button>
+            <>
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/auth/login"
+              >
+                Login
+              </Button>
+              <Button
+                color="primary"
+                fullWidth
+                component={Link}
+                to="/auth/register2"
+              >
+                Criar conta
+              </Button>
+            </>
           )}
 
           {currentUserls && currentUserls.type === 'client' && (
-            <Button color="primary"
-              fullWidth component={Link} to="/auth/complete-register2">
+            <Button
+              color="primary"
+              fullWidth
+              component={Link}
+              to="/auth/complete-register2"
+            >
               Completar Cadastro
             </Button>
           )}
 
-          {
-            currentUserls && (
-              <>
-                <Notifications />
-                <Profile />
-              </>
-            )
-          }
+          {currentUserls && (
+            <>
+              <MyAppsDrawer />
+
+              <Notifications />
+              <Profile />
+            </>
+          )}
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

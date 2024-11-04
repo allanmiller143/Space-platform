@@ -103,10 +103,8 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     setValue(newValue);
     setMyPost([]);
   };
-
-
   const ProfileTabs = [
-    // Condicional para adicionar "Meus Imóveis"
+    // Condicional para adicionar Feed
     ...(userData.email === currentUserls.email ? [{
       label: 'Feed',
       icon: <IconUserCircle size="20" />,
@@ -114,16 +112,10 @@ const ProfileTab = ({ email, socket, myPost, setMyPost,userData }) => {
     }] : []),
 
     {
-      label: userData.email === currentUserls.email ? 'Minhas Publicações' : 'Publicações',
+      label: userData.email === currentUserls.email ? 'Minhas Publicações' : 'Publicações', 
       icon: <IconUserCircle size="20" />,
       component: <MinhasPublicacoes email={email} myPost={myPost} setMyPost={setMyPost} userData={userData} />
     },
-
-    ...((userData.email === currentUserls.email && isMdUp) ? [{
-      label: 'Meus Imóveis',
-      icon: <IconHome size="20" />,
-      component: <MeusImoveis />
-    }] : []),
 
     {
       label: 'Seguindo',

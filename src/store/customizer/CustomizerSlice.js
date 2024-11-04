@@ -12,8 +12,8 @@ const initialState = {
   isSidebarHover: false,
   isMobileSidebar: false,
   isHorizontal: true,
-  isLanguage: 'en',
-  isCardShadow: true,
+  isLanguage: 'pt-BR',
+  isCardShadow: false,
   borderRadius: 7,
 };
 

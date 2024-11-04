@@ -18,7 +18,6 @@ const Contacts = () => {
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   return (
     <PageContainer title="Aplicativo de Contatos" description="Esta é a página de Contatos">
-      <Breadcrumb title="Aplicativo de Contatos" subtitle="Liste seus Contatos Imobiliários" />
       <AppCard>
         {/* ------------------------------------------- */}
         {/* Parte Esquerda */}
