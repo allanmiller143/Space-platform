@@ -64,52 +64,58 @@ const Notifications = () => {
           },
         }}
       >
-        <Stack direction="row" py={2} px={4} justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Notifications</Typography>
-          <Chip label="5 new" color="primary" size="small" />
-        </Stack>
-        <Scrollbar sx={{ height: '385px' }}>
-          {dropdownData.notifications.map((notification, index) => (
-            <Box key={index}>
-              <MenuItem sx={{ py: 2, px: 4 }}>
-                <Stack direction="row" spacing={2}>
-                  <Avatar
-                    src={notification.avatar}
-                    alt={notification.avatar}
-                    sx={{
-                      width: 48,
-                      height: 48,
-                    }}
-                  />
-                  <Box>
-                    <Typography
-                      variant="subtitle2"
-                      color="textPrimary"
-                      fontWeight={600}
-                      noWrap
+
+          <Stack direction="row" py={2} px={4} justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Sem notificações para mostrar</Typography>
+          </Stack>
+        <Box sx={{ display: 'none' }}>
+          <Stack direction="row" py={2} px={4} justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Notificações</Typography>
+            <Chip label="5 new" color="primary" size="small" />
+          </Stack>
+          <Scrollbar sx={{ height: '385px' }}>
+            {dropdownData.notifications.map((notification, index) => (
+              <Box key={index}>
+                <MenuItem sx={{ py: 2, px: 4 }}>
+                  <Stack direction="row" spacing={2}>
+                    <Avatar
+                      src={notification.avatar}
+                      alt={notification.avatar}
                       sx={{
-                        width: '240px',
+                        width: 48,
+                        height: 48,
                       }}
-                    >
-                      {notification.title}
-                    </Typography>
-                    <Typography
-                      color="textSecondary"
-                      variant="subtitle2"
-                      sx={{
-                        width: '240px',
-                      }}
-                      noWrap
-                    >
-                      {notification.subtitle}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </MenuItem>
-            </Box>
-          ))}
-        </Scrollbar>
-        <Box p={3} pb={1}>
+                    />
+                    <Box>
+                      <Typography
+                        variant="subtitle2"
+                        color="textPrimary"
+                        fontWeight={600}
+                        noWrap
+                        sx={{
+                          width: '240px',
+                        }}
+                      >
+                        {notification.title}
+                      </Typography>
+                      <Typography
+                        color="textSecondary"
+                        variant="subtitle2"
+                        sx={{
+                          width: '240px',
+                        }}
+                        noWrap
+                      >
+                        {notification.subtitle}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </MenuItem>
+              </Box>
+            ))}
+          </Scrollbar>
+        </Box>
+        <Box sx={{ display: 'none' }} p={3} pb={1}>
           <Button to="/apps/email" variant="outlined" component={Link} color="primary" fullWidth>
             Ver Todas as Notificações
           </Button>

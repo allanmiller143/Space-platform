@@ -16,7 +16,7 @@ function Page() {
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={8}>
               <Typography variant="h2" component="h1" gutterBottom>
-                Bem-vindo à sua lista de Imóveis
+                Imóveis
               </Typography>
               <Typography variant="h5" color="text.secondary" paragraph fontWeight={400}>
                 Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. Publique novos anúncios, atualize informações existentes e mantenha seus prontos para venda.

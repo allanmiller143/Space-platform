@@ -125,12 +125,12 @@ const appsLink = [
     subtext: 'Gestão de anotações',
     avatar: icon3,
   },
-  {
-    href: '/apps/email',
-    title: 'Email App',
-    subtext: 'Gestão de emails',
-    avatar: ddIcon7,
-  },
+  // {
+  //   href: '/apps/email',
+  //   title: 'Email App',
+  //   subtext: 'Gestão de emails',
+  //   avatar: ddIcon7,
+  // },
   // {
   //   href: '/dashboards/ecommerce',
   //   title: 'Ecom Dashboard ',

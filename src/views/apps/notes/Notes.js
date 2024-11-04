@@ -22,8 +22,7 @@ const Notes = () => {
 
 
   return (
-    <PageContainer title="Aplicativo de Notas" description="Este é o Aplicativo de Notas para Corretores de Imóveis">
-      <Breadcrumb title="Aplicativo de Notas" items={BCrumb} />
+    <PageContainer title="Notas" description="">
       <AppCard>
         {lgDown ?
           <NoteSidebar

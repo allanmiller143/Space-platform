@@ -79,7 +79,6 @@ const Router = [
       // Apps
       { path: '/apps/chats', element: <Chats socket={socket} /> },
       { path: '/apps/notes', element: <Notes /> },
-      { path: '/apps/calendar', element: <Calendar /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/tickets', element: <Tickets /> },
       { path: '/apps/contacts', element: <Contacts /> },
@@ -103,6 +102,7 @@ const Router = [
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
+      { path: '/apps/calendar', element: <Calendar /> },
 
       { path: '/templates/contato', element: <ContatoPage /> },
       { path: '/templates/home', element: <Home /> },

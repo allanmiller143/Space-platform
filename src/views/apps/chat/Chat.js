@@ -12,8 +12,7 @@ const Chats = ({ socket }) => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <PageContainer title="Chat" description="Converse com corretores, proprietários e imobiliárias">
-      <Breadcrumb title="Mensagens" subtitle="Converse com corretores, proprietários e imobiliárias" />
+    <PageContainer title="Chat" description="">
       <AppCard>
         <ChatSidebar
           isMobileSidebarOpen={isMobileSidebarOpen}
