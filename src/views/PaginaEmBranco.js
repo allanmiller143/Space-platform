@@ -14,7 +14,7 @@ const PaginaEmBranco = () => {
   ];
 
   return (
-    <PageContainer title="Página em Branco" description="Esta é uma página em branco">
+    <PageContainer title="Página em Branco" description="">
       <Breadcrumb title="Página em Branco" items={BCrumb} />
       <Card>
         <CardContent>
