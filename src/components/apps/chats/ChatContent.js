@@ -29,7 +29,6 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
     if (messages && messages.length > 0) {
       scrollToBottom();
       console.log(messages);
-
     }
   }, [messages]);
 
@@ -83,7 +82,6 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
     e.preventDefault();
     setDragging(true);
   };
-
   const handleDragLeave = () => {
     setDragging(false);
   };
@@ -98,28 +96,29 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
 
   return (
     <Box display="flex" flexDirection="column" height="100%" sx = {{position : 'relative'}} >
+      <Box
+        sx={{
+          display: { xs: 'block', sm: 'none', lg: 'none' },
+          ml: '20px',
+          mt: '10px',
+        }}
+      >
+        <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
+      </Box>
       {
         activeChat && messages && messages.length > 0 ? (
           <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
             <>
             <Box>
               <Box display="flex" alignItems="center" p={2} position={'relative'}>
-                <Box
-                  sx={{
-                    display: { xs: 'block', md: 'block', lg: 'none' },
-                    mr: '10px',
-                  }}
-                >
-                  <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
-                </Box>
                 <ListItem  dense disableGutters sx={{ gap: 1 }}>
                   <Avatar alt="imagem de perfil" src={selectedUser.profile ? selectedUser.profile.url : ''} />
                   <Typography variant="h5">{selectedUser.name}</Typography>
                 </ListItem>
                 <Stack direction={'row'}>
-                  <IconButton aria-label="mais opções" onClick={() => setIsInSidebar(!isInSidebar)}>
+                  {/* <IconButton aria-label="mais opções" onClick={() => setIsInSidebar(!isInSidebar)}>
                     <IconDotsVertical stroke={1.5} />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </Box>
               <Divider />
@@ -162,14 +161,12 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
           </Box >
         ) 
         : 
-        loadingChat ? <Spinner height='100%'/> :
+        loadingChat ? <Spinner height='100%'  minHeight='400px'/> :
         (
-          <ChatNoConversationSelected />
+          <Box display="flex" justifyContent="center" alignItems="center" height="100%" minHeight='400px'> </Box>
         )
       }
       <ChatInsideSidebar isInSidebar={isInSidebar} setIsInSidebar = {setIsInSidebar} />
-
-  
       {activeChat ?  
       <Box>
         <Divider />

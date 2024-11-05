@@ -39,32 +39,33 @@ const AudioRecorder = ({ socket, recording, setRecording }) => {
         mediaRecorder.onstop = () => {
           if (audioChunks.length > 0) {
             const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-            // Send the audio Blob via WebSocket
+
+            // Convert Blob to base64
             const reader = new FileReader();
             reader.onloadend = () => {
-              const arrayBuffer = reader.result;
-              console.log(arrayBuffer);
+              const base64String = reader.result.split(',')[1]; // Remove the "data:audio/wav;base64," part
 
               const data = {
                 email: currentUser.email,
                 chatId: chatId,
                 type: 'audio',
                 fileName: 'audio.wav',
-                file: arrayBuffer
+                file: base64String, // Base64 string
               };
 
               setMessages(prevMessages => [
                 ...prevMessages,
                 { ...data, isLoading: true, id: 1, senderEmail: currentUser.email, createdAt: '2024-07-20T00:00:00.394Z' },
               ]);
+              console.log(data);
 
+              // Send the base64 string via WebSocket
               socket.emit('upload', data, (error) => {
-                console.log(error);
-              });            
+                if (error) console.error('Error uploading audio:', error);
+              });
             };
 
-
-            reader.readAsArrayBuffer(audioBlob);
+            reader.readAsDataURL(audioBlob); // Read the Blob as a data URL (base64)
           }
         };
 
@@ -98,20 +99,38 @@ const AudioRecorder = ({ socket, recording, setRecording }) => {
   };
 
   return (
-   
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
-      {recording && <Typography pl = {2} > Gravando...</Typography>}
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {recording && <Typography pl={2}>Gravando...</Typography>}
       {recording && (
-        <Button type="primary" onClick={handleCancelClick} style={{ height: '35px', backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none', }}>
-          <StopRounded sx ={{ color: 'red', fontSize: '35px' }}/>
+        <Button
+          type="primary"
+          onClick={handleCancelClick}
+          style={{
+            height: '35px',
+            backgroundColor: 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            boxShadow: 'none',
+          }}
+        >
+          <StopRounded sx={{ color: 'red', fontSize: '35px' }} />
         </Button>
       )}
-      <Button type="primary" onClick={handleStartStopClick} style={{ height: '35px', width: '25px',backgroundColor: 'transparent',  display: 'flex', alignItems: 'center',boxShadow: 'none', }}>
-        {recording ? <SendIcon color='primary' /> : <MicRounded color='primary'/>}
+      <Button
+        type="primary"
+        onClick={handleStartStopClick}
+        style={{
+          height: '35px',
+          width: '25px',
+          backgroundColor: 'transparent',
+          display: 'flex',
+          alignItems: 'center',
+          boxShadow: 'none',
+        }}
+      >
+        {recording ? <SendIcon color="primary" /> : <MicRounded color="primary" />}
       </Button>
-
     </Box>
-   
   );
 };
 

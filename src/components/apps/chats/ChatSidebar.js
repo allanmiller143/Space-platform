@@ -4,10 +4,10 @@ import { Drawer, useMediaQuery } from '@mui/material';
 import ChatListing from './ChatListing';
 import Teste from './teste';
 
-const drawerWidth = 320;
+const drawerWidth = 280;
 
 const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose, socket }) => {
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   return (
     <Drawer

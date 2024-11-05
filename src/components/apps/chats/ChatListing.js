@@ -9,7 +9,7 @@ import { getData } from '../../../Services/Api';
 import { useContext } from 'react';
 import ChatContext from './ChatContext/ChatContext';
 const ChatListing = ({ socket }) => {
-  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, } = useContext(ChatContext);
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat,setSelectedUser } = useContext(ChatContext);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const cuString = localStorage.getItem('currentUser');
@@ -24,6 +24,12 @@ const ChatListing = ({ socket }) => {
       if (response.status === 200 || response.status === 201) {
         setUserChats(response.userInfo);
         setFilteredChats(response.userInfo);  // Iniciar com todos os chats disponíveis
+        if(userChats.length > 0){
+          setActiveChat(userChats[0]);
+          const user = activeChat.user1.email === currentUserls.email ? activeChat.user2 : activeChat.user1;
+          setActiveChat(activeChat.id);
+          setSelectedUser(user);
+        }
       } else {
         console.log(response);
       }

@@ -18,11 +18,8 @@ const AudioCard = ({ message }) => {
 
   return (
     <Box 
-      mb={1}
-      p={1}
-      pr={2.5}
-      sx={{ 
-          backgroundColor: 'primary.light', 
+      mb={1}      
+      sx={{  
           ml: 'auto', 
           maxWidth: '320px', 
           position: 'relative', 

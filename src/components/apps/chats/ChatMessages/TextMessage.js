@@ -25,6 +25,10 @@ const TextMessage = ({ message }) => {
                 ml: 'auto', 
                 maxWidth: '320px', 
                 position: 'relative', 
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                wordBreak: 'break-word', // Adicionado para garantir a quebra de palavras longas
+                overflow: 'hidden', // Adicionado para evitar transbordamento
             }}
             // Exibe o ícone quando o mouse está sobre a mensagem
             onMouseEnter={() => {
