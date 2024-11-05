@@ -3,9 +3,8 @@
 import { Grid, LinearProgress, Typography, Box } from '@mui/material';
 import IntroCard from 'src/components/apps/userprofile/feed/IntroCard';
 import InfoCard from 'src/components/apps/userprofile/feed/InfoCard';
-import Post from 'src/components/apps/userprofile/feed/Post';
 import { useState } from 'react';
-import OtherPosts from './otherPosts';
+import OtherPosts from './OtherPosts';
 
 
 const Feed = ( {myPost, setMyPost,userData}) => {
