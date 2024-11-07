@@ -62,7 +62,7 @@ const Router = [
     path: '/',
     element: <FullLayout socket={socket} />,
     children: [
-      { path: '/', element: <Navigate to="/marketplace" /> },
+      { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
 
