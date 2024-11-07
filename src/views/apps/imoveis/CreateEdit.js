@@ -112,6 +112,7 @@ const EditImovel = () => {
       });
     }
   }, []);
+
   const validateStep0 = () => {
     const { tipoDeAnuncio, tipoDeImovel, precoDeVenda, precoDeAluguel, quartos, banheiros, vaga, suites, andar,area } = formData;
     if(!tipoDeImovel ){
@@ -282,10 +283,12 @@ const EditImovel = () => {
         }
         else{
           toast.error(response.message);
+          console.log(response);
         }
         console.log(response);
       }catch(error){
         toast.error(error.message);
+        console.log(error);
       }finally{
         setLoading(false);
       }

@@ -3,22 +3,26 @@
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid } from "@mui/material";
 import { useState } from 'react';
+import InputMask from 'react-input-mask';
 import fetchCepData from '../../../../Services/SearchCep';
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 
-const Localizacao = ({  formData, setFormData }) => {
-  const [cep, setCep] = useState('');
+const Localizacao = ({ formData, setFormData }) => {
+  const [cep, setCep] = useState(formData.cep || '');
+  const [complemento, setComplemento] = useState(formData.complemento || '');
+
   const handleCepChange = async (value) => {
+    const unmaskedValue = value.replace(/\D/g, ''); // Removes any non-numeric characters
     setCep(value);
     setFormData(prevState => ({
       ...prevState,
-      cep: value
+      cep: unmaskedValue
     }));
 
-    if (value.length === 8) {
+    if (unmaskedValue.length === 8) {
       try {
-        const cepData = await fetchCepData(value);
+        const cepData = await fetchCepData(unmaskedValue);
         console.log(cepData);
         setFormData(prevState => ({
           ...prevState,
@@ -39,24 +43,40 @@ const Localizacao = ({  formData, setFormData }) => {
     }
   };
 
-
+  const handleComplementoChange = (value) => {
+    if (value.length <= 100) {
+      setComplemento(value);
+      setFormData(prevState => ({
+        ...prevState,
+        complemento: value
+      }));
+    }
+  };
 
   return (
     <Box mt={4}>
       <Typography variant="h2" sx={{ mb: 2 }}>Localização do Imóvel</Typography>
       <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <CustomFormLabel htmlFor="cep">CEP</CustomFormLabel>
-          <CustomTextField
-            id="cep"
-            variant="outlined"
-            fullWidth
-            margin="normal"
+          <InputMask
+            mask="99999-999"
+            value={cep}
             onChange={(e) => handleCepChange(e.target.value)}
-            value={formData.cep}
-          />
+          >
+            {(inputProps) => (
+              <CustomTextField
+                {...inputProps}
+                id="cep"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+            )}
+          </InputMask>
         </Grid>
 
+        {/* Rest of your fields */}
         <Grid item xs={12} md={6}>
           <CustomFormLabel htmlFor="cidade">Cidade</CustomFormLabel>
           <CustomTextField
@@ -77,7 +97,6 @@ const Localizacao = ({  formData, setFormData }) => {
             margin="normal"
             onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
             value={formData.estado}
-
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -122,9 +141,13 @@ const Localizacao = ({  formData, setFormData }) => {
             margin="normal"
             multiline
             rows={4}
-            onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}
-            value={formData.complemento}
+            inputProps={{ maxLength: 100 }}
+            onChange={(e) => handleComplementoChange(e.target.value)}
+            value={complemento}
           />
+          <Typography variant="body2" color="textSecondary" align="right">
+            {complemento.length}/100
+          </Typography>
         </Grid>
       </Grid>
     </Box>

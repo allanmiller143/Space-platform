@@ -138,7 +138,7 @@ const DadosGerais = ({ formData, setFormData }) => {
           </Grid>
         )}
 
-        {(formData.tipoDeImovel === 'apartment' || formData.tipoDeImovel === 'house') && (
+        {(formData.tipoDeImovel === 'apartment' || formData.tipoDeImovel === 'house' || formData.tipoDeImovel === 'farm') && (
           <>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="numero-quartos-imovel">Número de Quartos</CustomFormLabel>

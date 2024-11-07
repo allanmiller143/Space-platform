@@ -6,17 +6,30 @@ import { Box, Typography, Grid, FormControl, MenuItem, Select } from "@mui/mater
 import CheckboxesGroup from '../CheckBoxGroup/CheckBoxGroup';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
+import { useState } from 'react';
 
 const CustomSelect = styled((props) => <Select {...props} />)(({}) => ({}));
 
 
 
 const OutrosDetalhes = ({ formData, setFormData }) => {
+  const [descricao, setDescricao] = useState(formData.descricao || '');
+
   const mobiliadoChange = (event) => {
     setFormData({ ...formData, mobiliado: event.target.value });
   };
   const aceitaFinanciamentoChange = (event) => {
     setFormData({ ...formData, aceitaFinanciamento: event.target.value });
+  };
+
+  const handleDescricaoChange = (value) => {
+    if (value.length <= 100) {
+      setDescricao(value);
+      setFormData(prevState => ({
+        ...prevState,
+        descricao: value
+      }));
+    }
   };
 
   return (
@@ -32,9 +45,13 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
             margin="normal"
             multiline
             rows={4}
-            onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+            inputProps={{ maxLength: 256 }}
+            onChange={(e) => handleDescricaoChange(e.target.value)}
             value={formData.descricao}
           />
+          <Typography variant="body2" color="textSecondary" align="right">
+            {descricao.length}/256
+          </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <FormControl fullWidth margin="normal">
