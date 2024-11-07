@@ -10,8 +10,6 @@ import { useState } from 'react';
 
 const CustomSelect = styled((props) => <Select {...props} />)(({}) => ({}));
 
-
-
 const OutrosDetalhes = ({ formData, setFormData }) => {
   const [descricao, setDescricao] = useState(formData.descricao || '');
 
@@ -22,8 +20,9 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
     setFormData({ ...formData, aceitaFinanciamento: event.target.value });
   };
 
-  const handleDescricaoChange = (value) => {
-    if (value.length <= 100) {
+  const handleDescricaoChange = (event) => {
+    const value = event.target.value;
+    if (value.length <= 500) {
       setDescricao(value);
       setFormData(prevState => ({
         ...prevState,
@@ -36,8 +35,8 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
     <Box mt={4}>
       <Typography variant="h2" sx={{ mb: 2 }}>Outros Detalhes</Typography>
       <Grid container spacing={2}>
-      <Grid item xs={12} md={12}>
-          <CustomFormLabel htmlFor="complemento">Descrição</CustomFormLabel>
+        <Grid item xs={12} md={12}>
+          <CustomFormLabel htmlFor="descricao">Descrição</CustomFormLabel>
           <CustomTextField
             id="descricao"
             variant="outlined"
@@ -45,12 +44,12 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
             margin="normal"
             multiline
             rows={4}
-            inputProps={{ maxLength: 256 }}
-            onChange={(e) => handleDescricaoChange(e.target.value)}
-            value={formData.descricao}
+            inputProps={{ maxLength: 500 }}
+            onChange={handleDescricaoChange}
+            value={descricao}
           />
           <Typography variant="body2" color="textSecondary" align="right">
-            {descricao.length}/256
+            {descricao.length}/500
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -77,36 +76,39 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
               label="Aceita financiamento"
               id="Aceita financiamento"
             >
-              <MenuItem value={true}>sim</MenuItem>
+              <MenuItem value={true}>Sim</MenuItem>
               <MenuItem value={false}>Não</MenuItem>
             </CustomSelect>
           </FormControl>
         </Grid>
       </Grid>
-      {formData.tipoDeImovel !== 'Terreno'  && (
-
-      <Grid item xs={12} md={12}>
-          <CustomFormLabel htmlFor="lado-imovel" sx ={{ fontSize: 25 }}>Comodidades (opcional)</CustomFormLabel>
-          <CheckboxesGroup  formData = {formData} setFormData={setFormData}
-          data = {{label: '', 
-            itens: [
-              {value: 'Piscina', label: 'Piscina',checked: formData.opcoesRapidas.Piscina},
-              {value: 'Churrasqueira', label: 'Churrasqueira',checked: formData.opcoesRapidas.Churrasqueira},
-              {value: 'Ar_Condicionado', label: 'Ar Condicionado',checked: formData.opcoesRapidas.Ar_Condicionado},
-              {value: 'Playground', label: 'Playground',checked: formData.opcoesRapidas.Playground},
-              {value: 'Sala_de_eventos', label: 'Sala de eventos',checked: formData.opcoesRapidas.Sala_de_eventos},
-              {value: 'Academia', label: 'Academia',checked: formData.opcoesRapidas.Academia},
-              {value: 'Varanda', label: 'Varanda',checked: formData.opcoesRapidas.Varanda},
-              {value: 'Energia_solar', label: 'Energia solar',checked: formData.opcoesRapidas.Energia_solar},
-              {value: 'Portaria_24h', label: 'Portaria 24h',checked: formData.opcoesRapidas.Portaria_24h},
-              {value: 'Quintal', label: 'Quintal',checked: formData.opcoesRapidas.Quintal},
-              {value: 'Area_Gourmet', label: 'Área Gourmet',checked: formData.opcoesRapidas.Area_Gourmet},
-              {value: 'Sacada', label: 'Sacada',checked: formData.opcoesRapidas.Sacada},
-              {value: 'Laje', label: 'Laje',checked: formData.opcoesRapidas.Laje},
-              {value: 'Condominio_fechado', label: 'Condomínio fechado',checked: formData.opcoesRapidas.Condominio_fechado},
-              {value: 'Jardin', label: 'Jardin',checked: formData.opcoesRapidas.Jardin},
-
-            ]}}/>
+      {formData.tipoDeImovel !== 'Terreno' && (
+        <Grid item xs={12} md={12}>
+          <CustomFormLabel htmlFor="lado-imovel" sx={{ fontSize: 25 }}>Comodidades (opcional)</CustomFormLabel>
+          <CheckboxesGroup
+            formData={formData}
+            setFormData={setFormData}
+            data={{
+              label: '',
+              itens: [
+                { value: 'Piscina', label: 'Piscina', checked: formData.opcoesRapidas.Piscina },
+                { value: 'Churrasqueira', label: 'Churrasqueira', checked: formData.opcoesRapidas.Churrasqueira },
+                { value: 'Ar_Condicionado', label: 'Ar Condicionado', checked: formData.opcoesRapidas.Ar_Condicionado },
+                { value: 'Playground', label: 'Playground', checked: formData.opcoesRapidas.Playground },
+                { value: 'Sala_de_eventos', label: 'Sala de eventos', checked: formData.opcoesRapidas.Sala_de_eventos },
+                { value: 'Academia', label: 'Academia', checked: formData.opcoesRapidas.Academia },
+                { value: 'Varanda', label: 'Varanda', checked: formData.opcoesRapidas.Varanda },
+                { value: 'Energia_solar', label: 'Energia solar', checked: formData.opcoesRapidas.Energia_solar },
+                { value: 'Portaria_24h', label: 'Portaria 24h', checked: formData.opcoesRapidas.Portaria_24h },
+                { value: 'Quintal', label: 'Quintal', checked: formData.opcoesRapidas.Quintal },
+                { value: 'Area_Gourmet', label: 'Área Gourmet', checked: formData.opcoesRapidas.Area_Gourmet },
+                { value: 'Sacada', label: 'Sacada', checked: formData.opcoesRapidas.Sacada },
+                { value: 'Laje', label: 'Laje', checked: formData.opcoesRapidas.Laje },
+                { value: 'Condominio_fechado', label: 'Condomínio fechado', checked: formData.opcoesRapidas.Condominio_fechado },
+                { value: 'Jardin', label: 'Jardin', checked: formData.opcoesRapidas.Jardin },
+              ]
+            }}
+          />
         </Grid>
       )}
     </Box>

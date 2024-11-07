@@ -194,10 +194,6 @@ const EditImovel = () => {
       return false;
     }
 
-    if (!aceitaFinanciamento) {
-      toast.warning('Por favor, preencha o campo aceita Financiamento!');
-      return false;
-    }
     return true;
   };
   const handleFormSubmit = async () => {
