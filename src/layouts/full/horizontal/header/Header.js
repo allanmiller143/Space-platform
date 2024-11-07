@@ -82,22 +82,9 @@ const Header = ({ socket }) => {
               </Button>
             </>
           )}
-
-          {currentUserls && currentUserls.type === 'client' && (
-            <Button
-              color="primary"
-              fullWidth
-              component={Link}
-              to="/auth/complete-register2"
-            >
-              Completar Cadastro
-            </Button>
-          )}
-
           {currentUserls && (
             <>
               <MyAppsDrawer />
-
               <Notifications />
               <Profile />
             </>

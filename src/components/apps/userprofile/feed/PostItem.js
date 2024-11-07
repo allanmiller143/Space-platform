@@ -244,7 +244,8 @@ const PostItem = ({ post, setMyPost, myPost }) => {
         </Box>
        }
       <Divider/>
-      <Box p={2}>
+      
+      <Box py={2}>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
             src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''}

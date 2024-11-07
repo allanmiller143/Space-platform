@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Grid, Box, Button } from '@mui/material';
@@ -12,12 +13,20 @@ import PropertyGallery from './Componentes/Gallery';
 import DadosGerais from './Componentes/DadosGerais';
 import Map from './Componentes/Map';
 import AdvertiserCard from './Componentes/AdvertiserCard';
+import { useNavigate } from 'react-router';
+import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
+import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
 
-const ImovelPage = () => {
+const ImovelPage = ({socket}) => {
     const [loading, setLoading] = useState(false);
     const [property, setProperty] = useState(null);
     const [advertiser, setAdvertiser] = useState(null);
     const { id } = useParams();
+    const navigate = useNavigate();
+    const cuString = localStorage.getItem('currentUser');
+    const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+    const token = localStorage.getItem('token');
+    const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = React.useContext(ChatContext);
 
     async function loadPropertyData() {
         setLoading(true);
@@ -35,6 +44,56 @@ const ImovelPage = () => {
             setLoading(false);
         }
     }
+
+    const seePhone = async () => {
+        if (currentUserls) {
+          setLoading(true);
+          setSelectedUser(null);
+          setMessages([]);
+          try {
+            await openNewChat(socket, advertiser.email);
+          } catch (err) {
+            console.log('Error loading messages:', err);
+          }
+      
+          try {
+            const response = await getData('chat', token);
+            if (response.status === 200 || response.status === 201) {
+              setUserChats(response.userInfo);
+              setFilteredChats(response.userInfo);  // Iniciar com todos os chats disponíveis
+              if(response.userInfo.length > 0){
+                const selectedChat = response.userInfo.find(chat => chat.user1.email === advertiser.email || chat.user2.email === advertiser.email);
+                const user = selectedChat.user1.email === currentUserls.email ? selectedChat.user2 : selectedChat.user1;
+                console.log(user);
+                setActiveChat(selectedChat.id);
+                setSelectedUser(user);
+                navigate(`/apps/chats`);
+                
+              }else{
+                console.log('sem chats');
+              }
+            } else {
+              console.log(response);
+            }
+          } catch (e) {
+            console.log(e);
+          }finally{
+            setLoading(false);
+          }    
+        } else {
+          navigate('/google-form');
+          toast.success('Faça um cadastro para enviar uma mensagem');
+        }
+      };
+    
+
+    const toProfilePage = () => {
+        if (currentUserls) {
+          navigate(`/user-profile/${advertiser.email.replaceAll(/[.]/g, '-')}`);
+        } else {
+          toast.warning('Por favor, complete seu perfil para acessar esta página');
+        }
+      };
 
     useEffect(() => {
         loadPropertyData();
@@ -55,7 +114,7 @@ const ImovelPage = () => {
                         md={8}
                         sx={{
                             borderRight: '1px solid #d4d4d4',
-                            padding: '50px !important',
+                            padding: {md : '50px !important', xs: '10px !important'},
                             overflowY: 'scroll',
                             height: '100%',
                             boxShadow: '1px 0px 4px #2121211f',
@@ -63,12 +122,27 @@ const ImovelPage = () => {
                             width: '100%',
                         }}
                     >
+                        
                         <PropertyGallery property={property} />
+                        <Box sx = {{display: {sm : 'block', md: 'none'}}} >
+                            <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
+                                <Button variant="contained" color="primary">
+                                    Agendar visita
+                                </Button>
+                                <Button variant="outlined" color="primary">
+                                    Fazer proposta
+                                </Button>
+                                <Button variant="outlined" color="primary" onClick={toProfilePage}>
+                                    Perfil do anunciante
+                                </Button>
+                            </Box>
+                        </Box>
                         <DadosGerais property={property} />
                     </Grid>
                     <Grid
                         item
                         md={4}
+                        xs={12}
                         sx={{
                             padding: 5,
                             backgroundColor: '#fafafa',
@@ -82,9 +156,15 @@ const ImovelPage = () => {
                             <Button variant="outlined" color="primary">
                                 Fazer proposta
                             </Button>
+                            <Button variant="outlined" color="primary" onClick={seePhone}>
+                                Entre em contato
+                            </Button>
                         </Box>
-                        <Map property={property} />
-                        <AdvertiserCard property={property} advertiser={advertiser} />
+                        <Box sx = {{display: {sm : 'none', md: 'block'}}}>
+                          <Map property={property} />
+                          <AdvertiserCard property={property} advertiser={advertiser} />  
+                        </Box>
+                        
                     </Grid>
                 </Grid>
             </Box>

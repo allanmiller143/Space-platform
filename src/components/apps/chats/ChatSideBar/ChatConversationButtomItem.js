@@ -7,10 +7,9 @@ import ChatContext from '../ChatContext/ChatContext';
 const ChatConversationButtomItem = ({ chat }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
-  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat,selectedUser, setSelectedUser,messages,setMessages } = useContext(ChatContext);
+  const { activeChat, setActiveChat, setSelectedUser,setMessages } = useContext(ChatContext);
 
   const user = chat.user1.email === currentUserls.email ? chat.user2 : chat.user1;
-
   // Verifica se o chat atual está ativo
   const isSelected = activeChat === chat.id;
 

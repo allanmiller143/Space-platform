@@ -12,25 +12,29 @@ import { toast } from 'sonner';
 const PostComments = ({ comment, isLast }) => {
   const commentRef = useRef(null);
   return (
-    <Box p={1}>
-      <Box p={2} sx={{ position: 'relative' }}>
+    <Box py={2}>
+      <Box  sx={{ position: 'relative' }}>
         <Stack direction="row" gap={2} alignItems="flex-start">
           <Avatar
             alt="User profile"
             src={comment.photo !== null ? comment.photo : ''}
-            sx={{ width: '40px', height: '40px', zIndex: 1 }}
+            sx={{ width: { xs : '35px',sm : '40px' }, height: { xs : '35px',sm : '40px' }, zIndex: 1 }}
           />
           <Box sx={{ flexGrow: 1, position: 'relative' }} ref={commentRef}>
             <Box sx={{ zIndex: 1 }}>
-              <Typography variant="h6">{comment.name}</Typography>
-              <Typography variant="caption" color="textSecondary">
-                <IconCircle size="7" fill="" fillOpacity={'0.1'} strokeOpacity="0.1" />{' '}
-                {formatDistanceToNowStrict(new Date(comment.createdAt), {
-                  addSuffix: false,
-                  locale: ptBR,
-                })}
-              </Typography>
-              <Box py={2}>
+              <Box display="flex" alignItems="center" gap={1}> 
+                <Typography variant="h6">{comment.name}</Typography>
+                <Typography variant="caption" color="textSecondary">
+                  <IconCircle size="7" fill="" fillOpacity={'0.1'} strokeOpacity="0.1" />{' '}
+                  {formatDistanceToNowStrict(new Date(comment.createdAt), {
+                    addSuffix: false,
+                    locale: ptBR,
+                  })}
+                </Typography>
+
+              </Box>
+
+              <Box py={1} pb = {2}>
                 <Typography color="textSecondary">{comment.text}</Typography>
               </Box>
               {/* <Stack direction="row" gap={1} alignItems="center">
@@ -47,7 +51,7 @@ const PostComments = ({ comment, isLast }) => {
           </Box>
         </Stack>
       </Box>
-      {!isLast && <Divider />} {/* Renderiza o Divider apenas se não for o último */}
+      {!isLast && <Divider  pt = {1}/>} {/* Renderiza o Divider apenas se não for o último */}
     </Box>
   );
 };

@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import { Drawer, useMediaQuery } from '@mui/material';
 import ChatListing from './ChatListing';
-import Teste from './teste';
 
 const drawerWidth = 280;
 
@@ -21,7 +20,6 @@ const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose, socket }) => {
         [`& .MuiDrawer-paper`]: { position: 'relative' },
       }}
     >
-      {/* <Teste socket={socket}/> */}
       <ChatListing socket={socket} />
     </Drawer>
   );

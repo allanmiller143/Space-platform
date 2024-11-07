@@ -43,7 +43,7 @@ const ProductCarousel = ({post}) => {
               src={step.url}
               alt={step.url}
               width="100%"
-              style={{ borderRadius: '5px',maxHeight:'480px' }}
+              style={{ borderRadius: '5px',maxHeight:'450px', maxWidth:'100%', height:'450px' }}
               />
           </Box>
         ))}
@@ -61,18 +61,20 @@ const ProductCarousel = ({post}) => {
             <Typography sx={{textAlign:'center', mt:2, fontSize:'20px', position:'absolute', top:'90%', left:'50%', transform:'translate(-50%, -50%)'}}>Post sem imagens</Typography>
         </Box>
       }
+      <Box sx ={{ display: { xs: 'none', md: 'block' } }}>
+        <Slider asNavFor={nav1} ref={(slider) => (slider2.current = slider)} {...settings}>
+          {slidesToShow > 2 && post.PostMedia.map((step) => (
+            <Box key={step.id} sx={{ p: 1, cursor: 'pointer' }}>
+              <img
+                src={step.url}
+                alt={step.url}
+                style={{ borderRadius: '5px',width:'80px', height:'80px',maxHeight:'80px', maxwidth:'60px' }}
+                />
+            </Box>
+          ))}
+        </Slider>
+      </Box>
 
-      <Slider asNavFor={nav1} ref={(slider) => (slider2.current = slider)} {...settings}>
-        {slidesToShow > 1 && post.PostMedia.map((step) => (
-          <Box key={step.id} sx={{ p: 1, cursor: 'pointer' }}>
-            <img
-              src={step.url}
-              alt={step.url}
-              style={{ borderRadius: '5px',width:'80px',maxHeight:'80px', maxwidth:'60px' }}
-              />
-          </Box>
-        ))}
-      </Slider>
     </Box>
   );
 };

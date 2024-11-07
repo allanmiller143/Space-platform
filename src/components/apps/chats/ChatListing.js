@@ -24,12 +24,7 @@ const ChatListing = ({ socket }) => {
       if (response.status === 200 || response.status === 201) {
         setUserChats(response.userInfo);
         setFilteredChats(response.userInfo);  // Iniciar com todos os chats disponíveis
-        if(userChats.length > 0){
-          setActiveChat(userChats[0]);
-          const user = activeChat.user1.email === currentUserls.email ? activeChat.user2 : activeChat.user1;
-          setActiveChat(activeChat.id);
-          setSelectedUser(user);
-        }
+        
       } else {
         console.log(response);
       }

@@ -13,7 +13,7 @@ import Spinner from '../../../views/spinner/Spinner';
 import ChatsMessages from './ChatMessages/ChatsMessages';
 import ChatInsideSidebar from './ChatInsideSidebar';
 
-const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
+const ChatContent = ({ toggleChatSidebar, socket }) => {
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
   const [dragging, setDragging] = useState(false);
   const messagesEndRef = useRef(null);
@@ -28,13 +28,11 @@ const ChatContent = ({ toggleChatSidebar, open, setOpen, socket }) => {
   useEffect(() => {
     if (messages && messages.length > 0) {
       scrollToBottom();
-      console.log(messages);
     }
   }, [messages]);
 
+
   useEffect(() => {
-    console.log(socket);
-    console.log(messages);
     if (socket) {
       socket.on('message', (data) => {
         setMessages((prevMessages) => {

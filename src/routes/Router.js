@@ -100,7 +100,7 @@ const Router = [
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
 
       { path: '/marketplace', element: <Marketplace /> },
-      { path: '/marketplace/imovel/:id', element: <ImovelPage /> },
+      { path: '/marketplace/imovel/:id', element: <ImovelPage socket={socket} /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/apps/calendar', element: <Calendar /> },
 

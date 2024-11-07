@@ -6,6 +6,7 @@ import { use } from 'i18next';
 import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Ícone de check verde
 import CancelIcon from '@mui/icons-material/Cancel'; // Ícone de X vermelho
+import Map from './Map';
 const DadosGerais = ({property}) => {
 
     const [opcoesRapidas, setOpcoesRapidas] = useState({});
@@ -166,6 +167,11 @@ const DadosGerais = ({property}) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Box sx ={{ my: 2, display : {md: 'none', xs: 'block'} }}>
+                    <Map property={property} />
+                </Box>
+
+                
 
                 <Typography variant="h4" component="h2" sx={{ mt: 4, mb: 2 }}>Comodidades (opcional)</Typography>
                 <TableContainer component={Paper}>

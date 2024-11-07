@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import {Avatar,Box,Button,CircularProgress,Divider,Fab,Pagination,TextField,Tooltip,Typography,} from '@mui/material';
-
 import PostComments from '../../userprofile/feed/PostComments';
 import { useRef, useState } from 'react';
 import { Stack } from '@mui/system';
@@ -143,30 +142,47 @@ const ProductDetail = ({ post }) => {
         </Box>
       </Box>
 
-      <Box p={2}>
-        <Divider />
-        <Box height={10}></Box>
-        <Stack direction={'row'} gap={2} alignItems="center">
-          <Avatar
-            src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''}
-            sx={{ width: '33px', height: '33px' }}
-          />
-          <TextField
-            placeholder="Comentar"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            variant="outlined"
-            size="small"
-            fullWidth
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleComment}
-            disabled={loadingComment} // Desativa o botão durante o carregamento
-          >
-            {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
-          </Button>
+      <Box py={2}>
+        <Stack direction="column" gap={2}>
+          {/* Box com Avatar e TextField */}
+          <Box display="flex" alignItems="start" gap={2}>
+            <Avatar
+              src={currentUserls.profile && currentUserls.profile.url ? currentUserls.profile.url : ''}
+              sx={{ width: '33px', height: '33px', my: 1 }}
+
+            />
+            <Box sx={{ flexGrow: 1, display : 'flex',flexDirection : 'column', alignItems : 'end' }}>
+              <TextField
+                placeholder="Comentar"
+                value={comment}
+                onChange={(e) => setComment(e.target.value.slice(0, 400))} // Limita a 400 caracteres
+                variant="outlined"
+                size="small"
+                multiline
+                maxRows={4}
+                fullWidth
+                sx={{ flexGrow: 1 }} // Ocupa o máximo de espaço disponível
+              />
+              <Typography width={'100%'} variant="caption" color="textSecondary" align="right"> 
+                {comment.length}/400
+              </Typography>
+
+            </Box>
+            
+          </Box>
+
+          {/* Box com o botão */}
+          <Box display="flex" justifyContent={ 'flex-end'}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleComment}
+              disabled={loadingComment}
+              sx={{ width: 'auto' }} // Botão em largura total em telas pequenas
+            >
+              {loadingComment ? <CircularProgress size={24} /> : 'Comentar'}
+            </Button>
+          </Box>
         </Stack>
       </Box>
     </Box>
