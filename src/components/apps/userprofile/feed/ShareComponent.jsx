@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Dialog, DialogContent, DialogTitle, IconButton, Slide, Tooltip, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, IconButton, Slide, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import {FacebookShareButton,FacebookIcon,TwitterShareButton,TwitterIcon,LinkedinShareButton,LinkedinIcon,WhatsappShareButton,WhatsappIcon,} from 'react-share';
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LinkedinShareButton, LinkedinIcon, WhatsappShareButton, WhatsappIcon } from 'react-share';
 import { IconShare } from '@tabler/icons';
 import { Box } from '@mui/system';
 import { Cancel } from '@mui/icons-material';
+import { Helmet } from 'react-helmet-async';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,13 +23,24 @@ const ShareComponent = ({ post }) => {
   };
 
   // Obtém a URL atual da página
-  const shareUrl = `https://spaceimoveis.netlify.app/apps/post/${post.id}`; // aqui é a URL que você deseja compartilhar real do site
-  //const shareUrl = `localhost:5173/apps/post/${post.id}`; //aqui é pra testar 
-
-  const title = 'Confira este link incrível!';
+  const shareUrl = `https://spaceimoveis.netlify.app/apps/post/${post.id}`; // a URL do post
+  const title =  'Confira este link incrível!';
+  const description = 'post';
+  const imageUrl = post.PostMedia.length > 0 ? post.PostMedia[0].url : 'URL_da_imagem_do_imóvel';
 
   return (
     <div>
+      <Helmet>
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        {/* Outras meta tags que você deseja adicionar */}
+      </Helmet>
+
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -71,24 +82,10 @@ const ShareComponent = ({ post }) => {
             <WhatsappShareButton url={shareUrl} title={title}>
               <WhatsappIcon size={32} round={true} />
             </WhatsappShareButton>
-
-            <a
-              href={'https://www.instagram.com/'}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                alt="Instagram"
-                style={{ width: '32px', height: '32px', borderRadius: '50%' }}
-              />
-            </a>
-
-            {/* Adicione mais botões de compartilhamento conforme necessário */}
           </div>
         </DialogContent>
       </Dialog>
+
       <IconButton sx={{ ml: 'auto' }} onClick={handleClickOpen}>
         <IconShare size="16" />
       </IconButton>
