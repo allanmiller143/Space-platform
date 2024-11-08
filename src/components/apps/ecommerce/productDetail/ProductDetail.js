@@ -6,6 +6,7 @@ import { Stack } from '@mui/system';
 import { postData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 import { IconThumbUp } from '@tabler/icons';
+import ShareComponent from '../../userprofile/feed/ShareComponent';
 
 const ProductDetail = ({ post }) => {
   const scrollContainerRef = useRef(null);
@@ -86,15 +87,22 @@ const ProductDetail = ({ post }) => {
       <Box>
         <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}> 
           <Typography variant="h2">Detalhes do post</Typography>
-          <Box display={'flex'} alignItems={'center'} gap={1}>
-            <Tooltip title="Curtir" placement="top" onClick={() => handleLike(post.id)}>
-              <Fab size="small" color={postLiked ? 'primary' : 'default'}>
-                  <IconThumbUp size="16"  />
-              </Fab>
-            </Tooltip>
-            <Typography variant="body1" fontWeight={600} >
-              {linkesLength}
-            </Typography>
+          <Box display={'flex'} gap={3}  >
+            <Box>
+              <Tooltip title="Compartilhar" placement="top">
+                <ShareComponent post={post} sx={{ ml: 'auto' }} />
+              </Tooltip>
+            </Box>
+            <Box display={'flex'} alignItems={'center'} gap={1}>
+              <Tooltip title="Curtir" placement="top" onClick={() => handleLike(post.id)}>
+                <Fab size="small" color={postLiked ? 'primary' : 'default'}>
+                    <IconThumbUp size="16"  />
+                </Fab>
+              </Tooltip>
+              <Typography variant="body1" fontWeight={600} >
+                {linkesLength}
+              </Typography>
+            </Box>
           </Box>
         </Box>
         <Box pt={2} pb={2}>
