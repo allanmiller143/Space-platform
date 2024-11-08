@@ -4,7 +4,6 @@ import * as dropdownData from './data';
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
-import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -187,7 +186,7 @@ const Profile = () => {
                           }}
                         />
                       </Box>
-                      <Box>
+                      <Box sx = {{cursor: 'pointer'}}>
                         <Typography
                           variant="subtitle2"
                           fontWeight={600}

@@ -23,8 +23,8 @@ const ShareComponent = ({ post }) => {
   };
 
   // Obtém a URL atual da página
-  //const shareUrl = `https://spaceimoveis.netlify.app/apps/post/${post.id}`;
-  const shareUrl = `localhost:5173/apps/post/${post.id}`;
+  const shareUrl = `https://spaceimoveis.netlify.app/apps/post/${post.id}`; // aqui é a URL que você deseja compartilhar real do site
+  //const shareUrl = `localhost:5173/apps/post/${post.id}`; //aqui é pra testar 
 
   const title = 'Confira este link incrível!';
 
