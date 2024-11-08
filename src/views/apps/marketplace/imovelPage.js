@@ -16,6 +16,7 @@ import AdvertiserCard from './Componentes/AdvertiserCard';
 import { useNavigate } from 'react-router';
 import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
 import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
+import GoogleCalendar from '../../../Services/GoogleCalendar';
 
 const ImovelPage = ({socket}) => {
     const [loading, setLoading] = useState(false);
@@ -126,9 +127,7 @@ const ImovelPage = ({socket}) => {
                         <PropertyGallery property={property} />
                         <Box sx = {{display: {sm : 'block', md: 'none'}}} >
                             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                                <Button variant="contained" color="primary">
-                                    Agendar visita
-                                </Button>
+                                <GoogleCalendar/>
                                 <Button variant="outlined" color="primary">
                                     Fazer proposta
                                 </Button>
@@ -150,9 +149,7 @@ const ImovelPage = ({socket}) => {
                         }}
                     >
                         <Box sx={{ display: 'flex', gap: 3, my: 4 }}>
-                            <Button variant="contained" color="primary">
-                                Agendar visita
-                            </Button>
+                            <GoogleCalendar/>   
                             <Button variant="outlined" color="primary">
                                 Fazer proposta
                             </Button>

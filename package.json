@@ -43,6 +43,7 @@
     "firebase": "^10.13.1",
     "formik": "^2.2.9",
     "framer-motion": "^8.5.2",
+    "gapi-script": "^1.2.0",
     "i18next": "^22.0.6",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
