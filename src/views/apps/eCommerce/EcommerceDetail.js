@@ -48,13 +48,13 @@ const EcommerceDetail = () => {
             <meta property="og:url" content={`https://spaceimoveis.netlify.app/apps/post/${id}`} />
             <meta property="og:title" content={myPost.title} />
             <meta property="og:description" content={myPost.description} />
-            <meta property="og:image" content={myPost.postMedia.length > 0 ? myPost.postMedia[0].url : 'URL_da_imagem_do_imóvel'} />
+            <meta property="og:image" content={myPost.imageUrl} />
 
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:url" content={`https://spaceimoveis.netlify.app/apps/post/${id}`} />
             <meta name="twitter:title" content={myPost.title} />
             <meta name="twitter:description" content={myPost.description} />
-            <meta name="twitter:image" content={myPost.postMedia.length > 0 ? myPost.postMedia[0].url : 'URL_da_imagem_do_imóvel'} />
+            <meta name="twitter:image" content={myPost.imageUrl} />
           </Helmet>
 
           <Grid container spacing={3} sx={{ maxWidth: { lg: '1055px', xl: '1200px' } }}>
