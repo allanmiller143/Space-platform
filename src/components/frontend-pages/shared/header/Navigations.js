@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
 import Button from '@mui/material/Button';
 
 import { styled } from '@mui/material/styles';
@@ -7,10 +7,10 @@ import { Chip } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export const NavLinks = [
-  {
-    title: 'Feed',
-    to: '/templates/feed',
-  },
+  // {
+  //   title: 'Feed',
+  //   to: '/templates/feed',
+  // },
   {
     title: 'Buscar Imóveis',
     to: '/marketplace',

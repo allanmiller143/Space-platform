@@ -46,6 +46,7 @@ const Header = ({ socket }) => {
         <Box sx={{ width: lgDown ? '45px' : 'auto', overflow: 'hidden' }}>
           <Logo />
         </Box>
+        
 
         {lgDown ? (
           <IconButton

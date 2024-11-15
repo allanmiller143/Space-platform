@@ -16,7 +16,7 @@ import AdvertiserCard from './Componentes/AdvertiserCard';
 import { useNavigate } from 'react-router';
 import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
 import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
-import GoogleCalendar from '../../../Services/GoogleCalendar';
+import GoogleCalendar from '../../../Services/GoogleCalendar/GoogleCalendar';
 
 const ImovelPage = ({socket}) => {
     const [loading, setLoading] = useState(false);
@@ -127,13 +127,13 @@ const ImovelPage = ({socket}) => {
                         <PropertyGallery property={property} />
                         <Box sx = {{display: {sm : 'block', md: 'none'}}} >
                             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                                <GoogleCalendar/>
+                                {/* <GoogleCalendar advertiser={advertiser} property={property}/> */}
                                 <Button variant="outlined" color="primary">
                                     Fazer proposta
                                 </Button>
-                                <Button variant="outlined" color="primary" onClick={toProfilePage}>
-                                    Perfil do anunciante
-                                </Button>
+                                <Button variant="outlined" color="primary" onClick={seePhone}>
+                                  Entre em contato
+                              </Button>   
                             </Box>
                         </Box>
                         <DadosGerais property={property} />
@@ -148,14 +148,16 @@ const ImovelPage = ({socket}) => {
                             overflow: 'auto',
                         }}
                     >
-                        <Box sx={{ display: 'flex', gap: 3, my: 4 }}>
-                            <GoogleCalendar/>   
-                            <Button variant="outlined" color="primary">
-                                Fazer proposta
-                            </Button>
-                            <Button variant="outlined" color="primary" onClick={seePhone}>
-                                Entre em contato
-                            </Button>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
+                            {/* <GoogleCalendar advertiser={advertiser} property={property}/>  */}
+                            <Box sx={{ display: 'flex', gap: 1 }}>
+                              <Button variant="outlined" color="primary">
+                                  Fazer proposta
+                              </Button>
+                              <Button variant="outlined" color="primary" onClick={seePhone}>
+                                  Entre em contato
+                              </Button>                              
+                            </Box>  
                         </Box>
                         <Box sx = {{display: {sm : 'none', md: 'block'}}}>
                           <Map property={property} />
