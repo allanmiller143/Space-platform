@@ -6,12 +6,15 @@ import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top
 import HpHeader from '../../../components/frontend-pages/shared/header/HpHeader';
 import ContatoTittle from './ContatoTittle';
 import MotionButton from './MotionButton';
+import { toast } from 'sonner';
+import Loading from '../../../components/Loading/Loading';
+import { postData } from '../../../Services/Api';
 
 const ContatoPage = () => {
     const [message, setMessage] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('');
+    const [loading,setLoading] = useState(false);
 
     const cuString = localStorage.getItem('currentUser');
     const currentUserls = JSON.parse(cuString);
@@ -25,16 +28,51 @@ const ContatoPage = () => {
 
 
 
-    const sendMessage = (event) => {
+
+    const sendMessage = async (event) => {
         event.preventDefault(); // Evita o comportamento padrão de recarregar a página
-        alert('Mensagem enviada com sucesso!');
+
+        if(email!== '' || name !== '' || message !== '' ){
+            try{
+            setLoading(true);
     
-    }
+            const formJson = {
+                email: email,
+                name: name,
+                message: message
+            };
+            console.log(formJson);
+    
+            const response = await postData('contact',formJson,'');
+            if(response.status === 200 || response.status === 201){
+                toast.success('Mensagem enviada com sucesso');
+                setEmail('');
+                setName('');
+                setMessage('');
+            }else{
+                toast.error(response.message);
+            }
+            }
+            catch(error){
+            toast.error(error.message);
+            }finally{
+            setLoading(false);
+            }
+        }
+        else{
+            toast.error('Para mandar uma mensagem, preencha todos os campos');
+        }
+    };    
+            
+          
+    
 
     return (
         <PageContainer title="Contato" description="Entre em contato conosco">
             <HpHeader />
-            <Box width={'100%'} pt={10} pb={500} sx={{ backgroundColor: '#f9f9f9' }}>
+            {loading && <Loading data = {{open:loading}}/>}
+
+            <Box width={'100%'} pt={8} pb={50} sx={{ backgroundColor: '#f9f9f9' }}>
                 <Container maxWidth="md">
                     <ContatoTittle />
                     <Card elevation={3}>
@@ -63,16 +101,6 @@ const ContatoPage = () => {
                                             type="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            required
-                                            fullWidth
-                                            label="Assunto"
-                                            variant="outlined"
-                                            value={subject}
-                                            onChange={(e) => setSubject(e.target.value)}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>

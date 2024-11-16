@@ -16,6 +16,7 @@ const Navigation = () => {
         {/* ------------------------------------------- */}
         {/* Sidebar for desktop */}
         {/* ------------------------------------------- */}
+        
         <Container
           sx={{
             maxWidth: customizer.isLayout === 'boxed' ? 'lg' : '100%!important',

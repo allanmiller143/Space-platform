@@ -7,6 +7,7 @@ import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -17,6 +18,8 @@ const Profile = () => {
   const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
   const [email] = useState(currentUserls ? currentUserls.email : '');
   const navigate = useNavigate();
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -39,9 +42,15 @@ const Profile = () => {
     toast.success('Sessão encerrada com sucesso');
   }
 
+
+
   return (
     <Box display="flex"   alignItems="center">
-      <Typography variant="caption"><strong>{name}</strong> </Typography>
+      {
+        smUp && (
+          <Typography variant="caption"><strong>{name}</strong> </Typography>
+        )
+      }
       <IconButton
         size="large"
         aria-label="mostrar novas notificações"

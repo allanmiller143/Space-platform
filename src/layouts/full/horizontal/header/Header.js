@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
+import { Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleMobileSidebar } from 'src/store/customizer/CustomizerSlice';
-import { IconMenu2 } from '@tabler/icons';
+import { useSelector } from 'react-redux';
 import Profile from 'src/layouts/full/vertical/header/Profile';
 import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
@@ -19,7 +17,6 @@ const Header = ({ socket }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const customizer = useSelector((state) => state.customizer);
-  const dispatch = useDispatch();
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     background: theme.palette.background.paper,
@@ -43,21 +40,7 @@ const Header = ({ socket }) => {
           maxWidth: customizer.isLayout === 'boxed' ? 'lg' : '100%!important',
         }}
       >
-        <Box sx={{ width: lgDown ? '45px' : 'auto', overflow: 'hidden' }}>
-          <Logo />
-        </Box>
-        
-
-        {lgDown ? (
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            onClick={() => dispatch(toggleMobileSidebar())}
-          >
-            <IconMenu2 />
-          </IconButton>
-        ) : null}
-
+        <Logo />
         {lgUp && <Navigation socket={socket} />}
 
         <Box flexGrow={1} />
@@ -86,7 +69,11 @@ const Header = ({ socket }) => {
           {currentUserls && (
             <>
               <MyAppsDrawer />
-              <Notifications />
+              {
+                !lgDown && (
+                  <Notifications />
+                )
+              }
               <Profile />
             </>
           )}

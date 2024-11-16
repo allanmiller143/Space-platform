@@ -2,7 +2,6 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,9 +9,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
 import Logo from '../../../../layouts/full/shared/logo/Logo';
 import Navigations from './Navigations';
-import MobileSidebar from './MobileSidebar';
 import { IconMenu2 } from '@tabler/icons';
 import Profile from '../../../../layouts/full/vertical/header/Profile';
+import PhoneDrawer from './PhoneDrawer';
 
 const HpHeader = () => {
   const cuString = localStorage.getItem('currentUser');
@@ -44,9 +43,7 @@ const HpHeader = () => {
     setOpen(true);
   };
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+
 
   return (
     <AppBarStyled position="sticky" elevation={0}>
@@ -76,21 +73,8 @@ const HpHeader = () => {
           ) : null}
         </ToolbarStyled>
       </Container>
-      <Drawer
-        anchor="left"
-        open={open}
-        variant="temporary"
-        onClose={toggleDrawer(false)}
-        PaperProps={{
-          sx: {
-            width: 270,
-            border: '0 !important',
-            boxShadow: (theme) => theme.shadows[8],
-          },
-        }}
-      >
-        <MobileSidebar />
-      </Drawer>
+      <PhoneDrawer open={open} setOpen={setOpen} />
+
     </AppBarStyled>
   );
 };

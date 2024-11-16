@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { IconButton, Drawer, Box, Typography, Button, Divider, Grid } from '@mui/material';
-import { IconGridDots, IconHelp } from '@tabler/icons';
-import { Link } from 'react-router-dom';
+import { IconButton, Drawer, Box, Typography,  Grid } from '@mui/material';
+import { IconGridDots} from '@tabler/icons';
 import AppLinks from '../../vertical/header/AppLinks';
 
 const MyAppsDrawer = () => {
