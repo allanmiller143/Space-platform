@@ -1,144 +1,109 @@
-import React from 'react';
-import { Container, Grid, Typography, TextField, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Container, Grid, Typography, TextField, Card, CardContent, Box } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import Footer from '../../../components/frontend-pages/shared/footer';
 import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top';
 import HpHeader from '../../../components/frontend-pages/shared/header/HpHeader';
-import { Card, CardContent } from '@mui/material';
+import ContatoTittle from './ContatoTittle';
+import MotionButton from './MotionButton';
 
 const ContatoPage = () => {
+    const [message, setMessage] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
+
+    const cuString = localStorage.getItem('currentUser');
+    const currentUserls = JSON.parse(cuString);
+
+    useEffect(() => {
+        if (currentUserls) {
+            setName(currentUserls.name);
+            setEmail(currentUserls.email);
+        }
+    }, [currentUserls]);
+
+
+
+    const sendMessage = (event) => {
+        event.preventDefault(); // Evita o comportamento padrão de recarregar a página
+        alert('Mensagem enviada com sucesso!');
+    
+    }
+
     return (
         <PageContainer title="Contato" description="Entre em contato conosco">
             <HpHeader />
-            <Container>
-                <Grid container pt={5}>
-
-                    <Grid item xs={12}>
-                        <Typography variant="h1" gutterBottom>Contato</Typography>
-                        <form>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        label="Nome"
-                                        variant="outlined"
-                                    />
+            <Box width={'100%'} pt={10} pb={500} sx={{ backgroundColor: '#f9f9f9' }}>
+                <Container maxWidth="md">
+                    <ContatoTittle />
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Typography variant="h3" gutterBottom color="primary">
+                                Envie sua mensagem
+                            </Typography>
+                            <form onSubmit={sendMessage}>
+                                <Grid container spacing={3} mt={2}>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            label="Nome"
+                                            variant="outlined"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            label="E-mail"
+                                            variant="outlined"
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            label="Assunto"
+                                            variant="outlined"
+                                            value={subject}
+                                            onChange={(e) => setSubject(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            label="Mensagem"
+                                            variant="outlined"
+                                            multiline
+                                            rows={4}
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                            inputProps={{ maxLength: 500 }}
+                                        />
+                                        <Typography
+                                            variant="caption"
+                                            color="text.secondary"
+                                            display="block"
+                                            align="right"
+                                            mt={1}
+                                        >
+                                            {message.length} / 500 caracteres
+                                        </Typography>
+                                    </Grid>
+                                    <MotionButton label="Enviar" borderRadius={1} />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        label="E-mail"
-                                        variant="outlined"
-                                        type="email"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        label="Assunto"
-                                        variant="outlined"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        label="Mensagem"
-                                        variant="outlined"
-                                        multiline
-                                        rows={4}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                    >
-                                        Enviar Mensagem
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </form>
-                    </Grid>
-
-                    <Grid container spacing={4} my={4}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Card sx={{ height: '100%', backgroundColor: '#E3F2FD', p: 0 }}>
-                                <CardContent>
-                                    <Typography variant="h5" gutterBottom color="primary">
-                                        Contato
-                                    </Typography>
-                                    <Typography variant="subtitle1" fontWeight="bold" mt={2}>
-                                        Telefone:
-                                    </Typography>
-                                    <Typography variant="body1" color="text.secondary" mb={2}>
-                                        (11) 5555-1234
-                                    </Typography>
-                                    <Typography variant="subtitle1" fontWeight="bold">
-                                        Email:
-                                    </Typography>
-                                    <Typography variant="body1" color="text.secondary">
-                                        contato@spaceimoveis.com.br
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Card sx={{ height: '100%', backgroundColor: '#FFF3E0', p: 0 }}>
-                                <CardContent>
-                                    <Typography variant="h5" gutterBottom color="secondary">
-                                        Endereço
-                                    </Typography>
-                                    <Typography variant="body1" color="text.secondary">
-                                        Av. Paulista, 1000 - Bela Vista
-                                        São Paulo - SP, 01310-100
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Card sx={{ height: '100%', backgroundColor: '#E8F5E9', p: 0 }}>
-                                <CardContent>
-                                    <Typography variant="h5" gutterBottom color="success">
-                                        Suporte
-                                    </Typography>
-                                    <Typography variant="subtitle2" fontWeight="bold" mt={1} component="a" href="#" sx={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                                        Central de atendimento ao cliente
-                                    </Typography>
-                                    <Typography variant="subtitle2" fontWeight="bold" mt={1} component="a" href="#" sx={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                                        Perguntas e respostas
-                                    </Typography>
-                                    <Typography variant="subtitle2" fontWeight="bold" mt={1} component="a" href="#" sx={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                                        Tickets
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Card sx={{ height: '100%', backgroundColor: '#FCE4EC', p: 0 }}>
-                                <CardContent>
-                                    <Typography variant="h5" gutterBottom color="error">
-                                        Vendas
-                                    </Typography>
-                                    <Typography variant="subtitle2" fontWeight="bold" mt={1}>
-                                        Solicitar demonstração
-                                    </Typography>
-                                    <Typography variant="subtitle2" fontWeight="bold" mt={1}>
-                                        Fale com um consultor
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-
-                </Grid>
-            </Container>
+                            </form>
+                        </CardContent>
+                    </Card>
+                </Container>
+            </Box>
             <Footer />
             <ScrollToTop />
         </PageContainer>

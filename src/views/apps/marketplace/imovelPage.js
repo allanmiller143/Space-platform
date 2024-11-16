@@ -139,32 +139,33 @@ const ImovelPage = ({socket}) => {
                         <DadosGerais property={property} />
                     </Grid>
                     <Grid
-                        item
-                        md={4}
-                        xs={12}
-                        sx={{
-                            padding: 5,
-                            backgroundColor: '#fafafa',
-                            overflow: 'auto',
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
-                            {/* <GoogleCalendar advertiser={advertiser} property={property}/>  */}
-                            <Box sx={{ display: 'flex', gap: 1 }}>
+                      item
+                      md={4}
+                      xs={12}
+                      sx={{
+                          padding: 5,
+                          backgroundColor: '#fafafa',
+                          overflowY: 'auto', // Permite o scroll vertical
+                          height: 'calc(100vh - 100px)', // Altura ajustável para manter o scroll funcional
+                      }}
+                  >
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
+                          {/* <GoogleCalendar advertiser={advertiser} property={property}/>  */}
+                          <Box sx={{ display: 'flex', gap: 1 }}>
                               <Button variant="outlined" color="primary">
                                   Fazer proposta
                               </Button>
                               <Button variant="outlined" color="primary" onClick={seePhone}>
                                   Entre em contato
-                              </Button>                              
-                            </Box>  
-                        </Box>
-                        <Box sx = {{display: {sm : 'none', md: 'block'}}}>
+                              </Button>
+                          </Box>
+                      </Box>
+                      <Box sx={{ display: { sm: 'none', md: 'block' } }}>
                           <Map property={property} />
-                          <AdvertiserCard property={property} advertiser={advertiser} />  
-                        </Box>
-                        
-                    </Grid>
+                          <AdvertiserCard property={property} advertiser={advertiser} />
+                      </Box>
+                  </Grid>
+
                 </Grid>
             </Box>
         </PageContainer>
