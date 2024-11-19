@@ -127,7 +127,7 @@ const ImovelPage = ({socket}) => {
                         <PropertyGallery property={property} />
                         <Box sx = {{display: {sm : 'block', md: 'none'}}} >
                             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                                {/* <GoogleCalendar advertiser={advertiser} property={property}/> */}
+                                <GoogleCalendar advertiser={advertiser} property={property}/>
                                 <Button variant="outlined" color="primary">
                                     Fazer proposta
                                 </Button>
@@ -150,7 +150,7 @@ const ImovelPage = ({socket}) => {
                       }}
                   >
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
-                          {/* <GoogleCalendar advertiser={advertiser} property={property}/>  */}
+                          <GoogleCalendar advertiser={advertiser} property={property}/> 
                           <Box sx={{ display: 'flex', gap: 1 }}>
                               <Button variant="outlined" color="primary">
                                   Fazer proposta

@@ -1,26 +1,15 @@
-import { useState } from 'react';
-import { Box, Menu, Typography, Button, Divider, Grid } from '@mui/material';
+import { Box, Button} from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import { IconChevronDown, IconHelp } from '@tabler/icons';
-import AppLinks from './AppLinks';
-import QuickLinks from './QuickLinks';
-import React from 'react';
+
 
 const AppDD = () => {
-  const [anchorEl2, setAnchorEl2] = useState(null);
   const location = useLocation();
 
-  const handleClick2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
 
-  const handleClose2 = () => {
-    setAnchorEl2(null);
-  };
 
   return (
-    <>
-<Button
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Button
         color="inherit"
         sx={{
           color: (theme) => theme.palette.text.secondary,
@@ -33,9 +22,19 @@ const AppDD = () => {
         Classificados
       </Button>
 
-      
-
-    </>
+      <Button
+        color="inherit"
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          bgcolor: location.pathname === '/marketplace' ? 'primary.light' : '',
+        }}
+        variant="text"
+        to="/apps/calendar"
+        component={Link}
+      >
+        Calendário
+      </Button>
+    </Box>
   );
 };
 

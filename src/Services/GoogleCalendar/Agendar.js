@@ -1,26 +1,48 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, TextField, Typography, Box } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+  Box,
+} from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 import { toast } from 'sonner';
 
-function Agendar({ open, setOpen, setEvents, advertiser,property }) {
-  const cuString = localStorage.getItem('currentUser'); 
-  const currentUserls = JSON.parse(cuString); 
-  const location = ` ${property.address.street} - ${property.address.number}, ${property.address.city} - ${property.address.state},Bairro: ${property.address.neighborhood}, complemento: ${property.address.complement}.`|| ''
-    
+function Agendar({ open, setOpen, setEvents, advertiser, property }) {
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = JSON.parse(cuString);
+
+  // Atualiza o valor inicial de location sempre que property mudar
+  const location = `${property.address.street} - ${property.address.number}, ${property.address.city} - ${property.address.state}, Bairro: ${property.address.neighborhood}, complemento: ${property.address.complement}.` || '';
+
   const [eventDetails, setEventDetails] = useState({
     summary: '',
     location: location,
     description: '',
     startDateTime: '',
     endDateTime: '',
-    name: currentUserls !== null && currentUserls.name || '',  
-    phone: currentUserls !== null && currentUserls.info.phone || '',
+    name: currentUserls?.name || '',
+    phone: currentUserls?.info?.phone || '',
   });
+
   const [openConfirmation, setOpenConfirmation] = useState(false);
+
+  useEffect(() => {
+    // Atualiza o campo location ao mudar a propriedade property
+    setEventDetails((prevDetails) => ({
+      ...prevDetails,
+      location: location,
+    }));
+  }, [property]);
 
   const handleOpenDialog = () => {
     setOpen(true);
@@ -28,7 +50,13 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
   };
 
   const handleCloseDialog = () => {
-    setEventDetails({});
+    setEventDetails((prevDetails) => ({
+      ...prevDetails,
+      summary: '',
+      description: '',
+      startDateTime: '',
+      endDateTime: '',
+    }));
     setOpen(false);
   };
 
@@ -40,58 +68,62 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
     const { name, value } = e.target;
     setEventDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSchedule = () => {
-    console.log("Tentando criar o evento com os detalhes:", eventDetails);
+    console.log('Tentando criar o evento com os detalhes:', eventDetails);
     console.log(advertiser);
     console.log(property);
+
     if (!eventDetails.startDateTime || !eventDetails.endDateTime) {
       toast.error('Por favor, preencha o campo de data e hora corretamente.');
       return;
     }
+
     const event = {
-        summary: eventDetails.summary + " - space-Imoveis",
-        location: eventDetails.location,
-        description: `
-          Anunciante: ${advertiser.name}; 
-          Email do Anunciante: ${advertiser.email}; 
-          Telefone do Anunciante: ${advertiser.info.phone}; 
-          Nome do comprador: ${currentUserls.name};
-          Telefone do comprador: ${currentUserls.info.phone}
-        `,
-        start: {
-          dateTime: new Date(eventDetails.startDateTime).toISOString(),
-          timeZone: 'America/Sao_Paulo'
-        },
-        end: {
-          dateTime: new Date(eventDetails.endDateTime).toISOString(),
-          timeZone: 'America/Sao_Paulo'
-        },
-        attendees: [
-          { email: advertiser.email },
-          { email: currentUserls.email, displayName: eventDetails.name }
-        ]
-      };
-      
+      summary: `${eventDetails.summary} - space-Imoveis`,
+      location: eventDetails.location,
+      description: `
+        Anunciante: ${advertiser.name}; 
+        Email do Anunciante: ${advertiser.email}; 
+        Telefone do Anunciante: ${advertiser.info.phone}; 
+        Nome do comprador: ${currentUserls.name};
+        Telefone do comprador: ${currentUserls.info.phone}
+      `,
+      start: {
+        dateTime: new Date(eventDetails.startDateTime).toISOString(),
+        timeZone: 'America/Sao_Paulo',
+      },
+      end: {
+        dateTime: new Date(eventDetails.endDateTime).toISOString(),
+        timeZone: 'America/Sao_Paulo',
+      },
+      attendees: [
+        { email: advertiser.email },
+        { email: currentUserls.email, displayName: eventDetails.name },
+      ],
+    };
 
     if (gapi.client.calendar) {
-      gapi.client.calendar.events.insert({
-        calendarId: 'primary',
-        resource: event,
-        sendUpdates: 'all'
-      }).then(response => {
-        console.log("Evento criado com sucesso:", response);
-        handleCloseDialog();
-        setOpenConfirmation(true);
-      }).catch(error => {
-        console.error("Erro ao criar evento:", error);
-        toast.error("Falha ao criar o agendamento. Verifique o console para detalhes.");
-      });
+      gapi.client.calendar.events
+        .insert({
+          calendarId: 'primary',
+          resource: event,
+          sendUpdates: 'all',
+        })
+        .then((response) => {
+          console.log('Evento criado com sucesso:', response);
+          handleCloseDialog();
+          setOpenConfirmation(true);
+        })
+        .catch((error) => {
+          console.error('Erro ao criar evento:', error);
+          toast.error('Falha ao criar o agendamento. Verifique o console para detalhes.');
+        });
     } else {
-      console.error("Módulo de calendário não foi carregado.");
+      console.error('Módulo de calendário não foi carregado.');
     }
   };
 
@@ -101,37 +133,40 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
       const oneYearLater = new Date();
       oneYearLater.setFullYear(now.getFullYear() + 1);
 
-      gapi.client.calendar.events.list({
-        calendarId: 'primary',
-        q: 'space-Imoveis',
-        timeMin: now.toISOString(),
-        timeMax: oneYearLater.toISOString(),
-        singleEvents: true,
-        orderBy: 'startTime'
-      }).then(response => {
-        const events = response.result.items;
-        setEvents(events);
-      }).catch(error => {
-        console.error("Erro ao buscar eventos:", error);
-      });
+      gapi.client.calendar.events
+        .list({
+          calendarId: 'primary',
+          q: 'space-Imoveis',
+          timeMin: now.toISOString(),
+          timeMax: oneYearLater.toISOString(),
+          singleEvents: true,
+          orderBy: 'startTime',
+        })
+        .then((response) => {
+          const events = response.result.items;
+          setEvents(events);
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar eventos:', error);
+        });
     } else {
-      console.error("Módulo de calendário não foi carregado.");
+      console.error('Módulo de calendário não foi carregado.');
     }
   };
 
   const handleStartDateTimeChange = (e) => {
     const startDateTime = e.target.value;
     const start = new Date(startDateTime);
-  
+
     const end = new Date(start);
     end.setHours(start.getHours() + 1);
-  
-    const formattedEndDateTime = end.toLocaleString('sv-SE').slice(0, 16);
-  
+
+    const formattedEndDateTime = end.toISOString().slice(0, 16);
+
     setEventDetails((prevDetails) => ({
       ...prevDetails,
       startDateTime,
-      endDateTime: formattedEndDateTime
+      endDateTime: formattedEndDateTime,
     }));
   };
 
@@ -139,8 +174,8 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
     <div>
       <Button variant="contained" color="primary" onClick={handleOpenDialog}>
         Agendar visita
-      </Button> 
-      
+      </Button>
+
       <Dialog open={open} onClose={handleCloseDialog} fullWidth>
         <DialogTitle>
           <Box display="flex" alignItems="center">
@@ -151,12 +186,16 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
               <Cancel />
             </IconButton>
           </Box>
-        </DialogTitle>  
-        <Divider />        
+        </DialogTitle>
+        <Divider />
         <DialogContent>
-          <Box sx = {{display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'start', my :1 }}>
-            <Typography variant="h6" color="textSecondary" paragraph> Local </Typography>
-            <Typography variant="body1" color="textSecondary" paragraph> {eventDetails.location}</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'start', my: 1 }}>
+            <Typography variant="h6" color="textSecondary" paragraph>
+              Local
+            </Typography>
+            <Typography variant="body1" color="textSecondary" paragraph>
+              {eventDetails.location}
+            </Typography>
           </Box>
 
           <TextField
@@ -196,8 +235,6 @@ function Agendar({ open, setOpen, setEvents, advertiser,property }) {
           <Typography variant="body1" color="textSecondary" paragraph mt={2}>
             O agendamento será analisado pelo anunciante e ele poderá aceitar ou recusar sua solicitação.
           </Typography>
-
-          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="secondary">

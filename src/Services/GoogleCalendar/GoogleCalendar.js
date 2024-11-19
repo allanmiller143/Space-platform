@@ -75,9 +75,9 @@ function GoogleCalendar({advertiser,property}) {
         <Box sx={{ display: 'flex', alignItems: 'center',gap:2 }}>
           <Agendar open = {open} setOpen = {setOpen} setEvents = {setEvents} advertiser = {advertiser} property = {property}/>
           <Agendamentos setIsSignedIn = {setIsSignedIn} setOpenListing={setOpenListing} openListing={openListing} events={events} setEvents={setEvents} />
-          <Button variant="contained" color="secondary" onClick={handleLogout}>
+          {/* <Button variant="contained" color="secondary" onClick={handleLogout}>
             Logout
-          </Button>
+          </Button> */}
         </Box>
       )}
     </div>

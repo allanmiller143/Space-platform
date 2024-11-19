@@ -6,7 +6,7 @@ import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 import {io} from 'socket.io-client';
 //const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
 
-const socket = io('https://space-api-7r5m.onrender.com/');
+const socket = io('https://spaceimoveis-api-dev.onrender.com/');
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
