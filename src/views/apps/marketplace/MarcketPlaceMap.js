@@ -6,12 +6,21 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet'; // Importar o Leaflet para criar o ícone
 import Pino from '../../../assets/images/svgs/pino-de-localizacao.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 // Criar um ícone personalizado para o usuário
 const userIcon = new L.Icon({
     iconUrl: Pino,
     iconSize: [38, 38], // Tamanho do ícone
     iconAnchor: [19, 38], // Ponto de ancoragem do ícone (base)
     popupAnchor: [0, -38], // Ponto de ancoragem do popup
+});
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
 });
 
 const MarketplaceMaps = ({ properties, formData }) => {

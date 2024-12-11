@@ -10,7 +10,6 @@ import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
 // import nodata from "../../"
 const Marketplace = () => {
-    const [selected, setSelected] = useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage] = React.useState(40); // Definido para exibir 6 itens por página
     const [loading, setLoading] = useState(false);
