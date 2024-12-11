@@ -119,7 +119,7 @@ const Banner = () => {
                 },
               }}
             >
-              A mais{' '}
+              Mais{' '}
               <Typography
                 variant="h1"
                 sx={{
@@ -132,7 +132,7 @@ const Banner = () => {
                 component="span"
                 color="primary.main"
               >
-                poderosa
+                Controle
               </Typography>{' '}
               e{' '}
               <Typography
@@ -147,9 +147,9 @@ const Banner = () => {
                 component="span"
                 color="primary.main"
               >
-                amigável
+                Produtividade,
               </Typography>{' '}
-              plataforma do mundo imobiliário
+              Novas oportunidades no mundo imobiliário
             </Typography>
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
