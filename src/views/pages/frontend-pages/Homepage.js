@@ -24,7 +24,7 @@ const HomePage = () => {
       {/* <Reviews /> */}
       {/* <ExceptionalFeature /> */}
       <Pricing />
-      <FAQ />
+      <FAQ/>
       {/* <C2a /> */}
       <Footer />
       <ScrollToTop />

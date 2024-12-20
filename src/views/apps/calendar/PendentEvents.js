@@ -20,9 +20,10 @@ const PendentEvents = ({ events, setEvents }) => {
       event.completeEvent.attendees.some(attendee => (
         attendee.email === currentUserls.email &&
         attendee.responseStatus === 'needsAction' &&
-        attendee.organizer !== true
+        attendee.organizer === undefined
       ))
     )));
+    console.log(pendingEvents);
   }, [events]);
 
 

@@ -11,7 +11,6 @@ import ddIcon3 from 'src/assets/images/svgs/icon-dd-invoice.svg';
 import ddIcon4 from 'src/assets/images/svgs/icon-dd-date.svg';
 import ddIcon5 from 'src/assets/images/svgs/icon-dd-mobile.svg';
 import ddIcon6 from 'src/assets/images/svgs/icon-dd-lifebuoy.svg';
-import ddIcon7 from 'src/assets/images/svgs/icon-dd-message-box.svg';
 
 //
 // Notifications dropdown
@@ -83,6 +82,12 @@ const profile = [
 // apps dropdown
 
 const appsLink = [
+  {
+    href: '/apps/dash',
+    title: 'Dashboard',
+    subtext: 'Veja dados dos seus imóveis',
+    avatar: icon3,
+  },
   {
     href: '/apps/imoveis/list',
     title: 'Gestão de Imóveis',

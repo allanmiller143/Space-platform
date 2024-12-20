@@ -8,7 +8,6 @@ import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { gapi } from 'gapi-script';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -39,16 +38,10 @@ const Profile = () => {
 
   const logout = () => {
     localStorage.clear();
-    handleLogout();
     navigate('/');
     toast.success('Sessão encerrada com sucesso');
   }
 
-  const handleLogout = () => {
-    gapi.auth2.getAuthInstance().signOut().then(() => {
-      console.log("Usuário desconectado");
-    });
-  };
 
 
 

@@ -4,6 +4,10 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
 import {io} from 'socket.io-client';
+import Dash from '../views/apps/Dash/Dash';
+import DefinirHorariosDisponibilidade from '../Services/GoogleCalendar/Horarios/DefinirHorariosDisponibilidade';
+import CalendarioDisponibilidade from '../Services/GoogleCalendar/Horarios/Calendar';
+import SharePropertyForm from '../views/apps/Share/SharePropertyForm';
 //const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
 
 const socket = io('https://spaceimoveis-api-dev.onrender.com/');
@@ -65,14 +69,14 @@ const Router = [
       { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
-
+      { path: '/apps/dash', element: <Dash /> },
+      { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
+      { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
       { path: '/apps/kanban', element: <Kanban /> },
-
       { path: '/apps/invoice/list', element: <InvoiceList /> },
       { path: '/apps/invoice/create', element: <InvoiceCreate /> },
       { path: '/apps/invoice/detail/:id', element: <InvoiceDetail /> },
       { path: '/apps/invoice/edit/:id', element: <InvoiceEdit /> },
-
       { path: '/user-profile/:email', element: <UserProfile socket={socket} /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
 
@@ -98,12 +102,11 @@ const Router = [
       { path: '/auth/forgot-password2', element: <ForgotPassword2 /> },
       { path: '/auth/two-steps', element: <TwoSteps /> },
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
-
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/marketplace/imovel/:id', element: <ImovelPage socket={socket} /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/apps/calendar', element: <Calendar /> },
-
+      { path: 'apps/share', element: <SharePropertyForm/> },
       { path: '/templates/contato', element: <ContatoPage /> },
       { path: '/templates/home', element: <Home /> },
       { path: '/templates/precos', element: <PrecosPage /> },

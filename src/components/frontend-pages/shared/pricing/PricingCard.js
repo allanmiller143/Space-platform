@@ -3,7 +3,6 @@ import { Box, Grid, Typography, Chip, CardContent, Divider, Stack, Button } from
 import BlankCard from '../../../shared/BlankCard';
 
 import IconCheck from 'src/assets/images/frontend-pages/icons/icon-check.svg';
-import IconClose from 'src/assets/images/frontend-pages/icons/icon-close.svg';
 
 const Planos = [
   {

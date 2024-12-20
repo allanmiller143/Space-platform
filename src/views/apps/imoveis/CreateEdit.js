@@ -472,7 +472,7 @@ const EditImovel = () => {
           </Grid>
         </Box>
       </ParentCard>
-      {openAdviceDialog &&(<ConfimarCadastroDialog open={openAdviceDialog} handleClose={()=> {setOpenAdviceDialog(false);Navigate('/apps/imoveis/list');}}/>)}
+      {openAdviceDialog &&(<ConfimarCadastroDialog open={openAdviceDialog} setOpenAdviceDialog={setOpenAdviceDialog} />)}
     </PageContainer>
 
   );

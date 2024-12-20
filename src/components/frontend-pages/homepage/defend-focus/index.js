@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Divider, Container, Typography } from '@mui/material';
+import { Box, Divider, Container } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -7,7 +7,6 @@ import TabPanel from '@mui/lab/TabPanel';
 import { styled } from '@mui/material/styles';
 import { IconAppWindow, IconArrowRampLeft, IconUserCircle, IconWallet } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
 import TabTeamScheduling from './TabTeamScheduling';
 import TabPayments from './TabPayments';
 import TabEmbedding from './TabEmbedding';

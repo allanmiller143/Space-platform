@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 import { toast } from 'sonner';
+import CalendarioDisponibilidade from './Horarios/Calendar';
 
 function Agendar({ open, setOpen, setEvents, advertiser, property }) {
   const cuString = localStorage.getItem('currentUser');
@@ -35,7 +36,15 @@ function Agendar({ open, setOpen, setEvents, advertiser, property }) {
   });
 
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [dialogAberto, setDialogAberto] = useState(false);
 
+  const handleAbrirDialog = () => {
+    setDialogAberto(true);
+  };
+
+  const handleFecharDialog = () => {
+    setDialogAberto(false);
+  };
   useEffect(() => {
     // Atualiza o campo location ao mudar a propriedade property
     setEventDetails((prevDetails) => ({
@@ -175,6 +184,12 @@ function Agendar({ open, setOpen, setEvents, advertiser, property }) {
       <Button variant="contained" color="primary" onClick={handleOpenDialog}>
         Agendar visita
       </Button>
+
+      <Button variant="contained" color="primary" onClick={handleAbrirDialog}>
+        Abrir Calendário
+      </Button>
+
+      <CalendarioDisponibilidade open={dialogAberto} onClose={handleFecharDialog} property={property} advertiser={advertiser}  />
 
       <Dialog open={open} onClose={handleCloseDialog} fullWidth>
         <DialogTitle>

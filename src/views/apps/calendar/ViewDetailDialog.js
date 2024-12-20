@@ -130,7 +130,7 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
                   </Button>
                 )}
                 <IconButton color="secondary" onClick={openConfirmDeleteDialog}>
-                  <Delete /> <span style={{ marginLeft: '5px', fontSize: '15px' }}> Excluir </span>
+                  <Delete /> <span style={{ marginLeft: '5px', fontSize: '15px' }}> {} Excluir </span>
                 </IconButton>
               </Box>
             </CardContent>

@@ -6,7 +6,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
 import "leaflet/dist/leaflet.css";
 import { toast } from 'sonner';
-import { getData } from '../../../Services/Api';
+import { getData, postData } from '../../../Services/Api';
 import { useParams } from 'react-router';
 import Spinner from '../../spinner/Spinner';
 import PropertyGallery from './Componentes/Gallery';
@@ -45,6 +45,18 @@ const ImovelPage = ({socket}) => {
             setLoading(false);
         }
     }
+
+
+
+    const click = async () => {
+        const clickResponse = await postData(`properties/times-seen/${id}`,{});
+        if (clickResponse.status === 200 || clickResponse.status === 201) {
+          toast.success('Propriedade visualizada com sucesso!');
+        } else {
+          toast.error(`Erro ao visualizar propriedade: ${clickResponse.message}`);
+          console.log(clickResponse);
+        }
+      };
 
     const seePhone = async () => {
         if (currentUserls) {
@@ -88,16 +100,10 @@ const ImovelPage = ({socket}) => {
       };
     
 
-    const toProfilePage = () => {
-        if (currentUserls) {
-          navigate(`/user-profile/${advertiser.email.replaceAll(/[.]/g, '-')}`);
-        } else {
-          toast.warning('Por favor, complete seu perfil para acessar esta página');
-        }
-      };
 
     useEffect(() => {
         loadPropertyData();
+        click();
     }, []);
 
     if (loading) {
@@ -127,7 +133,7 @@ const ImovelPage = ({socket}) => {
                         <PropertyGallery property={property} />
                         <Box sx = {{display: {sm : 'block', md: 'none'}}} >
                             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                                <GoogleCalendar advertiser={advertiser} property={property}/>
+                                {/* <GoogleCalendar advertiser={advertiser} property={property}/> */}
                                 <Button variant="outlined" color="primary">
                                     Fazer proposta
                                 </Button>
@@ -150,7 +156,7 @@ const ImovelPage = ({socket}) => {
                       }}
                   >
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
-                          <GoogleCalendar advertiser={advertiser} property={property}/> 
+                          {/* <GoogleCalendar advertiser={advertiser} property={property}/>  */}
                           <Box sx={{ display: 'flex', gap: 1 }}>
                               <Button variant="outlined" color="primary">
                                   Fazer proposta

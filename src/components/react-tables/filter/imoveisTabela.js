@@ -51,8 +51,6 @@ const ImoveisTableList = () => {
   }, []);
 
   const GetUserProperties = async () => {
-
-
     try {
       setLoading(true);
       const route = `properties/seller/${currentUserls.email}?limit=200`;

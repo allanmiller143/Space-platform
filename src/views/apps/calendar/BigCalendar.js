@@ -54,35 +54,33 @@ const BigCalendar = () => {
   }, []);
 
   const status = (event) => {
-    const updatedAttendees = event.attendees.map(attendee => {
-      if (attendee.organizer === undefined) {
-        if (attendee.responseStatus === 'accepted') {
-          return 'Aceito';
-        } else if (attendee.responseStatus === 'declined') {
-          return 'Recusado';
-        } else if (attendee.responseStatus === 'needsAction') {
-          return 'Pendente';
-        }
+    const attendee = event.attendees.find(attendee => attendee.organizer === undefined);
+    if (attendee) {
+      if (attendee.responseStatus === 'accepted') {
+        return 'Aceito';
+      } else if (attendee.responseStatus === 'declined') {
+        return 'Recusado';
+      } else if (attendee.responseStatus === 'needsAction') {
+        return 'Pendente';
       }
-    });
-    return updatedAttendees;
+    }
+    return ''; // Retorna uma string vazia se nenhum participante for encontrado
   };
 
   const statusColor = (event) => {
-    const color = event.attendees.map(attendee => {
-      if (attendee.organizer === undefined) {
-        if (attendee.responseStatus === 'accepted') {
-          return 'green';
-        } else if (attendee.responseStatus === 'declined') {
-          return 'red';
-        } else if (attendee.responseStatus === 'needsAction') {
-          return 'orange';
-        }
+    const attendee = event.attendees.find(attendee => attendee.organizer === undefined);
+    if (attendee) {
+      if (attendee.responseStatus === 'accepted') {
+        return 'green';
+      } else if (attendee.responseStatus === 'declined') {
+        return 'red';
+      } else if (attendee.responseStatus === 'needsAction') {
+        return 'orange';
       }
-    });
-    return color[0];
-
+    }
+    return ''; // Retorna uma string vazia se nenhum participante for encontrado
   };
+  
 
   const fetchEvents = () => {
     if (gapi.client.calendar) {
@@ -115,6 +113,9 @@ const BigCalendar = () => {
           }
           return null;
         }).filter(event => event !== null);
+
+
+        console.log(response.result.items);
 
         setEvents(events);
       }).catch(error => {

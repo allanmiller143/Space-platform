@@ -8,79 +8,114 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
 import "leaflet/dist/leaflet.css";
 import { MyLocation } from '@mui/icons-material';
+import { deleteData, postData } from '../../../../Services/Api';
 
-const PropertyGallery = ({property}) => {
-
+const PropertyGallery = ({ property }) => {
   const [openGallery, setOpenGallery] = useState(false);
   const [openVideoModal, setOpenVideoModal] = useState(false);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+  const cuString = localStorage.getItem('currentUser');
+  const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se o usuário está definido
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
+  const [favorite, setFavorite] = useState(false);
 
-  // Sample pictures for the gallery
-  const pictures = [
-    { url: '/mobiliado/imagem-12.jpg', name: 'Imagem 12', width: 800, height: 600 },
-    // Add more pictures as needed...
-  ];
-
-
-  function formatDate(dateString) {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('pt-BR', options);
-  }
-
-  function formatPrice(price) {
-    if(!price) {
-      return;
+  useEffect(() => {
+    if (property && currentUserls) {
+      const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
+      setFavorite(isFavorite);
     }
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  }
-  function prices () {
-    if(property.announcementType === 'both') {
+  }, [property, currentUserls]);
+
+  const formatPrice = (price) => {
+    return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
+  };
+
+  const prices = () => {
+    if (property.announcementType === 'both') {
       return (
         <Typography variant="h3" component="p" sx={{ mb: 3 }}>
-            {`Preço de compra R$ ${formatPrice(property.prices.sellPrice)}`}<br/> 
-            {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
+          {`Preço de compra R$ ${formatPrice(property.prices.sellPrice)}`}<br />
+          {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
         </Typography>
       );
-    }else if(property.announcementType === 'rent') {
+    } else if (property.announcementType === 'rent') {
       return (
         <Typography variant="h3" component="p" sx={{ mb: 3 }}>
-            {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
+          {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
         </Typography>
-      )
-    }else{
+      );
+    } else {
       return (
         <Typography variant="h3" component="p" sx={{ mb: 3 }}>
           {`Preço de venda R$ ${formatPrice(property.prices.sellPrice)}`}
         </Typography>
-      )
+      );
     }
-  }
+  };
 
   const back = () => {
-    Navigate(-1);
-  }
+    navigate(-1);
+  };
 
-  const handleFavorite = () => {
-    toast.warning('Função em producção!');
-  }
-  
+  const toggleFavorite = async () => {
+    if (!currentUserls) {
+      toast.warning('Para favoritar, faça o login');
+      return;
+    }
 
+    setLoading(true);
+    try {
+      const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
+      if (isFavorite) {
+        await UnFavorite(); // Chama UnFavorite sem passar o evento
+      } else {
+        await Favorite(); // Chama Favorite sem passar o evento
+      }
+    } catch (error) {
+      toast.error(`Erro ao processar a solicitação:\n ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const Favorite = async () => {
+    const favoriteData = {
+      propertyId: property.id,
+      email: currentUserls.email
+    };
+    const favoriteResponse = await postData('favorites', favoriteData, token);
+    if (favoriteResponse.status === 200 || favoriteResponse.status === 201) {
+      currentUserls.favorites.push({ propertyId: property.id });
+      localStorage.setItem('currentUser', JSON.stringify(currentUserls));
+      setFavorite(true);
+    } else {
+      toast.error('Erro ao favoritar, por favor tente novamente mais tarde ou entre em contato com o suporte.');
+      console.log(favoriteResponse);
+    }
+  };
+
+  const UnFavorite = async () => {
+    const unfavoriteResponse = await deleteData(`favorites/${currentUserls.email}/${property.id}`, token);
+    console.log(property.id);
+    if (unfavoriteResponse.status === 200 || unfavoriteResponse.status === 204) {
+      currentUserls.favorites = currentUserls.favorites.filter(fav => fav.propertyId !== property.id);
+      localStorage.setItem('currentUser', JSON.stringify(currentUserls));
+      setFavorite(false);
+    } else {
+      toast.error('Erro ao desfavoritar, por favor tente novamente mais tarde ou entre em contato com o suporte.');
+      console.log(unfavoriteResponse);
+    }
+  };
 
   return (
-    
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {property && ( <>
+      {property && (
+        <>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
             <Button
               variant="outlined"
-              sx={{
-                color: '#6c757d',
-                borderColor: '#e1e1e1',
-                backgroundColor: '#fff',
-                '&:hover': { color: 'black', backgroundColor: '#e2e6ea', borderColor: '#dae0e5' },
-              }}
               onClick={back}
-              
             >
               <IconArrowLeft sx={{ mr: 1 }} /> Voltar
             </Button>
@@ -88,12 +123,6 @@ const PropertyGallery = ({property}) => {
               <Tooltip title="Compartilhar">
                 <Button
                   variant="outlined"
-                  sx={{
-                    color: '#6c757d',
-                    borderColor: '#e1e1e1',
-                    backgroundColor: '#fff',
-                    '&:hover': { color: 'black', backgroundColor: '#e2e6ea', borderColor: '#dae0e5' },
-                  }}
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     toast.success('Link da página copiado para a área de transferência!');
@@ -105,15 +134,10 @@ const PropertyGallery = ({property}) => {
               <Tooltip title="Salvar">
                 <Button
                   variant="outlined"
-                  sx={{
-                    color: '#6c757d',
-                    borderColor: '#e1e1e1',
-                    backgroundColor: '#fff',
-                    '&:hover': { color: 'black', backgroundColor: '#e2e6ea', borderColor: '#dae0e5' },
-                  }}
-                  onClick={handleFavorite}
+                  sx={{ backgroundColor:  '#fff' }}
+                  onClick={toggleFavorite}
                 >
-                  <IconHeart />
+                  <IconHeart color={favorite ? 'red' : '#000'} />
                 </Button>
               </Tooltip>
             </Box>
@@ -157,15 +181,9 @@ const PropertyGallery = ({property}) => {
 
           <Box sx={{ display: 'flex', gap: 2, mb: 3, alignItems: 'center', opacity: 0.7, mt: 2 }}>
             <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
-              <IconCamera fontSize="small" sx={{ mr: 2,ml: 1, color: 'grey.600' }}/>   {property.pictures.length}  Fotos
+              <IconCamera fontSize="small" sx={{ mr: 2, ml: 1, color: 'grey.600' }} /> {property.pictures.length} Fotos
             </Typography>
-            {/* <Typography
-              variant="body2"
-              sx={{ display: 'flex', alignItems: 'center', color: 'grey.600', cursor: 'pointer' }}
-              onClick={() => setOpenVideoModal(true)}
-            >
-              <IconVideo fontSize="small" sx={{ mr: 0.5, color: 'grey.600' }} /> Vídeo
-            </Typography> */}
+            {/* Modal para Vídeo, se necessário */}
             <Modal
               open={openVideoModal}
               onClose={() => setOpenVideoModal(false)}
@@ -188,7 +206,7 @@ const PropertyGallery = ({property}) => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/VIDEO_ID"
+                  src="https://www.youtube.com/embed/VIDEO_ID" // Substitua VIDEO_ID pelo ID real do vídeo
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -198,14 +216,15 @@ const PropertyGallery = ({property}) => {
             </Modal>
           </Box>
 
-          
-              <Typography variant="h2" component="h1" sx={{ mb: 3 }}>
-                {`${property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' :  property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com
-                 ${property.bedrooms} Quartos e ${property.bathrooms} Banheiros, ${property.suites} suites, com ${property.parkingSpaces} vagas próximo do ${property.address.neighborhood}, ${property.address.city}`}
-              </Typography>
-              {prices()}
-            </>
-          )}
+          <Typography variant="h2" component="h1" sx={{ mb: 3 }}>
+            {`${property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' : property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com
+             ${property.bedrooms} Quartos e ${property.bathrooms} Banheiros, ${property.suites} suítes, com ${property.parkingSpaces} vagas próximo do ${property.address.neighborhood}, ${property.address.city}`}
+          </Typography>
+
+          {prices()}
+
+        </>
+      )}
     </Box>
   );
 };
