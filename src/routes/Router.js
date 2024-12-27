@@ -70,6 +70,8 @@ const Router = [
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
       { path: '/apps/dash', element: <Dash /> },
+      { path: 'apps/share/:id', element: <SharePropertyForm/> },
+
       { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
       { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
       { path: '/apps/kanban', element: <Kanban /> },
@@ -106,7 +108,6 @@ const Router = [
       { path: '/marketplace/imovel/:id', element: <ImovelPage socket={socket} /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/apps/calendar', element: <Calendar /> },
-      { path: 'apps/share', element: <SharePropertyForm/> },
       { path: '/templates/contato', element: <ContatoPage /> },
       { path: '/templates/home', element: <Home /> },
       { path: '/templates/precos', element: <PrecosPage /> },

@@ -2,21 +2,21 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box, IconButton, Divider } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box, IconButton, Divider, CircularProgress } from '@mui/material';
 import { Cancel, CheckCircleOutline } from '@mui/icons-material';
 import { toast } from 'sonner';
 import { postData } from '../../Api';
 
 const AgendarDialog = ({
-  setEventos,
   onClose,
+  close,
   property,
   advertiser,
   openConfirmacao,
   setOpenConfirmacao,
   eventoSelecionado,
   setEventoSelecionado,
-  agendamentosPreenchidos
+  setEventosDisponiveis
 }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
@@ -24,6 +24,7 @@ const AgendarDialog = ({
   const [openSolicitacao, setOpenSolicitacao] = useState(false);
   const [openAvisoMesmoDia, setOpenAvisoMesmoDia] = useState(false);
   const [openRestricaoHoras, setOpenRestricaoHoras] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Função para verificar restrição de tempo (3 horas)
   const verificarRestricaoTempo = (evento) => {
@@ -32,9 +33,16 @@ const AgendarDialog = ({
     return eventStart.diff(now, 'hours') < 3; // Se menos de 3 horas
   };
 
+  const convertToISODate = (isoString) => new Date(isoString);
+
   const handleMarcarConsulta = async () => {
     if (verificarRestricaoTempo(eventoSelecionado)) {
       setOpenRestricaoHoras(true);
+      return;
+    }
+
+    if(currentUserls.email === advertiser.email){
+      toast.error('Nao pode agendar com você mesmo');
       return;
     }
   
@@ -43,52 +51,63 @@ const AgendarDialog = ({
     // Cria o novo evento com os dados atualizados
     const novoEvento = {
       ...eventoSelecionado,
-      status: 'solicitado',
+      status: 'pending',
       solicitorEmail: currentUserls.email,
       title: 'Visita Solicitada',
       propertyId: property.id,
       advertiserEmail : advertiser.email
     };
-    console.log(novoEvento);
+
+    setLoading(true);
   
     try {
       // Faz a chamada à API para registrar o evento
       const response = await postData('client/appointment', novoEvento, token);
       console.log(response);
-  
-      // Atualiza os eventos no estado local
-      setEventos((prevEventos) => {
-        const novosEventos = prevEventos.map((evento) => {
-          if (
-            evento.start === eventoSelecionado.start &&
-            evento.end === eventoSelecionado.end
-          ) {
-            return { ...evento, ...novoEvento }; // Atualiza o evento correspondente
+      if(response.status === 200 || response.status === 201){
+        // Atualiza os eventos no estado local
+        setEventosDisponiveis((prevEventos) => {
+          const novosEventos = prevEventos.map((evento) => {
+            if (
+              evento.start === eventoSelecionado.start &&
+              evento.end === eventoSelecionado.end
+            ) {
+              return {...response.data, start: convertToISODate(evento.start),
+                end: convertToISODate(evento.end),} ; // Atualiza o evento correspondente
+            }
+            return evento;
+          });
+    
+          // Adiciona o novo evento caso não exista
+          const eventoExistente = novosEventos.some(
+            (evento) =>
+              moment(evento.start).isSame(eventoSelecionado.start) &&
+              moment(evento.end).isSame(eventoSelecionado.end)
+          );
+    
+          if (!eventoExistente) {
+            novosEventos.push(novoEvento);
           }
-          return evento;
+    
+          return novosEventos;
         });
-  
-        // Adiciona o novo evento caso não exista
-        const eventoExistente = novosEventos.some(
-          (evento) =>
-            moment(evento.start).isSame(eventoSelecionado.start) &&
-            moment(evento.end).isSame(eventoSelecionado.end)
-        );
-  
-        if (!eventoExistente) {
-          novosEventos.push(novoEvento);
-        }
-  
-        return novosEventos;
-      });
+
+     }else{
+      toast.error(`Erro ao marcar consulta:\n ${response.message}`);
+     }
+
+     if(response.status === 200 || response.status === 201){
+      setOpenSolicitacao(true);
+     }
   
       // Atualiza os estados após o sucesso
       setOpenConfirmacao(false);
-      setOpenSolicitacao(true);
       setEventoSelecionado(null);
     } catch (error) {
       console.error('Erro ao marcar consulta:', error);
       // Trate o erro aqui, exibindo mensagens ou registrando logs
+    }finally{
+      setLoading(false);
     }
   };
   
@@ -119,7 +138,7 @@ const AgendarDialog = ({
         <DialogTitle>
           <Box display="flex" alignItems="center">
             <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
-              <b>Confirmar Agendamento</b>
+              <b>Ralizar agendamento</b> 
             </Typography>
             <IconButton
               edge="end"
@@ -134,7 +153,7 @@ const AgendarDialog = ({
         <Divider />
 
         <DialogContent sx={{ padding: 3 }}>
-          {eventoSelecionado && !openRestricaoHoras && (
+          {eventoSelecionado && !openRestricaoHoras && !loading && (
             <Box>
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                 📍 Localização
@@ -151,6 +170,15 @@ const AgendarDialog = ({
               </Typography>
             </Box>
           )}
+
+          {
+            (eventoSelecionado && loading) && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh',width: '100%' }}>
+                <CircularProgress color="secondary" />
+                <Typography>Carregando...</Typography>
+              </Box>
+            )
+          }
           {openRestricaoHoras && (
             <Box>
               <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>

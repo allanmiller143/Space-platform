@@ -10,7 +10,6 @@ import { Cancel } from '@mui/icons-material';
 import { getData } from '../../../../Services/Api';
 
 const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
-  const [setLoading] = useState(false);
   const [isEmptyList, setIsEmptyList] = useState(false);
   const navigate = useNavigate();
 
@@ -24,14 +23,9 @@ const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
   }
 
   const loadPreInfo = async () => {
-    setLoading(true);
     try {
       const response = await getData(`realtor/availability/${currentUser.email}`, token);
       if (response.status === 200 || response.status === 201) {
-        console.log('deu bom!!!');
-        console.log(response.userInfo);
-
-        // Verifica se a lista retornada está vazia
         if (!response.userInfo || response.userInfo.length === 0) {
           setIsEmptyList(true);
         }else{
@@ -42,9 +36,7 @@ const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleCloseDialog = async () => {
@@ -121,7 +113,6 @@ const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
               </IconButton>
             </Box>
           </DialogTitle>
-
           <DialogContent>
             <Box
               sx={{

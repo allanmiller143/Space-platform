@@ -211,7 +211,7 @@ function DefinirHorariosDisponibilidade() {
         toast.success('Horários salvos com sucesso!');
       }else{
         console.log(response);
-        toast.error('Ocorreu um erro inesperado!');
+        toast.error(`Erro ao salvar horários: ${response.message}`);
       }
     }catch(e){
       console.log(e);

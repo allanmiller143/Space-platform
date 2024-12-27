@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // Importar estilos da biblioteca
 import { Avatar } from '@mui/material';
+import './ImageViewer.css';
 
 const ImageViewer = ({ src, alt, avatarSize = 65 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ const ImageViewer = ({ src, alt, avatarSize = 65 }) => {
           mainSrc={src}
           onCloseRequest={handleClose}
           imageCaption={alt}
+          wrapperClassName="react-image-lightbox" // Adicione esta classe
         />
       )}
     </>

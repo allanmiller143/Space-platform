@@ -1,99 +1,171 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { CardContent, Button, Typography } from '@mui/material';
+import { CardContent, Button, Typography, Avatar } from '@mui/material';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './Calendar.css';
 import BlankCard from '../../../components/shared/BlankCard';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { gapi } from 'gapi-script';
+import moment from 'moment';
+import { CalendarToday, Event } from '@mui/icons-material';
+import { getData, postData } from '../../../Services/Api';
+import { toast } from 'sonner';
 
-const PendentEvents = ({ events, setEvents }) => {
+const PendentEvents = ({ events,setEvents }) => {
   const [pendingEvents, setPendingEvents] = useState([]);
+  const [propertiesData, setPropertiesData] = useState([]);
   const cuString = localStorage.getItem('currentUser'); 
   const currentUserls = JSON.parse(cuString); 
+  const [loadAceita, setLoadAceita] = useState(false);
+  const [loadNega, setLoadNega] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    console.log('events', events);
-    setPendingEvents(events.filter((event) => (
-      event.status === 'Pendente' &&
-      event.completeEvent.attendees.some(attendee => (
-        attendee.email === currentUserls.email &&
-        attendee.responseStatus === 'needsAction' &&
-        attendee.organizer === undefined
-      ))
-    )));
-    console.log(pendingEvents);
+    const filteredEvents = events.filter(
+      (event) => event.status === 'pending' && event.advertiserEmail === currentUserls.email
+    );
+    setPendingEvents(filteredEvents);
   }, [events]);
 
-
-  const handleAcceptEvent = (event) => {
-    if (event && event.status === 'Pendente') {
-      const updatedAttendees = event.completeEvent.attendees.map(attendee => {
-        // Verifica se o e-mail corresponde ao do convidado, para definir o status como 'accepted'
-        if (attendee.email === currentUserls.email) {
-          return { ...attendee, responseStatus: "accepted" };
+  useEffect(() => {
+    const loadAllPropertyData = async () => {
+      try {
+        const propertyData = {};
+        for (const event of pendingEvents) {
+          const response = await getData(`properties/${event.propertyId}`);
+          if (response.status === 200 || response.status === 201) {
+            propertyData[event.propertyId] = response.userInfo;
+          } else {
+            toast.error(`Erro ao carregar propriedade ${event.propertyId}: ${response.message}`);
+          }
         }
-        return attendee;
-      });
-  
-      // Atualiza o evento com o attendee modificado
-      gapi.client.calendar.events.patch({
-        calendarId: 'primary',
-        eventId: event.id,
-        resource: {
-          attendees: updatedAttendees
-        }
-      }).then(() => {
-        // Atualiza o estado do evento localmente
-        const updatedEvent = { ...event, color: 'green', completeEvent: { ...event.completeEvent, attendees: updatedAttendees } };
-        setEvents(events.map(event => (event.id === updatedEvent.id ? updatedEvent : event)));
+        setPropertiesData(propertyData);
+      } catch (error) {
+        toast.error(`Erro ao carregar propriedades: ${error.message}`);
+      }
+    };
 
-
-
-      }).catch(error => console.error("Erro ao aceitar o evento:", error));
+    if (pendingEvents.length > 0) {
+      loadAllPropertyData();
     }
-  };
+  }, [pendingEvents]);
+
+
+  async function aceitaEvento({ selectedEvent }) {
+    setLoadAceita(true);
+    try {
+      const response = await postData(`realtor/appointment/approve/${selectedEvent.id}`,{}, token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Agendamento aceito com sucesso!');
+
+        const updatedEvents = events.map((event) => {
+          if (event.id === selectedEvent.id) {
+            return { ...event, status: 'accepted' };
+          }
+          return event;
+        });
+        setEvents(updatedEvents);
+        console.log(response);
+        
+      } else {
+        toast.error(`Erro ao aceitar agendamento: ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao aceitar agendamento: ${error.message}`);
+    } finally {
+      setLoadAceita(false);
+    }
+  }
+
+    async function negaEvento({ selectedEvent }) {
+      setLoadNega(true);
+      try {
+        const response = await postData(`realtor/appointment/reject/${selectedEvent.id}`,{}, token);
+        if (response.status === 200 || response.status === 201) {
+          toast.success('Agendamento negado com sucesso!');
+  
+          const updatedEvents = events.map((event) => {
+            if (event.id === selectedEvent.id) {
+              return { ...event, status: 'rejected' };
+            }
+            return event;
+          });
+  
+          setEvents(updatedEvents);
+          console.log(response);
+        } else {
+          toast.error(`Erro ao negar agendamento: ${response.message}`);
+        }
+      } catch (error) {
+        toast.error(`Erro ao negar agendamento: ${error.message}`);
+      } finally {
+        setLoadNega(false);
+      }
+    }
+
 
   return (
     <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Typography variant="h6">
-        Solicitações de Agendamento
-      </Typography>
+      <Typography variant="h6" onClick={() => {console.log(propertiesData)}}>Solicitações de Agendamento</Typography>
+      {
+        loadAceita || loadNega &&
+        <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Event fontSize="small" sx={{ mr: 1 }} />
+          carregando...
+        </Typography>
+      }
 
       {pendingEvents && pendingEvents.length > 0 ? (
-        pendingEvents.map((event, index) => (
-          <BlankCard key={index}>
-            <CardContent>
-              <Box sx={{ mb: 3 }}>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  {event.completeEvent.summary}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {new Date(event.completeEvent.start.dateTime || event.completeEvent.start.date).toLocaleString()}
-                </Typography>
-              </Box>
+        pendingEvents.map((event, index) => {
+          const property = propertiesData[event.propertyId] || {};
+          return (
+            <BlankCard key={index}>
+              <CardContent>
+                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Avatar
+                  src={property.pictures?.[0]?.url || ''}
+                  alt={property.name || 'Propriedade'}
+                  sx={{ width: 60, height: 60 }}
+                />
 
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() => handleAcceptEvent(event)}
-                >
-                  Aceitar
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                >
-                  Rejeitar
-                </Button>
-              </Box>
-            </CardContent>
-          </BlankCard>
-        ))
+                  <Box>
+                    <Typography variant="body2">
+                      <strong>Local:</strong> { property.address?.street && `${property.address?.street} - ${property.address?.number}, ${property.address?.neighborhood} - ${property.address?.city}, ${property.address?.state}`  || ''}
+                    </Typography>
+
+                  </Box>
+                </Box>
+                <Box>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <CalendarToday fontSize="small" sx={{ mr: 1 }} />
+                    <strong>Início:</strong> {moment(event.start).format('DD/MM/YYYY HH:mm')}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Event fontSize="small" sx={{ mr: 1 }} />
+                    <strong>Término:</strong> {moment(event.end).format('DD/MM/YYYY HH:mm')}
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+                  <Button variant="contained" color="primary" size="small" onClick={() => aceitaEvento({ selectedEvent: event })}>
+                    Aceitar
+                  </Button>
+                  <Button variant="outlined" color="error" size="small" onClick={() => negaEvento({ selectedEvent: event })}>
+                    Rejeitar
+                  </Button>
+                </Box>
+              </CardContent>
+            </BlankCard>
+          );
+        })
       ) : (
         <BlankCard>
           <CardContent>

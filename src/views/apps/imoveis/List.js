@@ -5,7 +5,8 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import houseImage from 'src/assets/images/ilustracoes/house.png';
 import { Container, Grid, Stack } from '@mui/material';
-import { Add as IconPlus, InfoOutlined as IconInfoCircle } from '@mui/icons-material';
+import { Add as IconPlus } from '@mui/icons-material';
+import { IconCalendar } from '@tabler/icons';
 function Page() {
   const navigate = useNavigate();
 
@@ -30,8 +31,8 @@ function Page() {
                 >
                   Adicionar Novo Imóvel
                 </Button>
-                <Button variant="outlined" href="#" color="primary" startIcon={<IconInfoCircle size={20} />}>
-                  Saiba como funciona
+                <Button variant="outlined" href="#" color="primary" startIcon={<IconCalendar size={20} />} onClick={() => navigate('/apps/agenda')}>
+                  Cadastrar Horários para visitas
                 </Button>
               </Stack>
             </Grid>

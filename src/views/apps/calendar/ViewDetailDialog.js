@@ -1,160 +1,267 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, IconButton, Typography, Divider, CardContent, DialogTitle, Box } from '@mui/material';
-import { Cancel, Delete } from '@mui/icons-material';
-import { gapi } from 'gapi-script';
+import { useEffect, useState } from 'react';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  IconButton,
+  Typography,
+  Divider,
+  CardContent,
+  DialogTitle,
+  Box,
+  Stack,
+  Chip,
+  Tooltip,
+  CircularProgress,
+} from '@mui/material';
+import { Cancel, Delete, CalendarToday, Email, Event } from '@mui/icons-material';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './Calendar.css';
+import { getData, postData } from '../../../Services/Api';
+import { toast } from 'sonner';
+import ImageViewer from '../../../components/react-tables/filter/ImoveisImageView';
 
-moment.locale('pt-BR');
-
-const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents }) => {
+const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents  }) => {
   const [confirmDeleteEvent, setConfirmDeleteEvent] = useState(null);
-  const cuString = localStorage.getItem('currentUser'); 
-  const currentUserls = JSON.parse(cuString); 
-
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const [property, setProperty] = useState(null);
+  const [advertiser, setAdvertiser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadAceita, setLoadAceita] = useState(false);
+  const [loadNega, setLoadNega] = useState(false);
+  const token = localStorage.getItem('token');
   const openConfirmDeleteDialog = () => {
     setConfirmDeleteEvent(selectedEvent);
   };
 
-  const handleDeleteEvent = () => {
-    if (confirmDeleteEvent) {
-      gapi.client.calendar.events.delete({
-        calendarId: 'primary',
-        eventId: confirmDeleteEvent.id
-      }).then(() => {
-        setEvents(events.filter(event => event.id !== confirmDeleteEvent.id)); // Atualiza o estado dos eventos
-        setConfirmDeleteEvent(null); // Fecha o diálogo de confirmação de exclusão
-        handleClose(); // Fecha o diálogo principal
-      }).catch(error => console.error("Erro ao excluir evento:", error));
+  const statusLabel = (event) => {
+    switch (event.status) {
+      case 'accepted':
+        return <Chip label="Confirmado" color="success" />;
+      case 'rejected':
+        return <Chip label="Recusado" color="error" />;
+      case 'pending':
+        return <Chip label="Pendente" color="warning" />;
+      default:
+        return <Chip label="Desconhecido" />;
     }
   };
+  async function loadPropertyData() {
+    setLoading(true);
+    try {
+        const response = await getData(`properties/${selectedEvent.propertyId}`);
+        if (response.status === 200 || response.status === 201) {
+            setProperty(response.userInfo);
+            setAdvertiser(response.userInfo.seller);
+            console.log(response.userInfo);
+        } else {
+            toast.error(`Erro ao carregar dados da propriedade: ${response.message}`);
+        }
+    } catch (error) {
+        toast.error(`Erro ao carregar dados da propriedade: ${error.message}`);
+    } finally {
+        setLoading(false);
+    }
+  }
 
-  const handleAcceptEvent = () => {
-    if (selectedEvent && selectedEvent.status === 'Pendente') {
-      const updatedAttendees = selectedEvent.completeEvent.attendees.map(attendee => {
-        // Verifica se o e-mail corresponde ao do convidado, para definir o status como 'accepted'
-        if (attendee.email === currentUserls.email) {
-          return { ...attendee, responseStatus: "accepted" };
-        }
-        return attendee;
-      });
-  
-      // Atualiza o evento com o attendee modificado
-      gapi.client.calendar.events.patch({
-        calendarId: 'primary',
-        eventId: selectedEvent.id,
-        resource: {
-          attendees: updatedAttendees
-        }
-      }).then(() => {
-        // Atualiza o estado do evento localmente
-        const updatedEvent = { 
-          ...selectedEvent, 
-          color: 'green',
-          completeEvent: { ...selectedEvent.completeEvent, attendees: updatedAttendees } 
-        };
-  
-        // Cria uma nova lista de eventos sem o evento atualizado e depois o adiciona de volta com as mudanças
-        const newEvents = events
-          .filter(event => event.id !== updatedEvent.id) // Remove o evento antigo
-          .concat(updatedEvent); // Adiciona o evento atualizado
-  
-        setEvents(newEvents); // Define a nova lista de eventos
-  
-        // Fecha o diálogo principal
+  useEffect(() => {
+      if (selectedEvent) {
+          loadPropertyData();
+      }
+  }, [selectedEvent]);
+
+  async function aceitaEvento() {
+    setLoadAceita(true);
+    try {
+      const response = await postData(`realtor/appointment/approve/${selectedEvent.id}`,{}, token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Agendamento aceito com sucesso!');
+
+        const updatedEvents = events.map((event) => {
+          if (event.id === selectedEvent.id) {
+            return { ...event, status: 'accepted' };
+          }
+          return event;
+        });
+        setEvents(updatedEvents);
+        console.log(response);
         handleClose();
-      }).catch(error => console.error("Erro ao aceitar o evento:", error));
+      } else {
+        toast.error(`Erro ao aceitar agendamento: ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao aceitar agendamento: ${error.message}`);
+    } finally {
+      setLoadAceita(false);
     }
-  };
+  }
+
+  async function negaEvento() {
+    setLoadNega(true);
+    try {
+      const response = await postData(`realtor/appointment/reject/${selectedEvent.id}`,{}, token);
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Agendamento negado com sucesso!');
+
+        const updatedEvents = events.map((event) => {
+          if (event.id === selectedEvent.id) {
+            return { ...event, status: 'rejected' };
+          }
+          return event;
+        });
+
+        setEvents(updatedEvents);
+        console.log(response);
+        handleClose();
+      } else {
+        toast.error(`Erro ao negar agendamento: ${response.message}`);
+      }
+    } catch (error) {
+      toast.error(`Erro ao negar agendamento: ${error.message}`);
+    } finally {
+      setLoadNega(false);
+    }
+  }
 
 
-  const getDescription = () => {
-    const description = selectedEvent.description || '';
-    const lines = description.split(';');
-    return (
-      <div>
-        {lines.map((line, index) => {
-          // Divide cada linha em chave e valor
-          const [key, value] = line.split(':');
-          return (
-            <Typography key={index}>
-              <strong>{key.trim()}:</strong> {value?.trim()}
-            </Typography>
-          );
-        })}
-      </div>
-    );
-  };
-  
-  
   return (
-    <Box>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
-        {!selectedEvent ? (
-          <Box>Carregando...</Box>
-        ) : (
-          <Box>
-            <DialogTitle>
-              <Box display="flex" alignItems="center">
-                <Typography variant="h5" component="span" style={{ flexGrow: 1 }}>
-                  Detalhes do agendamento
-                </Typography>
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      {!selectedEvent ? (
+        <Box p={3} textAlign="center">
+          <Typography variant="body1">Nenhum evento selecionado</Typography>
+        </Box>
+      ) : 
+      (loading)  ? 
+
+      <Box p={3} textAlign="center" sx = {{display : 'flex', flexDirection : 'column', alignItems : 'center', gap : '20px'}}>
+        <Typography variant="body1">Carregando...</Typography>
+        <CircularProgress />
+      </Box> :
+      (property && advertiser) ?
+
+      (
+        <Box>
+          <DialogTitle>
+            <Box display="flex" alignItems="center">
+              <Typography variant="h5" component="span" sx={{ flexGrow: 1 }}>
+                Detalhes do Agendamento
+              </Typography>
+              <Tooltip title="Fechar">
                 <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
                   <Cancel />
                 </IconButton>
+              </Tooltip>
+            </Box>
+          </DialogTitle>
+          <Divider />
+          <CardContent>
+            <Stack spacing={2}>
+              <Box display="flex" justifyContent="space-between"> 
+                <Typography variant="h6">{selectedEvent.title}</Typography>
+                <Box>
+                  {statusLabel(selectedEvent)}
+                </Box>
+
               </Box>
-            </DialogTitle>
-            <Divider />
-            <CardContent>
-              <Typography variant="h6" mb={1}>{selectedEvent.title}</Typography>
-              <Typography variant="body1" style={{ color: selectedEvent.color }}>
-                Status: {selectedEvent.status}
+
+              {
+                (selectedEvent.solitorEmail === currentUser.email && selectedEvent.status === 'pending') &&
+                <Typography variant="body2" sx =  {{display : 'flex', alignItems : 'center'}} >
+                  Aguarde o anunciante aceitar o seu pedido de agendamento
+                </Typography>
+              }
+              <Box>
+                <Typography variant="body2" color="textSecondary" sx = {{display : 'flex', alignItems : 'center'}}>
+                  <CalendarToday fontSize="small" sx={{ mr: 1 }} />
+                  <strong>Início:</strong>{' '}
+                  {moment(selectedEvent.start).format('DD/MM/YYYY HH:mm')}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" sx = {{display : 'flex', alignItems : 'center'}}>
+                  <Event fontSize="small" sx={{ mr: 1 }} />
+                  <strong>Término:</strong>{' '}
+                  {moment(selectedEvent.end).format('DD/MM/YYYY HH:mm')}
+                </Typography>
+              </Box>
+              <Typography variant="body2" sx =  {{display : 'flex', alignItems : 'center'}} >
+                <Email fontSize="small" sx={{ mr: 1 }} />
+                <strong>Anunciante:</strong> {selectedEvent.advertiserEmail || 'Não especificado'}
               </Typography>
-              <Divider />
-              <Typography color="textSecondary" mt={1}>
-                <strong>Início:</strong> {new Date(selectedEvent.start || selectedEvent.start.date).toLocaleString()}
+              <Typography variant="body2" sx =  {{display : 'flex', alignItems : 'center'}} >
+                <Email fontSize="small" sx={{ mr: 1 }} />
+                <strong>Solicitante:</strong> {selectedEvent.solicitorEmail || 'Não especificado'}
               </Typography>
-              <Typography color="textSecondary" mt={1}>
-                <strong>Local:</strong> {selectedEvent.location || 'Não especificado'}
-              </Typography>
-              <Typography color="textSecondary" mt={1}>
-                <strong>Descrição:</strong> {getDescription()}
-              </Typography>
-              <Box display="flex" justifyContent="flex-end" mt={2}>
-                {selectedEvent.status === 'Pendente' && selectedEvent.completeEvent.attendees.some(attendee => (attendee.email === currentUserls.email && attendee.responseStatus === 'needsAction' && attendee.organizer !== true )) && (
-                  <Button variant="contained" color="primary" onClick={handleAcceptEvent}>
-                    Aceitar
+
+              <Divider  sx={{ my: 2 }} />
+              <Typography variant="h6">Informações da Propriedade</Typography>
+
+              <Box sx = {{display : 'flex', alignItems : 'start', gap : 2}}>
+                <ImageViewer src={property.pictures[0].url} alt="Imóvel" />
+                <Box>
+                  <Typography variant="body2">
+                    <strong>Local:</strong> { `${property.address.street} - ${property.address.number}, ${property.address.neighborhood} - ${property.address.city}, ${property.address.state}` }
+                  </Typography>
+                  <Typography variant="body2" textAlign={'justify'}>
+                    <strong>Descrição:</strong> {property.description || 'Nenhuma descrição fornecida'}
+                  </Typography>
+                </Box>
+              </Box>
+
+            </Stack>
+            <Divider sx={{ my: 2 }} />
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+
+
+              {selectedEvent.status === 'pending' &&
+                selectedEvent.advertiserEmail === currentUser.email && (
+                    <Button color="error" onClick={openConfirmDeleteDialog}>
+                      <Delete />
+                        Negar Agendamento
+                    </Button>
+                )}
+              {selectedEvent.status === 'pending' &&
+                selectedEvent.advertiserEmail === currentUser.email && (
+                  <Button variant="contained" color="primary" onClick={aceitaEvento}>
+                    {
+                      loadAceita ? (
+                        <CircularProgress size={20} color="inherit" />
+                      ) : (
+                        <Typography>
+                          Aceitar
+                        </Typography>
+                      )
+                    }
+                    
                   </Button>
                 )}
-                <IconButton color="secondary" onClick={openConfirmDeleteDialog}>
-                  <Delete /> <span style={{ marginLeft: '5px', fontSize: '15px' }}> {} Excluir </span>
-                </IconButton>
-              </Box>
-            </CardContent>
-          </Box>
-        )}
-      </Dialog>
-
+            </Stack>
+          </CardContent>
+        </Box>
+      ): null}
+      {/* Diálogo de Confirmação de Exclusão */}
       <Dialog open={!!confirmDeleteEvent} onClose={() => setConfirmDeleteEvent(null)}>
         <DialogTitle>Confirmar Exclusão</DialogTitle>
         <DialogContent>
-          <Typography>
-            Tem certeza que deseja excluir o agendamento?
-          </Typography>
-          <DialogActions>
-            <Button onClick={() => setConfirmDeleteEvent(null)} color="inherit">
-              Cancelar
-            </Button>
-            <Button onClick={handleDeleteEvent} color="secondary">
-              Confirmar
-            </Button>
-          </DialogActions>
+          <Typography>Tem certeza que deseja excluir este agendamento?</Typography>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDeleteEvent(null)} color="inherit">
+            Cancelar
+          </Button>
+          <Button color="secondary" onClick={negaEvento}>
+            {
+              loadNega ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <Typography>
+                  Nega
+                </Typography>
+              )
+            }
+          </Button>
+        </DialogActions>
       </Dialog>
-    </Box>
+    </Dialog>
   );
 };
 

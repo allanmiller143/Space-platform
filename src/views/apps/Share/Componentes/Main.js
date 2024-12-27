@@ -1,11 +1,12 @@
-import { Box, Divider, Typography, Grid, Button } from '@mui/material';
+/* eslint-disable react/prop-types */
+import { Box, Divider, Typography, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { IconMinus, IconPlus } from '@tabler/icons';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { useState } from 'react';
-import IconAcc from 'src/assets/images/frontend-pages/homepage/accordian1.jpg';
+import { useEffect, useState } from 'react';
+import PropertyCard from './PropertyCard';
 
 const StyledAccordian = styled(Accordion)(() => ({
   boxShadow: 'none',
@@ -22,8 +23,8 @@ const StyledAccordian = styled(Accordion)(() => ({
   },
 }));
 
-const Main = () => {
-  const [expanded, setExpanded] = useState(true);
+const Main = ( { property }) => {
+  const [expanded, setExpanded] = useState(false);
   const [expanded2, setExpanded2] = useState(false);
   const [expanded3, setExpanded3] = useState(false);
 
@@ -39,33 +40,39 @@ const Main = () => {
     setExpanded3(!expanded3);
   };
 
+  useEffect(() => {
+    console.log(property);
+  }, []);
+
+  
+
   return (
-    <Grid container spacing={{ xs: 3, lg: 8 }}>
+    <Grid container spacing={{ xs: 3, lg: 8 }} mb = {3}>
       <Grid item xs={12} lg={6}>
-        <img
-          src={IconAcc}
-          width={500}
-          height={500}
-          style={{
-            width: '100%',
-            height: 'auto',  borderRadius: '8px'
-          }}
-          alt="img"
-        />
+        <PropertyCard property={property} />
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography
-          variant="h4"
+          variant="h5"
           sx={{
             fontSize: {
               lg: '40px',
               xs: '35px',
             },
+            lineHeight: {
+              lg: '40px',
+              xs: '30px',
+            },
           }}
           fontWeight="700"
           mt={5}
         >
-          Potencialize suas vendas
+          Vantagens de 
+          <span style={{ color: '#763EBD' }}> Compartilhar </span>
+          seu imóvel
+        </Typography>
+        <Typography variant="subtitle1" mt={2} mb={3} color={'primary'}>
+          Compartilhe seu imóvel com mais pessoas e aumente a chance de venda.
         </Typography>
         <Box mt={4}>
           <StyledAccordian expanded={expanded2} onChange={handleChange3}>
@@ -81,12 +88,12 @@ const Main = () => {
               id="panel2-header"
             >
               <Typography fontSize="17px" fontWeight="600">
-                Gestão de leads inteligente
+                Mais visibilidade
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Organize e priorize seus leads automaticamente, garantindo que você nunca perca uma oportunidade de venda. Nossa ferramenta de gestão de leads ajuda você a manter o foco nos clientes mais promissores.
+                Aumente sua visibilidade e alcance mais clientes potenciais. Compartilhe seu imóvel com mais pessoas, aumentando a chance de venda.
               </Typography>
             </AccordionDetails>
           </StyledAccordian>
@@ -104,12 +111,12 @@ const Main = () => {
               id="panel1-header"
             >
               <Typography fontSize="17px" fontWeight="600">
-                Agendamento automático de visitas
+                Agendamento de visitas
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Simplifique o processo de agendamento de visitas aos imóveis. Nossa ferramenta sincroniza automaticamente sua agenda com a disponibilidade dos proprietários, economizando seu tempo e melhorando a experiência do cliente.
+                Com seu imóvel compartilhado, o corretor pode agendar visitas online, aumentando a probabilidade de venda.
               </Typography>
             </AccordionDetails>
           </StyledAccordian>
@@ -127,21 +134,16 @@ const Main = () => {
               id="panel3-header"
             >
               <Typography fontSize="17px" fontWeight="600">
-                Análise de mercado em tempo real
+                 Maior chance de venda                   
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Tenha acesso a dados atualizados do mercado imobiliário local. Nossa ferramenta de análise fornece insights valiosos sobre tendências de preços, demanda por bairros e tipos de imóveis, ajudando você a tomar decisões informadas e estratégicas.
+                Com um de nossos corretores tomando conta dos eu imóvel, 
               </Typography>
             </AccordionDetails>
           </StyledAccordian>
-          <Divider />
-          <Box mt={3}>
-            <Button variant="contained" color="primary" size="large">
-              Saiba Mais
-            </Button>
-          </Box>
+
         </Box>
       </Grid>
     </Grid>
