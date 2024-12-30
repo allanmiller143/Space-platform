@@ -182,8 +182,8 @@ const BigCalendar = () => {
                 open={open}
                 handleClose={handleClose}
                 selectedEvent={selectedEvent}
-                events={events}
-                setEvents={setEvents}
+                events={displayEvents}
+                setEvents={setDisplayEvents}
               />
             </CardContent>
           </BlankCard>
@@ -192,7 +192,7 @@ const BigCalendar = () => {
           x === 0 && (
             <Grid item xs={12} lg={3} sx={{ height: { lg: '90vh' }, overflowY: { lg: 'scroll' } }}>
               <Stack spacing={3}>
-                {events.length > 0 && <PendentEvents events={events} setEvents={setEvents} />}
+                {events.length > 0 && <PendentEvents events={displayEvents} setEvents={setDisplayEvents}  />}
               </Stack>
             </Grid>
           )

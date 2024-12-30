@@ -11,7 +11,7 @@ import { CalendarToday, Event } from '@mui/icons-material';
 import { getData, postData } from '../../../Services/Api';
 import { toast } from 'sonner';
 
-const PendentEvents = ({ events,setEvents }) => {
+const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }) => {
   const [pendingEvents, setPendingEvents] = useState([]);
   const [propertiesData, setPropertiesData] = useState([]);
   const cuString = localStorage.getItem('currentUser'); 
@@ -64,6 +64,7 @@ const PendentEvents = ({ events,setEvents }) => {
           }
           return event;
         });
+
         setEvents(updatedEvents);
         console.log(response);
         

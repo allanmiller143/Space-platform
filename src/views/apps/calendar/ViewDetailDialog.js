@@ -84,8 +84,9 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
           }
           return event;
         });
+        console.log(events);
         setEvents(updatedEvents);
-        console.log(response);
+        console.log(events);
         handleClose();
       } else {
         toast.error(`Erro ao aceitar agendamento: ${response.message}`);
