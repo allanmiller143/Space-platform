@@ -104,7 +104,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
         <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
       </Box>
       {
-        activeChat && messages && messages.length > 0 ? (
+        activeChat ? (
           <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
             <>
             <Box>
@@ -121,6 +121,13 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
               </Box>
               <Divider />
             </Box>
+            {
+              loadingChat && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                  <Spinner />
+                </Box>
+              )
+            }
             <Box flexGrow={1} overflow="hidden">
               <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
                 <Box p={3}>
@@ -159,7 +166,6 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
           </Box >
         ) 
         : 
-        loadingChat ? <Spinner height='100%'  minHeight='400px'/> :
         (
           <Box display="flex" justifyContent="center" alignItems="center" height="100%" minHeight='400px'> </Box>
         )

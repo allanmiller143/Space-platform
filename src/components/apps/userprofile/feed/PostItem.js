@@ -85,6 +85,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    console.log(post);
   };
 
   const deletePost = async () => {
@@ -161,8 +162,15 @@ const PostItem = ({ post, setMyPost, myPost }) => {
             }}
           >
             <Box p={2}>
-              <MenuItem onClick={() => { /* Função de Editar */ handleClose(); }}>Editar</MenuItem>
-              <MenuItem onClick={() => { handleClose(); deletePost(); }}>Excluir</MenuItem>
+              {
+                post.email === currentUserls.email  && (
+                  <>
+                    <MenuItem onClick={() => { handleClose(); deletePost(); }}>Excluir</MenuItem>
+                    {/* <MenuItem onClick={() => { handleClose(); }}>Editar</MenuItem> */}
+                  </>
+                )
+              }
+
               <MenuItem onClick={() => { handleClose(); seePost(); }}> Ver publicação </MenuItem>
             </Box>
           </Popover>

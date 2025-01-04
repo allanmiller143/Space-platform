@@ -22,7 +22,7 @@ const AppDD = () => {
         Classificados
       </Button>
 
-      <Button
+      {/* <Button
         color="inherit"
         sx={{
           color: (theme) => theme.palette.text.secondary,
@@ -33,7 +33,7 @@ const AppDD = () => {
         component={Link}
       >
         Calendário
-      </Button>
+      </Button> */}
     </Box>
   );
 };

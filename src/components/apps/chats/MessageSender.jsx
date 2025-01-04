@@ -69,8 +69,8 @@ const MessageSender = ({ socket }) => {
           value={message}
           onChange={handleMessageChange}
           onPressEnter={handleKeyDown}
-          autoSize={{ minRows: 1, maxRows: 5 }}
-          style={{ flex: 1, paddingLeft: 20, marginTop: 5, resize: 'none' }}
+          autoSize={{ minRows: 1, maxRows: 2 }}
+          style={{ flex: 1, paddingLeft: 10, marginTop: 5, resize: 'none' }}
         />
         {
           !recording &&

@@ -119,7 +119,7 @@ const Marketplace = () => {
                     {`Exibindo ${properties.length} resultados - ${Object.keys(formData).filter(key => formData[key]).length - 1} Filtros aplicados - Ver filtros`}
                 </Button>
                 <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                    <Box sx={{ width: 600, p: 4, flexGrow: 0 }}>
+                    <Box sx={{ width: { xs: 340, md: 600}, p: 4, flexGrow: 0 }}>
                         <Typography variant="h3" gutterBottom>
                             Filtros
                         </Typography>

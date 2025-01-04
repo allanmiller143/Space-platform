@@ -15,18 +15,18 @@ export const NavLinks = [
     title: 'Buscar Imóveis',
     to: '/marketplace',
   },
-  {
-    title: 'Produtos',
-    to: '/templates/produtos',
-  },
+  // {
+  //   title: 'Produtos',
+  //   to: '/templates/produtos',
+  // },
   {
     title: 'Sobre nós',
     to: '/templates/sobre',
   },
-  {
-    title: 'Planos e preços',
-    to: '/templates/precos',
-  },
+  // {
+  //   title: 'Planos e preços',
+  //   to: '/templates/precos',
+  // },
   {
     title: 'Fale conosco',
     to: '/templates/contato',

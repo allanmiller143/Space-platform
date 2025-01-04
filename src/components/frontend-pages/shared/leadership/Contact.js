@@ -34,9 +34,9 @@ const Contact = () => {
               textDecorationColor: 'white',
             }}
           >
-            <Typography component="span" fontWeight={600} color="white" fontSize="16px">
+            {/* <Typography component="span" fontWeight={600} color="white" fontSize="16px">
               Contate-nos agora
-            </Typography>
+            </Typography> */}
           </Link>
         </Stack>
       </Container>

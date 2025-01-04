@@ -158,7 +158,7 @@ const Banner = () => {
               mb={4}
               justifyContent="center"
             >
-              <Button
+              {/* <Button
                 variant="text"
                 color="inherit"
                 onClick={handleClickOpen}
@@ -176,7 +176,7 @@ const Banner = () => {
                 }}
               >
                 <img src={iconPlay} alt="icon" width={40} height={40} /> Veja como funciona
-              </Button>
+              </Button> */}
 
               <Dialog
                 maxWidth="lg"

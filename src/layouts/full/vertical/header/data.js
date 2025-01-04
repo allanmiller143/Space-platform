@@ -112,24 +112,24 @@ const appsLink = [
     subtext: 'Agendamentos e visitas',
     avatar: ddIcon4,
   },
-  {
-    href: '/apps/contacts',
-    title: 'Contatos',
-    subtext: 'Salve contatos relevantes',
-    avatar: ddIcon5,
-  },
-  {
-    href: '/apps/tickets',
-    title: 'Chamados e Tickets',
-    subtext: 'Gestão de chamados e tickets',
-    avatar: ddIcon6,
-  },
-  {
-    href: '/apps/notes',
-    title: 'Anotações',
-    subtext: 'Gestão de anotações',
-    avatar: icon3,
-  },
+  // {
+  //   href: '/apps/contacts',
+  //   title: 'Contatos',
+  //   subtext: 'Salve contatos relevantes',
+  //   avatar: ddIcon5,
+  // },
+  // {
+  //   href: '/apps/tickets',
+  //   title: 'Chamados e Tickets',
+  //   subtext: 'Gestão de chamados e tickets',
+  //   avatar: ddIcon6,
+  // },
+  // {
+  //   href: '/apps/notes',
+  //   title: 'Anotações',
+  //   subtext: 'Gestão de anotações',
+  //   avatar: icon3,
+  // },
   // {
   //   href: '/apps/email',
   //   title: 'Email App',

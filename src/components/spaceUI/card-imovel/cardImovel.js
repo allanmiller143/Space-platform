@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, Chip, Button } from '@mui/material';
 import Gallery from 'src/components/lightbox/lightbox';
+import moment from 'moment';
 
 const CardImovel = ({ data }) => {
     const [isGalleryOpen, setIsGalleryOpen] = React.useState(false);
@@ -12,6 +13,17 @@ const CardImovel = ({ data }) => {
         }
         return '';
     }
+
+      const FormattedDateComponent = ({ date }) => {
+        // Format the date using moment
+        const formattedDate = moment(date).format("DD/MM/YYYY");
+      
+        return (
+          <Typography variant="body2" color="white" sx={{ position: 'absolute', top: 5, left: 5 }}>
+            <Chip label= {` Postado em: ${formattedDate}`} sx={{ color: 'white' }} color="default"/>
+          </Typography>
+        );
+      };
 
     return (
         <Card 
@@ -39,12 +51,12 @@ const CardImovel = ({ data }) => {
                     cursor: 'pointer',
                 }}
             >
-                <Typography variant="body2" color="white" sx={{ position: 'absolute', bottom: 10, left: 10 }}>
-                    Ver Galeria
-                </Typography>
-                <Box sx={{ position: 'absolute', top: 3, left: 5 }}>
+                {FormattedDateComponent({ date: data.createdAt })}
+                
+                {/* <Box sx={{ position: 'absolute', bottom: 3, left: 5 }}>
                     <Chip label="Anúncio novo" sx={{ color: 'white' }} color="default"/>
-                </Box>
+                </Box> */}
+
             </Box>
 
             {isGalleryOpen && <Gallery onClose={() => setIsGalleryOpen(false)} pictures={data.pictures} />}

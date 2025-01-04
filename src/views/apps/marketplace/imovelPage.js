@@ -17,6 +17,10 @@ import { useNavigate } from 'react-router';
 import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
 import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
 import Agendar from '../../../Services/GoogleCalendar/Agendar';
+import FloatingMiniPlayer from '../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer';
+import ChatContent from '../../../components/apps/chats/ChatContent';
+import { set } from 'lodash';
+import { is } from 'date-fns/locale';
 
 const ImovelPage = ({socket}) => {
     const [loading, setLoading] = useState(false);
@@ -51,7 +55,7 @@ const ImovelPage = ({socket}) => {
     const click = async () => {
         const clickResponse = await postData(`properties/times-seen/${id}`,{});
         if (clickResponse.status === 200 || clickResponse.status === 201) {
-          toast.success('Propriedade visualizada com sucesso!');
+          console.log(clickResponse);
         } else {
           toast.error(`Erro ao visualizar propriedade: ${clickResponse.message}`);
           console.log(clickResponse);
@@ -94,7 +98,47 @@ const ImovelPage = ({socket}) => {
             setLoading(false);
           }    
         } else {
-          navigate('/google-form');
+          navigate('/auth/login');
+          toast.success('Faça um cadastro para enviar uma mensagem');
+        }
+      };
+
+      const setActiveChatFunction = async () => {
+        if (currentUserls) {
+          setLoadPlayer(true);
+          setPlayerOpen(true)
+          setSelectedUser(null);
+          setMessages([]);
+          try {
+            await openNewChat(socket, advertiser.email);
+          } catch (err) {
+            console.log('Error loading messages:', err);
+          }
+      
+          try {
+            const response = await getData('chat', token);
+            if (response.status === 200 || response.status === 201) {
+              setUserChats(response.userInfo);
+              setFilteredChats(response.userInfo);  // Iniciar com todos os chats disponíveis
+              if(response.userInfo.length > 0){
+                const selectedChat = response.userInfo.find(chat => chat.user1.email === advertiser.email || chat.user2.email === advertiser.email);
+                const user = selectedChat.user1.email === currentUserls.email ? selectedChat.user2 : selectedChat.user1;
+                console.log(user);
+                setActiveChat(selectedChat.id);
+                setSelectedUser(user);                
+              }else{
+                console.log('sem chats');
+              }
+            } else {
+              console.log(response);
+            }
+          } catch (e) {
+            console.log(e);
+          }finally{
+            setLoadPlayer(false);
+          }    
+        } else {
+          navigate('/auth/login');
           toast.success('Faça um cadastro para enviar uma mensagem');
         }
       };
@@ -105,6 +149,9 @@ const ImovelPage = ({socket}) => {
         loadPropertyData();
         click();
     }, []);
+
+    const [isPlayerOpen, setPlayerOpen] = useState(false);
+    const [loadPlayer, setLoadPlayer] = useState(false);
 
     if (loading) {
         return <Spinner />;
@@ -129,18 +176,34 @@ const ImovelPage = ({socket}) => {
                             width: '100%',
                         }}
                     >
-                        
-                        <PropertyGallery property={property} />
+
+
+                        {
+                        isPlayerOpen && (
+                        <FloatingMiniPlayer
+                            content={
+                              (loadPlayer) ? 
+                              <Spinner height="100%"/> 
+                              :
+                              <ChatContent socket={socket}/>
+                            }
+                            onClose={() => setPlayerOpen(false)}
+                          />
+                        )}
+
+
+                        <PropertyGallery property={property} socket={socket} setActiveChatFunction={setActiveChatFunction} />
+
                         <Box sx = {{display: {sm : 'block', md: 'none'}}} >
                             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
                                 <Agendar  advertiser = {advertiser} property = {property}/>
-
                                 <Button variant="outlined" color="primary">
-                                    Fazer proposta
+                                  Fazer proposta
                                 </Button>
-                                <Button variant="outlined" color="primary" onClick={seePhone}>
+                                <Button variant="outlined" color="primary" onClick={seePhone} sx = {{display: {sm : 'block', md: 'none'} }}>
                                   Entre em contato
-                              </Button>   
+                                </Button> 
+                               
                             </Box>
                         </Box>
                         <DadosGerais property={property} />
@@ -157,14 +220,17 @@ const ImovelPage = ({socket}) => {
                       }}
                   >
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
-                        <Agendar  advertiser = {advertiser} property = {property}/>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                              <Button variant="outlined" color="primary">
+                              {/* <Button variant="outlined" color="primary">
                                   Fazer proposta
-                              </Button>
-                              <Button variant="outlined" color="primary" onClick={seePhone}>
+                              </Button> */}
+                              <Agendar  advertiser = {advertiser} property = {property}/>
+                              <Button variant="outlined" color="primary" onClick={seePhone} sx = {{display: {sm : 'block', md: 'none'} }}>
                                   Entre em contato
-                              </Button>
+                                </Button> 
+                                <Button variant="outlined" onClick={setActiveChatFunction} sx = {{display: {sm : 'none', md: 'block'} }}>
+                                  Entre em contato
+                                </Button>  
                           </Box>
                       </Box>
                       <Box sx={{ display: { sm: 'none', md: 'block' } }}>
@@ -172,7 +238,6 @@ const ImovelPage = ({socket}) => {
                           <AdvertiserCard property={property} advertiser={advertiser} />
                       </Box>
                   </Grid>
-
                 </Grid>
             </Box>
         </PageContainer>

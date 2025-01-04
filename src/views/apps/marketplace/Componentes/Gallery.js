@@ -9,8 +9,11 @@ import { useNavigate } from 'react-router';
 import "leaflet/dist/leaflet.css";
 import { MyLocation } from '@mui/icons-material';
 import { deleteData, postData } from '../../../../Services/Api';
+import moment from 'moment';
+import FloatingWindow from '../../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer';
+import ChatContent from '../../../../components/apps/chats/ChatContent';
 
-const PropertyGallery = ({ property }) => {
+const PropertyGallery = ({ property,socket,setActiveChatFunction }) => {
   const [openGallery, setOpenGallery] = useState(false);
   const [openVideoModal, setOpenVideoModal] = useState(false);
   const navigate = useNavigate();
@@ -22,10 +25,22 @@ const PropertyGallery = ({ property }) => {
 
   useEffect(() => {
     if (property && currentUserls) {
+      console.log(property);
       const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
       setFavorite(isFavorite);
     }
   }, [property, currentUserls]);
+
+  const FormattedDateComponent = ({ date }) => {
+    // Format the date using moment
+    const formattedDate = moment(date).format("DD/MM/YYYY HH:mm");
+  
+    return (
+      <Typography variant="body1" sx = {{ mb: 2}}>
+        Imóvel postado em: <b>{formattedDate}</b>
+      </Typography>
+    );
+  };
 
   const formatPrice = (price) => {
     return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
@@ -108,6 +123,8 @@ const PropertyGallery = ({ property }) => {
     }
   };
 
+
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {property && (
@@ -119,6 +136,8 @@ const PropertyGallery = ({ property }) => {
             >
               <IconArrowLeft sx={{ mr: 1 }} /> Voltar
             </Button>
+
+
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Tooltip title="Compartilhar">
                 <Button
@@ -215,6 +234,10 @@ const PropertyGallery = ({ property }) => {
               </Box>
             </Modal>
           </Box>
+
+          {
+            FormattedDateComponent({ date: property.createdAt })  
+          }
 
           <Typography variant="h2" component="h1" sx={{ mb: 3 }}>
             {`${property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' : property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com

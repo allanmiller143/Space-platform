@@ -100,13 +100,13 @@ function GoogleSignIn() {
           </Box>{' '}
           Google
         </CustomSocialButton>
-        <CustomSocialButton onClick={handleAppleLogin} sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333', color: 'white' } }}>
+        {/* <CustomSocialButton onClick={handleAppleLogin} sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333', color: 'white' } }}>
           <AppleIcon sx={{ mr: 1 }} />
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, whiteSpace: 'nowrap', mr: { sm: '3px' } }}>
             Iniciar sessão com
           </Box>{' '}
           Apple
-        </CustomSocialButton>
+        </CustomSocialButton> */}
       </Stack>
     </div>
   );

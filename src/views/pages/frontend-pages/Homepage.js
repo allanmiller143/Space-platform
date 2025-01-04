@@ -23,8 +23,8 @@ const HomePage = () => {
       {/* <PowerfulDozens /> */}
       {/* <Reviews /> */}
       {/* <ExceptionalFeature /> */}
-      <Pricing />
-      <FAQ/>
+      {/* <Pricing /> */}
+      {/* <FAQ/> */}
       {/* <C2a /> */}
       <Footer />
       <ScrollToTop />

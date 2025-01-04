@@ -29,7 +29,7 @@ function Agendar({ advertiser, property }) {
     <div>
 
       <Button variant="contained" color="primary" onClick={handleAbrirDialog}>
-        Abrir Calendário
+        Agendar Visita
       </Button>
       <CalendarioDisponibilidade open={dialogAberto} onClose={handleFecharDialog} property={property} advertiser={advertiser}  />
 

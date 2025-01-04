@@ -75,7 +75,7 @@ const FileMessage = ({ message }) => {
                 
             }
             
-            <MessageActions message={message} anchorEl={anchorEl} setAnchorEl={setAnchorEl} showIcon={showIcon} setShowIcon={setShowIcon}/>
+            {/* <MessageActions message={message} anchorEl={anchorEl} setAnchorEl={setAnchorEl} showIcon={showIcon} setShowIcon={setShowIcon}/> */}
             
         </Box>
     );
