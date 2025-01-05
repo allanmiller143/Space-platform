@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import PageContainer from '../../../components/container/PageContainer';
 import { Button, Typography, Box } from '@mui/material';
-import petError from './PetError.png'; // Importando a imagem da mesma pasta
+import petError from '../../../assets/images/profile/petError.png'; // Importando a imagem da mesma pasta
 
 const CatchError = ({ socket }) => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
