@@ -98,6 +98,7 @@ const ChatPreViewDialog = ({ previewOpen, setPreviewOpen, previewFiles, setPrevi
           backdropFilter: 'blur(10px)', // Efeito de desfoque no fundo
           borderRadius: '16px',
           padding: '16px',
+          zIndex: 9999,
         },
       }}
     >
@@ -125,6 +126,7 @@ const ChatPreViewDialog = ({ previewOpen, setPreviewOpen, previewFiles, setPrevi
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
                 maxWidth: '250px',
                 maxHeight: '250px',
+                zIndex: 1,
               }}
             />
           ) : (

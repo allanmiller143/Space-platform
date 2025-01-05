@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Box, Divider, Typography, Grid, Button } from '@mui/material';
+import { Box, Divider, Typography, Grid } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import { IconMinus, IconPlus } from '@tabler/icons';
@@ -82,14 +81,13 @@ const TabTeamScheduling = () => {
               aria-controls="panel2-content"
               id="panel2-header"
             >
-              <Typography fontSize="17px" fontWeight="600">
-                Gestão de leads inteligente
-              </Typography>
+            <Typography fontSize="17px" fontWeight="600">
+              Gestão de imóveis
+            </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Organize e priorize seus leads automaticamente, garantindo que você nunca perca uma oportunidade de venda. Nossa ferramenta de gestão de leads ajuda você a manter o foco nos clientes mais promissores.
-              </Typography>
+                Cadastre seus imóveis e faça a gestão dos seus anúncios. Criando sua carteira de imóveis na space, você receberá ofertas de clientes interessados em comprar ou alugar os imóveis cadastrados.              </Typography>
             </AccordionDetails>
           </StyledAccordian>
           <Divider />
@@ -105,14 +103,13 @@ const TabTeamScheduling = () => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              <Typography fontSize="17px" fontWeight="600">
-                Agendamento automático de visitas
-              </Typography>
+            <Typography fontSize="17px" fontWeight="600">
+              Agendamentos
+            </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Simplifique o processo de agendamento de visitas aos imóveis. Nossa ferramenta sincroniza automaticamente sua agenda com a disponibilidade dos proprietários, economizando seu tempo e melhorando a experiência do cliente.
-              </Typography>
+              Crie sua agenda de visitas e fique atento nas solicitações dos usuários para visitar os seus imóveis. Em breve, os agendamentos poderão ocorrer de forma mais automatizada em um chatbot personalizado para você.              </Typography>
             </AccordionDetails>
           </StyledAccordian>
           <Divider />
@@ -129,21 +126,14 @@ const TabTeamScheduling = () => {
               id="panel3-header"
             >
               <Typography fontSize="17px" fontWeight="600">
-                Análise de mercado em tempo real
+                Análise de dados
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Tenha acesso a dados atualizados do mercado imobiliário local. Nossa ferramenta de análise fornece insights valiosos sobre tendências de preços, demanda por bairros e tipos de imóveis, ajudando você a tomar decisões informadas e estratégicas.
-              </Typography>
+              Você tem acesso a um dashboard para analisar a interação dos usuários com os seis anúncios, quantas visualizações, curtidas e agendamentos, com isso garantimos uma melhor experiência para voce e seus clientes.              </Typography>
             </AccordionDetails>
           </StyledAccordian>
-          <Divider />
-          <Box mt={3}>
-            <Button variant="contained" color="primary" size="large">
-              Saiba Mais
-            </Button>
-          </Box>
         </Box>
       </Grid>
     </Grid>

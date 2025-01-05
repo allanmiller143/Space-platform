@@ -8,6 +8,7 @@ import Dash from '../views/apps/Dash/Dash';
 import DefinirHorariosDisponibilidade from '../Services/GoogleCalendar/Horarios/DefinirHorariosDisponibilidade';
 import CalendarioDisponibilidade from '../Services/GoogleCalendar/Horarios/Calendar';
 import SharePropertyForm from '../views/apps/Share/SharePropertyForm';
+import CatchError from '../views/apps/CatchError/CatchError';
 //const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
 
 const socket = io('https://spaceimoveis-api-dev.onrender.com/');
@@ -90,6 +91,9 @@ const Router = [
       { path: '/apps/contacts', element: <Contacts /> },
       { path: '/apps/post/:id', element: <EcommerceDetail /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
+      { path: '/error', element: <CatchError /> },
+
+      
     ],
   },
   {

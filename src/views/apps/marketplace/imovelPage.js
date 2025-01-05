@@ -19,8 +19,7 @@ import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
 import Agendar from '../../../Services/GoogleCalendar/Agendar';
 import FloatingMiniPlayer from '../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer';
 import ChatContent from '../../../components/apps/chats/ChatContent';
-import { set } from 'lodash';
-import { is } from 'date-fns/locale';
+
 
 const ImovelPage = ({socket}) => {
     const [loading, setLoading] = useState(false);
@@ -41,10 +40,10 @@ const ImovelPage = ({socket}) => {
                 setProperty(response.userInfo);
                 setAdvertiser(response.userInfo.seller);
             } else {
-                toast.error(`Erro ao carregar dados da propriedade: ${response.message}`);
+                navigate('/error');
             }
         } catch (error) {
-            toast.error(`Erro ao carregar dados da propriedade: ${error.message}`);
+          navigate('/error');
         } finally {
             setLoading(false);
         }
@@ -53,13 +52,16 @@ const ImovelPage = ({socket}) => {
 
 
     const click = async () => {
+      try{
         const clickResponse = await postData(`properties/times-seen/${id}`,{});
         if (clickResponse.status === 200 || clickResponse.status === 201) {
           console.log(clickResponse);
         } else {
-          toast.error(`Erro ao visualizar propriedade: ${clickResponse.message}`);
-          console.log(clickResponse);
+          navigate('/error');
         }
+      }catch(e){
+        navigate('/error');
+      }
       };
 
     const seePhone = async () => {
@@ -87,13 +89,13 @@ const ImovelPage = ({socket}) => {
                 navigate(`/apps/chats`);
                 
               }else{
-                console.log('sem chats');
+                navigate('/error');
               }
             } else {
-              console.log(response);
+              navigate('/error');
             }
           } catch (e) {
-            console.log(e);
+            navigate('/error');
           }finally{
             setLoading(false);
           }    
@@ -112,7 +114,7 @@ const ImovelPage = ({socket}) => {
           try {
             await openNewChat(socket, advertiser.email);
           } catch (err) {
-            console.log('Error loading messages:', err);
+            navigate('/error');
           }
       
           try {
@@ -127,13 +129,13 @@ const ImovelPage = ({socket}) => {
                 setActiveChat(selectedChat.id);
                 setSelectedUser(user);                
               }else{
-                console.log('sem chats');
+                navigate('/error');
               }
             } else {
-              console.log(response);
+              navigate('/error');
             }
           } catch (e) {
-            console.log(e);
+            navigate('/error');
           }finally{
             setLoadPlayer(false);
           }    

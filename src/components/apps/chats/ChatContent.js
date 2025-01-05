@@ -105,7 +105,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
       </Box>
       {
         activeChat ? (
-          <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
+          <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" minHeight={'430px'} onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
             <>
             <Box>
               <Box display="flex" alignItems="center" p={2} position={'relative'}>
@@ -128,7 +128,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
                 </Box>
               )
             }
-            <Box flexGrow={1} overflow="hidden">
+            <Box flexGrow={1} overflow="hidden" >
               <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
                 <Box p={3}>
                   {messages.map((message) => (

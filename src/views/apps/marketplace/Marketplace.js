@@ -8,6 +8,8 @@ import { toast } from 'sonner';
 import MarketplaceMaps from './MarcketPlaceMap';
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
+import { useNavigate } from 'react-router';
+
 // import nodata from "../../"
 const Marketplace = () => {
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -16,7 +18,7 @@ const Marketplace = () => {
     const [totalItens, setTotalItens] = useState(0);
     const [properties, setProperties] = useState([]); // Dados retornados da API
     const [drawerOpen, setDrawerOpen] = useState(false); // Estado para controlar a abertura do Drawer
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         propertyType : "",
         city : "",
@@ -85,10 +87,10 @@ const Marketplace = () => {
                 setProperties(response.data.result); // Defina as propriedades retornadas
                 console.log(response.data.result);
             } else {
-                toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
+                navigate('/error');
             }
         } catch (error) {
-            toast.error(`Erro ao buscar as propriedades:\n ${error.message}`);
+            navigate('/error');
         } finally {
             setLoading(false); // Parar o loading
         }

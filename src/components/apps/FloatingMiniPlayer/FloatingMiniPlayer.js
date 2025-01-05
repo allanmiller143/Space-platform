@@ -1,13 +1,13 @@
-/* eslint-disable react/prop-types */
+import ReactDOM from "react-dom";
 import Draggable from "react-draggable";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Cancel } from "@mui/icons-material";
 
 const FloatingMiniPlayer = ({ content, onClose }) => {
-  return (
+  const miniPlayer = (
     <Draggable handle=".handle">
       <Box
-      className="handle"
+        className="handle"
         sx={{
           width: 500,
           height: 500,
@@ -20,25 +20,36 @@ const FloatingMiniPlayer = ({ content, onClose }) => {
           zIndex: 2147483647, // Maior valor possível para z-index no CSS
         }}
       >
-
-
-        <Box sx={{ height: "85%",position: "relative" }}>
+        <Box>
           <IconButton
+            edge="end"
+            color="inherit"
             onClick={onClose}
+            aria-label="close"
             sx={{
+              display: "flex",
+              justifyContent: "end",
               position: "absolute",
+              right: 20,
               top: 20,
-              right: 10,
+              backgroundColor: "transparent",
               zIndex: 1,
+              
             }}
           >
             <Cancel />
           </IconButton>
+        </Box>
+
+        {/* Conteúdo */}
+        <Box sx={{ height: "85%" }}>
           {content || <Typography>Seu conteúdo aqui!</Typography>}
         </Box>
       </Box>
     </Draggable>
   );
+
+  return ReactDOM.createPortal(miniPlayer, document.body);
 };
 
 export default FloatingMiniPlayer;

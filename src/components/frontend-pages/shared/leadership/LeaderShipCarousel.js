@@ -12,6 +12,7 @@ import CardImovel from '/src/components/spaceUI/card-imovel/cardImovel';
 import Loading from 'src/components/Loading/Loading';
 import { putData } from 'src/Services/Api';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 
 function SampleNextArrow(props) {
@@ -71,6 +72,7 @@ const LeaderShipCarousel = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState([]);
+  const navigate = useNavigate();
 
   const filter = async () => {
     setLoading(true); 
@@ -78,12 +80,11 @@ const LeaderShipCarousel = () => {
       const response = await putData(`properties/filter?page=${1}&verified=true`, {});
       if (response.status === 200 || response.status === 201) {
         setProperties(response.data.result);
-        console.log(response.data.result);
       } else {
-        toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
+        navigate('/error');
       }
     } catch (error) {
-      toast.error(`Erro ao buscar as propriedades:\n ${error.message}`);
+      navigate('/error');
     } finally {
       setLoading(false); 
     }
