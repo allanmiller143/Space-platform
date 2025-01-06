@@ -6,7 +6,7 @@ import { Box, IconButton, Dialog, DialogTitle, DialogContent, TextField, DialogA
 import { Cancel } from '@mui/icons-material';
 import { Typography } from 'antd';
 
-const EditMessageDialog = ({ message,openDialog, setOpenDialog}) => {
+const EditMessageDialog = ({ message, openDialog, setOpenDialog}) => {
   const [editText, setEditText] = useState(message.text || ''); // Armazena o texto da mensagem a ser editado
 
   const handleDialogClose = () => {

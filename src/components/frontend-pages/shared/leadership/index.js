@@ -12,7 +12,7 @@ const Leadership = () => {
             <Box sx={{
                 py: {
                     xs: 5,
-                    lg: 10
+                    lg: 5
                 }
             }}>
                 <Container maxWidth="lg">

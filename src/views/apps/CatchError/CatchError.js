@@ -39,7 +39,7 @@ const CatchError = ({ socket }) => {
           }}
         />
         <Typography variant="h6" gutterBottom>
-          Pode ser um problema de conexão ou um erro desconhecido.
+          Pode ser um problema de conexão ou um algum erro desconhecido.
         </Typography>
         <Button
           variant="contained"

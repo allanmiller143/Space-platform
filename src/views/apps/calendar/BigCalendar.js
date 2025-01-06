@@ -168,6 +168,7 @@ const BigCalendar = () => {
             <CardContent>
               <Calendar
                 events={displayEvents} // Exibe a lista de eventos selecionada
+                lo
                 defaultView="month"
                 views={['month', 'week', 'day']} // Adicione as views para habilitar botões
                 scrollToTime={new Date(1970, 1, 1, 6)}

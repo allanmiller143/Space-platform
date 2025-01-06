@@ -74,10 +74,10 @@ const ImoveisTableList = () => {
 
       } 
       else {
-        toast.error(`Erro ao buscar as propriedades:\n ${response.message}`);
+        navigate('/error');
       }
     } catch (error) {
-      toast.error(`Erro ao buscar as propriedades, tente novamente mais tarde!`);
+      navigate('/error');
     } finally {
       setLoading(false);
     }
