@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import moment from 'moment';
 import { deleteData, postData } from "../../../../../Services/Api";
 
-const Gallery = ({ property }) => {
+const Gallery = ({ property,advertiser }) => {
   const [openGallery, setOpenGallery] = useState(false);
   const [selectedPic, setSelectedPic] = useState(0);
   const navigate = useNavigate();
@@ -155,7 +155,7 @@ const Gallery = ({ property }) => {
             <Box
               sx={{
                 flex: 2,
-                maxWidth: "700px",
+                maxWidth: "730px",
                 height: "400px",
                 borderRadius: "12px",
                 overflow: "hidden",
@@ -204,7 +204,7 @@ const Gallery = ({ property }) => {
                   <Box
                     sx={{
                       width: "100%",
-                      height: "133px",
+                      height: property.pictures.length <= 5 ? "190px": '150px',
                       borderRadius: "8px",
                       overflow: "hidden",
                       cursor: "pointer",
@@ -235,52 +235,56 @@ const Gallery = ({ property }) => {
 
               {/* Mais Fotos - visível apenas em telas grandes */}
               {property.pictures.length > 5 && (
-                <Grid item xs={6}>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "80px",
-                      position: "relative",
-                      backgroundColor: "rgba(0, 0, 0, 0.7)",
-                      borderRadius: "8px",
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.9)",
-                      },
-                    }}
-                    onClick={() => {
-                      setSelectedPic(5);
-                      setOpenGallery(true);
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      component="span"
-                      sx={{ fontWeight: "bold", fontSize: "1rem" }}
+                <Grid container spacing={3}>
+                  <Grid item xs = {6}> 
+
+                  </Grid>
+                
+                  <Grid item xs={6}>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "80px",
+                        position: "relative",
+                        backgroundColor: "rgba(0, 0, 0, 0.7)",
+                        borderRadius: "8px",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        },
+                      }}
+                      onClick={() => {
+                        setSelectedPic(5);
+                        setOpenGallery(true);
+                      }}
                     >
-                      + {property.pictures.length - 5} fotos
-                    </Typography>
-                  </Box>
+                      <Typography
+                        variant="h6"
+                        component="span"
+                        sx={{ fontWeight: "bold", fontSize: "1rem" }}
+                      >
+                        + {property.pictures.length - 5} fotos
+                      </Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
               )}
             </Grid>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 2, mb: 3, alignItems: 'center', opacity: 0.7, mt: 2 }}>
-            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
-              <IconCamera fontSize="small" sx={{ mr: 2, ml: 1, color: 'grey.600' }} /> {property.pictures.length} Fotos
-            </Typography>
-           
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'start',mt: 2, justifyContent : 'space-between' }}>
+            <Box>
+              <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
+                <IconCamera fontSize="small" sx={{ mr: 2, ml: 1, color: 'grey.600' }} /> {property.pictures.length} Fotos
+              </Typography>
+              {FormattedDateComponent({ date: property.createdAt })}  
+            </Box>
           </Box>
-
-          {
-            FormattedDateComponent({ date: property.createdAt })  
-          }
 
           <Typography variant="h2" component="h1" sx={{ mb: 3 }}>
             {`${property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' : property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com

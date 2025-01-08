@@ -171,31 +171,34 @@ const PaidImovelPage = ({socket}) => {
                       item
                       xs={12}
                   >
-                      <Gallery property={property} />
+                      <Gallery property={property} advertiser={advertiser} />
   
-                      <Box sx={{ display: { md: 'flex' }, flexDirection: 'column', gap: 3 }}>
+                      <Box sx={{ display: 'flex' , alignItems : { md : 'center', xs : 'start'} , flexDirection: {md: 'row', xs : 'column'},justifyContent : "space-between", gap: 3 }}>
                         <Box sx={{ display: 'flex', gap: 1 }}>
                           <Agendar advertiser={advertiser} property={property} />
                           
-                          {/* Botão para celulares */}
-                          <Button 
-                            variant="outlined" 
-                            color="primary" 
-                            onClick={seePhone} 
-                            sx={{ display: { xs: 'block', md: 'none' } }}  // Exibe apenas em telas menores
-                          >
-                            Entre em contato
-                          </Button>
-                          
+                          <div>
+                            <Button 
+                              variant="outlined" 
+                              color="primary" 
+                              onClick={seePhone} 
+                              sx={{ display: { xs: 'flex', md: 'none' } }}  // Exibe apenas em telas menores
+                            >
+                              Entre em contato
+                            </Button>
+                          </div>
                           {/* Botão para desktops */}
-                          <Button 
-                            variant="outlined" 
-                            onClick={setActiveChatFunction} 
-                            sx={{ display: { xs: 'none', md: 'block' } }}  // Exibe apenas em telas maiores
-                          >
-                            Entre em contato
+                          <div>
+                            <Button 
+                              variant="outlined" 
+                              onClick={setActiveChatFunction} 
+                              sx={{ display: { xs: 'none', md: 'flex' } }}  // Exibe apenas em telas maiores
+                            >
+                              Entre em contato
                           </Button>
+                          </div>
                         </Box>
+                        <AdvertiserCard property={property} advertiser={advertiser} />
                       </Box>
                       <DadosGerais property={property} advertiser={advertiser} />
                   </Grid>

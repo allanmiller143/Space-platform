@@ -8,6 +8,22 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Ícone de chec
 import CancelIcon from '@mui/icons-material/Cancel'; // Ícone de X vermelho
 import Map from './Map';
 import AdvertiserCard from './AdvertiserCard';
+import PoolIcon from '@mui/icons-material/Pool';
+import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import EventIcon from '@mui/icons-material/Event';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import DeckIcon from '@mui/icons-material/Deck';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import SecurityIcon from '@mui/icons-material/Security';
+import YardIcon from '@mui/icons-material/Yard';
+import KitchenIcon from '@mui/icons-material/Kitchen';
+import BalconyIcon from '@mui/icons-material/Balcony';
+import FoundationIcon from '@mui/icons-material/Foundation';
+import FenceIcon from '@mui/icons-material/Fence';
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
+
 const DadosGerais = ({property,advertiser}) => {
 
     const [opcoesRapidas, setOpcoesRapidas] = useState({});
@@ -34,6 +50,28 @@ const DadosGerais = ({property,advertiser}) => {
     }     
         setOpcoesRapidas(temp)
     }, [property])
+
+    const getSpecificIcon = (key) => {
+        const icons = {
+          Piscina: <PoolIcon />,
+          Churrasqueira: <OutdoorGrillIcon />,
+          Ar_Condicionado: <AcUnitIcon />,
+          Playground: <SportsSoccerIcon />,
+          Sala_de_eventos: <EventIcon />,
+          Academia: <FitnessCenterIcon />,
+          Varanda: <DeckIcon />,
+          Energia_solar: <WbSunnyIcon />,
+          Portaria_24h: <SecurityIcon />,
+          Quintal: <YardIcon />,
+          Area_Gourmet: <KitchenIcon />,
+          Sacada: <BalconyIcon />,
+          Laje: <FoundationIcon />,
+          Condominio_fechado: <FenceIcon />,
+          Jardin: <LocalFloristIcon />,
+        };
+      
+        return icons[key] || <CheckCircleIcon style={{ color: 'green' }} />; // Ícone padrão caso não encontre
+      };
 
   
     const type = (type) => {
@@ -81,7 +119,39 @@ const DadosGerais = ({property,advertiser}) => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {property && ( <>
             <Box sx={{ mt: 4 }}>
-                <Box sx = {{ display: 'flex', gap : 2, flexDirection: { xs: 'column', sm: 'row' }}} >
+            <Grid container sx={{ my: 1 }}>
+                <Grid xs = {12}>
+                    <Typography variant="h4" component="h2" sx={{ pb: 2, width: '100%' }}>
+                        Principais comodidades
+                    </Typography>
+                </Grid>
+                {Object.keys(opcoesRapidas)
+                    .filter((key) => opcoesRapidas[key]) // Filtra apenas os itens disponíveis
+                    .map((key) => (
+                    <Grid
+                        item
+                        xs={6}
+                        sm={3} 
+                        lg={2}
+                        key={key}
+                        sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        mb: 1,
+                        }}
+                    >
+                        <Box sx={{ fontSize: '25px', color: '#4caf50' }}>
+                            {getSpecificIcon(key)} {/* Ícone específico associado à comodidade */}
+                        </Box>
+                        <Typography variant="body1">
+                            {key.replace(/_/g, ' ')}
+                        </Typography>
+                    </Grid>
+                    ))}
+                </Grid>
+
+                <Box sx = {{ display: 'flex', gap : 2, mt: 5, flexDirection: { xs: 'column', sm: 'row' }}} >
                     <Grid iten xs = {12} sm={5} > 
                         <Typography variant="h4" component="h2" sx={{ mb: 2 }}>Dados Gerais do Imóvel</Typography>
                         <TableContainer component={Paper}>
@@ -131,43 +201,23 @@ const DadosGerais = ({property,advertiser}) => {
                             </Table>
                         </TableContainer>
                     </Grid>
-
-
                     <Grid container>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={7}>
+                            <Grid item xs={12} sm={12}>
                                 <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
                                     Localização do Imóvel
                                 </Typography>
                                 <Map property={property} />
                             </Grid>    
-
-                            <Grid item xs={12} sm={5}>
-                                <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
-                                    Informações do Anunciante
-                                </Typography>
-                                <AdvertiserCard property={property} advertiser={advertiser} />
-                            </Grid>  
-                        </Grid>    
-
-
-                        <Grid iten xs={12}>
-                            <Typography variant="h4" component="h2" pb = {2}>Comodidades (opcional)</Typography>
-                            <TableContainer component={Paper}>
-                                <Table>
-                                    <TableBody>
-                                    {Object.keys(opcoesRapidas)
-                                        .filter((key) => opcoesRapidas[key]) // Filtra apenas os itens cujo valor seja true
-                                        .map((key) => (
-                                        <TableRow key={key}>
-                                            <TableCell>{key.replace(/_/g, ' ')}</TableCell>
-                                            <TableCell >{getIcon(opcoesRapidas[key])}</TableCell>
-                                        </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Grid>
+                        </Grid>  
+                        <Grid item xs={12} sm={12}>
+                            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>
+                                Descrição do imóvel
+                            </Typography>
+                            <Typography>
+                                {property.description}
+                            </Typography>
+                        </Grid>  
                     </Grid>
                 </Box>
             </Box>     
