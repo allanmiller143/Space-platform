@@ -84,7 +84,7 @@ const CardImovel = ({ data }) => {
                     </Typography>
                 </div>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                    <Button variant="outlined" fullWidth href={`/marketplace/imovel/${data.id}`}>
+                    <Button variant="outlined" fullWidth href={`/imovel/${data.id}`}>
                         Ver Anúncio
                     </Button>
                 </Box>

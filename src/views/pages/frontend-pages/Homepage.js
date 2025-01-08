@@ -11,6 +11,7 @@ import FAQ from '../../../components/frontend-pages/homepage/faq';
 import Footer from '../../../components/frontend-pages/shared/footer';
 import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top';
 import { Divider } from '@mui/material';
+import CarrosselHome from '../../../components/frontend-pages/homepage/carrossel/CarrosselHome';
 
 const HomePage = () => {
   return (
@@ -18,9 +19,11 @@ const HomePage = () => {
       <HeaderAlert />
       <HpHeader />
       <Banner />
-      <Leadership />
-      <Divider />
+      {/* <Leadership /> */}
+      <Divider />  
+      <CarrosselHome/>
       <Features />
+
       <DefendFocus />
       {/* <PowerfulDozens /> */}
       {/* <Reviews /> */}

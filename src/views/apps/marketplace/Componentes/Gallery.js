@@ -15,7 +15,6 @@ import ChatContent from '../../../../components/apps/chats/ChatContent';
 
 const PropertyGallery = ({ property,socket,setActiveChatFunction }) => {
   const [openGallery, setOpenGallery] = useState(false);
-  const [openVideoModal, setOpenVideoModal] = useState(false);
   const navigate = useNavigate();
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se o usuário está definido
@@ -197,43 +196,6 @@ const PropertyGallery = ({ property,socket,setActiveChatFunction }) => {
           </Box>
 
           {openGallery && <Gallery onClose={() => setOpenGallery(false)} pictures={property.pictures} />}
-
-          <Box sx={{ display: 'flex', gap: 2, mb: 3, alignItems: 'center', opacity: 0.7, mt: 2 }}>
-            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.600' }}>
-              <IconCamera fontSize="small" sx={{ mr: 2, ml: 1, color: 'grey.600' }} /> {property.pictures.length} Fotos
-            </Typography>
-            {/* Modal para Vídeo, se necessário */}
-            <Modal
-              open={openVideoModal}
-              onClose={() => setOpenVideoModal(false)}
-              aria-labelledby="video-modal-title"
-              aria-describedby="video-modal-description"
-            >
-              <Box sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '80%',
-                height: '80%',
-                bgcolor: 'background.paper',
-                boxShadow: 30,
-                p: 0,
-                overflow: 'hidden',
-                borderRadius: '15px',
-              }}>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/VIDEO_ID" // Substitua VIDEO_ID pelo ID real do vídeo
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </Box>
-            </Modal>
-          </Box>
 
           {
             FormattedDateComponent({ date: property.createdAt })  

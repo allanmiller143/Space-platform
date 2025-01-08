@@ -6,7 +6,7 @@ import ScrollToTop from './components/shared/ScrollToTop';
 import Router from './routes/Router';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
-
+import { initMercadoPago } from '@mercadopago/sdk-react';
 import '../src/App.css';
 import '../src/index.css'
 import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
@@ -16,6 +16,8 @@ function App() {
   const routing = useRoutes(Router);
   const theme = ThemeSettings();
   const customizer = useSelector((state) => state.customizer);
+  initMercadoPago('YOUR_PUBLIC_KEY');
+
 
   return (
     <HelmetProvider>

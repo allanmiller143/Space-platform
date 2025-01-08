@@ -9,6 +9,12 @@ import DefinirHorariosDisponibilidade from '../Services/GoogleCalendar/Horarios/
 import CalendarioDisponibilidade from '../Services/GoogleCalendar/Horarios/Calendar';
 import SharePropertyForm from '../views/apps/Share/SharePropertyForm';
 import CatchError from '../views/apps/CatchError/CatchError';
+import About from '../views/pages/frontend-pages/About';
+import BlogPage from '../views/pages/frontend-pages/Blog';
+import PricingPage from '../views/pages/frontend-pages/Portfolio';
+import Modern from '../views/dashboard/Modern';
+import Ecommerce from '../views/dashboard/Ecommerce';
+import PaidImovelPage from '../views/apps/marketplace/PaidImovelPage/PaidImovelPage';
 //const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
 
 const socket = io('https://spaceimoveis-api-dev.onrender.com/');
@@ -72,7 +78,12 @@ const Router = [
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
       { path: '/apps/dash', element: <Dash /> },
       { path: 'apps/share/:id', element: <SharePropertyForm/> },
+      { path: '/apps/about', element: <About /> },
+      { path: '/apps/blog', element: <BlogPage /> },
+      { path: '/apps/p', element: <Ecommerce /> },
 
+
+      
       { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
       { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
       { path: '/apps/kanban', element: <Kanban /> },
@@ -110,6 +121,7 @@ const Router = [
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/marketplace/imovel/:id', element: <ImovelPage socket={socket} /> },
+      { path: '/imovel/:id', element: <PaidImovelPage socket={socket} /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/templates/contato', element: <ContatoPage /> },

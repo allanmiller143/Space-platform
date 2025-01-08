@@ -39,7 +39,7 @@ function Page() {
         <LimitAdvice openDialog={openDialog} setOpenDialog={setOpenDialog}/>
         {/* <UsersTable /> */}
 
-        <Container maxWidth="lg" sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
+        <Container  sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={8}>
               <Typography variant="h2" component="h1" gutterBottom>

@@ -102,12 +102,7 @@ const Ecommerce = () => {
                               Valor total: R$ 450.000,00
                             </Typography>
                           </Box>
-                          <Box display="flex" alignItems="center" mb={2}>
-                            <HomeIcon fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2">
-                              3 quartos | 2 banheiros | 150m²
-                            </Typography>
-                          </Box>
+
                           <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between' }}>
                             <Button 
                               variant="contained" 

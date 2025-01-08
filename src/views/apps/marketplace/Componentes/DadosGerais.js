@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import { use } from 'i18next';
 import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Ícone de check verde
 import CancelIcon from '@mui/icons-material/Cancel'; // Ícone de X vermelho
 import Map from './Map';
-const DadosGerais = ({property}) => {
+import AdvertiserCard from './AdvertiserCard';
+const DadosGerais = ({property,advertiser}) => {
 
     const [opcoesRapidas, setOpcoesRapidas] = useState({});
     useEffect(() => {
@@ -80,115 +81,95 @@ const DadosGerais = ({property}) => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {property && ( <>
             <Box sx={{ mt: 4 }}>
-                <Typography variant="h4" component="h2" sx={{ mb: 2 }}>Dados Gerais do Imóvel</Typography>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Tipo de Imóvel</TableCell>
-                                <TableCell>{type(property.propertyType)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Tipo de anúncio</TableCell>
-                                <TableCell>{announceType(property.announcementType)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Preço de Venda</TableCell>
-                                <TableCell>R$ {formatPrice(property.prices.sellPrice)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Preço de Aluguel</TableCell>
-                                <TableCell>R$ {formatPrice(property.prices.rentPrice)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Preço Negociável</TableCell>
-                                <TableCell>{negotiable(property.negotiable)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Número de Quartos</TableCell>
-                                <TableCell>{property.bedrooms}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Número de Banheiros</TableCell>
-                                <TableCell>{property.bathrooms}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Número de Suítes</TableCell>
-                                <TableCell>{property.suites}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Vagas de Garagem</TableCell>
-                                <TableCell>{property.parkingSpaces}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Área Total (m²)</TableCell>
-                                <TableCell>{formatPrice(property.size)}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box sx = {{ display: 'flex', gap : 2, flexDirection: { xs: 'column', sm: 'row' }}} >
+                    <Grid iten xs = {12} sm={5} > 
+                        <Typography variant="h4" component="h2" sx={{ mb: 2 }}>Dados Gerais do Imóvel</Typography>
+                        <TableContainer component={Paper}>
+                            <Table>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Tipo de Imóvel</TableCell>
+                                        <TableCell>{type(property.propertyType)}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Tipo de anúncio</TableCell>
+                                        <TableCell>{announceType(property.announcementType)}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Preço de Venda</TableCell>
+                                        <TableCell>R$ {formatPrice(property.prices.sellPrice)}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Preço de Aluguel</TableCell>
+                                        <TableCell>R$ {formatPrice(property.prices.rentPrice)}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Preço Negociável</TableCell>
+                                        <TableCell>{negotiable(property.negotiable)}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Número de Quartos</TableCell>
+                                        <TableCell>{property.bedrooms}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Número de Banheiros</TableCell>
+                                        <TableCell>{property.bathrooms}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Número de Suítes</TableCell>
+                                        <TableCell>{property.suites}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Vagas de Garagem</TableCell>
+                                        <TableCell>{property.parkingSpaces}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Área Total (m²)</TableCell>
+                                        <TableCell>{formatPrice(property.size)}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
 
-                <Typography variant="h4" component="h2" sx={{ mt: 4, mb: 2 }}>Localização do Imóvel</Typography>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>CEP</TableCell>
-                                <TableCell>{property.address.cep}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Cidade</TableCell>
-                                <TableCell>{property.address.city}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Estado</TableCell>
-                                <TableCell>{property.address.state}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Bairro</TableCell>
-                                <TableCell>{property.address.neighborhood}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Endereço Completo</TableCell>
-                                <TableCell>{property.address.street}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Número</TableCell>
-                                <TableCell>{property.address.number}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Complemento</TableCell>
-                                <TableCell>{property.address.complement}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Descrição</TableCell>
-                                <TableCell>{property.description}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Box sx ={{ my: 2, display : {md: 'none', xs: 'block'} }}>
-                    <Map property={property} />
-                </Box>
 
-                
+                    <Grid container>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={7}>
+                                <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
+                                    Localização do Imóvel
+                                </Typography>
+                                <Map property={property} />
+                            </Grid>    
 
-                <Typography variant="h4" component="h2" sx={{ mt: 4, mb: 2 }}>Comodidades (opcional)</Typography>
-                <TableContainer component={Paper}>
-                    <Table>
-                    <TableBody>
-                                   {
-                                    Object.keys(opcoesRapidas).map((key) => (
+                            <Grid item xs={12} sm={5}>
+                                <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
+                                    Informações do Anunciante
+                                </Typography>
+                                <AdvertiserCard property={property} advertiser={advertiser} />
+                            </Grid>  
+                        </Grid>    
+
+
+                        <Grid iten xs={12}>
+                            <Typography variant="h4" component="h2" pb = {2}>Comodidades (opcional)</Typography>
+                            <TableContainer component={Paper}>
+                                <Table>
+                                    <TableBody>
+                                    {Object.keys(opcoesRapidas)
+                                        .filter((key) => opcoesRapidas[key]) // Filtra apenas os itens cujo valor seja true
+                                        .map((key) => (
                                         <TableRow key={key}>
                                             <TableCell>{key.replace(/_/g, ' ')}</TableCell>
-                                            <TableCell>{getIcon(opcoesRapidas[key])}</TableCell>
+                                            <TableCell >{getIcon(opcoesRapidas[key])}</TableCell>
                                         </TableRow>
-                                    ))
-                                   } 
-                                </TableBody>
-
-                    </Table>
-                </TableContainer>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                    </Grid>
+                </Box>
             </Box>     
 
             </>

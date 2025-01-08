@@ -19,3 +19,9 @@
         padding-right: 5px !important;   
     }
   }
+
+/* Altere o fundo do Lightbox para transparente */
+.yarl__backdrop {
+    background-color: transparent !important;
+  }
+  
