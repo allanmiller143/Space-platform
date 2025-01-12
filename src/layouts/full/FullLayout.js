@@ -6,7 +6,8 @@ import { Outlet } from 'react-router-dom';
 import Header from './vertical/header/Header';
 import HorizontalHeader from '../full/horizontal/header/Header';
 import Sidebar from './vertical/sidebar/Sidebar';
-import Customizer from './shared/customizer/Customizer';
+import { useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 const MainWrapper = styled('div')(() => ({
   display: 'flex',
@@ -24,10 +25,13 @@ const PageWrapper = styled('div')(() => ({
   backgroundColor: 'transparent',
 }));
 
-const FullLayout = ( { socket } ) => {
+const FullLayout = ( { socket, } ) => {
   const customizer = useSelector((state) => state.customizer);
 
   const theme = useTheme();
+
+  
+
 
   return (
     <MainWrapper
@@ -51,7 +55,7 @@ const FullLayout = ( { socket } ) => {
         {/* ------------------------------------------- */}
         {/* Header */}
         {/* ------------------------------------------- */}
-        {customizer.isHorizontal ? <HorizontalHeader  socket={socket}/> : <Header socket={socket} />}
+        {customizer.isHorizontal ? <HorizontalHeader  socket={socket} /> : <Header socket={socket}  />}
         {/* ------------------------------------------- */}
         {/* PageContent */}
         {/* ------------------------------------------- */}
@@ -68,6 +72,7 @@ const FullLayout = ( { socket } ) => {
           <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
             <Outlet />
           </Box>
+          
           {/* ------------------------------------------- */}
           {/* End Page */}
           {/* ------------------------------------------- */}

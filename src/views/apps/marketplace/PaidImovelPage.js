@@ -1,27 +1,28 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { Grid, Box, Button } from '@mui/material';
+import React, { useContext } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { getData, postData } from "../../../Services/Api";
+import { openNewChat } from "../../../components/apps/chats/ChatService/Api";
+import { toast } from "sonner";
+import Spinner from "../../spinner/Spinner";
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
-import "leaflet/dist/leaflet.css";
-import { toast } from 'sonner';
-import { getData, postData } from '../../../Services/Api';
-import { useParams } from 'react-router';
-import Spinner from '../../spinner/Spinner';
-import PropertyGallery from './Componentes/Gallery';
-import DadosGerais from './Componentes/DadosGerais';
-import Map from './Componentes/Map';
-import AdvertiserCard from './Componentes/AdvertiserCard';
-import { useNavigate } from 'react-router';
+import { Button, Grid, Box } from "@mui/material";
+import FloatingMiniPlayer from "../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer";
+import ChatContent from "../../../components/apps/chats/ChatContent";
+import PropertyGallery from "./Componentes/Gallery";
+import Agendar from "../../../Services/GoogleCalendar/Agendar";
+import DadosGerais from "./Componentes/DadosGerais";
+import AdvertiserCard from "./Componentes/AdvertiserCard";
+import Map from "./Componentes/Map";
 import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
-import { openNewChat } from '../../../components/apps/chats/ChatService/Api';
-import Agendar from '../../../Services/GoogleCalendar/Agendar';
-import FloatingMiniPlayer from '../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer';
-import ChatContent from '../../../components/apps/chats/ChatContent';
+import Gallery from './Componentes/Gallery'
+import CarrosselHome from "../../../components/frontend-pages/homepage/carrossel/CarrosselHome";
+import NotificationContext from "../../../Services/Notification/NotificationContext/NotificationContext";
 
-
-const ImovelPage = ({socket}) => {
+const PaidImovelPage = () => {
     const [loading, setLoading] = useState(false);
     const [property, setProperty] = useState(null);
     const [advertiser, setAdvertiser] = useState(null);
@@ -31,6 +32,7 @@ const ImovelPage = ({socket}) => {
     const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
     const token = localStorage.getItem('token');
     const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = React.useContext(ChatContext);
+    const { socket } = useContext(NotificationContext);
 
     async function loadPropertyData() {
         setLoading(true);
@@ -39,6 +41,7 @@ const ImovelPage = ({socket}) => {
             if (response.status === 200 || response.status === 201) {
                 setProperty(response.userInfo);
                 setAdvertiser(response.userInfo.seller);
+                console.log(response.userInfo);
             } else {
                 navigate('/error');
             }
@@ -160,90 +163,64 @@ const ImovelPage = ({socket}) => {
     }
 
     return (
-        <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
-            <Header />
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Grid container sx={{ height: 'calc(100vh)', overflow: 'hidden' }}>
-                    <Grid
-                        item
-                        xs={12}
-                        md={8}
-                        sx={{
-                            borderRight: '1px solid #d4d4d4',
-                            padding: {md : '50px !important', xs: '10px !important'},
-                            overflowY: 'scroll',
-                            height: '100%',
-                            boxShadow: '1px 0px 4px #2121211f',
-                            zIndex: 9,
-                            width: '100%',
-                        }}
-                    >
+      <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
+          <Header />
+          <Box maxWidth="lg" margin='0 auto' py = {5} px = {2} >
 
-
-                        {
-                        isPlayerOpen && (
-                        <FloatingMiniPlayer
-                            content={
-                              (loadPlayer) ? 
-                              <Spinner height="100%"/> 
-                              :
-                              <ChatContent socket={socket}/>
-                            }
-                            onClose={() => setPlayerOpen(false)}
-                          />
-                        )}
-
-
-                        <PropertyGallery property={property} socket={socket} setActiveChatFunction={setActiveChatFunction} />
-
-                        <Box sx = {{display: {sm : 'block', md: 'none'}}} >
-                            <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                                <Agendar  advertiser = {advertiser} property = {property}/>
-                                <Button variant="outlined" color="primary">
-                                  Fazer proposta
-                                </Button>
-                                <Button variant="outlined" color="primary" onClick={seePhone} sx = {{display: {sm : 'block', md: 'none'} }}>
-                                  Entre em contato
-                                </Button> 
-                               
-                            </Box>
-                        </Box>
-                        <DadosGerais property={property} />
-                    </Grid>
-                    <Grid
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Grid container sx={{ height: '100%' }}>
+                  <Grid
                       item
-                      md={4}
                       xs={12}
-                      sx={{
-                          padding: 5,
-                          backgroundColor: '#fafafa',
-                          overflowY: 'auto', // Permite o scroll vertical
-                          height: 'calc(100vh - 100px)', // Altura ajustável para manter o scroll funcional
-                      }}
                   >
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, my: 4 }}>
+                      <Gallery property={property} advertiser={advertiser} />
+  
+                      <Box sx={{ display: 'flex' , alignItems : { md : 'center', xs : 'start'} , flexDirection: {md: 'row', xs : 'column'},justifyContent : "space-between", gap: 3 }}>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                              {/* <Button variant="outlined" color="primary">
-                                  Fazer proposta
-                              </Button> */}
-                              <Agendar  advertiser = {advertiser} property = {property}/>
-                              <Button variant="outlined" color="primary" onClick={seePhone} sx = {{display: {sm : 'block', md: 'none'} }}>
-                                  Entre em contato
-                                </Button> 
-                                <Button variant="outlined" onClick={setActiveChatFunction} sx = {{display: {sm : 'none', md: 'block'} }}>
-                                  Entre em contato
-                                </Button>  
-                          </Box>
+                          <Agendar advertiser={advertiser} property={property} />
+                          
+                          <div>
+                            <Button 
+                              variant="outlined" 
+                              color="primary" 
+                              onClick={seePhone} 
+                              sx={{ display: { xs: 'flex', md: 'none' } }}  // Exibe apenas em telas menores
+                            >
+                              Entre em contato
+                            </Button>
+                          </div>
+                          {/* Botão para desktops */}
+                          <div>
+                            <Button 
+                              variant="outlined" 
+                              onClick={setActiveChatFunction} 
+                              sx={{ display: { xs: 'none', md: 'flex' } }}  // Exibe apenas em telas maiores
+                            >
+                              Entre em contato
+                          </Button>
+                          </div>
+                        </Box>
+                        <AdvertiserCard property={property} advertiser={advertiser} />
                       </Box>
-                      <Box sx={{ display: { sm: 'none', md: 'block' } }}>
-                          <Map property={property} />
-                          <AdvertiserCard property={property} advertiser={advertiser} />
-                      </Box>
+                      <DadosGerais property={property} advertiser={advertiser} />
                   </Grid>
-                </Grid>
-            </Box>
-        </PageContainer>
-    );
+  
+              </Grid>
+          </Box>
+          </Box>
+          <CarrosselHome/>
+          
+  
+          {isPlayerOpen && (
+              <FloatingMiniPlayer
+                  content={
+                      loadPlayer ? <Spinner height="100%" /> : <ChatContent socket={socket} />
+                  }
+                  onClose={() => setPlayerOpen(false)}
+              />
+          )}
+      </PageContainer>
+  );
 };
 
-export default ImovelPage;
+export default PaidImovelPage;

@@ -9,7 +9,7 @@ import { putData } from '../../../../Services/Api';
 import BlogCard from '../../../apps/blog/BlogCard';
 import { Typography } from '@mui/material';
 
-const CarrosselHome = ({ posts }) => {
+const CarrosselHome = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState([]);
@@ -111,7 +111,7 @@ const CarrosselHome = ({ posts }) => {
           color: theme.palette.primary.main,
         }}
       >
-        Imóveis para Todos os Gostos
+        Imóveis patrocinados
       </Typography>
       <Box sx={{ padding: '20px', position: 'relative', marginBottom: '20px' }}>
         <Slider {...settings}>
@@ -126,8 +126,5 @@ const CarrosselHome = ({ posts }) => {
   );
 };
 
-CarrosselHome.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default CarrosselHome;

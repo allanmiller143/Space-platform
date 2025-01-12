@@ -56,7 +56,7 @@ const ImoveisTableList = () => {
       const route = `properties/seller/${currentUserls.email}?limit=200`;
       const response = await getData(route);
       if (response.status === 200 || response.status === 201) {
-        console.log(response.userInfo.properties[5]);
+        console.log(response.userInfo.properties);
         const data = response.userInfo.properties.map((property) => ({
           id: property.id,
           imagem: property.pictures[0]?.url || '',

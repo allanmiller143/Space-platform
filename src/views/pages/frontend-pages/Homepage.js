@@ -10,10 +10,12 @@ import Pricing from '../../../components/frontend-pages/shared/pricing';
 import FAQ from '../../../components/frontend-pages/homepage/faq';
 import Footer from '../../../components/frontend-pages/shared/footer';
 import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top';
-import { Divider } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import CarrosselHome from '../../../components/frontend-pages/homepage/carrossel/CarrosselHome';
+import NovosImoveis from '../../../Painel/Componentes/NovosImoveis/NovosImoveis';
 
 const HomePage = () => {
+
   return (
     <PageContainer title="Space iMóveis" description="">
       <HeaderAlert />
@@ -23,6 +25,7 @@ const HomePage = () => {
       <Divider />  
       <CarrosselHome/>
       <Features />
+
 
       <DefendFocus />
       {/* <PowerfulDozens /> */}

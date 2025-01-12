@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState } from 'react';
-import { Button, Input, Space } from 'antd';
+import { Button, Input, Space, Typography } from 'antd';
 import SendIcon from '@mui/icons-material/Send';
 import styled from 'styled-components';
 import PlaygroundSpeedDial from './ChatFIleOptions';
 import AudioRecorder from './AudioMessage/AudioRecorder';
+import ChatContext from './ChatContext/ChatContext';
 
 
 const { TextArea } = Input;
@@ -28,6 +29,7 @@ const MessageSender = ({ socket }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
   const [recording, setRecording] = useState(false);
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
 
 
   const sendMessage = () => {
@@ -35,7 +37,8 @@ const MessageSender = ({ socket }) => {
       const data = {
         'email': currentUser.email,
         'chatId': chatId,
-        'message': message
+        'message': message,
+        'receiver' : selectedUser.email
       };
       socket.emit('message', data);
     }

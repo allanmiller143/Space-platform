@@ -9,12 +9,14 @@ import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
 import Notifications from 'src/layouts/full/vertical/header/Notifications';
 import MyAppsDrawer from './myappsDrawer';
-
+import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
+import { useContext } from 'react';
 const Header = ({ socket }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null;
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const { notifiactionSocket,text } = useContext(NotificationContext);
 
   const customizer = useSelector((state) => state.customizer);
 
@@ -32,6 +34,7 @@ const Header = ({ socket }) => {
     width: '100%',
     color: `${theme.palette.text.secondary} !important`,
   }));
+
 
   return (
     <AppBarStyled position="sticky" color="default" elevation={8}>
@@ -69,11 +72,7 @@ const Header = ({ socket }) => {
           {currentUserls && (
             <>
               <MyAppsDrawer />
-              {
-                !lgDown && (
-                  <Notifications />
-                )
-              }
+              <Notifications  />
               <Profile />
             </>
           )}

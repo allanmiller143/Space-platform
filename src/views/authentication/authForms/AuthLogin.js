@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Typography, FormGroup, FormControlLabel, Button, Stack, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CustomCheckbox from '../../../components/forms/theme-elements/CustomCheckbox';
@@ -11,6 +11,8 @@ import {useNavigate} from 'react-router-dom';
 import {toast} from 'sonner';
 import Loading from '../../../components/Loading/Loading';
 import GoogleSignIn from './AuthGoogleSignIn';
+import { openNotification } from '../../../Services/Notification/NotificationApi';
+import NotificationContext from '../../../Services/Notification/NotificationContext/NotificationContext';
 
 const AuthLogin = ({ title, subtitle, subtext }) => {
   // Definindo os estados para email e senha
@@ -18,6 +20,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
+  const {notificationSocket, notifications, setNotifications } = useContext(NotificationContext);
 
   const handleLogin =  async (event) => {
     event.preventDefault(); 
@@ -31,9 +34,11 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
         if(response.status === 200 || response.status === 201){
           const token = response.data.accessToken; 
           const user = response.data.user;
-          console.log(response);
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log(notificationSocket);
+          const response1 = await openNotification(notificationSocket,email);
+          setNotifications(response1.messages);
           Navigate('/');
           toast.success('Login efetuado com sucesso');
 
@@ -41,7 +46,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           toast.error('Email ou senha inválidos');
         }
       }catch(error){
-        toast.error(error.message);
+        console.log(error);
       }finally{
         setLoading(false);
       }

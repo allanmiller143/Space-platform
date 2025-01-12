@@ -1,27 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Typography, Button, Avatar } from '@mui/material';
 import { Box } from '@mui/system';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 const AdvertiserCard = ({ advertiser }) => {
-  const [type, setType] = useState('');
   const navigate = useNavigate();
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString);
 
-  useEffect(() => {
-    if (advertiser) {
-      if (advertiser.type === 'realtor') {
-        setType('Corretor');
-      } else if (advertiser.type === 'realstate') {
-        setType('Imobiliária');
-      } else {
-        setType('Vendedor');
-      }
-    }
-  }, [advertiser]);
+
 
   const toProfilePage = () => {
     if (currentUserls) {

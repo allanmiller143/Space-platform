@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
 import ProfileBanner from 'src/components/apps/userprofile/feed/ProfileBanner';
@@ -9,16 +9,19 @@ import { useParams } from 'react-router-dom';
 import { getData } from '../../../Services/Api';
 import { toast } from 'sonner';
 import Spinner from '../../spinner/Spinner';
+import NotificationContext from '../../../Services/Notification/NotificationContext/NotificationContext';
 
 
 
-const UserProfile = ({socket}) => {
+const UserProfile = () => {
   const [loadingUserData, setLoadingUserData] = useState(true); // Inicializando como true
   const [myPost, setMyPost] = useState([]);
   const { email } = useParams(); // Captura o email da URL
   const [userData, setUserData] = useState({});
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); 
+  const { socket } = useContext(NotificationContext);
+
 
   useEffect(() => {
     loadUserInfo();
@@ -76,6 +79,7 @@ const UserProfile = ({socket}) => {
         </Grid>
       </Grid>
     </PageContainer>
+    
   );
 };
 

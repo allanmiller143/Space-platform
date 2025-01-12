@@ -3,7 +3,6 @@ import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import CompleteRegister2 from '../views/authentication/auth2/CompleteRegister2';
-import {io} from 'socket.io-client';
 import Dash from '../views/apps/Dash/Dash';
 import DefinirHorariosDisponibilidade from '../Services/GoogleCalendar/Horarios/DefinirHorariosDisponibilidade';
 import CalendarioDisponibilidade from '../Services/GoogleCalendar/Horarios/Calendar';
@@ -11,13 +10,9 @@ import SharePropertyForm from '../views/apps/Share/SharePropertyForm';
 import CatchError from '../views/apps/CatchError/CatchError';
 import About from '../views/pages/frontend-pages/About';
 import BlogPage from '../views/pages/frontend-pages/Blog';
-import PricingPage from '../views/pages/frontend-pages/Portfolio';
-import Modern from '../views/dashboard/Modern';
 import Ecommerce from '../views/dashboard/Ecommerce';
-import PaidImovelPage from '../views/apps/marketplace/PaidImovelPage/PaidImovelPage';
-//const socket = io('https://advanced-mosquito-usually.ngrok-free.app/');
-
-const socket = io('https://spaceimoveis-api-dev.onrender.com/');
+import PaidImovelPage from '../views/apps/marketplace/PaidImovelPage';
+import Tela from '../Painel/Componentes/Tela';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -44,10 +39,7 @@ const ForgotPassword2 = Loadable(lazy(() => import('../views/authentication/auth
 const TwoSteps = Loadable(lazy(() => import('../views/authentication/auth1/TwoSteps')));
 const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoSteps2')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
-
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
-const ImovelPage = Loadable(lazy(() => import('../views/apps/marketplace/imovelPage')));
-
 const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
 const ContatoPage = Loadable(lazy(() => import('../views/templates/contato/contato')));
 const PrecosPage = Loadable(lazy(() => import('../views/templates/precos/precos')));
@@ -71,7 +63,7 @@ const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')))
 const Router = [
   {
     path: '/',
-    element: <FullLayout socket={socket} />,
+    element: <FullLayout />,
     children: [
       { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
@@ -81,9 +73,6 @@ const Router = [
       { path: '/apps/about', element: <About /> },
       { path: '/apps/blog', element: <BlogPage /> },
       { path: '/apps/p', element: <Ecommerce /> },
-
-
-      
       { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
       { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
       { path: '/apps/kanban', element: <Kanban /> },
@@ -91,11 +80,11 @@ const Router = [
       { path: '/apps/invoice/create', element: <InvoiceCreate /> },
       { path: '/apps/invoice/detail/:id', element: <InvoiceDetail /> },
       { path: '/apps/invoice/edit/:id', element: <InvoiceEdit /> },
-      { path: '/user-profile/:email', element: <UserProfile socket={socket} /> },
+      { path: '/user-profile/:email', element: <UserProfile /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
 
       // Apps
-      { path: '/apps/chats', element: <Chats socket={socket} /> },
+      { path: '/apps/chats', element: <Chats /> },
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/tickets', element: <Tickets /> },
@@ -120,9 +109,10 @@ const Router = [
       { path: '/auth/two-steps', element: <TwoSteps /> },
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
       { path: '/marketplace', element: <Marketplace /> },
-      { path: '/marketplace/imovel/:id', element: <ImovelPage socket={socket} /> },
-      { path: '/imovel/:id', element: <PaidImovelPage socket={socket} /> },
+      { path: '/imovel/:id', element: <PaidImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
+      { path: '/tela', element: <Tela/> },
+
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/templates/contato', element: <ContatoPage /> },
       { path: '/templates/home', element: <Home /> },
