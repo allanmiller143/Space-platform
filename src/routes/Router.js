@@ -93,6 +93,7 @@ const Router = [
       { path: '*', element: <Navigate to="/auth/404" /> },
       { path: '/error', element: <CatchError /> },
 
+
       
     ],
   },
@@ -109,9 +110,9 @@ const Router = [
       { path: '/auth/two-steps', element: <TwoSteps /> },
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
       { path: '/marketplace', element: <Marketplace /> },
-      { path: '/imovel/:id', element: <PaidImovelPage /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/tela', element: <Tela/> },
+      { path: '/imovel/:id', element: <PaidImovelPage /> },
 
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/templates/contato', element: <ContatoPage /> },

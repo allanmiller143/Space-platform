@@ -1,16 +1,13 @@
+/* eslint-disable react/prop-types */
 
-import { Box, Card, Typography, IconButton } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NotificationContext from '../../../Services/Notification/NotificationContext/NotificationContext';
-import { useContext } from 'react';
 import DrawerList from '../../DrawerList';
 
 
-const Header = () => {
-  const { socket } = useContext(NotificationContext);
+const Header = ({selectedPage, setSelectedPage}) => {
 
   return (
-
       <Box width='100%' margin="0 auto"
         sx={{
           boxShadow: 2,
@@ -29,9 +26,9 @@ const Header = () => {
           {/* Menu e Título */}
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <DrawerList />
+            <DrawerList selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
             <Typography variant="h5" fontWeight="bold" color="primary">
-              Space iMóveis
+              Space iMóveis Dash
             </Typography>
           </Box>
 

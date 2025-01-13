@@ -6,15 +6,14 @@ import { Stack } from '@mui/system';
 import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
 import { openNotification } from '../../../../Services/Notification/NotificationApi';
 import ChatContext from '../../../../components/apps/chats/ChatContext/ChatContext';
-import { openNewChat } from '../../../../components/apps/chats/ChatService/Api';
-import { getData } from '../../../../Services/Api';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import Loading from '../../../../components/Loading/Loading';
+import { io } from 'socket.io-client';
 
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const { notifications, setNotifications,called,setCalled, socket } = useContext(NotificationContext);
+  const { notifications, setNotifications,called,setCalled,socket } = useContext(NotificationContext);
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
   const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = useContext(ChatContext);
@@ -22,13 +21,16 @@ const Notifications = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
-  const seePhone = async ({email,chatId}) => {
+
+
+
+  const seePhone = async ({email,senderName,chatId}) => {
     if (currentUser) {
       setLoading(true);
       setSelectedUser(null);
       setMessages([]);
       setActiveChat(chatId);
-      setSelectedUser({email : email, name: 'Torres resolve'});
+      setSelectedUser({email : email, name: 'Nome ta errado, torres vai resolver'});
       navigate(`/apps/chats`);
   
     } else {
@@ -36,7 +38,6 @@ const Notifications = () => {
       toast.success('Faça um cadastro para enviar uma mensagem');
     }
   };
-
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -47,35 +48,30 @@ const Notifications = () => {
   };
 
 
-  useEffect(() => {
-    if(called === false) {
-      fetchNotifications();
-    }
-  }, [called]);
+    const [open, setOpen] = useState(false);
 
-  async function fetchNotifications() {
-    setCalled(true);
-    try {
-      const response = await openNotification(socket, currentUser.email);
-      setNotifications(response.messages); 
-    } catch (error) {
-      console.error('Erro ao buscar notificações:', error);
-    }
-  }
-
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('message', (data) => {
-        setNotifications((prev) => [...prev, data]);});
-    }
-
-    return () => {
-      if (socket) {
-        socket.off('message');
+    useEffect(() => {
+      // Listen for messages
+      if (!open) {
+        setOpen(true);
+        socket.emit("open_notification", { email: currentUser.email }, (response) => {
+          console.log("Open notification response:", response);
+          setNotifications(response.messages);
+        });
       }
-    };
-  }, [socket, setNotifications]);
+    
+      // Listen for notifications
+      socket.on("notification", (notification) => {
+        console.log("Notification received:", notification);
+        setNotifications(notification.messages);
+      });
+    
+      return () => {
+        //   socket.off('message');
+          socket.off('notification');
+        };
+      }, []);
+    
 
 
 
@@ -136,10 +132,10 @@ const Notifications = () => {
         <Box>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId})}} >
+              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName})}} >
                 <Stack direction="row" spacing={2}>
                   <Avatar
-                    src=''
+                    src={''}
                     alt= 'oi'
                     sx={{
                       width: 48,

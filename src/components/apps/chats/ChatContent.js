@@ -171,7 +171,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
         )
       }
       <ChatInsideSidebar isInSidebar={isInSidebar} setIsInSidebar = {setIsInSidebar} />
-      {activeChat ?  
+      {(activeChat && !loadingChat) ?  
       <Box>
         <Divider />
         <MessageSender socket = {socket} sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 1 }} />

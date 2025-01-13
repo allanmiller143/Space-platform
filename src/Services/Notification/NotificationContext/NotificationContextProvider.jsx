@@ -4,13 +4,13 @@ import { io } from 'socket.io-client';
 import { useState } from 'react';
 
 function NotificationContextProvider({children}){
-  const notificationSocket = io('https://spaceimoveis-api-83y4.onrender.com/');
-  const socket = io('https://spaceimoveis-api-83y4.onrender.com/');
+  //const socket = io('https://spaceimoveis-api-83y4.onrender.com/'); // real
+  const socket = io('https://spaceimoveis-api-dev.onrender.com/'); // netlify
+  
   const [notifications, setNotifications] = useState([]);
   const [called,setCalled] = useState(false)
 
   const value = {
-    notificationSocket,
     notifications,
     setNotifications,
     called,

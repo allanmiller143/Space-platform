@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -9,12 +11,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function DrawerList() {
+export default function DrawerList({ selectedPage, setSelectedPage }) {
   const [open, setOpen] = useState(false);
-  const [selectedPage, setSelectedPage] = useState('Home'); // Estado para armazenar a página atual
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -28,7 +29,7 @@ export default function DrawerList() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Usuários', 'Propriedades',].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => handleListItemClick(text)}>
               <ListItemIcon>
@@ -41,7 +42,7 @@ export default function DrawerList() {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {[].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => handleListItemClick(text)}>
               <ListItemIcon>
@@ -55,26 +56,6 @@ export default function DrawerList() {
     </Box>
   );
 
-  const renderPageContent = () => {
-    switch (selectedPage) {
-      case 'Home':
-        return <Typography variant="h4">Welcome to the Home Page!</Typography>;
-      case 'Starred':
-        return <Typography variant="h4">Here are your starred items!</Typography>;
-      case 'Send email':
-        return <Typography variant="h4">Compose a new email here!</Typography>;
-      case 'Drafts':
-        return <Typography variant="h4">View your saved drafts!</Typography>;
-      case 'All mail':
-        return <Typography variant="h4">All your emails are here!</Typography>;
-      case 'Trash':
-        return <Typography variant="h4">Check your trash items!</Typography>;
-      case 'Spam':
-        return <Typography variant="h4">These are your spam emails!</Typography>;
-      default:
-        return <Typography variant="h4">Page not found</Typography>;
-    }
-  };
 
   return (
     <div>
@@ -84,7 +65,6 @@ export default function DrawerList() {
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
-      <Box sx={{ padding: 2 }}>{renderPageContent()}</Box>
     </div>
   );
 }

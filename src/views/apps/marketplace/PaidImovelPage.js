@@ -31,7 +31,7 @@ const PaidImovelPage = () => {
     const cuString = localStorage.getItem('currentUser');
     const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
     const token = localStorage.getItem('token');
-    const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = React.useContext(ChatContext);
+    const { setFilteredChats, setUserChats,setActiveChat,setSelectedUser, setMessages } = useContext(ChatContext);
     const { socket } = useContext(NotificationContext);
 
     async function loadPropertyData() {
@@ -41,7 +41,6 @@ const PaidImovelPage = () => {
             if (response.status === 200 || response.status === 201) {
                 setProperty(response.userInfo);
                 setAdvertiser(response.userInfo.seller);
-                console.log(response.userInfo);
             } else {
                 navigate('/error');
             }
@@ -51,8 +50,6 @@ const PaidImovelPage = () => {
             setLoading(false);
         }
     }
-
-
 
     const click = async () => {
       try{
@@ -65,7 +62,7 @@ const PaidImovelPage = () => {
       }catch(e){
         navigate('/error');
       }
-      };
+    };
 
     const seePhone = async () => {
         if (currentUserls) {
@@ -106,9 +103,9 @@ const PaidImovelPage = () => {
           navigate('/auth/login');
           toast.success('Faça um cadastro para enviar uma mensagem');
         }
-      };
+    };
 
-      const setActiveChatFunction = async () => {
+    const setActiveChatFunction = async () => {
         if (currentUserls) {
           setLoadPlayer(true);
           setPlayerOpen(true)
@@ -146,10 +143,8 @@ const PaidImovelPage = () => {
           navigate('/auth/login');
           toast.success('Faça um cadastro para enviar uma mensagem');
         }
-      };
+    };
     
-
-
     useEffect(() => {
         loadPropertyData();
         click();

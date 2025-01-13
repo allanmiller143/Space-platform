@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { Box,TextField,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Typography,Paper,Chip,IconButton,Avatar,Button,} from "@mui/material";
 import { Edit, Message, Search, Settings } from "@mui/icons-material";
@@ -32,7 +34,7 @@ const UsersTable = ({ socket }) => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { activeChat, setFilteredChats, setUserChats, setActiveChat, setChats, selectedUser, setSelectedUser, messages, setMessages } = useContext(ChatContext);
+  const { activeChat, setFilteredChats, setUserChats, setActiveChat, setChats, selectedUser, setSelectedUser, setMessages } = useContext(ChatContext);
   const [dialogOpen, setDialogOpen] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
@@ -166,7 +168,6 @@ const UsersTable = ({ socket }) => {
             <TableRow>
               <TableCell sx={{ fontWeight: "bold" }}>Foto</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Nome</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Endereço</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Tipo</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>E-mail</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Telefone</TableCell>
@@ -180,11 +181,6 @@ const UsersTable = ({ socket }) => {
                   <Avatar alt={user.name} src={user.profile?.url} sx={{ width: 50, height: 50 }} />
                 </TableCell>
                 <TableCell>{user.name}</TableCell>
-                <TableCell>
-                  {user.address?.street
-                    ? `${user.address.street}, ${user.address.number} - ${user.address.neighborhood}, ${user.address.city} - ${user.address.state}`
-                    : "Não cadastrado"}
-                </TableCell>
                 <TableCell>
                   <Chip label={userTypeLabel(user.type)} color="primary" size="small" />
                 </TableCell>

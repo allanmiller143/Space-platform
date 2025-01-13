@@ -36,9 +36,6 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           const user = response.data.user;
           localStorage.setItem('token', token);
           localStorage.setItem('currentUser', JSON.stringify(user));
-          console.log(notificationSocket);
-          const response1 = await openNotification(notificationSocket,email);
-          setNotifications(response1.messages);
           Navigate('/');
           toast.success('Login efetuado com sucesso');
 
@@ -46,7 +43,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           toast.error('Email ou senha inválidos');
         }
       }catch(error){
-        console.log(error);
+        Navigate('/error');
       }finally{
         setLoading(false);
       }

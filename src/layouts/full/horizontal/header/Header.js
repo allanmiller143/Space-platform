@@ -1,55 +1,54 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { Box, Stack, Button } from '@mui/material';
 import Profile from 'src/layouts/full/vertical/header/Profile';
-import Navigation from 'src/layouts/full/vertical/header/Navigation';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import { Link } from 'react-router-dom';
 import Notifications from 'src/layouts/full/vertical/header/Notifications';
 import MyAppsDrawer from './myappsDrawer';
-import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
-import { useContext } from 'react';
-const Header = ({ socket }) => {
+import Navigation from 'src/layouts/full/vertical/header/Navigation';
+
+const Header = () => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null;
-  const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const { notifiactionSocket,text } = useContext(NotificationContext);
-
-  const customizer = useSelector((state) => state.customizer);
-
-  const AppBarStyled = styled(AppBar)(({ theme }) => ({
-    background: theme.palette.background.paper,
-    justifyContent: 'center',
-    backdropFilter: 'blur(4px)',
-    [theme.breakpoints.up('lg')]: {
-      minHeight: customizer.TopbarHeight,
-    },
-  }));
-
-  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
-    margin: '0 auto',
-    width: '100%',
-    color: `${theme.palette.text.secondary} !important`,
-  }));
-
 
   return (
-    <AppBarStyled position="sticky" color="default" elevation={8}>
-      <ToolbarStyled
+    <Box
+      position="sticky"
+      color="default"
+      elevation={8}
+      sx={{
+        zIndex: 1101,
+        width: '100%',
+        backdropFilter: 'blur(4px)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        '&:after': {
+          content: '""',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '1px',
+          background: 'linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.15))',
+          backdropFilter: 'blur(4px)',
+        },
+      }}
+    >
+      <Box
         sx={{
-          maxWidth: customizer.isLayout === 'boxed' ? 'lg' : '100%!important',
+          maxWidth: 'lg',
+          width: '100%',
+          margin: '0 auto',
+          display: 'flex',
+          position: 'relative',
         }}
       >
         <Logo />
-        {lgUp && <Navigation socket={socket} />}
-
+        <Navigation />
         <Box flexGrow={1} />
 
         <Stack spacing={1} direction="row" alignItems="center">
-          {!currentUserls && (
+          {!currentUserls ? (
             <>
               <Button
                 variant="contained"
@@ -59,32 +58,21 @@ const Header = ({ socket }) => {
               >
                 Login
               </Button>
-              <Button
-                color="primary"
-                fullWidth
-                component={Link}
-                to="/auth/register2"
-              >
+              <Button color="primary" component={Link} to="/auth/register2">
                 Criar conta
               </Button>
             </>
-          )}
-          {currentUserls && (
+          ) : (
             <>
               <MyAppsDrawer />
-              <Notifications  />
+              <Notifications />
               <Profile />
             </>
           )}
         </Stack>
-      </ToolbarStyled>
-    </AppBarStyled>
+      </Box>
+    </Box>
   );
-};
-
-Header.propTypes = {
-  sx: PropTypes.object,
-  toggleSidebar: PropTypes.func,
 };
 
 export default Header;
