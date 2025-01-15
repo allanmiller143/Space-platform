@@ -2,23 +2,34 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Box, Typography, Grid, FormControl, MenuItem, Checkbox, FormControlLabel, Select } from "@mui/material";
+import { Box, Typography, Grid, FormControl, MenuItem, Checkbox, FormControlLabel, Select, Tooltip, Divider, IconButton, Button } from "@mui/material";
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import CustomSelect from '../../../../components/forms/theme-elements/CustomSelect';
+import RentDepositForm from './RentDepositForm';
 
 const DadosGerais = ({ formData, setFormData }) => {
+
+  const [open, setOpen] = React.useState(false);
 
   const handleTipoImovelChange = (event) => {
     setFormData({ ...formData, tipoDeImovel: event.target.value });
   };
 
   const handleFinalidadeChange = (event) => {
+    if(event.target.value === 'both' || event.target.value === 'rent' ) {
+      setOpen(true);
+    }
     setFormData({ ...formData, tipoDeAnuncio: event.target.value });
   };
 
   const handleNegociavelChange = (event) => {
     setFormData({ ...formData, negociavel: event.target.checked });
+  };
+
+  const handleCaucaoChange = (event) => {
+    setFormData({ ...formData, caucao: event.target.checked });
+
   };
 
   const handleAndarChange = (event) => {
@@ -43,8 +54,13 @@ const DadosGerais = ({ formData, setFormData }) => {
     setFormData({ ...formData, [fieldName]: numericValue });
   };
 
+  const handleRemoveCaucao = () => {
+    setFormData({ ...formData, caucao: false });
+  };
+
   return (
     <Box mt={4}>
+      <RentDepositForm open={open} onClose={() => setOpen(false)} formData={formData} setFormData={setFormData} />
       <Typography variant="h2" sx={{ mb: 2 }}>Dados Gerais do Imóvel</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
@@ -124,19 +140,62 @@ const DadosGerais = ({ formData, setFormData }) => {
           </Grid>
         )}
 
-        {(formData.tipoDeAnuncio === 'sell' || formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && (
-          <Grid item xs={12} md={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.negociavel || false}
-                  onChange={handleNegociavelChange}
-                />
-              }
-              label="Preço Negociável"
-            />
-          </Grid>
-        )}
+        <Grid container spacing={2} sx = {{mt: '-15px', mb: '-5px', ml: '1px', display: 'flex', flexDirection: 'row', alignItems: 'center'}}> 
+          {(formData.tipoDeAnuncio === 'sell' || formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && (
+            <Grid item xs={12} >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.negociavel || false}
+                    onChange={handleNegociavelChange}
+                  />
+                }
+                label="Preço Negociável"
+              />
+            </Grid>
+          )}
+
+          {((formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && formData.caucao !== false) && (
+              <Grid item xs={12} sm={12} sx = {{mb : '5px'}}>
+              <Box
+                p={2}
+                border="1px solid #ddd"
+                borderRadius="8px"
+              >
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                  <Typography variant="h4">Detalhes da Caução</Typography>
+                  <Box display="flex" gap={1}>
+                    <Button onClick={handleRemoveCaucao} color="primary"> Remover caução</Button>
+                    <Button onClick={() => setOpen(true)} color="primary"> Editar caução</Button>
+                    
+                  </Box>
+                </Box>
+                <Divider sx={{ my: 1 }} />
+                <Box display="flex" alignItems="center" mb={1}>
+                  <Typography variant="body1">
+                    <strong>Valor da Caução:</strong> {formatPrice(formData.caucao?.valorTotal)}
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" mb={1}>
+                  <Typography variant="body1">
+                    <strong>Valor do Aluguel:</strong> {formatPrice(formData.caucao?.aluguel)}
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" mb={1}>
+                  <Typography variant="body1">
+                    <strong>Multiplicador:</strong> {formData.caucao?.multiplicador}
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" mb={1}>
+                  <Typography variant="body1">
+                    <strong>Parcelas:</strong> {formData.caucao?.maximoParcelas}
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+          )}
+
+        </Grid>
 
         {(formData.tipoDeImovel === 'apartment' || formData.tipoDeImovel === 'house' || formData.tipoDeImovel === 'farm') && (
           <>
@@ -204,60 +263,6 @@ const DadosGerais = ({ formData, setFormData }) => {
             value={formData.area || ''}
           />
         </Grid>
-        
-
-        {/* {formData.tipoDeImovel === 'Terreno' && (
-          <>
-            <Grid item xs={12} md={6}>
-              <CustomFormLabel htmlFor="frente-imovel">Frente (m)</CustomFormLabel>
-              <CustomTextField
-                id="frente-imovel"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                type="number"
-                onChange={(e) => setFormData({ ...formData, frente: e.target.value })}
-                value={formData.frente || ''}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <CustomFormLabel htmlFor="fundo-imovel">Fundo (m)</CustomFormLabel>
-              <CustomTextField
-                id="fundo-imovel"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                type="number"
-                onChange={(e) => setFormData({ ...formData, fundo: e.target.value })}
-                value={formData.fundo || ''}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <CustomFormLabel htmlFor="lado-direito-imovel">Lado Direito (m)</CustomFormLabel>
-              <CustomTextField
-                id="lado-direito-imovel"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                type="number"
-                onChange={(e) => setFormData({ ...formData, ladoDireito: e.target.value })}
-                value={formData.ladoDireito || ''}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <CustomFormLabel htmlFor="lado-esquerdo-imovel">Lado Esquerdo (m)</CustomFormLabel>
-              <CustomTextField
-                id="lado-esquerdo-imovel"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                type="number"
-                onChange={(e) => setFormData({ ...formData, ladoEsquerdo: e.target.value })}
-                value={formData.ladoEsquerdo || ''}
-              />
-            </Grid>
-          </>
-        )} */}
       </Grid>
     </Box>
   );

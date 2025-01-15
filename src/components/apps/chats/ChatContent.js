@@ -33,8 +33,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
 
 
   useEffect(() => {
-    if (socket) {
-      socket.on('message', (data) => {
+      socket.on('message', (data) => {      
         setMessages((prevMessages) => {
           const filteredMessages = prevMessages.filter((message) => message.id !== 1);
           return [...filteredMessages, data];
@@ -47,7 +46,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
         });
         scrollToBottom();
       });
-    }
+    
 
     return () => {
       if (socket) {
@@ -55,7 +54,7 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
         socket.off('deleted_message');
       }
     };
-  }, [socket, setMessages]);
+  }, []);
 
   useEffect(() => {
     if (selectedUser !== undefined || selectedUser !== null) {

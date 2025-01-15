@@ -59,6 +59,7 @@ const EditImovel = () => {
     opcoesRapidas : {},
     area: '',
     aceitaFinanciamento : true,
+    caucao : false,
   });
 
   useEffect(() => {

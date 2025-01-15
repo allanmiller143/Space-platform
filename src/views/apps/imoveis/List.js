@@ -38,7 +38,6 @@ function Page() {
     <>
       <PageContainer title="Central de Imóveis" description="Gerencie seus imóveis de forma eficiente">
         <LimitAdvice openDialog={openDialog} setOpenDialog={setOpenDialog}/>
-          
         <Container  sx={{ bgcolor: 'primary.light', py: 4, mb: 4,  borderRadius: 2 }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={8}>

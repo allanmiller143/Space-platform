@@ -13,24 +13,27 @@ import { io } from 'socket.io-client';
 
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const { notifications, setNotifications,called,setCalled,socket } = useContext(NotificationContext);
+  const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
   const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const notificationSocket = io('https://spaceimoveis-api-dev.onrender.com/'); // netlify
 
 
 
 
-  const seePhone = async ({email,senderName,chatId}) => {
+  const seePhone = async ({email,senderName,chatId,profile}) => {
     if (currentUser) {
       setLoading(true);
       setSelectedUser(null);
       setMessages([]);
       setActiveChat(chatId);
-      setSelectedUser({email : email, name: 'Nome ta errado, torres vai resolver'});
+      setSelectedUser({email : email, name: senderName, profile: profile
+
+      });
       navigate(`/apps/chats`);
   
     } else {
@@ -54,21 +57,21 @@ const Notifications = () => {
       // Listen for messages
       if (!open) {
         setOpen(true);
-        socket.emit("open_notification", { email: currentUser.email }, (response) => {
+        notificationSocket.emit("open_notification", { email: currentUser.email }, (response) => {
           console.log("Open notification response:", response);
           setNotifications(response.messages);
         });
       }
     
       // Listen for notifications
-      socket.on("notification", (notification) => {
+      notificationSocket.on("notification", (notification) => {
         console.log("Notification received:", notification);
         setNotifications(notification.messages);
       });
     
       return () => {
         //   socket.off('message');
-          socket.off('notification');
+        notificationSocket.off('notification');
         };
       }, []);
     
@@ -132,10 +135,10 @@ const Notifications = () => {
         <Box>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName})}} >
+              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile})}} >
                 <Stack direction="row" spacing={2}>
                   <Avatar
-                    src={''}
+                    src={notification.senderProfile ? notification.senderProfile.url : ''}
                     alt= 'oi'
                     sx={{
                       width: 48,

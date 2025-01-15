@@ -25,3 +25,9 @@
     background-color: transparent !important;
   }
   
+.css-1qmkl3-MuiFormControl-root-MuiTextField-root {
+    margin-top: 2px !important;
+}
+.css-mhc70k-MuiGrid-root>.MuiGrid-item {
+    padding-top: 2px !important; 
+}

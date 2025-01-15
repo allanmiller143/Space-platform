@@ -29,7 +29,7 @@ export default function DrawerList({ selectedPage, setSelectedPage }) {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {['Usuários', 'Propriedades',].map((text, index) => (
+        {['Usuários', 'Propriedades','Send email'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => handleListItemClick(text)}>
               <ListItemIcon>
