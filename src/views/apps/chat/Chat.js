@@ -8,9 +8,9 @@ import ChatSidebar from '../../../components/apps/chats/ChatSidebar';
 import ChatContent from '../../../components/apps/chats/ChatContent';
 import AppCard from 'src/components/shared/AppCard';
 import NotificationContext from '../../../Services/Notification/NotificationContext/NotificationContext';
+import socket from '../../../Services/socket';
 const Chats = () => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const { socket } = useContext(NotificationContext);
 
   return (
     <PageContainer title="Chat" description="">

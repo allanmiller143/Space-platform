@@ -21,6 +21,7 @@ import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext'
 import Gallery from './Componentes/Gallery'
 import CarrosselHome from "../../../components/frontend-pages/homepage/carrossel/CarrosselHome";
 import NotificationContext from "../../../Services/Notification/NotificationContext/NotificationContext";
+import socket from "../../../Services/socket";
 
 const PaidImovelPage = () => {
     const [loading, setLoading] = useState(false);
@@ -32,7 +33,6 @@ const PaidImovelPage = () => {
     const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
     const token = localStorage.getItem('token');
     const { setFilteredChats, setUserChats,setActiveChat,setSelectedUser, setMessages } = useContext(ChatContext);
-    const { socket } = useContext(NotificationContext);
 
     async function loadPropertyData() {
         setLoading(true);

@@ -10,17 +10,16 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import Loading from '../../../../components/Loading/Loading';
 import { io } from 'socket.io-client';
-
+import socket from '../../../../Services/socket'
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
   const cuString = localStorage.getItem('currentUser');
   const currentUser = JSON.parse(cuString);
-  const { activeChat,setFilteredChats, setUserChats,setActiveChat, setChats, selectedUser, setSelectedUser,messages, setMessages } = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const notificationSocket = io('https://spaceimoveis-api-dev.onrender.com/'); // netlify
+  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
 
 
 
@@ -54,24 +53,29 @@ const Notifications = () => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-      // Listen for messages
+
       if (!open) {
         setOpen(true);
-        notificationSocket.emit("open_notification", { email: currentUser.email }, (response) => {
+        socket.emit("open_notification", { email: currentUser.email }, (response) => {
           console.log("Open notification response:", response);
+          console.log(socket);
           setNotifications(response.messages);
         });
       }
-    
+
+
+
       // Listen for notifications
-      notificationSocket.on("notification", (notification) => {
+      socket.on("notification", (notification) => {
         console.log("Notification received:", notification);
+        console.log(socket);
         setNotifications(notification.messages);
       });
+
+
     
       return () => {
-        //   socket.off('message');
-        notificationSocket.off('notification');
+        socket.off('notification');
         };
       }, []);
     

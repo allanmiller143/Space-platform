@@ -33,8 +33,6 @@ const MessageSender = ({ socket }) => {
 
 
   const sendMessage = () => {
-    console.log('Sending message:', message);
-    console.log('socket:', socket);
     if (message.trim() !== '') {
       const data = {
         'email': currentUser.email,

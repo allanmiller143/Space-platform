@@ -2,10 +2,11 @@
 /* eslint-disable react/prop-types */
 import { Drawer, useMediaQuery } from '@mui/material';
 import ChatListing from './ChatListing';
+import socket from '../../../Services/socket';
 
 const drawerWidth = 280;
 
-const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose, socket }) => {
+const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   return (

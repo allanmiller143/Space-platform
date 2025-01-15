@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps *//* eslint-disable react/prop-types */ /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useContext, useEffect,useRef, useState } from 'react';
 import { Typography, Divider, Avatar, ListItem, ListItemText, ListItemAvatar, IconButton, Box, Stack, Badge, useMediaQuery, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
@@ -12,8 +13,9 @@ import ChatPreViewDialog from './ChatPreViewDialog';
 import Spinner from '../../../views/spinner/Spinner';
 import ChatsMessages from './ChatMessages/ChatsMessages';
 import ChatInsideSidebar from './ChatInsideSidebar';
+import  socket  from '../../../Services/socket';
 
-const ChatContent = ({ toggleChatSidebar, socket }) => {
+const ChatContent = ({ toggleChatSidebar }) => {
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
   const [dragging, setDragging] = useState(false);
   const messagesEndRef = useRef(null);
@@ -33,9 +35,10 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
 
 
   useEffect(() => {
-      socket.on('message', (data) => {      
-        setMessages((prevMessages) => {
-          const filteredMessages = prevMessages.filter((message) => message.id !== 1);
+      console.log('ativei');
+      socket.on('message', (data) => {   
+        console.log(socket);
+        setMessages((prevMessages) => {const filteredMessages = prevMessages.filter((message) => message.id !== 1);
           return [...filteredMessages, data];
         });
         scrollToBottom();
@@ -49,12 +52,10 @@ const ChatContent = ({ toggleChatSidebar, socket }) => {
     
 
     return () => {
-      if (socket) {
         socket.off('message');
         socket.off('deleted_message');
-      }
     };
-  }, []);
+  }, [setMessages, socket]);
 
   useEffect(() => {
     if (selectedUser !== undefined || selectedUser !== null) {
