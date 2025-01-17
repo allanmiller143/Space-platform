@@ -31,3 +31,7 @@
 .css-mhc70k-MuiGrid-root>.MuiGrid-item {
     padding-top: 2px !important; 
 }
+
+.css-17vbkzs-MuiFormControl-root-MuiTextField-root{
+    margin-top: 2px !important;
+}

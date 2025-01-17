@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
@@ -117,8 +118,8 @@ const RentDepositForm = ({ open, onClose, formData, setFormData }) => {
               <Button
                 variant="outlined"
                 onClick={() => {
-                  setStep(2);
                   reset({ wantsDeposit: false });
+                  onClose();
                 }}
               >
                 Não
@@ -136,71 +137,86 @@ const RentDepositForm = ({ open, onClose, formData, setFormData }) => {
           </>
         )}
 
-        {step === 2 && (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="rentValue"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Valor do Aluguel (R$)"
-                  type="number"
-                  fullWidth
-                  margin="normal"
-                  error={!!errors.rentValue}
-                  helperText={errors.rentValue?.message}
-                />
-              )}
-            />
+{step === 2 && (
+  <form onSubmit={handleSubmit(onSubmit)}>
+    <Typography variant="h6" mb={2}>
+      Detalhes da Caução
+    </Typography>
+    <Typography variant="body2" color="textSecondary" mb={1}>
+      Informe o valor do aluguel para calcular o valor da caução.
+    </Typography>
+    <Controller
+      name="rentValue"
+      control={control}
+      render={({ field }) => (
+        <TextField
+          {...field}
+          label="Valor do Aluguel (R$)"
+          type="number"
+          fullWidth
+          margin="normal"
+          error={!!errors.rentValue}
+          helperText={errors.rentValue?.message}
+        />
+      )}
+    />
 
-            {watchWantsDeposit && (
-              <>
-                <Controller
-                  name="depositMultiplier"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      fullWidth
-                      margin="normal"
-                      error={!!errors.depositMultiplier}
-                      displayEmpty
-                    >
-                      <MenuItem value={1}>1x o aluguel</MenuItem>
-                      <MenuItem value={2}>2x o aluguel</MenuItem>
-                      <MenuItem value={3}>3x o aluguel</MenuItem>
-                    </Select>
-                  )}
-                />
-                <Controller
-                  name="depositInstallments"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      fullWidth
-                      margin="normal"
-                      error={!!errors.depositInstallments}
-                      displayEmpty
-                    >
-                      {Array.from({ length: 10 }, (_, i) => (
-                        <MenuItem key={i + 1} value={i + 1}>
-                          {i + 1} parcela{`${i > 0 ? "s" : ""}`}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
-                />
-                <Box mt={2}>
-                  <Typography variant="body2">
-                    Valor total da caução: <strong>R$ {depositValue.toFixed(2)}</strong>
-                  </Typography>
-                </Box>
-              </>
-            )}
-          </form>
-        )}
+    {watchWantsDeposit && (
+      <>
+        <Typography variant="body2" color="textSecondary" mt = {1}>
+          Escolha quantas vezes o valor do aluguel será usado para calcular a caução.
+        </Typography>
+        <Controller
+          name="depositMultiplier"
+          control={control}
+          render={({ field }) => (
+            <Select
+              {...field}
+              fullWidth
+              margin="normal"
+              error={!!errors.depositMultiplier}
+              displayEmpty
+            >
+              <MenuItem value={1}>1x o aluguel : {watchRentValue}</MenuItem>
+              <MenuItem value={2}>2x o aluguel : {watchRentValue * 2}</MenuItem>
+              <MenuItem value={3}>3x o aluguel : {watchRentValue * 3}</MenuItem>
+            </Select>
+          )}
+        />
+
+        <Typography variant="body2" color="textSecondary" mt={2} >
+          Escolha em quantas parcelas o valor da caução será dividido.
+        </Typography>
+        <Controller
+          name="depositInstallments"
+          control={control}
+          render={({ field }) => (
+            <Select
+              {...field}
+              fullWidth
+              margin="normal"
+              error={!!errors.depositInstallments}
+              displayEmpty
+            >
+              {Array.from({ length: 10 }, (_, i) => (
+                <MenuItem key={i + 1} value={i + 1}>
+                  {i + 1} parcela{`${i > 0 ? "s" : ""}`}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+
+        <Box mt={2}>
+          <Typography variant="body2">
+            Valor total da caução: <strong>R$ {depositValue.toFixed(2)}</strong>
+          </Typography>
+        </Box>
+      </>
+    )}
+  </form>
+)}
+
       </DialogContent>
       <DialogActions>
         {step === 2 && (

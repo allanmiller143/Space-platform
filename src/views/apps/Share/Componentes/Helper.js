@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {Box,Typography,TextField,Grid} from "@mui/material";
+import {Box,Typography,Grid, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 
 const Helper = ({formData, setFormData}) => {
 
@@ -16,33 +16,46 @@ const Helper = ({formData, setFormData}) => {
                 position: "relative",
                 "&:hover .helper-text": {
                 display: "block",
-                backgroundColor: "#fff",
                 },
             }}
             >
-            <TextField
-                fullWidth
-                label="Comissão (%)"
-                type="number"
-                name="comissao"
-                value={formData.comissao}
-                onChange={handleChange}
-                placeholder="Ex: 5"
-            />
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id="comissao-label">Comissão (%)</InputLabel>
+                <Select
+                  labelId="comissao-label"
+                  id="comissao"
+                  value={formData.comissao || ""}
+                  name="comissao"
+                  onChange={handleChange}
+                  label="Comissão (%)"
+                >
+                  {Array.from({ length: 15 }, (_, index) => (
+                    <MenuItem
+                    key={index + 1} value={index + 1}>
+                      {index + 1}%
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
             <Typography
-                variant="body2"
+                variant="h6"
                 color="text.secondary"
                 className="helper-text"
                 sx={{
                 display: "none",
                 position: "absolute",
-                top: "100%",
+                top: '100%',
                 left: 0,
                 mt: 0.5,
                 fontSize: "0.8rem",
                 padding: "4px",
                 borderRadius: "4px",
                 boxShadow: 1,
+                backgroundColor: "white",
+                zIndex: 1,
                 }}
             >
                 Comissão em porcentagem em relação ao valor de venda ou aluguel que será repassado ao corretor

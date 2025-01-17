@@ -1,76 +1,90 @@
 /* eslint-disable react/prop-types */
-import { LocationOn } from "@mui/icons-material";
-import { Card, CardMedia, Typography, Box, Button } from "@mui/material";
+import { Typography, Avatar, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const PropertyCard = ({ property }) => {
-    const formatPrice = (price) => {
-        return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
-    };
-    const [address, setAddress] = useState('');
+  const formatPrice = (price) => {
+    return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
+  };
 
-    useEffect(() => {
-        if (property) {
-            setAddress(`${property.address.street}, ${property.address.number} - ${property.address.neighborhood},${property.address.city}, ${property.address.state}`);
-        }
-    }, [property]);
+  const [address, setAddress] = useState("");
 
-    const prices = () => {
-        if (property.announcementType === 'both') {
-          return (
-            <Typography variant="h4" component="p" sx={{ mb: 3 }}>
-              {`Preço de compra R$ ${formatPrice(property.prices.sellPrice)}`}<br />
-              {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
-            </Typography>
-          );
-        } else if (property.announcementType === 'rent') {
-          return (
-            <Typography variant="h4" component="p" sx={{ mb: 3 }}>
-              {`Aluguel R$ ${formatPrice(property.prices.rentPrice)}`}
-            </Typography>
-          );
-        } else {
-          return (
-            <Typography variant="h4" component="p" sx={{ mb: 3 }}>
-              {`Preço de venda R$ ${formatPrice(property.prices.sellPrice)}`}
-            </Typography>
-          );
-        }
-      };
+  useEffect(() => {
+    if (property) {
+      setAddress(
+        `${property.address.street}, ${property.address.number} - ${property.address.neighborhood}, ${property.address.city}, ${property.address.state}`
+      );
+    }
+  }, [property]);
+
+  const prices = () => {
+    if (property.announcementType === "both") {
+      return (
+        <Typography variant="body1" color="text.secondary">
+          {`Preço de compra: R$ ${formatPrice(property.prices.sellPrice)}`} <br />
+          {`Aluguel: R$ ${formatPrice(property.prices.rentPrice)}`}
+        </Typography>
+      );
+    } else if (property.announcementType === "rent") {
+      return (
+        <Typography variant="body1" color="text.secondary">
+          {`Aluguel: R$ ${formatPrice(property.prices.rentPrice)}`}
+        </Typography>
+      );
+    } else {
+      return (
+        <Typography variant="body1" color="text.secondary">
+          {`Preço de venda: R$ ${formatPrice(property.prices.sellPrice)}`}
+        </Typography>
+      );
+    }
+  };
 
   return (
-      <Card
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: "16px",
+        p: 2,
+        maxWidth: "600px",
+      }}
+    >
+      {/* Image */}
+      <Avatar
+        src={property.pictures[0]?.url || ""}
+        alt="Imagem do imóvel"
         sx={{
-          height: 500,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          boxShadow: 3,
-          borderRadius: 2,
-          overflow: "hidden",
+          height: 96,
+          width: 96,
         }}
-      >
-        <CardMedia
-          component="img"
-          image={property.pictures[0].url}
-          alt={property.pictures[0].url}
-          sx={{ height:250, objectFit: "cover" }}
-        />
+      />
 
-        <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1, pt: '10px'}}>
-            <Typography variant="h5" sx={{ pr: '10px', mb: '5px',    textAlign: 'justify',  }}>
-                <span> <LocationOn/> </span>{address}
-            </Typography>
-            <Typography variant="body1" component="h1" sx={{ mb: 1 }}>
-                {`${property.propbertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' : property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com
-                ${property.bedrooms} Quartos e ${property.bathrooms} Banheiros, ${property.suites} suítes, com ${property.parkingSpaces} vagas próximo do ${property.address.neighborhood}, ${property.address.city}`}
-          </Typography>
-            {prices()}
-        </Box>
-          <Button variant="contained" color="primary" size="small" sx ={{width: '130px', alignSelf: 'end'}} href={`/marketplace/imovel/${property.id}`}>
-            Ver Mais
-          </Button>
-      </Card>
+      {/* Content */}
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+        <Typography variant="h6" color="text.primary" noWrap>
+          {property.propertyType === "house"
+            ? "Casa"
+            : property.propertyType === "apartment"
+            ? "Apartamento"
+            : property.propertyType === "land"
+            ? "Terreno"
+            : "Fazenda/Chácara"}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ display: "flex", alignItems: "center", gap: "4px" }}
+        >
+          {address}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {`${property.bedrooms} Quartos, ${property.bathrooms} Banheiros, ${property.suites} Suítes, ${property.parkingSpaces} Vagas`}
+        </Typography>
+        {prices()}
+      </Box>
+    </Box>
   );
 };
 

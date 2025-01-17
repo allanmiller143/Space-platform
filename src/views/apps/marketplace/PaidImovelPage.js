@@ -36,6 +36,7 @@ const PaidImovelPage = () => {
 
     async function loadPropertyData() {
         setLoading(true);
+        console.log(socket);
         try {
             const response = await getData(`properties/${id}`);
             if (response.status === 200 || response.status === 201) {

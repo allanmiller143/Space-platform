@@ -259,10 +259,10 @@ function DefinirHorariosDisponibilidade() {
             <Card>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
-                <Typography variant="h6" mb={2}>
+                <Typography variant="h6" mt={2} mb={1}> 
                   Selecione os dias da semana:
                 </Typography>
-                <Grid container spacing={1}>
+                <Grid container spacing={1} mb ={1}>
                   {['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo'].map((dia) => (
                     <Grid item key={dia}>
                       <Button

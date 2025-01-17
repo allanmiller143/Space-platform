@@ -8,9 +8,11 @@ import { Container, Grid, Stack } from '@mui/material';
 import { Add as IconPlus } from '@mui/icons-material';
 import { IconCalendar } from '@tabler/icons';
 import LimitAdvice from './LimitAdvice/LimitAdvice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getData } from '../../../Services/Api';
-import Notifications from '../../../layouts/full/vertical/header/Notifications';
+import PaymentButton from '../../../Services/MercadoPago/PaymentButton';
+
+
 function Page() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
@@ -59,6 +61,7 @@ function Page() {
                 <Button variant="outlined" href="#" color="primary" startIcon={<IconCalendar size={20} />} onClick={() => navigate('/apps/agenda')}>
                   Cadastrar Horários para visitas
                 </Button>
+                <PaymentButton/>
               </Stack>
             </Grid>
             <Grid item xs={12} md={4} container justifyContent="center" alignItems="center">

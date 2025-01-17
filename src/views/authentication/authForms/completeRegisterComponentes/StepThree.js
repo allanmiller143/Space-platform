@@ -94,10 +94,10 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
   const renderAddressFields = () => (
     <Stack spacing={3} mb={3}>
       <Paper elevation={1} sx={{ padding: 3 }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" gutterBottom pb ={1}>
           Informações do Endereço
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} pb ={2}>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="cep">CEP</CustomFormLabel>
             <TextField type='number' id="cep" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
@@ -107,7 +107,7 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
             <TextField id="city" variant="outlined" fullWidth value={formData.city} onChange={handleChange} />
           </Grid>
         </Grid>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} pb ={2}>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="street">Rua</CustomFormLabel>
             <TextField id="street" variant="outlined" fullWidth value={formData.street} onChange={handleChange} />
@@ -130,13 +130,13 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
               data={{ label: '', itens: localItens}} 
             />
           </Grid>
-        </Grid>
-        <Typography variant="h6" gutterBottom mt={3}>
+        </Grid >
+        <Typography variant="h6" gutterBottom mt={3} >
           Segurança
         </Typography>
 
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={2} pb ={2}>
+          <Grid item xs={12} sm={6} >
           <CustomFormLabel htmlFor="password">Senha</CustomFormLabel>
             <CustomTextField
               id="password"

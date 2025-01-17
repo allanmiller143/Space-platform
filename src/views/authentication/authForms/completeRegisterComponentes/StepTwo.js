@@ -127,12 +127,12 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
         return (
           <Stack spacing={1} mb={3}>
             <Paper elevation={3} sx={{ padding: 3 }}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom pb={2}> 
                 Informações do Corretor
               </Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} pb ={2}>
                 <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="name">Nome</CustomFormLabel>
+                  <CustomFormLabel htmlFor="name" >Nome</CustomFormLabel>
                   <TextField id="name" variant="outlined" fullWidth value={formData.name} onChange={handleChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -147,7 +147,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
+              <Grid container spacing={2}  pb ={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
                   <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
@@ -174,10 +174,10 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
         return (
           <Stack spacing={1} mb={3}>
             <Paper elevation={3} sx={{ padding: 3 }}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom  pb ={2}>
                 Informações do Vendedor
               </Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={2}  pb ={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="name">Nome</CustomFormLabel>
                   <TextField id="name" variant="outlined" fullWidth value={formData.name} onChange={handleChange} />
@@ -194,7 +194,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
+              <Grid container spacing={2}  pb ={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
                   <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
@@ -217,10 +217,10 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
         return (
           <Stack spacing={3} mb={3}>
             <Paper elevation={1} sx={{ padding: 3 }}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom  pb ={2}>
                 Informações da Imobiliária
               </Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={2}  pb ={2}>
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="name">Razão Social</CustomFormLabel>
                   <TextField id="name" variant="outlined" fullWidth value={formData.name} onChange={handleChange} />
@@ -237,7 +237,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} >
                 <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="phone">Telefone</CustomFormLabel>
                   <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />

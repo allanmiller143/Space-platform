@@ -1,38 +1,30 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  CircularProgress,
-  Step,
-  StepLabel,
-  Stepper,
-} from "@mui/material";
-import Main from "./Componentes/Main";
+import {Box,CircularProgress,Step,StepLabel,Stepper,} from "@mui/material";
 import PageContainer from "src/components/container/PageContainer";
-import Realtors from "./Componentes/Realtors";
+import StepTwo from "./Componentes/StepTwo";
 import { useParams } from "react-router";
 import { getData } from "../../../Services/Api";
 import { toast } from "sonner";
 import StepOne from "./Componentes/StepOne";
 import ParentCard from "../../../components/shared/ParentCard";
+import Stepthree from "./Componentes/Stepthree";
 
 const SharePropertyForm = () => {
   const [formData, setFormData] = useState({
     tipoAnuncio: "",
     valorVenda: "",
     valorAluguel: "",
-    comissao: "2",
-    caucao: "1",
-    parcelas: "1",
+    comissao: "",
+    selectedUser: null,
+    property: null,
   });
   const { id } = useParams();
-
   const [isLoading, setIsLoading] = useState(false);
   const [corretores, setCorretores] = useState([]);
   const [filteredCorretores, setFilteredCorretores] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loadProperty, setLoadProperty] = useState(false);
   const [property, setProperty] = useState(null);
-  const [advertiser, setAdvertiser] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
 
   async function loadPropertyData() {
@@ -41,7 +33,6 @@ const SharePropertyForm = () => {
       const response = await getData(`properties/${id}`);
       if (response.status === 200 || response.status === 201) {
         setProperty(response.userInfo);
-        setAdvertiser(response.userInfo.seller);
         setFormData({
           ...formData,
           tipoAnuncio:
@@ -53,6 +44,7 @@ const SharePropertyForm = () => {
           valorVenda: response.userInfo.prices.sellPrice || "",
           valorAluguel: response.userInfo.prices.rentPrice || "",
           comissao: response.userInfo.commission,
+          property: response.userInfo,
         });
       } else {
         toast.error(`Erro ao carregar dados da propriedade: ${response.message}`);
@@ -86,21 +78,40 @@ const SharePropertyForm = () => {
             setCorretores={setCorretores}
             setFilteredCorretores={setFilteredCorretores}
             setActiveStep={setActiveStep}
+            corretores={corretores}
+
           />
         );
       case 1:
         return (
-          <Realtors
+          <StepTwo
             isLoading={isLoading}
             corretores={corretores}
             setSearchQuery={setSearchQuery}
             setFilteredCorretores={setFilteredCorretores}
             searchQuery={searchQuery}
             filteredCorretores={filteredCorretores}
+            setActiveStep={setActiveStep}
+            formData={formData}
+            setFormData={setFormData}
           />
         );
       case 2:
-        return <div>Compartilhar conteúdo aqui</div>; // Substitua por seu componente final
+        return (      
+          <Stepthree
+            isLoading={isLoading}
+            corretores={corretores}
+            setSearchQuery={setSearchQuery}
+            setFilteredCorretores={setFilteredCorretores}
+            searchQuery={searchQuery}
+            filteredCorretores={filteredCorretores}
+            setActiveStep={setActiveStep}
+            formData={formData}
+            setFormData={setFormData}
+            property={property}
+          />
+      );
+
       default:
         return null;
     }
@@ -115,8 +126,7 @@ const SharePropertyForm = () => {
       ) : (
         <>
 
-            <Main property={property} advertiser={advertiser} />
-            <ParentCard title = "Compartilhar Imóvel">
+      <ParentCard title = "Compartilhar Imóvel">
 
             <Stepper
               activeStep={activeStep}
