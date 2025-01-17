@@ -36,7 +36,6 @@ const PaidImovelPage = () => {
 
     async function loadPropertyData() {
         setLoading(true);
-        console.log(socket);
         try {
             const response = await getData(`properties/${id}`);
             if (response.status === 200 || response.status === 201) {
@@ -84,7 +83,6 @@ const PaidImovelPage = () => {
               if(response.userInfo.length > 0){
                 const selectedChat = response.userInfo.find(chat => chat.user1.email === advertiser.email || chat.user2.email === advertiser.email);
                 const user = selectedChat.user1.email === currentUserls.email ? selectedChat.user2 : selectedChat.user1;
-                console.log(user);
                 setActiveChat(selectedChat.id);
                 setSelectedUser(user);
                 navigate(`/apps/chats`);

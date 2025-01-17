@@ -29,7 +29,6 @@ const MarketplaceMaps = ({ properties, formData }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('houve uma alteração');
     }, [formData.city, formData.state]);
 
     const GetPropertyType = (type) => {

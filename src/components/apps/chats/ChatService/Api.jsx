@@ -4,7 +4,6 @@ import { postData } from "../../../../Services/Api";
 export async function openNewChat(socket, email) {
   const token = localStorage.getItem('token');
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  console.log(currentUser.email);
   try {
     const response = await postData(`chat/${email}`, {}, token);
     let chatId;

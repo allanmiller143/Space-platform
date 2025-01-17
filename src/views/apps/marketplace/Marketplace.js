@@ -48,8 +48,6 @@ const Marketplace = () => {
     const scrollContainerRef = useRef(null);
 
     const filter = async () => {
-        console.log(formData)
-
         setLoading(true); // Iniciar o loading
 
         // Cria um novo objeto apenas com as opções que forem true

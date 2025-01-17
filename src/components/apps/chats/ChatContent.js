@@ -35,9 +35,7 @@ const ChatContent = ({ toggleChatSidebar }) => {
 
 
   useEffect(() => {
-      console.log('ativei');
       socket.on('message', (data) => {   
-        console.log(socket);
         setMessages((prevMessages) => {const filteredMessages = prevMessages.filter((message) => message.id !== 1);
           return [...filteredMessages, data];
         });

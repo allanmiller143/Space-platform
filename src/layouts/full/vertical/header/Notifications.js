@@ -57,8 +57,6 @@ const Notifications = () => {
       if (!open) {
         setOpen(true);
         socket.emit("open_notification", { email: currentUser.email }, (response) => {
-          console.log("Open notification response:", response);
-          console.log(socket);
           setNotifications(response.messages);
         });
       }
@@ -67,8 +65,6 @@ const Notifications = () => {
 
       // Listen for notifications
       socket.on("notification", (notification) => {
-        console.log("Notification received:", notification);
-        console.log(socket);
         setNotifications(notification.messages);
       });
 
