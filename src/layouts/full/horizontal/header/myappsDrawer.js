@@ -1,57 +1,29 @@
-import { useState } from 'react';
-import { IconButton, Drawer, Box, Typography,  Grid } from '@mui/material';
-import { IconGridDots} from '@tabler/icons';
+import { Box, Typography, Grid, Divider } from '@mui/material';
 import AppLinks from '../../vertical/header/AppLinks';
 
 const MyAppsDrawer = () => {
-    const [open, setOpen] = useState(false);
+  return (
+    <Box
+      sx={{
+        width: 320,
+        pt: 2,
+      }}
+    >
+      <Typography variant="h5" mb={4}>
+        Meus Aplicativos
+      </Typography>
 
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Box p={0}>
+            <AppLinks />
+          </Box>
+        </Grid>
+      </Grid>
 
-    return (
-        <>
-            <IconButton
-                size="large"
-                aria-label="mostrar aplicativos"
-                color="inherit"
-                onClick={toggleDrawer}
-                sx={{
-                    color: 'text.secondary'
-                }}
-            >
-                <IconGridDots size="21" stroke="1.5" />
-            </IconButton>
-
-            <Drawer
-                anchor="right"
-                open={open}
-                onClose={toggleDrawer}
-            >
-                <Box
-                    sx={{
-                        width: 320,
-                        p: 3
-                    }}
-                >
-                    <Typography variant="h5" mb={3}>
-                        Meus Aplicativos
-                    </Typography>
-
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <Box p={0}>
-                                <AppLinks />
-                                
-                            </Box>
-                        </Grid>
-                    </Grid>
-
-                </Box>
-            </Drawer>
-        </>
-    );
+      <Divider sx={{ mt: 1 }} />
+    </Box>
+  );
 };
 
 export default MyAppsDrawer;

@@ -8,7 +8,7 @@ const AppDD = () => {
 
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <Box sx={{ display: {md: 'flex', xs : 'none'}, alignItems: 'center', gap: 2 }}>
       <Button
         color="inherit"
         sx={{

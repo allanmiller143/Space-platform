@@ -8,6 +8,7 @@ import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import MyAppsDrawer from '../../horizontal/header/myappsDrawer';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -116,6 +117,8 @@ const Profile = () => {
             </Stack>
             
             <Divider />
+            <MyAppsDrawer />
+            
             {
               currentUserls && currentUserls.type === 'client' ?
                 <Box> 

@@ -21,6 +21,8 @@ const Header = () => {
         zIndex: 1101,
         width: '100%',
         backdropFilter: 'blur(4px)',
+        pl : 2,
+        pr : 1,
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
         '&:after': {
           content: '""',
@@ -58,13 +60,9 @@ const Header = () => {
               >
                 Login
               </Button>
-              <Button color="primary" component={Link} to="/auth/register2">
-                Criar conta
-              </Button>
             </>
           ) : (
             <>
-              <MyAppsDrawer />
               <Notifications />
               <Profile />
             </>
