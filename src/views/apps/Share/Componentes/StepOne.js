@@ -4,8 +4,12 @@ import { toast } from "sonner";
 import Helper from "./Helper";
 import { getData } from "../../../../Services/Api";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useEffect, useState } from "react";
 
 const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores, corretores, setFilteredCorretores, setActiveStep }) => {
+
+  const [stillLoading, setStillLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let requiredFields;
@@ -29,9 +33,29 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
     }
 
 
-    if(corretores.length === 0){
-      setIsLoading(true);
+    if(corretores.length === 0 && !stillLoading){
+      console.log('entrei aqui')
+      loadRealtors(false);
 
+    }else{
+      setActiveStep(1); 
+    }
+
+    console.log(formData);
+  };
+
+  useEffect(() => {
+    loadRealtors(true);
+  }, []);
+
+  async function loadRealtors(onOpen) {
+    if((corretores.length === 0 || onOpen) && !stillLoading){
+      if(!onOpen){
+        setIsLoading(true);
+      }else{
+        setStillLoading(true);
+      }
+      
       try {
         const response = await getData(`realtor`);
         if (response.status === 200 || response.status === 201) {
@@ -47,15 +71,18 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
         console.error(error);
       } finally {
         setIsLoading(false); // Desativa o loading
-        setActiveStep(1); // Avança para o próximo passo
 
+        if(!onOpen){
+          setActiveStep(1); // Avança para o próximo passo
+        }else{
+          setStillLoading(false);
+        }
       }
-  }else{
-    setActiveStep(1); // Avança para o próximo passo
-  }
+    }else{
+      setActiveStep(1);
+    }
 
-    console.log(formData);
-  };
+  }
 
 
   const vantagens = [

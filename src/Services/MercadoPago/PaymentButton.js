@@ -1,72 +1,43 @@
-import React, { useEffect } from 'react';
+import { Button } from '@mui/material';
+import { postData } from '../Api';
+import { useState } from 'react';
 
 const PaymentButton = () => {
-  useEffect(() => {
-    const initializeMercadoPago = async () => {
-      if (window.MercadoPago) {
-        console.log('MercadoPago SDK carregado com sucesso.');
-        const mp = new window.MercadoPago('APP_USR-e03e96fc-0a8f-438e-8027-adbea0efc60c', {
-          locale: 'pt-BR', // Define o idioma do checkout
-        });
+  const [loading, setLoading] = useState(false);
+  const [ticketUrl, setTicketUrl] = useState(false);
+  const data = {
+    items: [
+      {
+        title: 'Produto Teste',
+        unit_price: 1,
+        quantity: 1,
+      },
+    ],
+  };
 
-        const checkoutButton = document.getElementById('checkout-button');
-
-        // Verifique se o botão está disponível
-        if (checkoutButton) {
-          checkoutButton.addEventListener('click', async () => {
-            console.log('Botão de pagamento clicado');
-            try {
-              const response = await fetch('https://advanced-mosquito-usually.ngrok-free.app/criar-preferencia', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  items: [
-                    {
-                      title: 'Produto Teste',
-                      unit_price: 1,
-                      quantity: 1,
-                    },
-                  ],
-                }),
-              });
-
-              const data = await response.json();
-              console.log('Dados da preferência:', data);
-
-              mp.checkout({
-                preference: {
-                  id: data.id,
-                },
-                autoOpen: true,
-              });
-            } catch (error) {
-              console.error('Erro ao iniciar pagamento:', error);
-            }
-          });
-        } else {
-          console.error('Botão de pagamento não encontrado.');
-        }
+  const handlePost = async () => {
+    setLoading(true);
+    try {
+      const response = await postData('criar-preferencia', data);
+      if (response.status === 200 || response.status === 201) {
+        console.log('Operação concluída com sucesso.');
+        setTicketUrl(response.data.point_of_interaction.transaction_data.ticketUrl)
       } else {
-        console.error('MercadoPago SDK não está disponível.');
+        console.log('Erro na operação do else, status:', response.status);
       }
-    };
-
-    // Aguarda o carregamento completo da janela
-    window.addEventListener('load', initializeMercadoPago);
-
-    // Limpa o evento ao desmontar o componente
-    return () => {
-      window.removeEventListener('load', initializeMercadoPago);
-    };
-  }, []);
+    } catch (e) {
+      console.log(`Erro ao realizar a operação: ${e}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <button id="checkout-button">Pagar</button>
-      {console.log('Botão renderizado')}
-    </>
+    <Button onClick={handlePost} disabled={loading}>
+      {loading ? 'Gerando PIX...' : 'Pagar'}
+    </Button>
+
+    
   );
 };
 

@@ -43,7 +43,7 @@ const SharePropertyForm = () => {
               : "ambos",
           valorVenda: response.userInfo.prices.sellPrice || "",
           valorAluguel: response.userInfo.prices.rentPrice || "",
-          comissao: response.userInfo.commission,
+          comissao: 2,
           property: response.userInfo,
         });
       } else {

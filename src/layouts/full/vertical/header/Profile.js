@@ -61,6 +61,7 @@ const Profile = () => {
         sx={{
           ...(typeof anchorEl2 === 'object' && {
             color: 'primary.main',
+            zIndex: 10000
           }),
         }}
         onClick={handleClick2}
@@ -95,7 +96,7 @@ const Profile = () => {
             <Stack direction="row" py={3} spacing={2} alignItems="center">
               <Avatar src={profileImageUrl} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
               <Box>
-                <Typography variant="subtitle2" color="textPrimary" fontWeight={600}>
+                <Typography variant="subtitle2" color="textPrimary" fontWeight={600} sx = {{zIndex: 100}}>
                   {name}
                 </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
