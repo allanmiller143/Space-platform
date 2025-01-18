@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Grid, Box, Stack, Typography } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthLogin from '../authForms/AuthLogin';
+import HpHeader from '../../../components/frontend-pages/shared/header/HpHeader';
 
 const Login = () => (
   <PageContainer title="Login" description="Acesse sua conta">
+    <HpHeader/>
     <Grid
       container
       spacing={0}
@@ -16,8 +17,8 @@ const Login = () => (
     >
       <Grid
         item
-        xs={12}
-        sm={12}
+        xs={0}
+        sm={0}
         lg={7}
         xl={8}
         sx={{
@@ -48,8 +49,7 @@ const Login = () => (
           boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <Box p={4} width="100%" maxWidth="400px">
-          <Logo />
+        <Box px={4} py ={0} width="100%" maxWidth="400px">
           <AuthLogin
             title="Bem-vindo de volta"
             subtext={
