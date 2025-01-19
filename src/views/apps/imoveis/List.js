@@ -49,19 +49,19 @@ function Page() {
                 Imóveis
               </Typography>
               <Typography variant="h5" color="text.secondary" paragraph fontWeight={400} fontSize={ { xs: '14px', md: '16px' }}>
-                Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. Publique novos anúncios, atualize informações existentes e mantenha seus prontos para venda.
+                Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. 
               </Typography>
-              <Stack sx = {{flexDirection :{xs : 'column', md : 'row'},width : '100%', alignItems : {md : 'end',xs : 'start'}, gap : {xs : 0, md : 2}}} spacing={2} mt={4} >
+              <Stack sx = {{flexDirection :'row',width : '100%', alignItems : 'end', gap: 2}} spacing={2} >
                 <Button 
                     variant="contained" 
                     onClick={handleOpenDialog}
                     color="primary" 
                     startIcon={<IconPlus size={20} />}
                   >
-                    Adicionar Novo Imóvel
+                    Novo Imóvel
                   </Button>
                   <Button variant="outlined" href="#" color="primary" startIcon={<IconCalendar size={20} />} onClick={() => navigate('/apps/agenda')}>
-                    Cadastrar Horários para visitas
+                    Horários
                   </Button>
               </Stack>
             </Grid>
