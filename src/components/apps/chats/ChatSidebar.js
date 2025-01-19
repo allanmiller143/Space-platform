@@ -16,6 +16,7 @@ const ChatSidebar = ({ isMobileSidebarOpen, onSidebarClose }) => {
       variant={lgUp ? 'permanent' : 'temporary'}
       sx={{
         width: drawerWidth,
+        display: { xs: 'none', sm: 'block' },
         flexShrink: 0,
         zIndex: lgUp ? 0 : 1,
         [`& .MuiDrawer-paper`]: { position: 'relative' },

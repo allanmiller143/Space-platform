@@ -37,7 +37,9 @@ const ChatListing = ({ socket }) => {
 
   // useEffect para carregar os chats na montagem do componente
   useEffect(() => {
-    fetchUserChats();
+    if(userChats.length === 0){
+      fetchUserChats();
+    }
   }, []);
 
   // useEffect para filtrar os chats conforme o usuário digita

@@ -2,24 +2,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { 
-  Box, 
-  IconButton, 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  DialogActions, 
-  Button, 
-  Typography, 
-  Collapse, 
-  Grid 
-} from '@mui/material';
-import { Cancel, ExpandMore, ExpandLess } from '@mui/icons-material';
-import QRCode from 'react-qr-code'; // Instale com `npm install react-qr-code`
+import { Box, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Collapse, Grid } from '@mui/material';
+import { Cancel, ExpandMore, ExpandLess, Payment } from '@mui/icons-material';
+import PaymentButton from '../../../../Services/MercadoPago/PaymentButton';
 
 const LimitAdvice = ({ openDialog, setOpenDialog }) => {
   const [expanded, setExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const handleDialogClose = () => {
     setOpenDialog(false);
@@ -30,9 +20,42 @@ const LimitAdvice = ({ openDialog, setOpenDialog }) => {
   };
 
   const paymentOptions = [
-    { label: "10 Postagens - R$ 10,90", value: "pix_10", price: "10,90" },
-    { label: "20 Postagens - R$ 15,90", value: "pix_20", price: "15,90" },
-    { label: "30 Postagens - R$ 20,90", value: "pix_30", price: "20,90" },
+    { label: "10 Postagens - R$ 10,90", value: "pix_10", price: "10,90", data : {
+      transaction_amount: 0.1,
+      description: "aumentar o limite de postagens de imóveis para 10",
+      payment_method_id: "pix",
+      payer: {
+        email: currentUser.email,
+        identification: {
+          type: "CPF",
+          number: currentUser.info.cpf,
+        },
+      },
+    } },
+    { label: "20 Postagens - R$ 15,90", value: "pix_20", price: "15,90", data : {
+      transaction_amount: 0.2,
+      description: "aumentar o limite de postagens de imóveis para 20",
+      payment_method_id: "pix",
+      payer: {
+        email: currentUser.email,
+        identification: {
+          type: "CPF",
+          number: currentUser.info.cpf,
+        },
+      },
+    }},
+    { label: "30 Postagens - R$ 20,90", value: "pix_30", price: "20,90", data : {
+      transaction_amount: 0.3,
+      description: "aumentar o limite de postagens de imóveis para 30",
+      payment_method_id: "pix",
+      payer: {
+        email: currentUser.email,
+        identification: {
+          type: "CPF",
+          number: currentUser.info.cpf,
+        },
+      },
+    }},
   ];
 
   return (
@@ -85,41 +108,12 @@ const LimitAdvice = ({ openDialog, setOpenDialog }) => {
                 onClick={() => setSelectedOption(option.value)}
               >
                 <Typography variant="body1">{option.label}</Typography>
-                <QRCode value={`PIX:${option.value}`} size={50} />
+                <PaymentButton data={option.data} close={handleDialogClose}/>
               </Box>
             ))}
           </Box>
         </Collapse>
       </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={handleDialogClose}
-          color="secondary"
-          style={{
-            textTransform: 'none',
-            borderRadius: '8px',
-            padding: '8px 16px',
-            backgroundColor: '#f50057',
-            color: 'white',
-          }}
-        >
-          Cancelar
-        </Button>
-        <Button
-          onClick={() => alert(`Você escolheu: ${selectedOption}`)}
-          color="primary"
-          disabled={!selectedOption}
-          style={{
-            textTransform: 'none',
-            borderRadius: '8px',
-            padding: '8px 16px',
-            backgroundColor: selectedOption ? '#3f51b5' : '#ccc',
-            color: selectedOption ? 'white' : '#666',
-          }}
-        >
-          Confirmar Pagamento
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };

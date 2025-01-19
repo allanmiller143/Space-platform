@@ -13,6 +13,7 @@ import { Typography } from 'antd';
 import Usuarios from '../Telas/Usuarios';
 import Propriedades from '../Telas/Propriedades';
 import ProfessionalForm from './ProfessionalForm';
+import Teste from '../Teste';
 const Tela = () => {
   const { socket } = useContext(NotificationContext);
   const [selectedPage, setSelectedPage] = useState('Usuários'); // Estado para armazenar a página atual
@@ -25,7 +26,7 @@ const Tela = () => {
       case 'Propriedades':
         return <Propriedades/>;
       case 'Send email':
-        return <ProfessionalForm/>;
+        return <Teste/>;
       case 'Drafts':
         return <Typography variant="h4">View your saved drafts!</Typography>;
       case 'All mail':

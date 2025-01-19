@@ -14,8 +14,9 @@ import Spinner from '../../../views/spinner/Spinner';
 import ChatsMessages from './ChatMessages/ChatsMessages';
 import ChatInsideSidebar from './ChatInsideSidebar';
 import  socket  from '../../../Services/socket';
+import { ArrowBack } from '@mui/icons-material';
 
-const ChatContent = ({ toggleChatSidebar }) => {
+const ChatContent = () => {
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
   const [dragging, setDragging] = useState(false);
   const messagesEndRef = useRef(null);
@@ -92,15 +93,7 @@ const ChatContent = ({ toggleChatSidebar }) => {
 
   return (
     <Box display="flex" flexDirection="column" height="100%" sx = {{position : 'relative'}} >
-      <Box
-        sx={{
-          display: { xs: 'block', sm: 'none', lg: 'none' },
-          ml: '20px',
-          mt: '10px',
-        }}
-      >
-        <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
-      </Box>
+
       {
         activeChat ? (
           <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" minHeight={'430px'} onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
@@ -108,6 +101,18 @@ const ChatContent = ({ toggleChatSidebar }) => {
             <Box>
               <Box display="flex" alignItems="center" p={2} position={'relative'}>
                 <ListItem  dense disableGutters sx={{ gap: 1 }}>
+                  <Box
+                      sx={{
+                        display: { xs: 'block', sm: 'none', lg: 'none' },
+                        ml: '5px',
+                        mr: '10px',
+                        mt: '10px',
+                      }}
+                    >
+                      <ArrowBack stroke={1.5} onClick={()=>{setSelectedUser(null);setActiveChat(null);setMessages([]);
+                        
+                      }} />
+                  </Box>
                   <Avatar alt="imagem de perfil" src={selectedUser.profile ? selectedUser.profile.url : ''} />
                   <Typography variant="h5">{selectedUser.name}</Typography>
                 </ListItem>

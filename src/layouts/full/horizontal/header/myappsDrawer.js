@@ -1,7 +1,7 @@
 import { Box, Typography, Grid, Divider } from '@mui/material';
 import AppLinks from '../../vertical/header/AppLinks';
 
-const MyAppsDrawer = () => {
+const MyAppsDrawer = ({close}) => {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ const MyAppsDrawer = () => {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Box p={0}>
-            <AppLinks />
+            <AppLinks close={close} />
           </Box>
         </Grid>
       </Grid>

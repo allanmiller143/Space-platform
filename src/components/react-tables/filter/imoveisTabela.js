@@ -287,7 +287,6 @@ const ImoveisTableList = () => {
         />
       )}
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
-      {/* {openAdviceDialog &&(<Step5_Modal open={openAdviceDialog} handleClose={()=> setOpenAdviceDialog(false)} />)} */}
 
     </Paper>
 

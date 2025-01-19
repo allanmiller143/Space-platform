@@ -86,7 +86,7 @@ const ImagensEdit = ({ formData, setFormData }) => {
       {/* Área para a foto de capa */}
       {coverImage && (
         <Box mb={4}>
-          <Typography variant="h6">Foto de Capa</Typography>
+          <Typography variant="h6" mb={2}>Foto de Capa</Typography>
           <Card sx={{ maxWidth: 300, margin: '0 auto', border: '2px solid green', position: 'relative' }}>
             <CardMedia
               component="img"
@@ -159,9 +159,9 @@ const ImagensEdit = ({ formData, setFormData }) => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          sx={{ display: 'inline-block', margin: '10px', position: 'relative' }}
+                          sx={{ display: 'inline-block', margin: '5px', position: 'relative' }}
                         >
-                          <Box sx={{ width: 120, height: 120, border: '1px solid #ccc', position: 'relative' }}>
+                          <Grid sx={{ border: '1px solid #ccc', position: 'relative' }}>
                             <img
                               src={file.preview}
                               alt={file.name}
@@ -173,7 +173,7 @@ const ImagensEdit = ({ formData, setFormData }) => {
                             >
                               <MoreVertIcon />
                             </IconButton>
-                          </Box>
+                          </Grid>
                         </Box>
                       )}
                     </Draggable>

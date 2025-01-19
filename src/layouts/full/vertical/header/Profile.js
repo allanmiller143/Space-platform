@@ -29,11 +29,11 @@ const Profile = () => {
   };
 
   const toProfilePage = () => {
+    handleClose2();
     if(currentUserls && currentUserls.type !== 'client') {
       navigate(`/user-profile/${email.replaceAll(/[.]/g, '-')}`);
     }else{
       navigate('/auth/complete-register2');
-
     }
   };
 
@@ -117,7 +117,6 @@ const Profile = () => {
             </Stack>
             
             <Divider />
-            <MyAppsDrawer />
             
             {
               currentUserls && currentUserls.type === 'client' ?
@@ -177,6 +176,8 @@ const Profile = () => {
                 </Box> 
               :
               <Box> 
+              <MyAppsDrawer close = {handleClose2} />
+
               {dropdownData.profile.map((profile) => (
               <Box key={profile.title}>
                 <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">

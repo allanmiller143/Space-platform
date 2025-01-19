@@ -24,7 +24,7 @@ const steps = [
 ];
 
 const EditImovel = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const token = localStorage.getItem('token');
