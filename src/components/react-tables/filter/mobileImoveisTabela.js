@@ -126,7 +126,7 @@ const MobileImoveisCards = () => {
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <Paper>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <Box p={1}>
         {isLoading && <Loading data={{ open: isLoading }} />}
 
