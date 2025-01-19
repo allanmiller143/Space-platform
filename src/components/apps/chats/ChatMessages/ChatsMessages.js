@@ -18,7 +18,7 @@ const ChatsMessages = ({ message }) => {
   const currentUserls = JSON.parse(cuString);
 
   return (
-    <Box>
+    <Box sx = {{backgroundColor : 'purple'}}>
       {message.senderEmail !== currentUserls.email ? (
         <Box display="flex" gap={2}>
           <Avatar

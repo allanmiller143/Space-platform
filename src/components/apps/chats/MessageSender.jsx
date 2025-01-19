@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import PlaygroundSpeedDial from './ChatFIleOptions';
 import AudioRecorder from './AudioMessage/AudioRecorder';
 import ChatContext from './ChatContext/ChatContext';
+import { Box } from '@mui/material';
 
 
 const { TextArea } = Input;
@@ -64,7 +65,7 @@ const MessageSender = ({ socket }) => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'end', padding: 10, position: 'relative', width: '100%',justifyContent: 'center'}}>
+    <Box  sx = {{ px : {lg: "10px", xs: "5px" } ,py : "10px" , display:  'flex', alignItems: 'end', position: 'relative', width: '100%',justifyContent: 'center'}} >
       <PlaygroundSpeedDial socket={socket} />
       <div style={{ flexGrow: 1, display: 'flex', paddingLeft: 50,paddingBottom: 8, alignItems: 'end', paddingRight: 10 }}>
         <StyledTextArea
@@ -83,7 +84,7 @@ const MessageSender = ({ socket }) => {
         
       </div>        
 
-    </div>
+    </Box>
   );
 };
 

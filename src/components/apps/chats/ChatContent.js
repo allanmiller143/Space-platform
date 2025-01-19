@@ -2,10 +2,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect,useRef, useState } from 'react';
 import { Typography, Divider, Avatar, ListItem, ListItemText, ListItemAvatar, IconButton, Box, Stack, Badge, useMediaQuery, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
-import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
-import { useSelector } from 'react-redux';
-import Scrollbar from 'src/components/custom-scroll/Scrollbar';
-import ChatNoConversationSelected from './ChatNoConversationSelected';
 import ChatContext from './ChatContext/ChatContext';
 import MessageSender from './MessageSender';
 import { openNewChat } from './ChatService/Api';
@@ -92,19 +88,28 @@ const ChatContent = () => {
 
 
   return (
-    <Box display="flex" flexDirection="column" height="100%" sx = {{position : 'relative'}} >
+    <Box display="flex" flexDirection="column" height="100%" maxHeight='90vh' sx = {{position : 'relative',}} >
 
       {
         activeChat ? (
-          <Box display="flex" flexDirection="column" height="100%" maxHeight="700px" minHeight={'430px'} onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
-            <>
-            <Box>
+          <Box display="flex" flexDirection="column" height="100%"  minHeight={'430px'} onDragOver={handleDragOver} onDragLeave={handleDragLeave }onDrop={handleDrop} sx = {{position : 'relative'}} >
+
+            {
+              loadingChat && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                  <Spinner />
+                </Box>
+              )
+            }
+            {!loadingChat && (  
+            <Box height={'100%'} sx ={{display: 'flex', flexDirection: 'column', justifyContent : 'space-between'}}>
+            <Box >
               <Box display="flex" alignItems="center" p={2} position={'relative'}>
                 <ListItem  dense disableGutters sx={{ gap: 1 }}>
                   <Box
                       sx={{
                         display: { xs: 'block', sm: 'none', lg: 'none' },
-                        ml: '5px',
+                        ml: '-20px',
                         mr: '10px',
                         mt: '10px',
                       }}
@@ -116,34 +121,34 @@ const ChatContent = () => {
                   <Avatar alt="imagem de perfil" src={selectedUser.profile ? selectedUser.profile.url : ''} />
                   <Typography variant="h5">{selectedUser.name}</Typography>
                 </ListItem>
-                <Stack direction={'row'}>
-                  {/* <IconButton aria-label="mais opções" onClick={() => setIsInSidebar(!isInSidebar)}>
-                    <IconDotsVertical stroke={1.5} />
-                  </IconButton> */}
-                </Stack>
               </Box>
               <Divider />
             </Box>
-            {
-              loadingChat && (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                  <Spinner />
-                </Box>
-              )
-            }
-            <Box flexGrow={1} overflow="hidden" >
-              <Scrollbar sx={{ height: '100%', overflow: 'auto' }}>
-                <Box p={3}>
-                  {messages.map((message) => (
-                    <Box key={message.id}>
-                      <ChatsMessages message={message}/>
-                    </Box>
-                  ))}
-                </Box>     
-                <div ref={messagesEndRef} />
-              </Scrollbar>
+              
+            <Box
+  sx={{
+    flex: 1, // Ocupa o máximo de espaço disponível
+    overflowY: 'auto', // Adiciona scroll apenas no eixo vertical
+    minHeight: '100px', // Evita que o contêiner desapareça
+    p: { lg: 3, xs: 1 },
+  }}
+>
+  {messages.map((message) => (
+    <Box key={message.id}>
+      <ChatsMessages message={message} />
+    </Box>
+  ))}
+  <div ref={messagesEndRef} />
+</Box>
+
+
+              <Box>
+               <Divider />
+                <MessageSender socket = {socket} />
+              </Box>
             </Box>
-          </>
+            )}
+
             {dragging && (
             <Box
               sx={{
@@ -174,11 +179,7 @@ const ChatContent = () => {
         )
       }
       <ChatInsideSidebar isInSidebar={isInSidebar} setIsInSidebar = {setIsInSidebar} />
-      {(activeChat && !loadingChat) ?  
-      <Box>
-        <Divider />
-        <MessageSender socket = {socket} sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 1 }} />
-      </Box> : null}    
+ 
     </Box>
   );
 };

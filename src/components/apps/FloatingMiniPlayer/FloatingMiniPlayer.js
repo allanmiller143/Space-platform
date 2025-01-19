@@ -42,7 +42,7 @@ const FloatingMiniPlayer = ({ content, onClose }) => {
         </Box>
 
         {/* Conteúdo */}
-        <Box sx={{ height: "80%" }}>
+        <Box sx={{ height: "100%" }}>
           {content || <Typography>Seu conteúdo aqui!</Typography>}
         </Box>
       </Box>

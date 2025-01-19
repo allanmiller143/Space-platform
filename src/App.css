@@ -35,3 +35,10 @@
 .css-17vbkzs-MuiFormControl-root-MuiTextField-root{
     margin-top: 2px !important;
 }
+
+@media (max-width: 1199.98px) {
+    .css-gshwue-MuiContainer-root {
+      padding-top: 10px !important;
+    }
+  }
+  

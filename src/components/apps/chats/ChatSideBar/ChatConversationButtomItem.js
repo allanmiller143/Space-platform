@@ -22,7 +22,7 @@ const ChatConversationButtomItem = ({ chat }) => {
       }} // Define o chat como ativo ao clicar
       sx={{
         py: 1,
-        px: 3,
+        px: { lg: 2, xs: 1},
         alignItems: 'center',
         backgroundColor: isSelected ? 'rgba(0, 123, 255, 0.1)' : 'transparent', // Altera a cor de fundo do chat ativo
         '&:hover': {

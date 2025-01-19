@@ -3,9 +3,9 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://advanced-mosquito-usually.ngrok-free.app/';
+//const apiUrl = 'https://advanced-mosquito-usually.ngrok-free.app/';
 //const apiUrl = 'https://spaceimoveis-api-83y4.onrender.com/'; //link para deploy real 
-//const apiUrl = 'https://spaceimoveis-api-dev.onrender.com/'
+const apiUrl = 'https://spaceimoveis-api-dev.onrender.com/'
 
 export async function getData(url= '',token = '') {
   try {

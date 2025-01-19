@@ -17,26 +17,36 @@ const Chats = () => {
   const { selectedUser } = useContext(ChatContext);
 
   // Verifica se a tela é menor que o breakpoint `md`
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+  const content = (
+    <>
+      <ChatSidebar
+        isMobileSidebarOpen={isMobileSidebarOpen}
+        onSidebarClose={() => setMobileSidebarOpen(false)}
+        socket={socket}
+      />
+      <Box flexGrow={1}>
+        {isSmallScreen && !selectedUser ? (
+          <ChatListing socket={socket} />
+        ) : (
+          <ChatContent socket={socket} />
+        )}
+      </Box>
+    </>
+  );
 
   return (
-    <PageContainer title="Chat" description="">
-      <AppCard>
-        <ChatSidebar
-          isMobileSidebarOpen={isMobileSidebarOpen}
-          onSidebarClose={() => setMobileSidebarOpen(false)}
-          socket={socket}
-        />
-
-        <Box flexGrow={1}>
-          {isSmallScreen && !selectedUser ? (
-            <ChatListing socket={socket} />
-          ) : (
-            <ChatContent socket={socket} />
-          )}
-        </Box>
-      </AppCard>
-    </PageContainer>
+<Box 
+    sx={{
+      height: '100%', // Altura máxima da tela
+      maxHeight: '90vh',
+      display: 'flex', // Para garantir que os filhos sejam posicionados corretamente
+      flexDirection: 'column', // Garantir a direção vertical dos filhos
+    }}
+  >
+    {isSmallScreen ? <AppCard mobile = {true}>{content}</AppCard> : <AppCard>{content}</AppCard>}
+  </Box>
   );
 };
 

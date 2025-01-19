@@ -60,8 +60,8 @@ const ChatListing = ({ socket }) => {
   };
 
   return (
-    <div>
-      <Box display={'flex'} alignItems="center" gap="10px" p={3}>
+    <Box >
+      <Box display={'flex'} alignItems="center" gap="10px" py ={2} sx={{ px: { lg: 2, xs: 1 } }}>
         <Avatar alt="Remy Sharp" src={currentUserls.profile && currentUserls?.profile.url} sx={{ width: 54, height: 54 }} />
         <Box>
           <Typography variant="body1" fontWeight={600}>
@@ -77,7 +77,7 @@ const ChatListing = ({ socket }) => {
         </Box>
       </Box>
 
-      <Box px={3} py={1}>
+      <Box sx={{ px: { lg: 2, xs: 1 }}}>
         <TextField
           id="outlined-search"
           placeholder="Buscar contatos"
@@ -118,7 +118,7 @@ const ChatListing = ({ socket }) => {
           )}
         </Scrollbar>
       </List>
-    </div>
+    </Box>
   );
 };
 
