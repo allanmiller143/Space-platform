@@ -2,6 +2,6 @@
 
 import React from 'react';
 
-const marketplaceContext = React.createContext([]);
+const MarketplaceContext = React.createContext([]);
 
-export default marketplaceContext;
+export default MarketplaceContext;
