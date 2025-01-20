@@ -21,8 +21,9 @@ const LimitAdvice = ({ openDialog, setOpenDialog }) => {
 
   const paymentOptions = [
     { label: "10 Postagens - R$ 10,90", value: "pix_10", price: "10,90", data : {
-      transaction_amount: 0.1,
-      description: "aumentar o limite de postagens de imóveis para 10",
+      transaction_amount: 10.99,
+      new_limit : 10,
+      description: "Aumentar o limite de postagens de imóveis para 10",
       payment_method_id: "pix",
       payer: {
         email: currentUser.email,
@@ -33,8 +34,9 @@ const LimitAdvice = ({ openDialog, setOpenDialog }) => {
       },
     } },
     { label: "20 Postagens - R$ 15,90", value: "pix_20", price: "15,90", data : {
-      transaction_amount: 0.2,
-      description: "aumentar o limite de postagens de imóveis para 20",
+      transaction_amount: 15.99,
+      new_limit : 20,
+      description: "Aumentar o limite de postagens de imóveis para 20",
       payment_method_id: "pix",
       payer: {
         email: currentUser.email,
@@ -45,8 +47,9 @@ const LimitAdvice = ({ openDialog, setOpenDialog }) => {
       },
     }},
     { label: "30 Postagens - R$ 20,90", value: "pix_30", price: "20,90", data : {
-      transaction_amount: 0.3,
-      description: "aumentar o limite de postagens de imóveis para 30",
+      transaction_amount: 20.99,
+      new_limit : 30,
+      description: "Aumentar o limite de postagens de imóveis para 30",
       payment_method_id: "pix",
       payer: {
         email: currentUser.email,

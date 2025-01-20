@@ -53,7 +53,7 @@ const BlogCard = ({ post }) => {
             animation="wave"
             variant="square"
             width="100%"
-            height={400}
+            height={440}
             sx={{ borderRadius: (theme) => theme.shape.borderRadius / 5 }}
           ></Skeleton>
         </>
@@ -88,17 +88,27 @@ const BlogCard = ({ post }) => {
                 >
                   {post.address.street} - {post.address.number}, {post.address.city} - {post.address.state}
                 </Typography>
-
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  {/* Preço de Venda */}
                   {(post.announcementType === 'both' || post.announcementType === 'sell') && (
-                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', my: 1 }}>
-                        R$ {formatPrice(post.prices.sellPrice)}
+                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
+                      R$ {formatPrice(post.prices.sellPrice)}
                     </Typography>
                   )}
+
+                  {/* Separador */}
+                  {(post.announcementType === 'both' || post.announcementType === 'sell') &&
+                    (post.announcementType === 'both' || post.announcementType === 'rent') && (
+                      <Typography variant="body1" sx={{ mx: 1 }}>|</Typography>
+                    )}
+
+                  {/* Preço de Aluguel */}
                   {(post.announcementType === 'both' || post.announcementType === 'rent') && (
-                    <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', mb: 1 }}>
-                        R$ {formatPrice(post.prices.rentPrice)} / mês
+                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
+                      R$ {formatPrice(post.prices.rentPrice)} / mês
                     </Typography>
                   )}
+                </Box>
               
               </Box>
               <Stack direction="row" gap={3} alignItems="center">

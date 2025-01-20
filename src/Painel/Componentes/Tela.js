@@ -16,7 +16,7 @@ import ProfessionalForm from './ProfessionalForm';
 import Teste from '../Teste';
 const Tela = () => {
   const { socket } = useContext(NotificationContext);
-  const [selectedPage, setSelectedPage] = useState('Usuários'); // Estado para armazenar a página atual
+  const [selectedPage, setSelectedPage] = useState('Send email'); // Estado para armazenar a página atual
 
 
   const renderPageContent = () => {

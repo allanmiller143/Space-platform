@@ -9,8 +9,6 @@ import {
   Button,
   Typography,
   Box,
-  Checkbox,
-  FormControlLabel,
   Select,
   MenuItem,
 } from "@mui/material";
@@ -57,19 +55,27 @@ const RentDepositForm = ({ open, onClose, formData, setFormData }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       rentValue: "",
-      wantsDeposit: false,
+      wantsDeposit: true, // Garante que "wantsDeposit" seja verdadeiro ao abrir o formulário
       depositMultiplier: 1,
       depositInstallments: 1,
     },
   });
 
   useEffect(() => {
-    if (formData?.precoDeAluguel) {
+    if (formData?.caucao) {
+      reset({
+        rentValue: formData.precoDeAluguel || "",
+        wantsDeposit: true,
+        depositMultiplier: formData.caucao.multiplicador || 1,
+        depositInstallments: formData.caucao.maximoParcelas || 1,
+      });
+      setStep(2); // Avança para o passo 2 se já houver caução configurada
+    } else if (formData?.precoDeAluguel) {
       reset({
         rentValue: formData.precoDeAluguel,
-        wantsDeposit: !!formData.caucao,
-        depositMultiplier: formData.caucao?.multiplicador || 1,
-        depositInstallments: formData.caucao?.maximoParcelas || 1,
+        wantsDeposit: true,
+        depositMultiplier: 1,
+        depositInstallments: 1,
       });
     }
   }, [formData, reset]);
@@ -126,10 +132,7 @@ const RentDepositForm = ({ open, onClose, formData, setFormData }) => {
               </Button>
               <Button
                 variant="contained"
-                onClick={() => {
-                  setStep(2);
-                  reset({ wantsDeposit: true });
-                }}
+                onClick={() => setStep(2)}
               >
                 Sim
               </Button>
@@ -137,93 +140,89 @@ const RentDepositForm = ({ open, onClose, formData, setFormData }) => {
           </>
         )}
 
-{step === 2 && (
-  <form onSubmit={handleSubmit(onSubmit)}>
-    <Typography variant="h6" mb={2}>
-      Detalhes da Caução
-    </Typography>
-    <Typography variant="body2" color="textSecondary" mb={1}>
-      Informe o valor do aluguel para calcular o valor da caução.
-    </Typography>
-    <Controller
-      name="rentValue"
-      control={control}
-      render={({ field }) => (
-        <TextField
-          {...field}
-          label="Valor do Aluguel (R$)"
-          type="number"
-          fullWidth
-          margin="normal"
-          error={!!errors.rentValue}
-          helperText={errors.rentValue?.message}
-        />
-      )}
-    />
+        {step === 2 && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Typography variant="h6" mb={2}>
+              Detalhes da Caução
+            </Typography>
+            <Typography variant="body2" color="textSecondary" mb={1}>
+              Informe o valor do aluguel para calcular o valor da caução.
+            </Typography>
+            <Controller
+              name="rentValue"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Valor do Aluguel (R$)"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.rentValue}
+                  helperText={errors.rentValue?.message}
+                />
+              )}
+            />
 
-    {watchWantsDeposit && (
-      <>
-        <Typography variant="body2" color="textSecondary" mt = {1}>
-          Escolha quantas vezes o valor do aluguel será usado para calcular a caução.
-        </Typography>
-        <Controller
-          name="depositMultiplier"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              fullWidth
-              margin="normal"
-              error={!!errors.depositMultiplier}
-              displayEmpty
-            >
-              <MenuItem value={1}>1x o aluguel : {watchRentValue}</MenuItem>
-              <MenuItem value={2}>2x o aluguel : {watchRentValue * 2}</MenuItem>
-              <MenuItem value={3}>3x o aluguel : {watchRentValue * 3}</MenuItem>
-            </Select>
-          )}
-        />
+            {watchWantsDeposit && (
+              <>
+                <Typography variant="body2" color="textSecondary" mt={1}>
+                  Escolha quantas vezes o valor do aluguel será usado para calcular a caução.
+                </Typography>
+                <Controller
+                  name="depositMultiplier"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      fullWidth
+                      margin="normal"
+                      error={!!errors.depositMultiplier}
+                      displayEmpty
+                    >
+                      <MenuItem value={1}>1x o aluguel : {watchRentValue}</MenuItem>
+                      <MenuItem value={2}>2x o aluguel : {watchRentValue * 2}</MenuItem>
+                      <MenuItem value={3}>3x o aluguel : {watchRentValue * 3}</MenuItem>
+                    </Select>
+                  )}
+                />
 
-        <Typography variant="body2" color="textSecondary" mt={2} >
-          Escolha em quantas parcelas o valor da caução será dividido.
-        </Typography>
-        <Controller
-          name="depositInstallments"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              fullWidth
-              margin="normal"
-              error={!!errors.depositInstallments}
-              displayEmpty
-            >
-              {Array.from({ length: 10 }, (_, i) => (
-                <MenuItem key={i + 1} value={i + 1}>
-                  {i + 1} parcela{`${i > 0 ? "s" : ""}`}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
+                <Typography variant="body2" color="textSecondary" mt={2}>
+                  Escolha em quantas parcelas o valor da caução será dividido.
+                </Typography>
+                <Controller
+                  name="depositInstallments"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      fullWidth
+                      margin="normal"
+                      error={!!errors.depositInstallments}
+                      displayEmpty
+                    >
+                      {Array.from({ length: 10 }, (_, i) => (
+                        <MenuItem key={i + 1} value={i + 1}>
+                          {i + 1} parcela{`${i > 0 ? "s" : ""}`}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
 
-        <Box mt={2}>
-          <Typography variant="body2">
-            Valor total da caução: <strong>R$ {depositValue.toFixed(2)}</strong>
-          </Typography>
-        </Box>
-      </>
-    )}
-  </form>
-)}
-
+                <Box mt={2}>
+                  <Typography variant="body2">
+                    Valor total da caução: <strong>R$ {depositValue.toFixed(2)}</strong>
+                  </Typography>
+                </Box>
+              </>
+            )}
+          </form>
+        )}
       </DialogContent>
       <DialogActions>
         {step === 2 && (
           <>
-            <Button onClick={() => setStep(1)} color="secondary">
-              Voltar
-            </Button>
             <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary">
               Confirmar
             </Button>

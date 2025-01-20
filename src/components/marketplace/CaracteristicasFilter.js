@@ -52,7 +52,7 @@ const CaracteristicasFilter = ({ formData, setFormData }) => {
         <Box>
             <FormControl fullWidth margin="none">
                 <CustomFormLabel htmlFor="caracteristicas">Características</CustomFormLabel>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} mt = {'2px'}>
                     {Object.keys(labelMapping).map((key) => (
                         <Grid item xs={6} key={key}>
                             <FormControlLabel

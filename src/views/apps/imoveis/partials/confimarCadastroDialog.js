@@ -17,7 +17,6 @@ const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
   const token = localStorage.getItem('token');
 
   const handleClose = ()=> {
-
     setOpenAdviceDialog(false);
     navigate('/apps/imoveis/list');
   }

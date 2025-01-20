@@ -20,6 +20,8 @@ const ChatContent = () => {
   const [previewFiles, setPreviewFiles] = useState([]);
   const [loadingChat, setLoadingChat] = useState(false);
   const [isInSidebar, setIsInSidebar] = useState(false);
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
   };
@@ -88,7 +90,7 @@ const ChatContent = () => {
 
 
   return (
-    <Box display="flex" flexDirection="column" height="100%" maxHeight='90vh' sx = {{position : 'relative',}} >
+    <Box display="flex" flexDirection="column" height="100%" maxHeight = {isSmallScreen ? '100vh' : "90vh"} sx = {{position : 'relative',}} >
 
       {
         activeChat ? (
@@ -109,7 +111,7 @@ const ChatContent = () => {
                   <Box
                       sx={{
                         display: { xs: 'block', sm: 'none', lg: 'none' },
-                        ml: '-20px',
+                        ml: '-10px',
                         mr: '10px',
                         mt: '10px',
                       }}
@@ -126,20 +128,20 @@ const ChatContent = () => {
             </Box>
               
             <Box
-  sx={{
-    flex: 1, // Ocupa o máximo de espaço disponível
-    overflowY: 'auto', // Adiciona scroll apenas no eixo vertical
-    minHeight: '100px', // Evita que o contêiner desapareça
-    p: { lg: 3, xs: 1 },
-  }}
->
-  {messages.map((message) => (
-    <Box key={message.id}>
-      <ChatsMessages message={message} />
-    </Box>
-  ))}
-  <div ref={messagesEndRef} />
-</Box>
+              sx={{
+                flex: 1, // Ocupa o máximo de espaço disponível
+                overflowY: 'auto', // Adiciona scroll apenas no eixo vertical
+                minHeight: '100px', // Evita que o contêiner desapareça
+                p: { lg: 3, xs: 1 },
+              }}
+            >
+              {messages.map((message) => (
+                <Box key={message.id}>
+                  <ChatsMessages message={message} />
+                </Box>
+              ))}
+              <div ref={messagesEndRef} />
+            </Box>
 
 
               <Box>

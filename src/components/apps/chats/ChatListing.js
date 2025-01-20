@@ -61,7 +61,7 @@ const ChatListing = ({ socket }) => {
 
   return (
     <Box >
-      <Box display={'flex'} alignItems="center" gap="10px" py ={2} sx={{ px: { lg: 2, xs: 1 } }}>
+      <Box display={'flex'} alignItems="center" gap="10px" py ={2} sx={{ px: { lg: 2, xs: 2 } }}>
         <Avatar alt="Remy Sharp" src={currentUserls.profile && currentUserls?.profile.url} sx={{ width: 54, height: 54 }} />
         <Box>
           <Typography variant="body1" fontWeight={600}>
@@ -77,7 +77,7 @@ const ChatListing = ({ socket }) => {
         </Box>
       </Box>
 
-      <Box sx={{ px: { lg: 2, xs: 1 }}}>
+      <Box sx={{ px: { lg: 2, xs: 2 }}}>
         <TextField
           id="outlined-search"
           placeholder="Buscar contatos"
@@ -90,7 +90,7 @@ const ChatListing = ({ socket }) => {
         />
       </Box>
 
-      <List sx={{ px: 0 }}>
+      <List sx={{ px: 1 }}>
         <Scrollbar sx={{ height: { lg: 'calc(100vh - 100px)', md: '100vh' }, maxHeight: '600px' }}>
           {loading ? (
             // Skeleton loading effect

@@ -10,6 +10,7 @@ const TipoAnuncioFilter = ( {formData, setFormData}) => {
     const handleTipoAnuncioChange = (event) => {
         setFormData({ ...formData, announcementType: event.target.value });
       };
+      
     return (
         <Box>
             <FormControl fullWidth margin="none"> {/* Remove margem */}

@@ -10,16 +10,6 @@
     padding: 0px 4px 0px 5px !important;
 }
 
-@media (max-width: 600px) {
-    .css-17pmaar-MuiCardContent-root {
-        padding: 5px !important;
-    }
-    .css-gshwue-MuiContainer-root {
-        padding-left: 5px !important;
-        padding-right: 5px !important;   
-    }
-  }
-
 /* Altere o fundo do Lightbox para transparente */
 .yarl__backdrop {
     background-color: transparent !important;
@@ -28,9 +18,7 @@
 .css-1qmkl3-MuiFormControl-root-MuiTextField-root {
     margin-top: 2px !important;
 }
-.css-mhc70k-MuiGrid-root>.MuiGrid-item {
-    padding-top: 2px !important; 
-}
+
 
 .css-17vbkzs-MuiFormControl-root-MuiTextField-root{
     margin-top: 2px !important;
@@ -42,3 +30,6 @@
     }
   }
   
+  .css-1kkuafa-MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-input {
+    padding: 3px 3px 3px 36px !important;
+}

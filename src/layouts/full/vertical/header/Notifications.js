@@ -26,11 +26,12 @@ const Notifications = () => {
 
   const seePhone = async ({email,senderName,chatId,profile}) => {
     if (currentUser) {
-      setLoading(true);
       setSelectedUser(null);
+      handleClose2();
       setMessages([]);
       setActiveChat(chatId);
       setSelectedUser({email : email, name: senderName, profile: profile
+
 
       });
       navigate(`/apps/chats`);

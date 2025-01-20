@@ -84,7 +84,6 @@ const Router = [
       { path: '/pages/account-settings', element: <AccountSetting /> },
 
       // Apps
-      { path: '/apps/chats', element: <Chats /> },
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/tickets', element: <Tickets /> },
@@ -103,6 +102,8 @@ const Router = [
     children: [
       { path: '/auth/404', element: <Error /> },
       { path: '/auth/login', element: <Login /> },
+      { path: '/apps/chats', element: <Chats /> },
+
       { path: '/auth/register2', element: <Register2 /> },
       { path: '/auth/complete-register2', element: <CompleteRegister2 /> },
       { path: '/auth/forgot-password', element: <ForgotPassword /> },

@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-undef */
 import  { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, TablePagination, TableSortLabel, Box } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import { Edit, Delete, ConstructionOutlined } from '@mui/icons-material';
 import DeleteDialog from './ImoveisDeleteDialog';  // Importando o novo componente
 import { toast } from 'sonner';
 import { deleteData, getData } from 'src/Services/Api';
@@ -56,6 +56,7 @@ const ImoveisTableList = () => {
       const route = `properties/seller/${currentUserls.email}?limit=200`;
       const response = await getData(route);
       if (response.status === 200 || response.status === 201) {
+        console.log(response);
         const data = response.userInfo.properties.map((property) => ({
           id: property.id,
           imagem: property.pictures[0]?.url || '',
@@ -136,6 +137,7 @@ const ImoveisTableList = () => {
           const updatedImoveis = imoveis.filter((imovel) => imovel.id !== imovelToDelete);
           setImoveis(updatedImoveis);
           setFilteredImoveis(updatedImoveis);
+
         } else {
           toast.error(response.message);
         }

@@ -11,6 +11,9 @@ import RentDepositForm from './RentDepositForm';
 const DadosGerais = ({ formData, setFormData }) => {
 
   const [open, setOpen] = React.useState(false);
+  React.useEffect (() => {
+    console.log(formData);
+  })
 
   const handleTipoImovelChange = (event) => {
     setFormData({ ...formData, tipoDeImovel: event.target.value });
@@ -55,7 +58,7 @@ const DadosGerais = ({ formData, setFormData }) => {
   };
 
   const handleRemoveCaucao = () => {
-    setFormData({ ...formData, caucao: false });
+    setFormData({ ...formData, caucao: {} });
   };
 
   return (
@@ -155,7 +158,7 @@ const DadosGerais = ({ formData, setFormData }) => {
             </Grid>
           )}
 
-          {((formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && formData.caucao !== false) && (
+          {((formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && formData.caucao.multiplicador) && (
               <Grid item xs={12} sm={12} sx = {{mb : '5px'}}>
               <Box
                 p={2}

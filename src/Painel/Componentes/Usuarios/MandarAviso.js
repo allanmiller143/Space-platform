@@ -1,9 +1,24 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { Cancel, Block, Notifications, ManageAccounts } from "@mui/icons-material";
-import {Dialog,DialogTitle,DialogContent,DialogActions,Typography,Slide,Box,IconButton,Select,MenuItem,Button,TextField,List,ListItem,ListItemIcon,ListItemText,
-Divider,Grid,} from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+  Slide,
+  Box,
+  IconButton,
+  Select,
+  MenuItem,
+  Button,
+  TextField,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Grid,
+} from "@mui/material";
 import React, { useState } from "react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -47,7 +62,7 @@ const AdminActions = ({ open, onClose, user }) => {
     switch (selectedAction) {
       case "notify":
         return (
-          <>
+          <Box height={"100%"}>
             <Typography variant="subtitle1" gutterBottom>
               Escolha uma mensagem ou escreva a sua:
             </Typography>
@@ -77,7 +92,7 @@ const AdminActions = ({ open, onClose, user }) => {
               multiline
               rows={3}
             />
-          </>
+          </Box>
         );
       case "suspend":
         return (
@@ -111,13 +126,7 @@ const AdminActions = ({ open, onClose, user }) => {
   if (!user) return null;
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      maxWidth="md"
-      TransitionComponent={Transition}
-    >
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" TransitionComponent={Transition}>
       <DialogTitle>
         <Box display="flex" alignItems="center">
           <Typography variant="h5" component="span" style={{ flexGrow: 1 }}>
@@ -129,7 +138,7 @@ const AdminActions = ({ open, onClose, user }) => {
         </Box>
       </DialogTitle>
 
-      <DialogContent>
+      <DialogContent sx={{ overflowY: "auto" }}>
         <Grid container spacing={2}>
           {/* Sidebar Menu */}
           <Grid item xs={3}>

@@ -10,6 +10,7 @@ import '../src/App.css';
 import '../src/index.css'
 import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
 import NotificationContextProvider from './Services/Notification/NotificationContext/NotificationContextProvider';
+import MarketplaceContextProvider from './views/apps/marketplace/MarketplaceContext/MarketplaceContextProvider';
 
 function App() {
   const routing = useRoutes(Router);
@@ -21,11 +22,13 @@ function App() {
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <NotificationContextProvider>
-          <ChatContextProvider> 
+          <ChatContextProvider>
+            <MarketplaceContextProvider>
             <RTL direction={customizer.activeDir}>
               <CssBaseline />
               <ScrollToTop>{routing}</ScrollToTop>
             </RTL>
+            </MarketplaceContextProvider> 
           </ChatContextProvider>
         </NotificationContextProvider>
       </ThemeProvider>

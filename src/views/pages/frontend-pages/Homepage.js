@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import PageContainer from 'src/components/container/PageContainer';
-import Banner from '../../../components/frontend-pages/homepage/banner/Banner';
 import HeaderAlert from '../../../components/frontend-pages/shared/header/HeaderAlert';
 import HpHeader from '../../../components/frontend-pages/shared/header/HpHeader';
 import Features from '../../../components/frontend-pages/homepage/features/Features';
@@ -13,21 +12,33 @@ import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top
 import { Button, Divider, Typography } from '@mui/material';
 import CarrosselHome from '../../../components/frontend-pages/homepage/carrossel/CarrosselHome';
 import NovosImoveis from '../../../Painel/Componentes/NovosImoveis/NovosImoveis';
+import HomeCard from '../../../Painel/Componentes/ComponentesTest/HomeCard';
+import CarroselCompleto from '../../../Painel/Componentes/ComponentesTest/CarroselCompleto';
+import Filtros from '../../../Painel/Componentes/ComponentesTest/Filtros';
+import Banner from '../../../Painel/Componentes/ComponentesTest/Banner';
+import SearchBar from '../../../Painel/Componentes/ComponentesTest/SearchBar';
+import DestinationComponent from '../../../Painel/Componentes/ComponentesTest/DestinationComponent';
+import { useContext } from 'react';
+import marketplaceContext from '../../apps/marketplace/MarketplaceContext/MarketplaceContext';
 
 const HomePage = () => {
+  const  {test} = useContext(marketplaceContext);
 
   return (
     <PageContainer title="Space iMóveis" description="">
       <HeaderAlert />
       <HpHeader />
-      <Banner />
-      {/* <Leadership /> */}
-      <Divider />  
+      <SearchBar/>
+      <Banner/>
       <CarrosselHome/>
+      <Filtros/>
+      <CarroselCompleto/>
+      <DestinationComponent/>
       <Features />
+      
 
 
-      <DefendFocus />
+
       {/* <PowerfulDozens /> */}
       {/* <Reviews /> */}
       {/* <ExceptionalFeature /> */}
@@ -35,7 +46,6 @@ const HomePage = () => {
       {/* <FAQ/> */}
       {/* <C2a /> */}
 
-      <Footer />
       <ScrollToTop />
     </PageContainer>
   );

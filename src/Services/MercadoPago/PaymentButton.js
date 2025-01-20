@@ -1,17 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Box,
-  Typography,
-  IconButton,
-  TextField,
-  Tooltip,Divider
-} from '@mui/material';
+import {Button,Dialog,DialogTitle,DialogContent,Box,Typography,IconButton,TextField,Divider,Tooltip} from '@mui/material';
 import { CopyAll, Cancel, CheckCircleOutline, ErrorOutline } from '@mui/icons-material';
 import { postData, getData } from '../Api'; // postData para criar o PIX, getData para consultar status
 

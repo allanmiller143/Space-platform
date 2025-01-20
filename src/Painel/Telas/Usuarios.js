@@ -15,7 +15,7 @@ const Usuarios = () => {
 
   return (
     <Box maxWidth="lg" margin="0 auto" padding={3}>
-      <Grid container spacing={2}>
+      <Grid container spacing={6}>
         {/* Cards Section */}
         <Grid item xs={12}>
           <Cards />

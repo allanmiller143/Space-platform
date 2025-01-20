@@ -19,7 +19,7 @@ const Profile = () => {
   const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
   const [email] = useState(currentUserls ? currentUserls.email : '');
   const navigate = useNavigate();
-  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);

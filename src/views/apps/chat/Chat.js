@@ -11,6 +11,7 @@ import NotificationContext from '../../../Services/Notification/NotificationCont
 import socket from '../../../Services/socket';
 import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
 import ChatListing from '../../../components/apps/chats/ChatListing';
+import Header from '../../../layouts/full/horizontal/header/Header';
 
 const Chats = () => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -37,15 +38,32 @@ const Chats = () => {
   );
 
   return (
+
 <Box 
     sx={{
       height: '100%', // Altura máxima da tela
-      maxHeight: '90vh',
-      display: 'flex', // Para garantir que os filhos sejam posicionados corretamente
-      flexDirection: 'column', // Garantir a direção vertical dos filhos
+      width: '100%',
     }}
   >
-    {isSmallScreen ? <AppCard mobile = {true}>{content}</AppCard> : <AppCard>{content}</AppCard>}
+    {
+      (isSmallScreen && !selectedUser) ? <Header/> : null
+    }
+    {
+     !isSmallScreen ? <Header/> : null  
+    }    
+  
+    <Box
+        sx={{
+          height: '100%', // Altura máxima da tela
+          margin : '0 auto',
+          maxWidth: 'lg',
+          maxHeight: isSmallScreen ? '100vh' : '90vh',
+          display: 'flex', // Para garantir que os filhos sejam posicionados corretamente
+          flexDirection: 'column', // Garantir a direção vertical dos filhos
+          marginTop: !isSmallScreen ? '10px' : '0',
+        }}>
+    {isSmallScreen ? <AppCard mobile = {true}> {content}</AppCard> : <AppCard>{content}</AppCard>}
+    </Box>
   </Box>
   );
 };

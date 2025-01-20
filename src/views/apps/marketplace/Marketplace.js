@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Grid, Box, Pagination, Skeleton, Typography, Button, Drawer } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
@@ -9,44 +9,21 @@ import MarketplaceMaps from './MarcketPlaceMap';
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
 import { useNavigate } from 'react-router';
+import marketplaceContext from './MarketplaceContext/MarketplaceContext';
 
 // import nodata from "../../"
 const Marketplace = () => {
-    const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage] = React.useState(40); // Definido para exibir 6 itens por página
-    const [loading, setLoading] = useState(false);
-    const [totalItens, setTotalItens] = useState(0);
-    const [properties, setProperties] = useState([]); // Dados retornados da API
-    const [drawerOpen, setDrawerOpen] = useState(false); // Estado para controlar a abertura do Drawer
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        propertyType : "",
-        city : "",
-        state : "",
-        opcoesRapidas: {
-            pool: false,
-            grill: false,
-            airConditioning: false,
-            playground: false,
-            eventArea: false,
-            gym: false,
-            porch: false,
-            solarEnergy: false,
-            concierge: false,
-            yard: false,
-            gourmetArea: false,
-            balcony: false,
-            slab: false,
-            gatedCommunity: false,
-            garden: false
-        },
-        minPrice : '',
-        maxPrice : '',
-        announcementType : '',
-    });
-    // Crie uma referência para o contêiner de rolagem
-    const scrollContainerRef = useRef(null);
+    const {    
+        currentPage, setCurrentPage,itemsPerPage,
+        loading, setLoading,
+        totalItens, setTotalItens,
+        properties, setProperties,
+        drawerOpen, setDrawerOpen,
+        navigate, formData, setFormData,
+    } = useContext(marketplaceContext);
 
+
+    const scrollContainerRef = useRef(null);
     const filter = async () => {
         setLoading(true); // Iniciar o loading
 

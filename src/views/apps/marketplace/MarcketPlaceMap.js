@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
     shadowUrl: markerShadow,
 });
 
-const MarketplaceMaps = ({ properties, formData }) => {
+const MarcketPlaceMap = ({ properties, formData }) => {
     const [userLocation, setUserLocation] = useState([0, 0]);
     const [isLocationLoaded, setIsLocationLoaded] = useState(false);
     const navigate = useNavigate();
@@ -140,4 +140,4 @@ const MarketplaceMaps = ({ properties, formData }) => {
     );
 };
 
-export default MarketplaceMaps;
+export default MarcketPlaceMap;

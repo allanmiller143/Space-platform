@@ -24,7 +24,7 @@ const steps = [
 ];
 
 const EditImovel = () => {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -81,7 +81,6 @@ const EditImovel = () => {
         banheiros: imovel.bathrooms,
         vaga: imovel.parkingSpaces,
         suites: imovel.suites,
-
         cep: imovel.address.cep,
         rua: imovel.address.city,
         numero: imovel.address.number,
@@ -92,6 +91,13 @@ const EditImovel = () => {
         id : imovel.id,
         mobiliado: imovel.furnished,
 
+        caucao : {
+          valorTotal :  imovel.prices.deposit,
+          multiplicador : imovel.prices.depositInstallments,
+          maximoParcelas : imovel.prices.timesDeposit,
+          aluguel : imovel.prices.rentPrice
+
+        },
         opcoesRapidas: {
           Piscina: imovel.commodities.pool,
           Churrasqueira : imovel.commodities.grill,
@@ -218,6 +224,12 @@ const EditImovel = () => {
       'negotiable': formData.negociavel,
       'financiable' : formData.aceitaFinanciamento || false,
     };
+    
+    if((formData.tipoDeAnuncio === 'both' || formData.tipoDeAnuncio === 'rent') && formData.caucao ){
+      formJson.deposit  = formData.caucao.valorTotal || -1;
+      formJson.timesDeposit = formData.caucao.multiplicador || -1;
+      formJson.depositInstallments  = formData.caucao.maximoParcelas || -1; 
+    }
 
     if(formData.tipoDeImovel === 'apartment'){
       formJson.floor = formData.andar;
@@ -313,6 +325,12 @@ const EditImovel = () => {
       'financiable' : formData.aceitaFinanciamento,      
     };
 
+    if((formData.tipoDeAnuncio === 'both' || formData.tipoDeAnuncio === 'rent') && formData.caucao ){
+      formJson.deposit  = formData.caucao.valorTotal || -1;
+      formJson.timesDeposit = formData.caucao.multiplicador || -1;
+      formJson.depositInstallments  = formData.caucao.maximoParcelas || -1; 
+    }
+
     if(formData.tipoDeImovel === 'apartment'){
       formJson.floor = formData.andar;
     }
@@ -378,6 +396,7 @@ const EditImovel = () => {
       formJson.oldPhotos = oldPhotos;
       setLoading(true);
       form.append('data', JSON.stringify(formJson));
+      console.log(formJson);
       try{
         const response = await putFormData(`properties/${formData.id}`, form, token);
         if(response.status === 201 || response.status === 200){
