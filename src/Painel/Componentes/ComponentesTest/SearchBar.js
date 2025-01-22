@@ -83,7 +83,7 @@ const SearchBar = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Para onde você vai?"
+            label="Filtre por cidade"
             variant="outlined"
             onChange={(e) => fetchCities(e.target.value)} // Busca cidades enquanto digita
             InputProps={{
