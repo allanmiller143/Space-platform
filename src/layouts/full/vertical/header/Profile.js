@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MyAppsDrawer from '../../horizontal/header/myappsDrawer';
+import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
-  const [profileImageUrl] = useState( (currentUserls && currentUserls.type !== 'client' && currentUserls.profile) ? currentUserls.profile?.url : ''); // Estado para a URL da imagem do perfil
+  const [profileImageUrl] = useState( (currentUserls  && currentUserls.profile) ? currentUserls.profile?.url : ''); // Estado para a URL da imagem do perfil
   const [name] = useState(!currentUserls ? '' : currentUserls.name || '');
   const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Proprietário' : 'Usuário');
   const [email] = useState(currentUserls ? currentUserls.email : '');
@@ -30,7 +31,7 @@ const Profile = () => {
 
   const toProfilePage = () => {
     handleClose2();
-    if(currentUserls && currentUserls.type !== 'client') {
+    if(currentUserls ) {
       navigate(`/user-profile/${email.replaceAll(/[.]/g, '-')}`);
     }else{
       navigate('/auth/complete-register2');
@@ -43,7 +44,10 @@ const Profile = () => {
     toast.success('Sessão encerrada com sucesso');
   }
 
-
+  const handleLinkClick = (href) => {
+    handleClose2();
+    navigate(href); // Navega para o link
+  };
 
 
   return (
@@ -124,7 +128,7 @@ const Profile = () => {
                   {dropdownData.profileNoCompleted.map((profile) => (
                   <Box key={profile.title} sx={{ cursor: 'pointer' }}>
                     <Box sx={{ py: 2, px: 0 }}>
-                    <Box onClick={toProfilePage} >
+                    <Box onClick={() => handleLinkClick(profile.href)} >
                       <Stack direction="row" spacing={2}>
                           <Box
                             width="45px"
@@ -176,84 +180,88 @@ const Profile = () => {
                 </Box> 
               :
               <Box> 
-              <MyAppsDrawer close = {handleClose2} />
+                <MyAppsDrawer close = {handleClose2} />
+              </Box>   
+            }
 
-              {dropdownData.profile.map((profile) => (
-              <Box key={profile.title}>
-                <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
-                <Box onClick={toProfilePage} >
-                  <Stack direction="row" spacing={2}>
-                      <Box
-                        width="45px"
-                        height="45px"
-                        bgcolor="primary.light"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Avatar
-                          src={profile.icon}
-                          alt={profile.icon}
-                          sx={{
-                            width: 24,
-                            height: 24,
-                            borderRadius: 0,
-                          }}
-                        />
-                      </Box>
-                      <Box sx = {{cursor: 'pointer'}}>
-                        <Typography
-                          variant="subtitle2"
-                          fontWeight={600}
-                          color="textPrimary"
-                          className="text-hover"
-                          noWrap
-                          sx={{
-                            width: '240px',
-                          }}
+{dropdownData.profile.map((profile) => (
+                <Box key={profile.title}>
+                  <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
+                  <Box onClick={toProfilePage} >
+                    <Stack direction="row" spacing={2}>
+                        <Box
+                          width="45px"
+                          height="45px"
+                          bgcolor="primary.light"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
                         >
-                          {profile.title}
-                        </Typography>
-                        <Typography
-                          color="textSecondary"
-                          variant="subtitle2"
-                          sx={{
-                            width: '240px',
-                          }}
-                          noWrap
-                        >
-                          {profile.subtitle}
-                        </Typography>
-                      </Box>
-                    </Stack>
+                          <Avatar
+                            src={profile.icon}
+                            alt={profile.icon}
+                            sx={{
+                              width: 24,
+                              height: 24,
+                              borderRadius: 0,
+                            }}
+                          />
+                        </Box>
+                        <Box sx = {{cursor: 'pointer'}}>
+                          <Typography
+                            variant="subtitle2"
+                            fontWeight={600}
+                            color="textPrimary"
+                            className="text-hover"
+                            noWrap
+                            sx={{
+                              width: '240px',
+                            }}
+                          >
+                            {profile.title}
+                          </Typography>
+                          <Typography
+                            color="textSecondary"
+                            variant="subtitle2"
+                            sx={{
+                              width: '240px',
+                            }}
+                            noWrap
+                          >
+                            {profile.subtitle}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            ))}
-            </Box>   
-            }
+              ))}
 
 
             <Button  variant="outlined" color="error" onClick={logout} fullWidth sx={{ mt: 2, cursor: 'pointer'}}>
               <Typography> sair </Typography>
             </Button>
 
-            {/* <Box mt={2}>
+            {
+              currentUserls && currentUserls.type === 'client' ?
+              <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
                   <Box>
                     <Typography variant="h5" mb={2}>
-                      Acesso <br />
-                      Ilimitado
+                      Acesso limitado
                     </Typography>
-                    <Button variant="contained" color="primary">
-                      Atualizar
+                    <Button variant="contained" color="primary" sx = {{zIndex: 100}} href='/auth/complete-register2'>
+                      Complete seu cadastro
                     </Button>
                   </Box>
                   <img src={unlimitedImg} alt="ilimitado" className="signup-bg"></img>
                 </Box>
               </Box>
-            </Box> */}
+            </Box>:null
+            }
+
+
 
           </Box>
         </Scrollbar>

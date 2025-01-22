@@ -63,11 +63,12 @@ const notifications = [
 //
 const profileNoCompleted = [
   {
-    href: '/auth/complete-register2',
-    title: 'Complete seu cadastro',
-    subtitle: 'Complete para acessar todas as funcionalidades',
-    icon: icon3,
+    href: '/apps/chats',
+    title: 'Mensagens',
+    subtitle: 'Chat com corretores e clientes',
+    icon: ddIcon1,
   },
+
 ];
 
 const profile = [
