@@ -90,7 +90,7 @@ const ProductDetail = ({ post }) => {
           <Box display={'flex'} gap={3}  >
             <Box>
               <Tooltip title="Compartilhar" placement="top">
-                <ShareComponent post={post} sx={{ ml: 'auto' }} />
+                <ShareComponent post={post} url = '/apps/post/' sx={{ ml: 'auto' }} />
               </Tooltip>
             </Box>
             <Box display={'flex'} alignItems={'center'} gap={1}>

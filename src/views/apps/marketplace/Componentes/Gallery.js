@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import moment from 'moment';
 import { deleteData, postData } from "../../../../Services/Api";
 import GalleryPhotos from "./GalleryPhotos";
+import ShareComponent from "../../../../components/apps/userprofile/feed/ShareComponent";
 
 const Gallery = ({ property }) => {
   const navigate = useNavigate();
@@ -126,17 +127,13 @@ const Gallery = ({ property }) => {
 
 
             <Box sx={{ display: 'flex', gap: 2 }}>
-              <Tooltip title="Compartilhar">
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    toast.success('Link da página copiado para a área de transferência!');
-                  }}
-                >
-                  <IconShare />
-                </Button>
-              </Tooltip>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>
+                  Compartilhar
+                </Typography>
+                <ShareComponent post={property} url = '/apps/post/' sx={{ ml: 'auto' }} />  
+              </Box>
+
               <Tooltip title="Salvar">
                 <Button
                   variant="outlined"

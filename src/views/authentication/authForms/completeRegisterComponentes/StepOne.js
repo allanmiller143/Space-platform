@@ -7,7 +7,7 @@ const StepOne = ( { selectedType,setSelectedType,formData,setFormData}) => {
 
   const typeCards = [
     {
-      title: 'Vendedor',
+      title: 'Proprietário',
       description: 'Quero vender/alugar os meus imóveis',
       avatar: '/images/profile/user-1.jpg',
     },

@@ -159,13 +159,13 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         toast.warning("Para 'Corretor', CPF deve ter 11 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
         return false;
       }
-    } else if (selectedType === 'Vendedor') {
+    } else if (selectedType === 'Proprietário') {
       if (!cpf || !rg || !isValidCPF(cpf)) {
         if(!isValidCPF(cpf) ){
-          toast.warning("Para 'Vendedor', CPF deve ter 11 dígitos e RG deve ser fornecido.");
+          toast.warning("Para 'Proprietário', CPF deve ter 11 dígitos e RG deve ser fornecido.");
           return false;
         }
-        toast.warning("Para 'Vendedor', CPF deve ter 11 dígitos e RG deve ser fornecido.");
+        toast.warning("Para 'Proprietário', CPF deve ter 11 dígitos e RG deve ser fornecido.");
         return false;
       }
     } else if (selectedType === 'Imobiliária') {
@@ -242,7 +242,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         ]
       };
       userRoute = 'realtor';
-    }else if(selectedType === 'Vendedor'){
+    }else if(selectedType === 'Proprietário'){
       postDataExample = { 
         'name':formData.name,
         'email':formData.email,

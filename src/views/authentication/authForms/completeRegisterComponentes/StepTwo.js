@@ -170,12 +170,12 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
             </Paper>
           </Stack>
         );
-      case 'Vendedor':
+      case 'Proprietário':
         return (
           <Stack spacing={1} mb={3}>
             <Paper elevation={3} sx={{ padding: 3 }}>
               <Typography variant="h6" gutterBottom  pb ={2}>
-                Informações do Vendedor
+                Informações do Proprietário
               </Typography>
               <Grid container spacing={2}  pb ={2}>
                 <Grid item xs={12} sm={6}>

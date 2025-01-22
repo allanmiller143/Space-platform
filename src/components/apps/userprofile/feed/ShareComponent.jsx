@@ -10,7 +10,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ShareComponent = ({ post }) => {
+const ShareComponent = ({ post, url }) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -22,7 +22,7 @@ const ShareComponent = ({ post }) => {
   };
 
   // Obtém a URL atual da página
-  const shareUrl = `https://spaceimoveis.netlify.app/apps/post/${post.id}`; 
+  const shareUrl = `${window.location.origin}${url}${post.id}`; 
 
   const title = 'Confira este link incrível!';
 

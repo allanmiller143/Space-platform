@@ -219,7 +219,7 @@ const PostItem = ({ post, setMyPost, myPost }) => {
               </Typography>
             </Box>
             <Tooltip title="Compartilhar" placement="top">
-              <ShareComponent post={post} sx={{ ml: 'auto' }} />
+              <ShareComponent post={post} url = '/apps/post/' sx={{ ml: 'auto' }} />
             </Tooltip>
           </Stack>
         </Box>

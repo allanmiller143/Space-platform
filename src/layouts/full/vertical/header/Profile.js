@@ -16,7 +16,7 @@ const Profile = () => {
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
   const [profileImageUrl] = useState( (currentUserls && currentUserls.type !== 'client' && currentUserls.profile) ? currentUserls.profile?.url : ''); // Estado para a URL da imagem do perfil
   const [name] = useState(!currentUserls ? '' : currentUserls.name || '');
-  const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Vendedor' : 'Usuário');
+  const [type] = useState( !currentUserls  ? '' : currentUserls.type === 'realstate' ? 'Imobiliária' : currentUserls.type === 'realtor' ? 'Corretor de imóveis' : currentUserls.type === 'owner' ? 'Proprietário' : 'Usuário');
   const [email] = useState(currentUserls ? currentUserls.email : '');
   const navigate = useNavigate();
   const smUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
