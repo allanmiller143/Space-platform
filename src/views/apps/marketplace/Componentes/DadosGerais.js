@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Grid } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Grid, Divider, Card } from '@mui/material';
 import { Box } from '@mui/system';
 import { use } from 'i18next';
 import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Ícone de check verde
 import CancelIcon from '@mui/icons-material/Cancel'; // Ícone de X vermelho
 import Map from './Map';
-import AdvertiserCard from './AdvertiserCard';
 import PoolIcon from '@mui/icons-material/Pool';
 import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -111,16 +110,47 @@ const DadosGerais = ({property,advertiser}) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    const getIcon = (value) => {
-        return value ? <CheckCircleIcon style={{ color: 'green' }} /> : <CancelIcon style={{ color: 'red' }} />;
-    };
+    function depositData () {
+        return <>
+                    {
+                property.prices.deposit !== null && (
+                    <Box sx={{ mb: 2,  }}>
+                        <Typography 
+                            variant="h5" 
+                            component="h2" 
+                            sx={{ pb: 1, fontWeight: 'bold' }}
+                        >
+                            Dados da caução
+                        </Typography>
+                        <Typography 
+                            variant="body1" 
+                            sx={{ pb: 1 }}
+                        >
+                            {property.prices.deposit
+                                ? `Este imóvel cobra ${property.prices.timesDeposit} meses de adiantamento, totalizando ${formatPrice(property.prices.deposit)}.`
+                                : 'Depósito: N/A'}
+                        </Typography>
+                        {property.prices.deposit && (
+                            <Typography 
+                                variant="body2" 
+                                sx={{ color: 'text.secondary' }}
+                            >
+                                O valor pode ser parcelado em até {property.prices.depositInstallments} vezes.
+                            </Typography>
+                        )}
+                    </Box>
+                )
+            }
+        </>
+    }
+
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {property && ( <>
             <Box sx={{ mt: 4 }}>
             <Grid container sx={{ my: 1 }}>
-                <Grid xs = {12}>
+                <Grid xs = {12} mt={1}>
                     <Typography variant="h4" component="h2" sx={{ pb: 2, width: '100%' }}>
                         Principais comodidades
                     </Typography>
@@ -150,6 +180,8 @@ const DadosGerais = ({property,advertiser}) => {
                     </Grid>
                     ))}
                 </Grid>
+
+                {depositData()}
 
                 <Box sx = {{ display: 'flex', gap : 2, mt: 5, flexDirection: { xs: 'column', sm: 'row' }}} >
                     <Grid iten xs = {12} sm={5} > 

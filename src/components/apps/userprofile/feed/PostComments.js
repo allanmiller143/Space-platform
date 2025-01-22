@@ -6,13 +6,12 @@ import { Stack, Avatar, Box, Typography, Tooltip, Fab, Divider } from '@mui/mate
 import { IconCircle, IconThumbUp } from '@tabler/icons';
 import { ptBR } from 'date-fns/locale';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { toast } from 'sonner';
 
 // eslint-disable-next-line react/prop-types
 const PostComments = ({ comment, isLast }) => {
   const commentRef = useRef(null);
   return (
-    <Box py={2}>
+    <Box py={2} px = {2}>
       <Box  sx={{ position: 'relative' }}>
         <Stack direction="row" gap={2} alignItems="flex-start">
           <Avatar
