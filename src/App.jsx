@@ -11,6 +11,7 @@ import '../src/index.css'
 import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
 import NotificationContextProvider from './Services/Notification/NotificationContext/NotificationContextProvider';
 import MarketplaceContextProvider from './views/apps/marketplace/MarketplaceContext/MarketplaceContextProvider';
+import ContactsContextProvider from './views/apps/contacts/ContactsContext/ContactsContextProvider';
 
 function App() {
   const routing = useRoutes(Router);
@@ -24,10 +25,12 @@ function App() {
         <NotificationContextProvider>
           <ChatContextProvider>
             <MarketplaceContextProvider>
-            <RTL direction={customizer.activeDir}>
-              <CssBaseline />
-              <ScrollToTop>{routing}</ScrollToTop>
-            </RTL>
+              <ContactsContextProvider>
+                <RTL direction={customizer.activeDir}>
+                  <CssBaseline />
+                  <ScrollToTop>{routing}</ScrollToTop>
+                </RTL>
+             </ContactsContextProvider>
             </MarketplaceContextProvider> 
           </ChatContextProvider>
         </NotificationContextProvider>

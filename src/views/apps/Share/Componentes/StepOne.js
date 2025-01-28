@@ -57,14 +57,14 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
       }
       
       try {
-        const response = await getData(`realtor`);
+        const response = await getData(`realtors-and-realstates?page=-1`);
         if (response.status === 200 || response.status === 201) {
-          setCorretores(response.userInfo.users || []);
-          setFilteredCorretores(response.userInfo.users || []);
-          console.log(response.userInfo.users);
+          setCorretores(response.userInfo || []);
+          setFilteredCorretores(response.userInfo || []);
+          console.log(response.userInfo);
         } else {
           toast.error(`Erro ao buscar os corretores: ${response.message}`);
-          console.error(`Erro ao buscar os corretores: ${response.message}`);
+          console.error(response);
         }
       } catch (error) {
         toast.error("Ocorreu um erro ao buscar os corretores");
@@ -85,47 +85,11 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
   }
 
 
-  const vantagens = [
-    {
-      icon: <CheckCircleIcon color="success" fontSize="large" />,
-      text: "Expertise no mercado imobiliário para negociar o melhor valor.",
-    },
-    {
-      icon: <CheckCircleIcon color="success" fontSize="large" />,
-      text: "Acesso a uma ampla rede de potenciais compradores.",
-    },
-    {
-      icon: <CheckCircleIcon color="success" fontSize="large" />,
-      text: "Gestão completa de documentação e contratos.",
-    },
-    {
-      icon: <CheckCircleIcon color="success" fontSize="large" />,
-      text: "Economia de tempo e esforço com a divulgação do imóvel.",
-    },
-  ]; 
+
 
   return (
-    <MuiCard elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
-      <Grid container spacing={4}>
-        {/* Seção de Vantagens */}
-        <Grid item xs={12}>
-          <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: 5 }}>
-            Vantagens de confiar em nossos corretores
-          </Typography>
-          <Grid container spacing={2}>
-            {vantagens.map((advantage, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <MuiCard elevation={1} sx={{ display: "flex", alignItems: "center", padding: 2, borderRadius: 1, marginBottom: 2 }}>
-                  {advantage.icon}
-                  <Typography variant="body1" sx={{ marginLeft: 2 }}>
-                    {advantage.text}
-                  </Typography>
-                </MuiCard>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-
+    <>
+      <Grid container spacing={4} mt={3}>
         {/* Formulário */}
         <Grid item xs={12}>
           <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
@@ -199,7 +163,7 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
           </form>
         </Grid>
       </Grid>
-    </MuiCard>
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ListItemText,
@@ -10,71 +9,48 @@ import {
 } from '@mui/material';
 import { setVisibilityFilter } from '../../../store/apps/contacts/ContactSlice';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
-import { IconMail, IconSend, IconBucket, IconFolder } from '@tabler/icons';
-import ContactAdd from './ContactAdd';
+import { IconMail, IconSend } from '@tabler/icons';
+import { useContext } from 'react';
+import ContactsContext from '../../../views/apps/contacts/ContactsContext/ContactsContext';
 
 const ContactFilter = () => {
   const dispatch = useDispatch();
   const active = useSelector((state) => state.contactsReducer.currentFilter);
   const customizer = useSelector((state) => state.customizer);
   const br = `${customizer.borderRadius}px`;
+  const {
+    list,
+    setList,
+    acceptedList,
+    setActiveList,
+    setActive
+  } = useContext(ContactsContext);
 
   const filterData = [
     {
-      id: 2,
-      name: 'Todos',
+      id: 1,
+      name: 'Pendentes',
       sort: 'show_all',
-      icon: IconMail,
-    },
-    {
-      id: 3,
-      name: 'Frequentes',
-      sort: 'frequent_contact',
       icon: IconSend,
     },
     {
-      id: 4,
-      name: 'Favoritos',
-      sort: 'starred_contact',
-      icon: IconBucket,
-    },
-    {
-      id: 6,
-      devider: true,
-    },
-    {
-      id: 5,
-      filterbyTitle: 'Categorias',
-    },
-
-    {
-      id: 7,
-      name: 'Residencial',
-      sort: 'engineering_department',
-      icon: IconFolder,
-      color: 'primary.main',
-    },
-    {
-      id: 8,
-      name: 'Comercial',
-      sort: 'support_department',
-      icon: IconFolder,
-      color: 'error.main',
-    },
-    {
-      id: 9,
-      name: 'Rural',
-      sort: 'sales_department',
-      icon: IconFolder,
-      color: 'success.main',
+      id: 2,
+      name: 'Aceitos',
+      sort: 'frequent_contact',
+      icon: IconMail ,
     },
   ];
 
   return (
     <>
-      <ContactAdd />
       <List>
-        <Scrollbar sx={{ height: { lg: 'calc(100vh - 100px)', md: '100vh' }, maxHeight: '800px' }}>
+        <Scrollbar
+          sx={{
+            height: { lg: 'calc(100vh - 300px)', md: '100vh' },
+            maxHeight: '800px',
+            mt: 1,
+          }}
+        >
           {filterData.map((filter) => {
             if (filter.filterbyTitle) {
               return (
@@ -97,7 +73,19 @@ const ContactFilter = () => {
               <ListItemButton
                 sx={{ mb: 1, mx: 3, borderRadius: br }}
                 selected={active === `${filter.sort}`}
-                onClick={() => dispatch(setVisibilityFilter(`${filter.sort}`))}
+                onClick={() => {
+                  // Atualiza o filtro ativo no Redux
+                  dispatch(setVisibilityFilter(`${filter.sort}`));
+
+                  // Atualiza a lista ativa com base no filtro selecionado
+                  if (filter.sort === 'show_all') {
+                    setActiveList(list); // Lista normal
+                    setActive(null);
+                  } else if (filter.sort === 'frequent_contact') {
+                    setActiveList(acceptedList); // Lista de aceitos
+                    setActive(null);
+                  }
+                }}
                 key={filter.id}
               >
                 <ListItemIcon sx={{ minWidth: '30px', color: filter.color }}>

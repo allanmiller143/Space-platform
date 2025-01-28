@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import StepOne from "./Componentes/StepOne";
 import ParentCard from "../../../components/shared/ParentCard";
 import Stepthree from "./Componentes/Stepthree";
+import Breadcrumb from "../../../layouts/full/shared/breadcrumb/Breadcrumb";
 
 const SharePropertyForm = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const SharePropertyForm = () => {
               : "ambos",
           valorVenda: response.userInfo.prices.sellPrice || "",
           valorAluguel: response.userInfo.prices.rentPrice || "",
-          comissao: 2,
+          comissao: "",
           property: response.userInfo,
         });
       } else {
@@ -125,9 +126,8 @@ const SharePropertyForm = () => {
         </Box>
       ) : (
         <>
-
+      <Breadcrumb title="Comparilhar Imovel" description="this is Form Wizard page" />
       <ParentCard title = "Compartilhar Imóvel">
-
             <Stepper
               activeStep={activeStep}
               alternativeLabel

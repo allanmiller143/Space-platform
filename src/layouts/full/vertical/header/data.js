@@ -15,6 +15,9 @@ import ddIcon6 from 'src/assets/images/svgs/icon-dd-lifebuoy.svg';
 //
 // Notifications dropdown
 //
+
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
 const notifications = [
   {
     avatar: img1,
@@ -101,48 +104,23 @@ const appsLink = [
     subtext: 'Chat com corretores e clientes',
     avatar: ddIcon1,
   },
-  // {
-  //   href: '/apps/ecommerce/shop',
-  //   title: 'eCommerce App',
-  //   subtext: 'Messages & Emails',
-  //   avatar: ddIcon2,
-  // },
   {
     href: '/apps/calendar',
     title: 'Calendário',
     subtext: 'Agendamentos e visitas',
     avatar: ddIcon4,
   },
-  // {
-  //   href: '/apps/contacts',
-  //   title: 'Contatos',
-  //   subtext: 'Salve contatos relevantes',
-  //   avatar: ddIcon5,
-  // },
-  // {
-  //   href: '/apps/tickets',
-  //   title: 'Chamados e Tickets',
-  //   subtext: 'Gestão de chamados e tickets',
-  //   avatar: ddIcon6,
-  // },
-  // {
-  //   href: '/apps/notes',
-  //   title: 'Anotações',
-  //   subtext: 'Gestão de anotações',
-  //   avatar: icon3,
-  // },
-  // {
-  //   href: '/apps/email',
-  //   title: 'Email App',
-  //   subtext: 'Gestão de emails',
-  //   avatar: ddIcon7,
-  // },
-  // {
-  //   href: '/dashboards/ecommerce',
-  //   title: 'Ecom Dashboard ',
-  //   subtext: 'Data-genic Dashbaords',
-  //   avatar: ddIcon8,
-  // },
+  // Adiciona o item de "Contacts" apenas se a condição for verdadeira
+  ...(currentUser?.type !== 'client' && currentUser?.type !== 'owner'
+    ? [
+        {
+          href: '/apps/contacts',
+          title: 'Compartilhamento',
+          subtext: 'Veja pedidos de compartilhamento pendentes',
+          avatar: ddIcon5,
+        },
+      ]
+    : []),
 ];
 
 const pageLinks = [

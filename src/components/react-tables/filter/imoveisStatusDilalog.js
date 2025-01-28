@@ -5,8 +5,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect } from 'react';
 import { Cancel, Delete as DeleteIcon } from '@mui/icons-material';
 
-function DashBoardWaitingAvaliationProperties({ open, handleClose, property, func }) {
+function DashBoardWaitingAvaliationProperties({ open, handleClose, property }) {
   const [activeStep, setActiveStep] = React.useState(0);
+
+  useEffect(() => {
+    console.log(property);
+  }, [property]);
 
   const steps = [
     {
@@ -19,7 +23,7 @@ function DashBoardWaitingAvaliationProperties({ open, handleClose, property, fun
   if (property.verified === 'rejected') {
     steps.push({
       label: 'Anúncio recusado',
-      description: `Infelizmente, seu anúncio foi recusado. Verifique os requisitos e tente novamente.\n\nMotivo: ${property.reason.reason}`,
+      description: `Infelizmente, seu anúncio foi recusado. Verifique os requisitos e tente novamente.\n\nMotivo: ${property.fullImovel.reasonRejected}`,
     });
   }
 

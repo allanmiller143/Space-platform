@@ -1,21 +1,12 @@
 import React from 'react';
-import {
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  FormControlLabel,
-  Alert,
-} from '@mui/material';
-import PageContainer from '../../components/container/PageContainer';
-import Breadcrumb from '../../layouts/full/shared/breadcrumb/Breadcrumb';
-import FormWizardCode from '../../components/forms/form-wizard/code/FormWizardCode';
-import CustomTextField from '../../components/forms/theme-elements/CustomTextField';
-import CustomCheckbox from '../../components/forms/theme-elements/CustomCheckbox';
-import CustomFormLabel from '../../components/forms/theme-elements/CustomFormLabel';
-import ParentCard from '../../components/shared/ParentCard';
+import {Box,Stepper,Step,StepLabel,Button,Typography,FormControlLabel,Alert,} from '@mui/material';
+import PageContainer from '../../../components/container/PageContainer';
+import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
+import FormWizardCode from '../../../components/forms/form-wizard/code/FormWizardCode';
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import CustomCheckbox from '../../../components/forms/theme-elements/CustomCheckbox';
+import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
+import ParentCard from '../../../components/shared/ParentCard';
 import { Stack } from '@mui/system';
 
 const steps = ['Account', 'Profile', 'Finish'];
@@ -137,10 +128,10 @@ const FormWizard = () => {
   };
   return (
     <PageContainer>
-      <Breadcrumb title="Form Wizard" description="this is Form Wizard page" />
-      <ParentCard title='Form Wizard' codeModel={<FormWizardCode />}>
+      <Breadcrumb title="Comparilhar Imovel" description="this is Form Wizard page" />
+      <ParentCard title='Deixe seu imovel com um de nossos corretores ou imobiliárias' codeModel={<FormWizardCode />}>
         <Box width="100%">
-          <Stepper activeStep={activeStep}>
+          <Stepper activeStep={activeStep} alternativeLabel >
             {steps.map((label, index) => {
               const stepProps = {};
               const labelProps = {};
@@ -157,6 +148,8 @@ const FormWizard = () => {
               );
             })}
           </Stepper>
+
+
           {activeStep === steps.length ? (
             <>
               <Stack spacing={2} mt={3}>

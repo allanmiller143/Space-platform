@@ -1,92 +1,168 @@
 /* eslint-disable react/prop-types */
-import { CheckCircle } from "@mui/icons-material";
-import { Box, Typography, TextField, Button, Grid, Card, CardContent, CircularProgress, Avatar, Divider } from "@mui/material";
-import { useState } from "react";
-import PageContainer from 'src/components/container/PageContainer';
-import PropertyCard from "./PropertyCard";
+import { useState } from 'react';
+import { Box, Typography, Grid, Divider, Button, CircularProgress, Avatar } from '@mui/material';
+import { putData } from '../../../../Services/Api';
+import {useNavigate} from 'react-router-dom';
+import PropertyInfo from './PropertyInfo';
+import { toast } from 'sonner';
+const PropertyDetails = ({ formData, setActiveStep }) => {
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
-const Stepthree = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores, formData, filteredCorretores, setActiveStep, property }) => {
-  const [selectedCorretor, setSelectedCorretor] = useState(null);
-
-  const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-    const filtered = corretores.filter(
-      (corretor) =>
-        corretor.name.toLowerCase().includes(query) ||
-        corretor.address.city.toLowerCase().includes(query) ||
-        corretor.address.state.toLowerCase().includes(query)
-    );
-    setFilteredCorretores(filtered);
-  };
-
-  const handleContinue = () => {
-    if (selectedCorretor) {
-      setActiveStep(2);
+   const renderCommision = (property) => {
+    if (property.announcementType === "both") {
+      return (
+        <Grid item xs={12}>
+          <Typography variant="subtitle2" sx={{ color: "#888", marginBottom: 0.5 }}>
+            Comissão em caso de venda
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 500, color: "#000" }}>
+            Em caso de vendo o anuncioante recebe {formData.comissao}% do valor do imóvel. que equivale a cerca de R$
+            {property.prices.sellPrice * (formData.comissao / 100)}
+          </Typography>
+          <Typography variant="subtitle2" sx={{ color: "#888", marginTop: 2, marginBottom: 0.5 }}>
+            Comissão em caso de aluguel
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 500, color: "#000" }}>
+            Em caso de alugando o anunciante recebe {formData.comissao}% do valor do imóvel. Equivalente a cerca de R$
+            {property.prices.rentPrice * (formData.comissao / 100)}
+          </Typography>
+        </ Grid>
+      );
+    } else if (property.announcementType === "rent") {
+      return (
+        <Grid item xs={12}>
+          <Typography variant="subtitle2" sx={{ color: "#888", marginBottom: 0.5 }}>
+            Comissão em caso de aluguel
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 500, color: "#000" }}>
+            Em caso de alugando o anunciante recebe {formData.comissao}% do valor do imóvel. Equivalente a cerca de R$
+            {property.prices.rentPrice * (formData.comissao / 100)}
+          </Typography>
+        </ Grid>
+      );
+    } else {
+      return (
+        <Grid item xs={12}>
+          <Typography variant="subtitle2" sx={{ color: "#888", marginBottom: 0.5 }}>
+            Comissão em caso de venda
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 500, color: "#000" }}>
+            Em caso de vendo o anunciante recebe {formData.comissao}% do valor do imóvel. Equivalente a cerca de R$
+            {property.prices.sellPrice * (formData.comissao / 100)}
+          </Typography>
+        </Grid>
+      );
     }
   };
 
-  return (
-    <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
-      <>
-        <Box>
-          <PropertyCard property={property} />
-        </Box>
+  async function shareProperty() {
+    setLoading(true);
+    try{
+      const body = {
+        guestEmail : formData.selectedUser.email,
+        cut : formData.comissao/100,
+      }
+      const response = await putData(`properties/share/${formData.property.id}`,body,token);
+      if(response.status === 200){
+        toast.success('Pedido enviado com sucesso');
+        navigate('/apps/imoveis/list');
+      }else{
+        toast.error('Ocorreu um erro ao compartilhar o imóvel, tente novamente mais tarde');
+      }
+    }catch(error){
+      navigate('/error');
+    }finally{
+      setLoading(false);
+    }
+  }
 
-        {/* Seção com informações do imóvel, anunciante e comissão */}
-        <Box sx={{ marginTop: 4 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>Detalhes do Imóvel</Typography>
-              <Typography variant="body1">
-                <strong>Endereço:</strong> {formData.property?.address.latitude || "Não informado"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Preço:</strong> {formData.property?.price || "Não informado"}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
 
-              <Typography variant="h6" gutterBottom>Informações do Anunciante</Typography>
-              <Typography variant="body1">
-                <strong>Nome:</strong> {formData.seller?.name || "Não informado"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Contato:</strong> {formData.seller?.contact || "Não informado"}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
 
-              <Typography variant="h6" gutterBottom>Comissão</Typography>
-              <Typography variant="body1">
-                <strong>Valor:</strong> {formData.commission?.value || "Não informado"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Percentual:</strong> {formData.commission?.percentage || "Não informado"}%
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
-          <Box>
-            <Button fullWidth variant="outlined" onClick={() => setActiveStep(1)}>
-              Voltar
-            </Button>
+  return(
+    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4, width: '100%'}}>
+    <Box sx={{ width: '100%', maxWidth: '100%' }}>
+      <Typography
+        variant="h5"
+        sx={{
+          fontWeight: 'bold',
+          textAlign: 'start',
+          marginBottom: 3,
+          color: '#333',
+        }}
+      >
+        Detalhes do Comparilhamento
+      </Typography>
+
+      <Divider sx={{ marginBottom: 3 }} />
+      <PropertyInfo imovel={formData.property} />
+      <Divider sx={{ marginY: 3 }} />
+      <Box>
+      <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+        Informações do Anunciante
+      </Typography>
+
+      <Grid container spacing={1} alignItems="center">
+        {/* Avatar */}
+        <Grid item xs={2} md = {1.5}>
+          <Avatar
+            alt={formData.selectedUser?.profile?.url || "Avatar"}
+            src={formData.selectedUser?.profile?.url || ""}
+            sx={{ width: 72, height: 72 }}
+          />
+        </Grid>
+
+        {/* Informações do Anunciante */}
+        <Grid item xs={10} md = {10.5}>
+          <Box mb={1}>
+            <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
+              Nome :  {formData.selectedUser?.name || "Não informado"}
+            </Typography>
           </Box>
+
           <Box>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleContinue}
-              disabled={!selectedCorretor}
-            >
-              {isLoading ? <CircularProgress size={24} color="inherit" /> : "Ir para o próximo passo"}
-            </Button>
+            <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
+              Contato :  {formData.selectedUser?.info?.phone || "Não informado"}
+            </Typography>
           </Box>
-        </Box>
-      </>
-    </PageContainer>
+        </Grid>
+      </Grid>
+    </Box>
+
+   
+      <Divider sx={{ marginY: 3 }} />
+
+      <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
+        Dados da Comissão
+      </Typography>
+
+      <Grid container spacing={2}>
+        {renderCommision(formData.property)}
+      </Grid>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+            <Box>
+              <Button fullWidth variant="outlined" onClick={() => setActiveStep(1)}>
+                Voltar
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={shareProperty}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : "Enviar pedido"}
+              </Button>
+            </Box>
+          </Box>
+    </Box>
+
+  </Box>
   );
-};
+}
 
-export default Stepthree;
+
+export default PropertyDetails;

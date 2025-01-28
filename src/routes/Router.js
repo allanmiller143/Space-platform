@@ -30,6 +30,7 @@ const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/CreateEdit
 const AccountSetting = Loadable(lazy(() => import('../views/pages/account-setting/AccountSetting')));
 const EcommerceDetail = Loadable(lazy(() => import('../views/apps/eCommerce/EcommerceDetail')));
 
+const FormWizard = Loadable(lazy(() => import('../views/apps/Share/FormWizard')));
 
 // authentication
 const Login = Loadable(lazy(() => import('../views/authentication/auth1/Login')));
@@ -82,6 +83,7 @@ const Router = [
       { path: '/apps/invoice/edit/:id', element: <InvoiceEdit /> },
       { path: '/user-profile/:email', element: <UserProfile /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
+      { path: '/forms/form-wizard', element: <FormWizard /> },
 
       // Apps
       { path: '/apps/notes', element: <Notes /> },

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useState, useEffect } from 'react';
 import { Box, Card, CardContent, CardActions, Typography, Grid, TextField, IconButton, Button, CircularProgress, ListItem, ListItemAvatar, ListItemText, Avatar, Popover, MenuItem, Paper } from '@mui/material';
 import DeleteDialog from './ImoveisDeleteDialog'; 
@@ -6,6 +7,7 @@ import { deleteData, getData } from 'src/Services/Api';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../Loading/Loading';
 import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
+import ImoveisSharedDialog from './ImoveisSharedDialog';
 
 const MobileImoveisCards = () => {
   const [imoveis, setImoveis] = useState([]);
@@ -15,6 +17,7 @@ const MobileImoveisCards = () => {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [imovelToDelete, setImovelToDelete] = useState(null);
   const [openStep, setOpenStep] = useState(false);
+  const [openShared, setOpenShared] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);  // Para controlar o PopOver
   const [selectedImovel, setSelectedImovel] = useState(null);  // Para controlar o imóvel selecionado
@@ -234,6 +237,7 @@ const MobileImoveisCards = () => {
           onCancel={handleDeleteCancel}
 
         />
+          {openShared &&(<ImoveisSharedDialog open={openStep} handleClose={()=> {setOpenShared(false); handlePopoverClose();}} property={selectedImovel.fullImovel}/>)}
           {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> {setOpenStep(false); handlePopoverClose();}} property={selectedImovel}/>)}
 
       </Box>

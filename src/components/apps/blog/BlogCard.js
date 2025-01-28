@@ -74,7 +74,11 @@ const BlogCard = ({ post }) => {
                 ></Chip>
               </Stack>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-                <Chip  label = {post.propertyType === 'apartment' ? 'Apartamento' : post.propertyType === 'house' ? 'Casa' : post.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'}size="small" sx={{ marginTop: 2 }}></Chip>
+                <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap ={1} >
+                  <Chip  label = {post.propertyType === 'apartment' ? 'Apartamento' : post.propertyType === 'house' ? 'Casa' : post.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'}size="small" sx={{ marginTop: 2 }}></Chip>
+                  <Chip  label = {post.announcementType === 'both' ? 'Ambos' : post.announcementType === 'sell' ? 'Venda' : 'aluguel' }size="small" sx={{ marginTop: 2 }}></Chip>
+                </Box>
+
                 <Typography variant="body2" color="textSecondary">
                   {post.size} m² · {post.bedrooms} quarto · {post.parkingSpaces} vaga
                 </Typography>   

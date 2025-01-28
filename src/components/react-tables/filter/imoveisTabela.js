@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-undef */
 import  { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, TablePagination, TableSortLabel, Box } from '@mui/material';
-import { Edit, Delete, ConstructionOutlined } from '@mui/icons-material';
+import { Edit, Delete, ConstructionOutlined, Share } from '@mui/icons-material';
 import DeleteDialog from './ImoveisDeleteDialog';  // Importando o novo componente
 import { toast } from 'sonner';
 import { deleteData, getData } from 'src/Services/Api';
@@ -12,17 +13,9 @@ import Loading from '../../Loading/Loading';
 import { useNavigate } from 'react-router-dom';
 import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
 import { Button } from '@mui/material';
-import Step5_Modal from '../../../views/apps/imoveis/partials/confimarCadastroDialog';
-const columns = [
-  { id: 'galeria', label: 'Galeria', minWidth: 100 },
-  { id: 'endereco', label: 'Endereço', minWidth: 170 },
-  { id: 'tipo', label: 'Tipo', minWidth: 100 },
-  { id: 'finalidade', label: 'Finalidade', minWidth: 100 },
-  { id: 'preco_aluguel',label: 'Aluguel',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
-  { id: 'preco_venda',label: 'Venda',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
-  { id: 'verified', label: 'Status', minWidth: 100 },
+import ImoveisSharedDialog from './ImoveisSharedDialog';
 
-];
+
 
 const ImoveisTableList = () => {
   const [imoveis, setImoveis] = useState([]);
@@ -43,12 +36,26 @@ const ImoveisTableList = () => {
   const token = localStorage.getItem('token') || '';
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null;
-  const [openAdviceDialog, setOpenAdviceDialog] = useState(false);
+  const [openShared, setOpenShared] = useState(false);
 
   useEffect(() => {
     GetUserProperties();
-    setOpenAdviceDialog(true);
   }, []);
+
+  const columns = [
+    { id: 'galeria', label: 'Galeria', minWidth: 100 },
+    { id: 'endereco', label: 'Endereço', minWidth: 170 },
+    { id: 'tipo', label: 'Tipo', minWidth: 100 },
+    { id: 'finalidade', label: 'Finalidade', minWidth: 100 },
+    { id: 'preco_aluguel',label: 'Aluguel',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
+    { id: 'preco_venda',label: 'Venda',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
+    
+    { id: 'verified', label: 'Status', minWidth: 100 },
+    ...(currentUserls?.type === 'owner'
+      ? [{ id: 'share', label: 'Compartilhar', minWidth: 100 }]
+      : []),
+  
+  ];
 
   const GetUserProperties = async () => {
     try {
@@ -67,7 +74,9 @@ const ImoveisTableList = () => {
           preco_aluguel: property.prices.rentPrice || 0,
           preco_venda: property.prices.sellPrice || 0,
           verified : property.verified,
-          fullImovel : property
+          share : property.shared,
+          fullImovel : property,
+
         }));
         setImoveis(data);
         setFilteredImoveis(data);
@@ -127,6 +136,17 @@ const ImoveisTableList = () => {
     setOpenStep(true);
   };
 
+  const handleSeeShared = (imovel) => {
+    console.log(imovel);
+    if(imovel.fullImovel.shared === null){
+      navigate(`/apps/share/${imovel.id}`);
+    }else{
+      setImovelToSee(imovel);
+      setOpenShared(true);
+    }
+
+  };
+
   const handleDeleteConfirm = async () => {
     if (imovelToDelete !== null) {
       setIsLoading(true);
@@ -178,6 +198,10 @@ const ImoveisTableList = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handShareClick = (id) => {
+    navigate(`/apps/share/${id}`);
+  }
 
   return (
     <Paper>
@@ -256,6 +280,15 @@ const ImoveisTableList = () => {
                       <TableCell>
                         <Button color='primary' sx={{color : `${imovel.verified === 'pending' ? 'black' : imovel.verified === 'verified' ? 'green' : 'red'}`, textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeClick(imovel)}>{imovel.verified === 'pending' ? 'Análise' : imovel.verified === 'verified' ? 'Aprovado' : 'Rejeitado'}</Button>
                       </TableCell>
+
+                      {
+                        currentUserls.type === 'owner'?
+                          <TableCell>
+                            <Button color='primary' sx={{color : `${imovel.share === null ? 'black' : imovel.share.status === 'accepted' ? 'green' : imovel.share.status === 'pending' ? 'orange' : 'red'}`, textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeShared(imovel)}>{imovel.share === null ? 'Compartilhar' : imovel.share.status === 'accepted' ? 'Aprovado' : imovel.share.status === 'pending' ? 'Análise' : 'Rejeitado'}</Button>
+                          </TableCell> : null
+                      }
+
+                      
                       <TableCell>
                         <IconButton onClick={() => handleEdit(imovel)}>
                           <Edit />
@@ -288,6 +321,8 @@ const ImoveisTableList = () => {
           onCancel={handleDeleteCancel}
         />
       )}
+      {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
+
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
 
     </Paper>

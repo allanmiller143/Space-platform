@@ -1,53 +1,42 @@
 
 import React from 'react';
-import {
-  ListItemText,
-  Box,
-  Avatar,
-  ListItemButton,
-  Typography,
-  Stack,
-  ListItemAvatar,
-} from '@mui/material';
-
-import { IconStar, IconTrash } from '@tabler/icons';
-
+import {ListItemText,Box,Avatar,ListItemButton,Typography,Stack,ListItemAvatar,} from '@mui/material';
 
 const ContactListItem = ({
-  onContactClick,
-  onStarredClick,
-  onDeleteClick,
-  id,
-  firstname,
-  lastname,
-  image,
-  department,
-  starred,
-  active,
+  imovel,
+  selected
 }) => {
 
+  const type = (type) => {
+    switch (type) {
+      case "house":
+        return "Casa";
+      case "apartment":
+        return "Apartamento";
+      case "farm":
+        return "Fazenda/Chácaras";
+      case "land":
+        return "Terreno";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <ListItemButton sx={{ mb: 1 }} selected={active}>
+    <ListItemButton sx={{ mb: 1 }} selected={ selected}>
       <ListItemAvatar>
-        <Avatar alt={image} src={image} />
+        <Avatar alt={''} src={(imovel.pictures && imovel.pictures.length > 0 ? imovel.pictures[0].url : '') } />
       </ListItemAvatar>
       <ListItemText>
         <Stack direction="row" gap="10px" alignItems="center">
-          <Box mr="auto" onClick={onContactClick}>
-            <Typography variant="subtitle1" noWrap fontWeight={600} sx={{ maxWidth: '150px' }}>
-              {firstname} {lastname}
+          <Box mr="auto">
+            <Typography variant="subtitle1" noWrap sx={{ maxWidth: '200px' }}>
+              {type(imovel.propertyType)} em  {imovel.address.neighborhood} {imovel.address.city}, {imovel.address.state}
             </Typography>
             <Typography variant="body2" color="text.secondary" noWrap>
-              {department}
+              {imovel.address.street}, {imovel.address.number}
             </Typography>
           </Box>
-          <IconStar
-            onClick={onStarredClick}
-            size="16"
-            stroke={1.5}
-            style={{ fill: starred ? '#FFC107' : '', stroke: starred ? '#FFC107' : '' }}
-          />
-          <IconTrash onClick={onDeleteClick} size="16" stroke={1.5} />
         </Stack>
       </ListItemText>
     </ListItemButton>

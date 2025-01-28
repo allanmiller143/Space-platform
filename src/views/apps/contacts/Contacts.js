@@ -1,26 +1,75 @@
-import React, { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, Box, Drawer, useMediaQuery } from '@mui/material';
 import PageContainer from '../../../components/container/PageContainer';
 import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import ContactDetails from 'src/components/apps/contacts/ContactDetails';
 import ContactList from 'src/components/apps/contacts/ContactList';
 import ContactSearch from 'src/components/apps/contacts/ContactSearch';
-import ContactFilter from 'src/components/apps/contacts/ContactFilter';
 import AppCard from 'src/components/shared/AppCard';
+import ContactsContext from './ContactsContext/ContactsContext';
+import { getData } from '../../../Services/Api';
+import ContactFilter from 'src/components/apps/contacts/ContactFilter';
 
-const drawerWidth = 240;
 const secdrawerWidth = 320;
+const drawerWidth = 240;
 
 const Contacts = () => {
-  const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
+  const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const {test, list,setList,loading,setLoading,acceptedList,setAcceptedList, activeList, setActiveList} = useContext(ContactsContext);
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    loadSharedProperties();
+    loadSharedPropertiesAccepted();
+  },[]);
+
+
+  async function loadSharedProperties (){
+    setLoading(true);
+    try{
+      const response = await getData(`properties/shared/find?status=pending`, token);
+      if(response.status === 200 || response.status === 201){
+        setList(response.userInfo.properties);
+        setActiveList(response.userInfo.properties);
+        console.log(response.userInfo.properties);
+      }else{
+        console.log(response);
+      }
+    }catch(e){
+      console.log(e);
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  async function loadSharedPropertiesAccepted (){
+    setLoading(true);
+    try{
+      const response = await getData(`properties/shared/find?status=accepted`, token);
+      if(response.status === 200 || response.status === 201){
+        setAcceptedList(response.userInfo.properties);
+        console.log(response.userInfo.properties);
+      }else{
+        console.log(response);
+      }
+    }catch(e){
+      console.log(e);
+    }finally{
+      setLoading(false);
+    }
+  }
+
+
   return (
     <PageContainer title="Aplicativo de Contatos" description="Esta é a página de Contatos">
+      <Breadcrumb title="Compartilhamentos" subtitle="Liste todos os seus pedidos de compartilhamento" />
       <AppCard>
         {/* ------------------------------------------- */}
-        {/* Parte Esquerda */}
+        {/* Left Part */}
         {/* ------------------------------------------- */}
 
         <Drawer
@@ -36,7 +85,7 @@ const Contacts = () => {
           <ContactFilter />
         </Drawer>
         {/* ------------------------------------------- */}
-        {/* Parte do Meio */}
+        {/* Middle part */}
         {/* ------------------------------------------- */}
         <Box
           sx={{
@@ -49,7 +98,7 @@ const Contacts = () => {
           <ContactList showrightSidebar={() => setRightSidebarOpen(true)} />
         </Box>
         {/* ------------------------------------------- */}
-        {/* Parte Direita */}
+        {/* Right part */}
         {/* ------------------------------------------- */}
         <Drawer
           anchor="right"
@@ -63,7 +112,7 @@ const Contacts = () => {
             [`& .MuiDrawer-paper`]: { width: '100%', position: 'relative' },
           }}
         >
-          {/* Parte do botão voltar */}
+          {/* back btn Part */}
           {mdUp ? (
             ''
           ) : (
@@ -75,7 +124,7 @@ const Contacts = () => {
                 onClick={() => setRightSidebarOpen(false)}
                 sx={{ mb: 3, display: { xs: 'block', md: 'none', lg: 'none' } }}
               >
-                Voltar{' '}
+                Back{' '}
               </Button>
             </Box>
           )}
