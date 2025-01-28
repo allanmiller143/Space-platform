@@ -109,7 +109,7 @@ const SearchBar = () => {
             displayEmpty
             sx={{ display: { xs: "none", sm: "block" } }}
         >
-            <MenuItem value="">Tipo de  anúncio</MenuItem>
+            <MenuItem value="">Tipo de imóvel</MenuItem>
             <MenuItem value="apartment">Apartamento</MenuItem>
             <MenuItem value="house">Casa</MenuItem>
             <MenuItem value="land">Terreno</MenuItem>
@@ -124,7 +124,7 @@ const SearchBar = () => {
             displayEmpty
             sx={{ display: { xs: "none", sm: "block" } }}
         >
-        <MenuItem value="">Tipo de imóvel</MenuItem>
+        <MenuItem value="">Tipo de anúncio</MenuItem>
         <MenuItem value="rent">Aluguel</MenuItem>
         <MenuItem value="sell">Venda</MenuItem>
         <MenuItem value="both">Ambos</MenuItem>
