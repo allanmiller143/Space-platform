@@ -10,8 +10,8 @@ import LimitAdvice from './LimitAdvice/LimitAdvice';
 import { useState } from 'react';
 import { getData } from '../../../Services/Api';
 import { Box } from '@mui/system';
-import FilteringTable from '../../../components/apps/TabelaMeusIMoveis/imoveisTabela'
-import MobileImoveisTabela from '../../../components/apps/TabelaMeusIMoveis/MobileImoveisTabela'
+import FilteringTable from ''
+import MobileImoveisTabela from '../../../components/apps/TabelaMeusIMoveis/mobileImoveisTabela'
 function Page() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
