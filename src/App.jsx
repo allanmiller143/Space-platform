@@ -21,6 +21,7 @@ function App() {
 
   return (
     <HelmetProvider>
+      
       <ThemeProvider theme={theme}>
         <NotificationContextProvider>
           <ChatContextProvider>

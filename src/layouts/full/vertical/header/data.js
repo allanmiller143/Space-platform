@@ -86,24 +86,31 @@ const profile = [
 // apps dropdown
 
 const appsLink = [
-  {
-    href: '/apps/dash',
-    title: 'Dashboard',
-    subtext: 'Veja dados dos seus imóveis',
-    avatar: icon3,
-  },
+
+  ...(currentUser?.type === 'realtor' || currentUser?.type === 'realstate'
+    ? [
+        {
+          href: '/apps/dash',
+          title: 'Dashboard',
+          subtext: 'Veja dados dos seus imóveis',
+          avatar: icon3,
+        },
+      ]
+    : []),
   {
     href: '/apps/imoveis/list',
     title: 'Gestão de Imóveis',
     subtext: 'Gestão de imóveis',
     avatar: ddIcon3,
   },
+
   {
     href: '/apps/chats',
     title: 'Mensagens',
     subtext: 'Chat com corretores e clientes',
     avatar: ddIcon1,
   },
+
   {
     href: '/apps/calendar',
     title: 'Calendário',
@@ -111,7 +118,7 @@ const appsLink = [
     avatar: ddIcon4,
   },
   // Adiciona o item de "Contacts" apenas se a condição for verdadeira
-  ...(currentUser?.type !== 'client' && currentUser?.type !== 'owner'
+  ...(currentUser?.type === 'realtor' || currentUser?.type === 'realstate'
     ? [
         {
           href: '/apps/contacts',

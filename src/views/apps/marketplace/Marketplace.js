@@ -10,7 +10,7 @@ import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
 import { useNavigate } from 'react-router';
 import marketplaceContext from './MarketplaceContext/MarketplaceContext';
-
+import BlogPost from '../../../components/apps/blog/BlogCard';
 // import nodata from "../../"
 const Marketplace = () => {
     const {    
@@ -110,18 +110,12 @@ const Marketplace = () => {
                             ref={scrollContainerRef} 
                             sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 107px)', overflow: 'auto' }} // Altere 'scroll' para 'auto'
                         >
-                            <Grid container spacing={3} sx={{ p: 3 }}>
+                            <Grid container spacing={3} sx={{ p: 3, display: 'flex', alignItems: 'start',}}>
                                 {/* Render Skeletons when loading */}
                                 {loading ? (
                                     Array.from(new Array(itemsPerPage)).map((_, index) => (
                                         <Grid item xs={12} sm={6} md={4} key={index}>
-                                            <Skeleton variant="rectangular" height={200} />
-                                            <Skeleton height={50} sx={{ mt: 1 }} />
-                                            <Skeleton height={30} width="60%" />
-                                            <Skeleton width="40%" />
-                                            <Skeleton width="80%" />
-                                            <Skeleton width="50%" />
-                                            <Skeleton width="99%" height={60} sx={{ mt: 1, margin: 'auto' }} />
+                                            <Skeleton animation="wave"variant="square"width="100%"height={440}sx={{ borderRadius: (theme) => theme.shape.borderRadius / 5 }}></Skeleton>           
                                         </Grid>
                                     ))
                                 ) : properties.length === 0 ? ( // Verifique se não há propriedades
@@ -133,7 +127,7 @@ const Marketplace = () => {
                                 ) : (
                                     properties.map((property, index) => (
                                         <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <CardImovel data={property} />
+                                            <BlogPost post={property} />
                                         </Grid>
                                     ))
                                 )}

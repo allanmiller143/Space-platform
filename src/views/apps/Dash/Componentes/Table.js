@@ -1,13 +1,13 @@
 // src/Dashboard.jsx
 import { useState } from 'react';
 import { Grid} from '@mui/material';
-import FilteringTable from "src/components/react-tables/filter/imoveisTabela";
 import { useTheme } from '@emotion/react';
 import { styled } from "@mui/material/styles";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { IconMinus, IconPlus } from '@tabler/icons';
+import FilteringTable from '../../../../components/apps/TabelaMeusIMoveis/imoveisTabela'
 // Dados de exemplo para os gráficos
 
 const Table = () => {
@@ -51,7 +51,7 @@ const StyledAccordian = styled(Accordion)(() => ({
                 Todos os seus imóveis
             </AccordionSummary>
             <AccordionDetails>
-                <FilteringTable />            
+                <FilteringTable/>            
             </AccordionDetails>
         </StyledAccordian>
     </Grid>

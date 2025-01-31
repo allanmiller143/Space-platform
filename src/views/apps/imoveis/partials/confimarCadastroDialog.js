@@ -12,7 +12,6 @@ import { getData } from '../../../../Services/Api';
 const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
   const [isEmptyList, setIsEmptyList] = useState(false);
   const navigate = useNavigate();
-
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('token');
 
@@ -25,7 +24,7 @@ const ConfimarCadastroDialog = ({ open, setOpenAdviceDialog }) => {
     try {
       const response = await getData(`realtor/availability/${currentUser.email}`, token);
       if (response.status === 200 || response.status === 201) {
-        if (!response.userInfo || response.userInfo.length === 0) {
+        if ((!response.userInfo || response.userInfo.length === 0) && (currentUser.type === 'realtor' || currentUser.type === 'realstate')) {
           setIsEmptyList(true);
         }else{
           handleClose();

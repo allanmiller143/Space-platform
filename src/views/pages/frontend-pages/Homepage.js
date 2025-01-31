@@ -33,7 +33,7 @@ const HomePage = () => {
       <CarrosselHome/>
       <Filtros/>
       <CarroselCompleto/>
-      <DestinationComponent/>
+      {/* <DestinationComponent/> */}
       <Features />
       
 

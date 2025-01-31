@@ -1,4 +1,3 @@
-import React from 'react';
 import BlogDetail from 'src/components/apps/blog/detail/BlogDetail';
 
 import PageContainer from '../../../components/container/PageContainer';

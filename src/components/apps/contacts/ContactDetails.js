@@ -1,11 +1,9 @@
-import {Box,Button,Typography,Avatar,Divider,Grid, CircularProgress,} from '@mui/material';
-import {isEdit,DeleteContact,} from 'src/store/apps/contacts/ContactSlice';
-import emailIcon from 'src/assets/images/breadcrumb/emailSv.png';
+import {Box,Button,Typography,Divider,Grid, CircularProgress,} from '@mui/material';
+import emailIcon from '../../../assets/images/breadcrumb/emailSv.png';
 import { useContext, useState } from 'react';
 import ContactsContext from '../../../views/apps/contacts/ContactsContext/ContactsContext';
 import AceitarNegarCompartilhamentoDialog from './AceitarNegarCompartilhamentoDialog';
 import InfoProprietario from './InfoProprietario';
-import InfoImovel from './InfoImovel';
 import PropertyInfo from '../../../views/apps/Share/Componentes/PropertyInfo';
 
 const ContactDetails = () => {

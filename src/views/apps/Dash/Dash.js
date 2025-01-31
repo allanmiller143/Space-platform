@@ -1,9 +1,6 @@
-// src/Dashboard.jsx
 import { Grid, Typography } from '@mui/material';
-
 import PageContainer from 'src/components/container/PageContainer';
 import Table from './Componentes/Table';
-
 import SeenGraphic from './Componentes/SeenGraphic';
 import LikesGraphic from './Componentes/LikesGraphic';
 import PizzaGraphic from './Componentes/PizzaGraphic';

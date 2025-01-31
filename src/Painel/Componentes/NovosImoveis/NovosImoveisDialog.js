@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 import {Cancel,Pool,Balcony,LocalParking,KingBed,Bathtub,CheckCircle,OutdoorGrill,AcUnit,Toys,Event,Restaurant,Roofing,FitnessCenter,Grass,Deck,Person,Forest,Home,Elevator,WbSunny} from "@mui/icons-material";
 import {Dialog,DialogTitle,DialogContent,DialogActions,Typography,Button,Box,IconButton,Divider,Chip,Stack, Slide,} from "@mui/material";
-import GalleryPhotos from "../../../views/apps/marketplace/Componentes/GalleryPhotos";
+import GalleryPhotos from "../../../views/apps/ImovelPage/Componentes/GalleryPhotos";
 import React, { useState } from "react";
 import AceitarNegarImovelDialog from "./AceitarNegarImovelDialog";
 

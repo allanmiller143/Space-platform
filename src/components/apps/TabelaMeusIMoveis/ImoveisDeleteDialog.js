@@ -1,17 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-  Typography,
-  IconButton,
-  Box,
-  CircularProgress
-} from '@mui/material';
+import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Button,Typography,IconButton,Box,CircularProgress} from '@mui/material';
 import { Cancel, Delete as DeleteIcon } from '@mui/icons-material';
 
 const DeleteDialog = ({

@@ -91,7 +91,6 @@ export async function postFormLoadingData(url = '', formData = {}, token = '', s
     setLoading(false); // Stop loading if there is an error
     const message = error.response?.data?.message || 'An error occurred';
     const status = error.response?.status || 500;
-    console.log('tomada de cu');
     return { message, status }; // Return error details
   }
 }

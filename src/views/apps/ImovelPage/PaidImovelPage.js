@@ -22,6 +22,7 @@ import Gallery from './Componentes/Gallery'
 import CarrosselHome from "../../../components/frontend-pages/homepage/carrossel/CarrosselHome";
 import NotificationContext from "../../../Services/Notification/NotificationContext/NotificationContext";
 import socket from "../../../Services/socket";
+import FloatingButton from "./Componentes/FloatingButton";
 
 const PaidImovelPage = () => {
     const [loading, setLoading] = useState(false);
@@ -158,9 +159,8 @@ const PaidImovelPage = () => {
 
     return (
       <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
-          <Header />
           <Box maxWidth="lg" margin='0 auto' py = {5} px = {2} >
-
+          <FloatingButton advertiser = {advertiser}/>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Grid container sx={{ height: '100%' }}>
                   <Grid
@@ -172,8 +172,7 @@ const PaidImovelPage = () => {
                       <Box sx={{ display: 'flex' , alignItems : { md : 'center', xs : 'start'} , flexDirection: {md: 'row', xs : 'column'},justifyContent : "space-between", gap: 3 }}>
                         <Box sx={{ display: 'flex', gap: 1 }}>
                           <Agendar advertiser={advertiser} property={property} />
-                          
-                          <div>
+                          <Box>
                             <Button 
                               variant="outlined" 
                               color="primary" 
@@ -182,9 +181,9 @@ const PaidImovelPage = () => {
                             >
                               Entre em contato
                             </Button>
-                          </div>
+                          </Box>
                           {/* Botão para desktops */}
-                          <div>
+                          <Box>
                             <Button 
                               variant="outlined" 
                               onClick={setActiveChatFunction} 
@@ -192,7 +191,7 @@ const PaidImovelPage = () => {
                             >
                               Entre em contato
                           </Button>
-                          </div>
+                          </Box>
                         </Box>
                         <AdvertiserCard property={property} advertiser={advertiser} />
                       </Box>

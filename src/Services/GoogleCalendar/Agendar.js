@@ -18,6 +18,12 @@ function Agendar({ advertiser, property }) {
       toast.error('Necessário estar logado para agendar');
       return;
     } 
+
+    if(advertiser.type === 'owner'){
+      toast.error('opss, esse dono de imóvel não possui permissão para agendar, por favor, para mais informações entre em contato com o proprietário pelo chat');
+      return;
+    }
+
     setDialogAberto(true);
   };
 
@@ -31,6 +37,8 @@ function Agendar({ advertiser, property }) {
       <Button variant="contained" color="primary" onClick={handleAbrirDialog}>
         Agendar Visita
       </Button>
+
+
       <CalendarioDisponibilidade open={dialogAberto} onClose={handleFecharDialog} property={property} advertiser={advertiser}  />
 
      

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, CardContent, CircularProgress, Stack, Typography } from '@mui/material';
+import { CardContent, CircularProgress, Stack, Typography } from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -8,10 +8,10 @@ import PageContainer from '../../../components/container/PageContainer';
 import BlankCard from '../../../components/shared/BlankCard';
 import Header from '../../../layouts/full/horizontal/header/Header';
 import Grid from '@mui/material/Grid';
-import ViewDetailDialog from './ViewDetailDialog';
-import PendentEvents from './PendentEvents';
+import ViewDetailDialog from './Components/ViewDetailDialog';
 import { getData } from '../../../Services/Api';
 import { Box } from '@mui/system';
+import PendentEvents from './Components/PendentEvents';
 
 moment.locale('pt-BR');
 const localizer = momentLocalizer(moment);
@@ -33,6 +33,12 @@ const BigCalendar = () => {
   };
 
   const statusColor = (event) => {
+    const eventEndDate = new Date(event.end); // Converte a string para um objeto Date
+    const now = new Date();
+
+    if (eventEndDate < now ) {
+      return 'gray';
+    }
     if (event.status === 'accepted') {
       return 'green';
     } else if (event.status === 'rejected') {
@@ -40,7 +46,7 @@ const BigCalendar = () => {
     } else if (event.status === 'pending') {
       return 'orange';
     }
-    return ''; // Retorna uma string vazia se nenhum participante for encontrado
+    return ''; // Retorna uma string vazia se nenhum status for correspondente
   };
 
   const fetchEvents = async () => {
@@ -48,33 +54,51 @@ const BigCalendar = () => {
     try {
       const response = await getData(`appointments/${currentUser.email}`);
       if (response.status === 200 || response.status === 201) {
-        const convertedEvents = response.userInfo.map((event) => ({
-          ...event,
-          start: new Date(event.start),
-          end: new Date(event.end),
-        }));
+        const convertedEvents = response.userInfo.map((event) => {
+          const startDate = new Date(event.start);
+          const endDate = new Date(event.end);
+        
+          return {
+            ...event,
+            start: startDate,
+            end: endDate,
+            title: `${String(startDate.getHours()).padStart(2, '0')}h - ${String(endDate.getHours()).padStart(2, '0')}h`,
+          };
+        });
+        
 
-        // Filtrar eventos por advertiserEmail e solicitorEmail
-        const advertiserFiltered = convertedEvents.filter(
-          (event) => event.advertiserEmail === currentUser.email
-        );
+        console.log(convertedEvents);
+  
         const solicitorFiltered = convertedEvents.filter(
           (event) => event.solicitorEmail === currentUser.email
         );
-
+  
+        const advertiserFiltered = convertedEvents.filter(
+          (event) => event.advertiserEmail === currentUser.email
+        );
+  
         setEvents(convertedEvents);
-        setAdvertiserEvents(advertiserFiltered);
         setSolicitorEvents(solicitorFiltered);
-        setDisplayEvents(advertiserFiltered); // Visualização padrão
+        setAdvertiserEvents(advertiserFiltered);
+  
+        // Aqui garantimos que o displayEvents é atualizado corretamente
+        if (currentUser.type === "realtor" || currentUser.type === "realstate") {
+          setDisplayEvents(advertiserFiltered);
+          setX(0);
+        } else {
+          setDisplayEvents(solicitorFiltered);
+          setX(1);
+        }
       } else {
         console.log(response);
       }
     } catch (error) {
       console.error(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchEvents();
@@ -128,30 +152,7 @@ const BigCalendar = () => {
         )
       }
       <Grid container spacing={3} sx={{ p: 4, height: { xs: 'auto', lg: '90vh' } }}>
-        <Grid container spacing={3} xs = {12} >
-          <Box sx={{ display: 'flex',alignItems : 'center', justifyContent: 'center', width: '100%', mt: 5,gap : 2 }}>
-            <Button
-              onClick={() => {
-                setDisplayEvents(advertiserEvents);
-                setX(0);
-              }}
-              sx ={{height: '40px'}}
-              variant ={ x === 0 ? 'contained' : 'outlined'}
-            >
-              Agendamentos nos meus imóveis
-            </Button>
-            <Button
-              onClick={() => {
-                setDisplayEvents(solicitorEvents);
-                setX(1);
-              }}
-              sx ={{height: '40px'}}
-              variant ={ x === 1 ? 'contained' : 'outlined'}
-            >
-              Meus agendamentos
-              </Button>
-          </Box>
-        </Grid>
+
         <PageContainer >
           <Box sx={{ display: 'flex',alignItems : 'center', justifyContent: 'start', width: '100%', mt: 5, ml : 3,gap : 2 }}>
             <Typography variant="h6">
@@ -168,7 +169,6 @@ const BigCalendar = () => {
             <CardContent>
               <Calendar
                 events={displayEvents} // Exibe a lista de eventos selecionada
-                lo
                 defaultView="month"
                 views={['month', 'week', 'day']} // Adicione as views para habilitar botões
                 scrollToTime={new Date(1970, 1, 1, 6)}

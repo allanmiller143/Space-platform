@@ -1,6 +1,4 @@
 import PageContainer from 'src/components/container/PageContainer';
-import FilteringTable from "src/components/react-tables/filter/imoveisTabela";
-import MobileImoveisTabela from "src/components/react-tables/filter/mobileImoveisTabela";
 import { Typography } from '@mui/material';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +10,13 @@ import LimitAdvice from './LimitAdvice/LimitAdvice';
 import { useState } from 'react';
 import { getData } from '../../../Services/Api';
 import { Box } from '@mui/system';
-
+import FilteringTable from '../../../components/apps/TabelaMeusIMoveis/imoveisTabela'
+import MobileImoveisTabela from '../../../components/apps/TabelaMeusIMoveis/MobileImoveisTabela'
 function Page() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const token = localStorage.getItem('token');
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   
   const isMd = useMediaQuery((theme) => theme.breakpoints.up('md')); // Verifica se a tela é maior ou igual ao breakpoint 'md'
 
@@ -60,9 +60,13 @@ function Page() {
                   >
                     Novo Imóvel
                   </Button>
-                  <Button variant="outlined" href="#" color="primary" startIcon={<IconCalendar size={20} />} onClick={() => navigate('/apps/agenda')}>
-                    Horários
-                  </Button>
+                  {
+                    currentUser.type === 'realtor' || currentUser.type === 'realstate' ?
+                    <Button variant="outlined" href="#" color="primary" startIcon={<IconCalendar size={20} />} onClick={() => navigate('/apps/agenda')}>
+                      Horários
+                    </Button>
+                    : null 
+                  }
               </Stack>
             </Grid>
             <Grid item xs={12} md={4} container justifyContent="center" alignItems="center" sx={{ display: { xs: 'none', md: 'block' } }}>

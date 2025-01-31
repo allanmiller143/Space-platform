@@ -2,14 +2,13 @@
 /* eslint-disable no-unused-vars */
 import { CardContent, Button, Typography, Avatar } from '@mui/material';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './Calendar.css';
-import BlankCard from '../../../components/shared/BlankCard';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { CalendarToday, Event } from '@mui/icons-material';
-import { getData, postData } from '../../../Services/Api';
 import { toast } from 'sonner';
+import { getData, postData } from '../../../../Services/Api';
+import BlankCard from '../../../../components/shared/BlankCard';
 
 const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }) => {
   const [pendingEvents, setPendingEvents] = useState([]);
@@ -21,8 +20,10 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    const now = new Date();
+
     const filteredEvents = events.filter(
-      (event) => event.status === 'pending' && event.advertiserEmail === currentUserls.email
+      (event) => event.status === 'pending' && event.advertiserEmail === currentUserls.email && moment(event.start).isAfter(now)  
     );
     setPendingEvents(filteredEvents);
   }, [events]);
@@ -78,7 +79,7 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
     }
   }
 
-    async function negaEvento({ selectedEvent }) {
+  async function negaEvento({ selectedEvent }) {
       setLoadNega(true);
       try {
         const response = await postData(`realtor/appointment/reject/${selectedEvent.id}`,{}, token);
@@ -102,11 +103,11 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
       } finally {
         setLoadNega(false);
       }
-    }
+  }
 
 
   return (
-    <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ mt: 3, pr : 2, display: 'flex', flexDirection: 'column', gap: 2, }}>
       <Typography variant="h6" onClick={() => {console.log(propertiesData)}}>Solicitações de Agendamento</Typography>
       {
         loadAceita || loadNega &&

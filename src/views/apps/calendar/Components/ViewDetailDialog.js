@@ -1,26 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  IconButton,
-  Typography,
-  Divider,
-  CardContent,
-  DialogTitle,
-  Box,
-  Stack,
-  Chip,
-  Tooltip,
-  CircularProgress,
-} from '@mui/material';
+import {Button,Dialog,DialogActions,DialogContent,IconButton,Typography,Divider,CardContent,DialogTitle,Box,Stack,Chip,Tooltip,CircularProgress,}from '@mui/material';
 import { Cancel, Delete, CalendarToday, Email, Event } from '@mui/icons-material';
 import moment from 'moment';
-import { getData, postData } from '../../../Services/Api';
+import { getData, postData } from '../../../../Services/Api';
 import { toast } from 'sonner';
-import ImageViewer from '../../../components/react-tables/filter/ImoveisImageView';
+import ImageViewer from '../../../../components/apps/TabelaMeusIMoveis/ImoveisImageView';
 
 const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents  }) => {
   const [confirmDeleteEvent, setConfirmDeleteEvent] = useState(null);
@@ -54,7 +39,6 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
         if (response.status === 200 || response.status === 201) {
             setProperty(response.userInfo);
             setAdvertiser(response.userInfo.seller);
-            console.log(response.userInfo);
         } else {
             toast.error(`Erro ao carregar dados da propriedade: ${response.message}`);
         }
@@ -84,9 +68,7 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
           }
           return event;
         });
-        console.log(events);
         setEvents(updatedEvents);
-        console.log(events);
         handleClose();
       } else {
         toast.error(`Erro ao aceitar agendamento: ${response.message}`);
@@ -113,7 +95,6 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
         });
 
         setEvents(updatedEvents);
-        console.log(response);
         handleClose();
       } else {
         toast.error(`Erro ao negar agendamento: ${response.message}`);

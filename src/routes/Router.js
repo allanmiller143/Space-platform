@@ -11,8 +11,9 @@ import CatchError from '../views/apps/CatchError/CatchError';
 import About from '../views/pages/frontend-pages/About';
 import BlogPage from '../views/pages/frontend-pages/Blog';
 import Ecommerce from '../views/dashboard/Ecommerce';
-import PaidImovelPage from '../views/apps/marketplace/PaidImovelPage';
 import Tela from '../Painel/Componentes/Tela';
+import PaidImovelPage from '../views/apps/ImovelPage/PaidImovelPage';
+import TelaDeTest from '../views/TelaDeTest/TelaDeTest';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -84,7 +85,7 @@ const Router = [
       { path: '/user-profile/:email', element: <UserProfile /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
       { path: '/forms/form-wizard', element: <FormWizard /> },
-
+      { path: '/imoveis/:id', element: <TelaDeTest /> },
       // Apps
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/email', element: <Email /> },
@@ -93,6 +94,7 @@ const Router = [
       { path: '/apps/post/:id', element: <EcommerceDetail /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
       { path: '/error', element: <CatchError /> },
+      { path: '/imovel/:id', element: <PaidImovelPage /> },
 
 
       
@@ -105,7 +107,7 @@ const Router = [
       { path: '/auth/404', element: <Error /> },
       { path: '/auth/login', element: <Login /> },
       { path: '/apps/chats', element: <Chats /> },
-
+      { path: '/apps/ecommerce/shop',element : <Ecommerce/> },
       { path: '/auth/register2', element: <Register2 /> },
       { path: '/auth/complete-register2', element: <CompleteRegister2 /> },
       { path: '/auth/forgot-password', element: <ForgotPassword /> },
@@ -115,7 +117,7 @@ const Router = [
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/tela', element: <Tela/> },
-      { path: '/imovel/:id', element: <PaidImovelPage /> },
+
 
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/templates/contato', element: <ContatoPage /> },
