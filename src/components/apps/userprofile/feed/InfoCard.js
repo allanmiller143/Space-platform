@@ -9,15 +9,25 @@ import Loading from '../../../Loading/Loading';
 
 const InfoCard = ( {userData}) => {
   const [isEditing, setIsEditing] = useState({ site: false, email: false, phone: false, whatsapp: false, address: false });
-  const [site, setSite] = useState((userData.socials.length === 0 || userData.socials.length === 3) ? 'https://meusite.com' : userData.socials[3].url === '.' ? 'https://meusite.com' : userData.socials[3].url );
-  const [email, setEmail] = useState( (userData.socials.length === 0 || userData.socials.length === 3) ? 'meuemail@exemplo.com' : userData.socials[4].url === '.' ? 'meuemail@exemplo.com': userData.socials[4].url);
-  const [phone, setPhone] = useState((userData.socials.length === 0 || userData.socials.length === 3) ? '(11) 99999-9999' : userData.socials[5].url === '.' ? '(11) 99999-9999' : userData.socials[5].url );
-  const [whatsapp, setWhatsapp] = useState((userData.socials && userData.socials.length > 0) ? userData.socials[1].url : '(11) 99999-9999');
   const [address] = useState({ city: userData.address.city, state: userData.address.state });
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
+  const socialsMap = currentUserls.socials.reduce((acc, social) => {
+    acc[social.type] = social.url === '.' ? '' : social.url;
+    return acc;
+  }, {});
+  
+  // Definindo os estados com base no mapeamento
+  const [whatsapp, setWhatsapp] = useState(socialsMap["whatsapp"] || '');
+  const [site, setSite] = useState(socialsMap["site"] || 'https://meusite.com');
+  const [email, setEmail] = useState(socialsMap["email"] || 'email@gmail.com');
+  const [phone, setPhone] = useState(socialsMap["phone"] || '(11) 99999-9999');
+  
+  
+  
+
 
   const formatPhoneNumber = (value) => {
     if (!value) return '';
@@ -41,12 +51,12 @@ const InfoCard = ( {userData}) => {
     setLoading(true);
     const formJson = {
       socials : [
-        {type : 'facebook', url : (userData.socials && userData.socials.length > 0 && userData.socials[0].url) ? userData.socials[0].url : '.'},
+        {type : 'facebook', url : socialsMap["facebook"] !== '.' ? socialsMap["facebook"] : '.'},
         {type : 'whatsapp', url : whatsapp !== '(11) 99999-9999' ? whatsapp : '.'},
-        {type : 'instagram', url : (userData.socials && userData.socials.length > 0 && userData.socials[2].url) ? userData.socials[2].url : '.'},
+        {type : 'instagram', url : socialsMap["instagram"] !== '.' ? socialsMap["instagram"] : '.'},
         {type : 'site', url : site !== 'https://meusite.com' ? site : '.'},
-        {type : 'email', url : email !== 'meuemail@exemplo.com' ? email : '.'},
-        {type : 'otherPhone', url : phone !== '(11) 99999-9999' ? phone : '.'},
+        {type : 'email', url : email !== 'email@gmail.com' ? email : '.'},
+        {type : 'otherPhone', url : phone !== '' ? phone : '.'},
       ],
     };
 

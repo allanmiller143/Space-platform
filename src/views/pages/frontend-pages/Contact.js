@@ -10,15 +10,15 @@ import ScrollToTop from '../../../components/frontend-pages/shared/scroll-to-top
 
 const Contact = () => {
     return (
-        <PageContainer title="Contact" description="this is Contact">
-            <HeaderAlert />
-            <HpHeader />
-            <Banner />
-            <Form />
-            <C2a />
-            <Footer />
-            <ScrollToTop />
-        </PageContainer>
+    <PageContainer title="Contact" description="this is Contact">
+        <HeaderAlert />
+        <HpHeader />
+        <Banner />
+        <Form />
+        <C2a />
+        <Footer />
+        <ScrollToTop />
+    </PageContainer>
     );
 };
 

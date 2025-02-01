@@ -110,7 +110,7 @@ const Marketplace = () => {
                             ref={scrollContainerRef} 
                             sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 107px)', overflow: 'auto' }} // Altere 'scroll' para 'auto'
                         >
-                            <Grid container spacing={3} sx={{ p: 3, display: 'flex', alignItems: 'start',}}>
+                            <Grid container spacing={0.5} sx={{ p: 3, display: 'flex', alignItems: 'start',}}>
                                 {/* Render Skeletons when loading */}
                                 {loading ? (
                                     Array.from(new Array(itemsPerPage)).map((_, index) => (

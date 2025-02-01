@@ -149,6 +149,11 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
     }
   };
 
+  const socialsMap = currentUserls.socials.reduce((acc, social) => {
+    acc[social.type] = social.url === '.' ? '' : social.url;
+    return acc;
+  }, {});
+
 
   return (
     <>
@@ -218,13 +223,13 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="primary"
-                  sx={{ backgroundColor: '#1877F2', display: (userData.socials[0] && userData.socials[0].url === '.') ? 'none' : ' ' }}
+                  sx={{ backgroundColor: '#1877F2', display: (socialsMap["facebook"] === '.') ? 'none' : ' ' }}
                   onClick={() => {
                     if(userData.socials[0].url === '.'){
                       toast.error('Este perfil ainda não possui Facebook cadastrado!');
                       return;
                     }
-                    window.open(`https://www.facebook.com/${userData.socials[0].url.replace('@', '')}`, '_blank')}
+                    window.open(`https://www.facebook.com/${socialsMap["facebook"].replace('@', '')}`, '_blank')}
                   }
                 >
                   <IconBrandFacebook size="16" />
@@ -232,7 +237,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="success"
-                  sx={{ backgroundColor: '#25D366', display: (userData.socials[1] && userData.socials[1].url === '.') ? 'none' : ' '  }}
+                  sx={{ backgroundColor: '#25D366', display: (socialsMap["whatsapp"] === '.') ? 'none' : ' '  }}
                   onClick={() => seePhone()}
                 >
                   <IconBrandWhatsapp size="18" />
@@ -240,13 +245,13 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="error"
-                  sx={{ backgroundColor: '#E4405F', display: (userData.socials[0] && userData.socials[2].url === '.') ? 'none' : ' '  }}
+                  sx={{ backgroundColor: '#E4405F', display: (socialsMap["instagram"] === '.') ? 'none' : ' '  }}
                   onClick={() =>{
-                    if(userData.socials[2].url === '.'){
+                    if(socialsMap["instagram"] === '.'){
                       toast.error('Este perfil ainda não possui Instagram cadastrado!');
                       return;
                     }
-                    window.open(`https://www.instagram.com/${userData.socials[2].url.replace('@', '')}`, '_blank')}
+                    window.open(`https://www.instagram.com/${socialsMap["instagram"].url.replace('@', '')}`, '_blank')}
                   } 
                 >
                   <IconBrandInstagram size="18" />

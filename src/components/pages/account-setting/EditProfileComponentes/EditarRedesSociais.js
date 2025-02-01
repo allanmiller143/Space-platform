@@ -15,13 +15,19 @@ const EditarRedesSociais = () => {
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
 
-  // Estados para cada campo de redes sociais
-  const [facebook, setFacebook] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[0].url === '.' ? '' : currentUserls.socials[0].url);
-  const [whatsapp, setWhatsapp] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[1].url === '.' ? '' : currentUserls.socials[1].url);
-  const [instagram, setInstagram] = useState( currentUserls.socials.length === 0 ? '' :  currentUserls.socials[2].url === '.' ? '' : currentUserls.socials[2].url);
-  const [site, setSite] = useState( currentUserls.socials.length === 0 ? '.' : currentUserls.socials[3].url === '.' ? '.' : currentUserls.socials[3].url);
-  const [email, setEmail] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[4].url === '.' ? '' : currentUserls.socials[4].url);
-  const [phone, setPhone] = useState( currentUserls.socials.length === 0 ? '' : currentUserls.socials[5].url === '.' ? '' : currentUserls.socials[5].url);
+  const socialsMap = currentUserls.socials.reduce((acc, social) => {
+    acc[social.type] = social.url === '.' ? '' : social.url;
+    return acc;
+  }, {});
+  
+  // Definindo os estados com base no mapeamento
+  const [facebook, setFacebook] = useState(socialsMap["facebook"] || '');
+  const [whatsapp, setWhatsapp] = useState(socialsMap["whatsapp"] || '');
+  const [instagram, setInstagram] = useState(socialsMap["instagram"] || '');
+  const [site, setSite] = useState(socialsMap["site"] || '');
+  const [email, setEmail] = useState(socialsMap["email"] || '');
+  const [phone, setPhone] = useState(socialsMap["phone"] || '');
+
   
   const isValidSocialHandle = (value) => {
     if(value === ''){
