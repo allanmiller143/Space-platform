@@ -53,7 +53,7 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
             value={descricao}
           />
           <Typography variant="body2" color="textSecondary" align="right">
-            {descricao.length}/500
+            {descricao.length}/1500
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
