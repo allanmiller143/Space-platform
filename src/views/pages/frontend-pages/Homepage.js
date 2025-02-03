@@ -17,7 +17,6 @@ import CarroselCompleto from '../../../Painel/Componentes/ComponentesTest/Carros
 import Filtros from '../../../Painel/Componentes/ComponentesTest/Filtros';
 import Banner from '../../../Painel/Componentes/ComponentesTest/Banner';
 import SearchBar from '../../../Painel/Componentes/ComponentesTest/SearchBar';
-import DestinationComponent from '../../../Painel/Componentes/ComponentesTest/DestinationComponent';
 import { useContext } from 'react';
 import marketplaceContext from '../../apps/marketplace/MarketplaceContext/MarketplaceContext';
 

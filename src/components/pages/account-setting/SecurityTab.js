@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Avatar,
-  Box,
-  CardContent,
-  Grid,
-  IconButton,
-  Typography,
-  Button,
-  Divider,
-  Stack
-} from '@mui/material';
-
-// componentes
+import {Avatar,Box,CardContent,Grid,IconButton,Typography,Button,Divider,Stack} from '@mui/material';
 import BlankCard from '../../shared/BlankCard';
 import { IconDeviceLaptop, IconDeviceMobile, IconDotsVertical } from '@tabler/icons';
 

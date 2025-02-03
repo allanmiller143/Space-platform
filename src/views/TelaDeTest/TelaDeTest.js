@@ -79,7 +79,7 @@ const TelaDeTest = () => {
             <Filter openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} propertyTypes={propertyTypes} setPropertyTypes={setPropertyTypes} announcementType={announcementType} setAnnouncementType={setAnnouncementType} />
             {
                 <Box sx = {{ display : {md : 'flex', xs : 'none'}}}> 
-                    <Breadcrumb title="Todos os imoveis" subtitle={"Nesse componente estou implementando uma tela que vai retornar os imoveis de um usuario especifico"} />
+                    <Breadcrumb title="Todos os imoveis" subtitle={"Vejo todos os imóveis do anunciante"} />
                 </Box>
             }
             <Box sx={{ width: '100%',display: 'flex',flexDirection: 'column', mt: { md: -2, xs: 1} }}>

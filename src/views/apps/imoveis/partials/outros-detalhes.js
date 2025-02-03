@@ -6,7 +6,7 @@ import { Box, Typography, Grid, FormControl, MenuItem, Select } from "@mui/mater
 import CheckboxesGroup from '../CheckBoxGroup/CheckBoxGroup';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const CustomSelect = styled((props) => <Select {...props} />)(({}) => ({}));
 
@@ -22,7 +22,7 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
 
   const handleDescricaoChange = (event) => {
     const value = event.target.value;
-    if (value.length <= 500) {
+    if (value.length <= 1500) {
       setDescricao(value);
       setFormData(prevState => ({
         ...prevState,
@@ -30,6 +30,10 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
       }));
     }
   };
+
+  useEffect(() => {
+    console.log(formData);
+  }, []);
 
   return (
     <Box mt={4}>
@@ -43,8 +47,8 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
             fullWidth
             margin="normal"
             multiline
-            rows={4}
-            inputProps={{ maxLength: 500 }}
+            rows={8}
+            inputProps={{ maxLength: 1500 }}
             onChange={handleDescricaoChange}
             value={descricao}
           />
@@ -116,3 +120,4 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
 };
 
 export default OutrosDetalhes;
+

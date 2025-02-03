@@ -20,7 +20,6 @@ const AccountTab = () => {
         <DadosPessoais />
         <EditarRedesSociais/>
         <EditarEndereco />
-
     </Grid>
   );
 };

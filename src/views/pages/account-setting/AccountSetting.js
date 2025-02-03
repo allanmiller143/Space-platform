@@ -70,19 +70,19 @@ const AccountSetting = () => {
                   icon={<IconBell size="22" />}
                   label="Notificações"
                   {...a11yProps(1)}
-                /> */}
-                {/* <Tab
+                />
+                <Tab
                   iconPosition="start"
                   icon={<IconArticle size="22" />}
                   label="Faturas"
                   {...a11yProps(2)}
                 /> */}
-                {/* <Tab
+                <Tab
                   iconPosition="start"
                   icon={<IconLock size="22" />}
                   label="Segurança"
                   {...a11yProps(3)}
-                /> */}
+                />
               </Tabs>
             </Box>
             <Divider />
