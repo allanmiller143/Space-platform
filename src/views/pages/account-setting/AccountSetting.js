@@ -14,7 +14,6 @@ import SecurityTab from '../../../components/pages/account-setting/SecurityTab';
 
 
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
