@@ -5,6 +5,8 @@ import { Cancel, SetMealTwoTone } from '@mui/icons-material';
 import { toast } from 'sonner';
 import { deleteData } from '../../../Services/Api';
 import { useNavigate } from 'react-router-dom';
+import TrocarSenha from './Segurança/TrocarSenha';
+import ApagarConta from './Segurança/ApagarConta';
 
 
 const NotificationTab = () => {
@@ -17,7 +19,7 @@ const NotificationTab = () => {
   const token = localStorage.getItem('token');
   
   function handleClose () {
-    SetMealTwoTone(false)
+    setOpen(false)
   }
 
 
@@ -50,57 +52,10 @@ const NotificationTab = () => {
   return (
     <>
       <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12}>
-          <BlankCard>
-            <CardContent>
-              <Typography variant="h4" mb={2} color={'#FA896B'}> Zona de perigo </Typography>
-              <Divider/>
-              <Typography variant= 'body1' mt = {1}> 
-                Para apagar sua conta, clique no botão abaixo. Lembre-se: ao apagar sua conta, todos os seus dados serão automaticamente removidos e você não poderá recuperá-los.            
-              </Typography>
-              <Stack direction="row" spacing={2} sx={{ justifyContent: 'end' }} mt={3}>
-                <Button size="large" variant="text" color="error" onClick={()=>{ setOpen(true)}}>
-                  Apagar conta
-                </Button>
-              </Stack>
-            </CardContent>
-          </BlankCard>
-        </Grid>
+        <TrocarSenha/>
+        <ApagarConta/>
+        
 
-        <Dialog open={open} onClose={handleClose} fullWidth >
-        <DialogTitle>
-          <Box display="flex" alignItems="center">
-            <Typography variant="h6" fontSize={'14px'} component="span" color={'error'} style={{ flexGrow: 1 }}>
-              Apagar conta
-            </Typography>
-            <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-              <Cancel />
-            </IconButton>
-          </Box>
-        </DialogTitle> 
-        <Divider/>  
-        <DialogContent>
-          <Typography variant='h6' mb = {2}> Para apagar sua conta digite: Apagar </Typography>
-            <TextField fullWidth variant="outlined" value={text} onChange={(e) => setText(e.target.value)}>
-          </TextField>
-          {
-            !active ? 
-            <Box mt = {1}>
-              <Typography variant='h6' color={'error'} mb = {1}> Obs: </Typography>
-              <Typography variant= 'body2'> 
-                  Lembre-se: ao apagar sua conta, todos os seus dados serão automaticamente removidos e você não poderá recuperá-los.            
-                </Typography>
-              </Box> : null
-          }
-
-        </DialogContent>
-        <DialogActions> 
-          <Button onClick={handleDelete} disabled = {active} > 
-            Apagar
-          </Button>
-        </DialogActions>
-
-        </Dialog>
       </Grid>
     </>
   );
