@@ -22,10 +22,10 @@ export const NavLinks = [
     title: 'Sobre nós',
     to: '/templates/sobre',
   },
-  // {
-  //   title: 'Planos e preços',
-  //   to: '/templates/precos',
-  // },
+  {
+    title: 'Anunciar',
+    to: '/anunciar',
+  },
   {
     title: 'Fale conosco',
     to: '/templates/contato',

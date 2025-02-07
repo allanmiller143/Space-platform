@@ -3,8 +3,6 @@
 import * as React from 'react';
 import PageContainer from 'src/components/container/PageContainer';
 import { Grid, Tabs, Tab, Box, CardContent, Divider } from '@mui/material';
-
-// componentes
 import AccountTab from '../../../components/pages/account-setting/AccountTab';
 import { IconArticle, IconBell, IconLock, IconUserCircle } from '@tabler/icons';
 import BlankCard from '../../../components/shared/BlankCard';
@@ -12,11 +10,8 @@ import NotificationTab from '../../../components/pages/account-setting/Notificat
 import BillsTab from '../../../components/pages/account-setting/BillsTab';
 import SecurityTab from '../../../components/pages/account-setting/SecurityTab';
 
-
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"

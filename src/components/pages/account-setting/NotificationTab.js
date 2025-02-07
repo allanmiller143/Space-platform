@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Box,Divider, CardContent, Grid, IconButton, Typography, Tooltip, Button, Stack, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import BlankCard from '../../shared/BlankCard';
-import { Cancel, SetMealTwoTone } from '@mui/icons-material';
+import  { useEffect, useState } from 'react';
+import { Grid, } from '@mui/material';
 import { toast } from 'sonner';
 import { deleteData } from '../../../Services/Api';
 import { useNavigate } from 'react-router-dom';
@@ -54,8 +52,6 @@ const NotificationTab = () => {
       <Grid container spacing={3} justifyContent="center">
         <TrocarSenha/>
         <ApagarConta/>
-        
-
       </Grid>
     </>
   );

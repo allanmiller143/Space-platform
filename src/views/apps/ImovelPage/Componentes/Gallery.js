@@ -68,7 +68,6 @@ const Gallery = ({ property }) => {
 
       useEffect(() => {
         if (property && currentUserls) {
-          console.log(property);
           const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
           setFavorite(isFavorite);
         }

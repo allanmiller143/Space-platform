@@ -24,8 +24,8 @@ const InfoCard = ( {userData}) => {
   const [site, setSite] = useState(socialsMap["site"] || 'https://meusite.com');
   const [email, setEmail] = useState(socialsMap["email"] || 'email@gmail.com');
   const [phone, setPhone] = useState(socialsMap["phone"] || '(11) 99999-9999');
-  
-  
+  const facebook = socialsMap["facebook"] || '.';
+  const instagram = socialsMap["instagram"] || '.';
   
 
 
@@ -51,9 +51,9 @@ const InfoCard = ( {userData}) => {
     setLoading(true);
     const formJson = {
       socials : [
-        {type : 'facebook', url : socialsMap["facebook"] !== '.' ? socialsMap["facebook"] : '.'},
+        {type : 'facebook', url : facebook !== '.' ? socialsMap["facebook"] : '.'},
         {type : 'whatsapp', url : whatsapp !== '(11) 99999-9999' ? whatsapp : '.'},
-        {type : 'instagram', url : socialsMap["instagram"] !== '.' ? socialsMap["instagram"] : '.'},
+        {type : 'instagram', url : instagram !== '.' ? socialsMap["instagram"] : '.'},
         {type : 'site', url : site !== 'https://meusite.com' ? site : '.'},
         {type : 'email', url : email !== 'email@gmail.com' ? email : '.'},
         {type : 'otherPhone', url : phone !== '' ? phone : '.'},
@@ -78,7 +78,8 @@ const InfoCard = ( {userData}) => {
           toast.error(`Erro ao obter dados do usuário:\n ${updatedUser.message}`);
         }
       } else {
-        toast.error(`Erro ao atualizar redes sociais:\n ${response.message}`);
+        console.log(formData);
+        toast.error(`Erro ao atualizar reddfgfges sociais:\n ${response.message}`);
       }
     } catch (error) {
       toast.error(`Erro ao atualizar redes sociais:\n ${error.message}`);

@@ -8,13 +8,12 @@ import DefinirHorariosDisponibilidade from '../Services/GoogleCalendar/Horarios/
 import CalendarioDisponibilidade from '../Services/GoogleCalendar/Horarios/Calendar';
 import SharePropertyForm from '../views/apps/Share/SharePropertyForm';
 import CatchError from '../views/apps/CatchError/CatchError';
-import About from '../views/pages/frontend-pages/About';
-import BlogPage from '../views/pages/frontend-pages/Blog';
 import Ecommerce from '../views/dashboard/Ecommerce';
-import Tela from '../Painel/Componentes/Tela';
 import PaidImovelPage from '../views/apps/ImovelPage/PaidImovelPage';
-import TelaDeTest from '../views/TelaDeTest/TelaDeTest';
+import Anunciar from '../views/pages/Anunciar/Anunciar';
 
+
+import SobreNosPage from '../views/pages/sobrenos/sobrenos'
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
@@ -42,15 +41,10 @@ const TwoSteps = Loadable(lazy(() => import('../views/authentication/auth1/TwoSt
 const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoSteps2')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
-const Homepage = Loadable(lazy(() => import('../views/pages/frontend-pages/Homepage')));
-const ContatoPage = Loadable(lazy(() => import('../views/templates/contato/contato')));
-const PrecosPage = Loadable(lazy(() => import('../views/templates/precos/precos')));
-const SobreNosPage = Loadable(lazy(() => import('../views/templates/sobrenos/sobrenos')));
-const ProdutosPage = Loadable(lazy(() => import('../views/templates/produtos/produtos')));
-const FeedPage = Loadable(lazy(() => import('../views/templates/feed/feed')));
+const Homepage = Loadable(lazy(() => import('../views/pages/Home/Homepage')));
+const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/contato')));
 
 // *** Templates Erick ***
-const Home = Loadable(lazy(() => import('../views/templates/home'))); 
 
 
 // Apps
@@ -72,8 +66,6 @@ const Router = [
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
       { path: '/apps/dash', element: <Dash /> },
       { path: 'apps/share/:id', element: <SharePropertyForm/> },
-      { path: '/apps/about', element: <About /> },
-      { path: '/apps/blog', element: <BlogPage /> },
       { path: '/apps/p', element: <Ecommerce /> },
       { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
       { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
@@ -85,7 +77,6 @@ const Router = [
       { path: '/user-profile/:email', element: <UserProfile /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
       { path: '/forms/form-wizard', element: <FormWizard /> },
-      { path: '/imoveis/:id', element: <TelaDeTest /> },
       // Apps
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/email', element: <Email /> },
@@ -116,16 +107,14 @@ const Router = [
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
-      { path: '/tela', element: <Tela/> },
+      { path: '/anunciar', element: <Anunciar/> },
 
+      
 
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/templates/contato', element: <ContatoPage /> },
-      { path: '/templates/home', element: <Home /> },
-      { path: '/templates/precos', element: <PrecosPage /> },
       { path: '/templates/sobre', element: <SobreNosPage /> },
-      { path: '/templates/produtos', element: <ProdutosPage /> },
-      { path: '/templates/feed', element: <FeedPage /> },
+
       
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

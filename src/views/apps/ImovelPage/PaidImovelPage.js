@@ -12,17 +12,17 @@ import Header from '../../../layouts/full/horizontal/header/Header';
 import { Button, Grid, Box } from "@mui/material";
 import FloatingMiniPlayer from "../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer";
 import ChatContent from "../../../components/apps/chats/ChatContent";
-import PropertyGallery from "./Componentes/Gallery";
 import Agendar from "../../../Services/GoogleCalendar/Agendar";
 import DadosGerais from "./Componentes/DadosGerais";
 import AdvertiserCard from "./Componentes/AdvertiserCard";
 import Map from "./Componentes/Map";
-import ChatContext from '../../../components/apps/chats/ChatContext/ChatContext';
 import Gallery from './Componentes/Gallery'
-import CarrosselHome from "../../../components/frontend-pages/homepage/carrossel/CarrosselHome";
 import NotificationContext from "../../../Services/Notification/NotificationContext/NotificationContext";
-import socket from "../../../Services/socket";
 import FloatingButton from "./Componentes/FloatingButton";
+import { set } from "lodash";
+import CarrosselHome from "../../pages/Home/Componentes/CarrosselHome";
+import ChatContext from "../../../components/apps/chats/ChatContext/ChatContext";
+import socket from "../../../Services/socket";
 
 const PaidImovelPage = () => {
     const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const PaidImovelPage = () => {
     const cuString = localStorage.getItem('currentUser');
     const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
     const token = localStorage.getItem('token');
-    const { setFilteredChats, setUserChats,setActiveChat,setSelectedUser, setMessages } = useContext(ChatContext);
+    const { setFilteredChats, setUserChats,selectedUser,setActiveChat,setSelectedUser,setMessages } = useContext(ChatContext);
 
     async function loadPropertyData() {
         setLoading(true);
@@ -106,10 +106,10 @@ const PaidImovelPage = () => {
     };
 
     const setActiveChatFunction = async () => {
-        if (currentUserls) {
+        if (currentUserls && !selectedUser  ) {
+          console.log('entrei no setActiveChatFunction');
           setLoadPlayer(true);
-          setPlayerOpen(true)
-          setSelectedUser(null);
+          setSelectedUser({});
           setMessages([]);
           try {
             await openNewChat(socket, advertiser.email);
@@ -137,22 +137,36 @@ const PaidImovelPage = () => {
           } catch (e) {
             navigate('/error');
           }finally{
+            console.log('carreguei o chat')
             setLoadPlayer(false);
+            setLoadingInitialPlayer(false);
           }    
-        } else {
+        }else if((currentUserls && selectedUser)){
+          console.log("entrei aqui")
+          setPlayerOpen(true);
+        } 
+        else {
           navigate('/auth/login');
           toast.success('Faça um cadastro para enviar uma mensagem');
         }
     };
     
     useEffect(() => {
+        
         loadPropertyData();
         click();
     }, []);
 
+    useEffect(() => {
+      if(advertiser){
+        setActiveChatFunction();
+      }
+  }, [advertiser]);
+
+
     const [isPlayerOpen, setPlayerOpen] = useState(false);
     const [loadPlayer, setLoadPlayer] = useState(false);
-
+    const [loadingInitialPlayer, setLoadingInitialPlayer] = useState(true);
     if (loading) {
         return <Spinner />;
     }

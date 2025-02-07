@@ -26,7 +26,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
   const fileInputRefCover = useRef(null);
   const [following, setFollowing] = useState(false);
   const [loadFollowing, setLoadFollowing] = useState(false);
-
+  
   useEffect(() => {
     if (currentUserls.email !== userData.email) {
       const isFollowing = currentUserls.follow.some(follow => follow.followedEmail === userData.email);
@@ -48,12 +48,16 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
   }));
 
   const seePhone = () => {
-    if(userData.socials.length === 0 ||  userData.socials[1].url === '.'){
+    toast.success('Telefone copiado com sucesso!');
+    const whatsapp = socialsMap["whatsapp"] || '.';
+
+    if(whatsapp === '.'){
       toast.error('Este perfil ainda não possui telefone cadastrado!');
       return;
     }
-      const phoneNumber = userData.socials[1].url.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-      window.open(`https://wa.me/55${phoneNumber}`, '_blank');
+    console.log(whatsapp);
+    const phoneNumber = whatsapp.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    window.open(`https://wa.me/55${phoneNumber}`, '_blank');
   };
 
 
@@ -154,6 +158,10 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
     return acc;
   }, {});
 
+  const facebook = socialsMap["facebook"] || '.';
+  const instagram = socialsMap["instagram"] || '.';
+  const whatsapp = socialsMap["whatsapp"] || '.';
+
 
   return (
     <>
@@ -223,13 +231,13 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="primary"
-                  sx={{ backgroundColor: '#1877F2', display: (socialsMap["facebook"] === '.') ? 'none' : ' ' }}
+                  sx={{ backgroundColor: '#1877F2', display: (facebook === '.') ? 'none' : ' ' }}
                   onClick={() => {
                     if(userData.socials[0].url === '.'){
                       toast.error('Este perfil ainda não possui Facebook cadastrado!');
                       return;
                     }
-                    window.open(`https://www.facebook.com/${socialsMap["facebook"].replace('@', '')}`, '_blank')}
+                    window.open(`https://www.facebook.com/${facebook.replace('@', '')}`, '_blank')}
                   }
                 >
                   <IconBrandFacebook size="16" />
@@ -237,7 +245,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="success"
-                  sx={{ backgroundColor: '#25D366', display: (socialsMap["whatsapp"] === '.') ? 'none' : ' '  }}
+                  sx={{ backgroundColor: '#25D366', display: (whatsapp === '.') ? 'none' : ' '  }}
                   onClick={() => seePhone()}
                 >
                   <IconBrandWhatsapp size="18" />
@@ -245,13 +253,13 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
                 <Fab
                   size="small"
                   color="error"
-                  sx={{ backgroundColor: '#E4405F', display: (socialsMap["instagram"] === '.') ? 'none' : ' '  }}
+                  sx={{ backgroundColor: '#E4405F', display: (instagram === '.') ? 'none' : ' '  }}
                   onClick={() =>{
                     if(socialsMap["instagram"] === '.'){
                       toast.error('Este perfil ainda não possui Instagram cadastrado!');
                       return;
                     }
-                    window.open(`https://www.instagram.com/${socialsMap["instagram"].url.replace('@', '')}`, '_blank')}
+                    window.open(`https://www.instagram.com/${instagram.replace('@', '')}`, '_blank')}
                   } 
                 >
                   <IconBrandInstagram size="18" />

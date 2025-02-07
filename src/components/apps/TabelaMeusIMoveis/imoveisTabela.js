@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-undef */
 import  { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, TablePagination, TableSortLabel, Box } from '@mui/material';
-import { Edit, Delete, ConstructionOutlined, Share } from '@mui/icons-material';
+import { Edit, Delete, ConstructionOutlined, Share, Star } from '@mui/icons-material';
 import DeleteDialog from './ImoveisDeleteDialog';  // Importando o novo componente
 import { toast } from 'sonner';
 import { deleteData, getData } from 'src/Services/Api';
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
 import { Button } from '@mui/material';
 import ImoveisSharedDialog from './ImoveisSharedDialog';
+import DestacarDialog from './DestacarDialog';
 
 
 
@@ -37,6 +38,7 @@ const ImoveisTableList = () => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null;
   const [openShared, setOpenShared] = useState(false);
+  const [openDestaque, setOpenDestaque] = useState(false);
 
   useEffect(() => {
     GetUserProperties();
@@ -76,6 +78,7 @@ const ImoveisTableList = () => {
           verified : property.verified,
           share : property.shared,
           fullImovel : property,
+          destaque : property.isHighlight
 
         }));
         setImoveis(data);
@@ -199,9 +202,10 @@ const ImoveisTableList = () => {
     setPage(newPage);
   };
 
-  const handShareClick = (id) => {
-    navigate(`/apps/share/${id}`);
-  }
+  const handleDestacar = (imovel) => {
+    setImovelToSee(imovel);
+    setOpenDestaque(true);
+  };
 
   return (
     <Paper>
@@ -287,14 +291,15 @@ const ImoveisTableList = () => {
                             <Button color='primary' sx={{color : `${imovel.share === null ? 'black' : imovel.share.status === 'accepted' ? 'green' : imovel.share.status === 'pending' ? 'orange' : 'red'}`, textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeShared(imovel)}>{imovel.share === null ? 'Compartilhar' : imovel.share.status === 'accepted' ? 'Aprovado' : imovel.share.status === 'pending' ? 'Análise' : 'Rejeitado'}</Button>
                           </TableCell> : null
                       }
-
-                      
                       <TableCell>
                         <IconButton onClick={() => handleEdit(imovel)}>
                           <Edit />
                         </IconButton>
                         <IconButton onClick={() => handleDeleteClick(imovel.id)}>
                           <Delete />
+                        </IconButton>
+                        <IconButton onClick={() => handleDestacar(imovel.id)}>
+                          <Star color = 'warning'/>
                         </IconButton>
                       </TableCell>
                     </TableRow>
@@ -322,8 +327,8 @@ const ImoveisTableList = () => {
         />
       )}
       {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
-
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
+      {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={imovelToSee}/>)}
 
     </Paper>
 

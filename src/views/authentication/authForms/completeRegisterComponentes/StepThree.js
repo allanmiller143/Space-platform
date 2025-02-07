@@ -7,6 +7,7 @@ import DropDownFilter from '../DropDownFilter';
 import fetchCepData from '../../../../Services/SearchCep';
 import { toast } from 'sonner';
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
+import InputMask from 'react-input-mask';
 
 const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue }) => {
   const [cep, setCep] = useState('');
@@ -59,16 +60,19 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
     { value: 'TO', label: 'Tocantins' }
   ];
 
+
+
   const handleCepChange = async (value) => {
+    const unmaskedValue = value.replace(/\D/g, ''); // Removes any non-numeric characters
     setCep(value);
     setFormData(prevState => ({
       ...prevState,
-      cep: value
+      cep: unmaskedValue
     }));
 
-    if (value.length === 8) {
+    if (unmaskedValue.length === 8) {
       try {
-        const cepData = await fetchCepData(value);
+        const cepData = await fetchCepData(unmaskedValue);
         console.log(cepData);
         setFormData(prevState => ({
           ...prevState,
@@ -78,8 +82,8 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
           state: cepData.state
         }));
         setDropdownLocaleValue(localItens.find(item => item.value === cepData.state)?.label || '');
+
       } catch (error) {
-        toast.error(error.message);
         setFormData(prevState => ({
           ...prevState,
           street: '',
@@ -100,8 +104,21 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
         <Grid container spacing={2} pb ={2}>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="cep">CEP</CustomFormLabel>
-            <TextField type='number' id="cep" variant="outlined" fullWidth value={formData.cep} onChange={(e) => handleCepChange(e.target.value)} />
-          </Grid>
+            <InputMask
+            mask="99999-999"
+            value={cep}
+            onChange={(e) => handleCepChange(e.target.value)}
+          >
+            {(inputProps) => (
+              <CustomTextField
+                {...inputProps}
+                id="cep"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+            )}
+          </InputMask>          </Grid>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="city">Cidade</CustomFormLabel>
             <TextField id="city" variant="outlined" fullWidth value={formData.city} onChange={handleChange} />

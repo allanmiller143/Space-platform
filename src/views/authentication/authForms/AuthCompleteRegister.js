@@ -7,12 +7,11 @@ import StepTwo from './completeRegisterComponentes/StepTwo';
 import StepThree from './completeRegisterComponentes/StepThree';
 import StepFour from './completeRegisterComponentes/StepFour';
 import { toast } from 'sonner';
-import { postData, putFormData } from '../../../Services/Api';
+import { postData, postFormData, putFormData } from '../../../Services/Api';
 import Loading from '../../../components/Loading/Loading';
 import { useNavigate } from 'react-router-dom';
 // Função para validar email
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
 // Função para validar CPF
 const isValidCPF = (cpf) => {
   cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
@@ -39,10 +38,6 @@ const isValidCPF = (cpf) => {
 
   return true;
 };
-
-
-// Função para validar CNPJ
-// Função para validar CNPJ
 const isValidCNPJ = (cnpj) => {
   cnpj = cnpj.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
 
@@ -71,7 +66,6 @@ const isValidCNPJ = (cnpj) => {
 
   return firstVerifierValid && secondVerifierValid;
 };
-
 const validatePassword = (password, confirmPassword) => {
   const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   if (!password.match(passwordRequirements)) {
@@ -86,19 +80,15 @@ const validatePassword = (password, confirmPassword) => {
     return true;
   }
 };
-
-// Função para validar telefone
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
-// Função para validar CRECI
 const isValidCRECI = (creci) => /^CRECI-[A-Z]{2} \d{5}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const [selectedType, setSelectedType] = useState('');
   const [canGoNext, setCanGoNext] = useState(true);
   const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     type: '',
     name: '',
@@ -185,7 +175,6 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     }
     return true;
   };
-
   const isStepThreeValid = () => {
     const { street, number, neighborhood, city, state, cep } = formData;
     if (!street || !number || !neighborhood || !city || !state || !cep) {
@@ -293,8 +282,14 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         setLoading(true);
         const form = new FormData();  
         form.append('profile', formData.profilePhotoFile);
-        form.append('data', JSON.stringify(postDataExample)); //
-        const elevateTypeResponse = await putFormData(`${userRoute}/elevate/${currentUserls.email}`, form, token);
+        form.append('data', JSON.stringify(postDataExample)); 
+        let elevateTypeResponse;
+        if(currentUserls ){
+          elevateTypeResponse = await putFormData(`${userRoute}/elevate/${currentUserls.email}`, form, token);
+        }else{
+          elevateTypeResponse = await postFormData(userRoute, form);
+        }
+
         if(elevateTypeResponse.status == 200 || elevateTypeResponse.status == 201){
           const data = { 'email': postDataExample.email, 'password': postDataExample.password };
           const loginResponse = await postData('login', data);
@@ -304,8 +299,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
             console.log(loginResponse)
             localStorage.setItem('token', token);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            Navigate(`/user-profile/${formData.email.replaceAll(/[.]/g, '-')}`);
-
+            Navigate('/apps/imoveis/edit');
             toast.success('Agora você pode anunciar imóveis');
           } else {
             toast.error(` erro no login ${userRoute}`); 

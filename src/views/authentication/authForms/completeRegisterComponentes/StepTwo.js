@@ -9,12 +9,15 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
 
   useEffect(() => {
-    setFormData({
-      ...formData,
-      email: currentUserls.email,
-      phone: currentUserls.phone || formData.phone,
-      name : currentUserls.name || ''
-    });
+    if(currentUserls){
+      setFormData({
+        ...formData,
+        email: currentUserls.email || '',
+        phone: currentUserls.phone || formData.phone,
+        name : currentUserls.name || ''
+      });
+    }
+
   }, []);
 
   const handleChange = (event) => {
@@ -143,7 +146,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     fullWidth
                     value={formData.email}
                     onChange={handleChange}
-                    disabled // Adicionado para desabilitar o campo
+                    disabled = {currentUserls ? true : false}
                   />
                 </Grid>
               </Grid>
@@ -190,7 +193,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     fullWidth
                     value={formData.email}
                     onChange={handleChange}
-                    disabled // Adicionado para desabilitar o campo
+                    disabled = {currentUserls ? true : false}
                   />
                 </Grid>
               </Grid>
@@ -233,7 +236,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     fullWidth
                     value={formData.email}
                     onChange={handleChange}
-                    disabled // Adicionado para desabilitar o campo
+                    disabled = {currentUserls ? true : false}
                   />
                 </Grid>
               </Grid>
