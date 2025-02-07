@@ -42,7 +42,7 @@ const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoS
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
 const Homepage = Loadable(lazy(() => import('../views/pages/Home/Homepage')));
-const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/contato')));
+const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/Contato')));
 
 // *** Templates Erick ***
 
