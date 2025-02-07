@@ -10,7 +10,7 @@ import '../src/App.css';
 import '../src/index.css'
 import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
 import NotificationContextProvider from './Services/Notification/NotificationContext/NotificationContextProvider';
-import MarketplaceContextProvider from './views/apps/marketplace/MarketplaceContext/MarketplaceContextProvider';
+import MarketplaceContextProvider from './views/apps/Classificados/MarketplaceContext/MarketplaceContextProvider';
 import ContactsContextProvider from './views/apps/contacts/ContactsContext/ContactsContextProvider';
 
 function App() {

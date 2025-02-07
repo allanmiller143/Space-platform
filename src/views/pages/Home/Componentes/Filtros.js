@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, CardActionArea, CardMedia } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import marketplaceContext from '../../../apps/marketplace/MarketplaceContext/MarketplaceContext';
+import marketplaceContext from '../../../apps/Classificados/MarketplaceContext/MarketplaceContext';
 import { useContext } from 'react';
 
 const Filtros = () => {

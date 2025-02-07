@@ -8,7 +8,7 @@ import Filtros from './Componentes/Filtros';
 import Banner from './Componentes/Banner';
 import SearchBar from './Componentes/SearchBar';
 import { useContext } from 'react';
-import marketplaceContext from '../../apps/marketplace/MarketplaceContext/MarketplaceContext';
+import marketplaceContext from '../../apps/Classificados/MarketplaceContext/MarketplaceContext';
 import AnunciosCarrossel from '../../../components/apps/Anuncios/Anuncios';
 import CarroselCompleto from './Componentes/CarroselCompleto';
 import CarrosselHome from './Componentes/CarrosselHome';

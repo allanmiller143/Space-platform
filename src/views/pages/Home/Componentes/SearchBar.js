@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import {Autocomplete,Box,TextField,Select,MenuItem,CircularProgress,IconButton,} from "@mui/material";
 import axios from "axios";
-import marketplaceContext from "../../../apps/marketplace/MarketplaceContext/MarketplaceContext";
+import marketplaceContext from "../../../apps/Classificados/MarketplaceContext/MarketplaceContext";
 import { IoMdSearch } from "react-icons/io";
 
 const SearchBar = () => {

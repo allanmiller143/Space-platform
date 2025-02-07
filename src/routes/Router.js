@@ -39,7 +39,7 @@ const ForgotPassword2 = Loadable(lazy(() => import('../views/authentication/auth
 const TwoSteps = Loadable(lazy(() => import('../views/authentication/auth1/TwoSteps')));
 const TwoSteps2 = Loadable(lazy(() => import('../views/authentication/auth2/TwoSteps2')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
-const Marketplace = Loadable(lazy(() => import('../views/apps/marketplace/Marketplace')));
+const Marketplace = Loadable(lazy(() => import('../views/apps/Classificados/Marketplace')));
 const Homepage = Loadable(lazy(() => import('../views/pages/Home/Homepage')));
 const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/Contato')));
 
