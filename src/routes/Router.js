@@ -50,7 +50,6 @@ const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/Conta
 const Chats = Loadable(lazy(() => import('../views/apps/chat/Chat')));
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
 const Calendar = Loadable(lazy(() => import('../views/apps/calendar/BigCalendar')));
-const Email = Loadable(lazy(() => import('../views/apps/email/Email')));
 const Tickets = Loadable(lazy(() => import('../views/apps/tickets/Tickets')));
 const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));
 
@@ -77,7 +76,6 @@ const Router = [
       { path: '/forms/form-wizard', element: <FormWizard /> },
       // Apps
       { path: '/apps/notes', element: <Notes /> },
-      { path: '/apps/email', element: <Email /> },
       { path: '/apps/tickets', element: <Tickets /> },
       { path: '/apps/contacts', element: <Contacts /> },
       { path: '/apps/post/:id', element: <EcommerceDetail /> },
