@@ -24,7 +24,6 @@ const InvoiceList = Loadable(lazy(() => import('../views/apps/invoice/List')));
 const InvoiceCreate = Loadable(lazy(() => import('../views/apps/invoice/Create')));
 const InvoiceDetail = Loadable(lazy(() => import('../views/apps/invoice/Detail')));
 const InvoiceEdit = Loadable(lazy(() => import('../views/apps/invoice/Edit')));
-const Kanban = Loadable(lazy(() => import('../views/apps/kanban/Kanban')));
 const ImoveisList = Loadable(lazy(() => import('../views/apps/imoveis/List')));
 const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/CreateEdit')));
 const AccountSetting = Loadable(lazy(() => import('../views/pages/account-setting/AccountSetting')));
@@ -69,7 +68,6 @@ const Router = [
       { path: '/apps/p', element: <Ecommerce /> },
       { path: '/apps/agenda', element: <DefinirHorariosDisponibilidade /> },
       { path: '/apps/horarios', element: <CalendarioDisponibilidade /> },
-      { path: '/apps/kanban', element: <Kanban /> },
       { path: '/apps/invoice/list', element: <InvoiceList /> },
       { path: '/apps/invoice/create', element: <InvoiceCreate /> },
       { path: '/apps/invoice/detail/:id', element: <InvoiceDetail /> },

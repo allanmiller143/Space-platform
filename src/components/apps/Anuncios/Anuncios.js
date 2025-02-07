@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { putData } from '../../../Services/Api';
 
-import Banner1 from '../../../assets/images/teste/banner1.png';
-import Banner2 from '../../../assets/images/teste/banner2.png';
+import Banner1 from '../../../assets/images/posters/banner1.png';
+import Banner2 from '../../../assets/images/posters/banner2.png';
 
 const CarroselCompleto = () => {
   const [loading, setLoading] = useState(false);
