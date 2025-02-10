@@ -14,15 +14,15 @@ import { useNavigate } from 'react-router-dom';
 import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
 import { Button } from '@mui/material';
 import ImoveisSharedDialog from './ImoveisSharedDialog';
-import DestacarDialog from './DestacarDialog';
-
+import DestacarDialog from './Destaque/DestacarDialog';
+import { hi } from 'date-fns/locale';
 
 
 const ImoveisTableList = () => {
   const [imoveis, setImoveis] = useState([]);
   const [filteredImoveis, setFilteredImoveis] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
   const [orderBy, setOrderBy] = useState('endereco');
   const [order, setOrder] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
@@ -51,7 +51,7 @@ const ImoveisTableList = () => {
     { id: 'finalidade', label: 'Finalidade', minWidth: 100 },
     { id: 'preco_aluguel',label: 'Aluguel',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
     { id: 'preco_venda',label: 'Venda',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
-    
+    { id: 'highlighted', label: 'Destaque', minWidth: 100 },
     { id: 'verified', label: 'Status', minWidth: 100 },
     ...(currentUserls?.type === 'owner'
       ? [{ id: 'share', label: 'Compartilhar', minWidth: 100 }]
@@ -203,7 +203,7 @@ const ImoveisTableList = () => {
   };
 
   const handleDestacar = (imovel) => {
-    setImovelToSee(imovel);
+    setImovelToSee(imovel.fullImovel);
     setOpenDestaque(true);
   };
 
@@ -281,6 +281,12 @@ const ImoveisTableList = () => {
                       <TableCell>{imovel.finalidade}</TableCell>
                       <TableCell align="right">{columns[4].format(imovel.preco_aluguel)}</TableCell>
                       <TableCell align="right">{columns[5].format(imovel.preco_venda)}</TableCell>
+                      <TableCell align="left">
+                        <IconButton onClick={() => handleDestacar(imovel)}>
+                          <Star color = {imovel.destaque === true ? 'warning' : 'disabled'}/>
+                        </IconButton>
+
+                      </TableCell>
                       <TableCell>
                         <Button color='primary' sx={{color : `${imovel.verified === 'pending' ? 'black' : imovel.verified === 'verified' ? 'green' : 'red'}`, textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeClick(imovel)}>{imovel.verified === 'pending' ? 'Análise' : imovel.verified === 'verified' ? 'Aprovado' : 'Rejeitado'}</Button>
                       </TableCell>
@@ -298,9 +304,6 @@ const ImoveisTableList = () => {
                         <IconButton onClick={() => handleDeleteClick(imovel.id)}>
                           <Delete />
                         </IconButton>
-                        <IconButton onClick={() => handleDestacar(imovel.id)}>
-                          <Star color = 'warning'/>
-                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))
@@ -309,7 +312,7 @@ const ImoveisTableList = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[15, 20, 25]}
             component="div"
             count={filteredImoveis.length}
             rowsPerPage={rowsPerPage}
@@ -328,7 +331,7 @@ const ImoveisTableList = () => {
       )}
       {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
-      {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={imovelToSee}/>)}
+      {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={{highlighted: true}}/>)}
 
     </Paper>
 

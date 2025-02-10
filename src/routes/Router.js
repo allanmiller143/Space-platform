@@ -11,9 +11,8 @@ import CatchError from '../views/apps/CatchError/CatchError';
 import Ecommerce from '../views/dashboard/Ecommerce';
 import PaidImovelPage from '../views/apps/ImovelPage/PaidImovelPage';
 import Anunciar from '../views/pages/Anunciar/Anunciar';
-
-
 import SobreNosPage from '../views/pages/sobrenos/sobrenos'
+import Landingpage from '../views/pages/landingpage/Landingpage';
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
@@ -42,7 +41,6 @@ const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Marketplace = Loadable(lazy(() => import('../views/apps/Classificados/Marketplace')));
 const Homepage = Loadable(lazy(() => import('../views/pages/Home/Homepage')));
 const ContatoPage = Loadable(lazy(() => import('../views/pages/FaleConosco/Contato')));
-
 // *** Templates Erick ***
 
 
@@ -74,6 +72,7 @@ const Router = [
       { path: '/user-profile/:email', element: <UserProfile /> },
       { path: '/pages/account-settings', element: <AccountSetting /> },
       { path: '/forms/form-wizard', element: <FormWizard /> },
+      { path: '/pages/landingpage', element: <Landingpage /> },
       // Apps
       { path: '/apps/notes', element: <Notes /> },
       { path: '/apps/tickets', element: <Tickets /> },
@@ -104,6 +103,7 @@ const Router = [
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/anunciar', element: <Anunciar/> },
+      { path: '/e', element: <Ecommerce /> },
 
       
 

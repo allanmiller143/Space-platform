@@ -24,7 +24,7 @@ export default function Anunciar() {
                             <span style={{ color: "#6E35B7" }}>Anuncie</span> seus imóveis e alcance milhões de interessados.
                         </Typography>
                         <Typography variant="subtitle1" mb = {3} sx = {{fontSize: "1.2rem", lineHeight: 1.2, color: "gray"}} gutterBottom>
-                            Bem-vindo à Space Imóveis, a plataforma ideal para anunciar imóveis e veículos.
+                            Bem-vindo à Space Imóveis, a plataforma ideal para anunciar imóveis.
                         </Typography>
                         
                         <Grid container spacing={2} mb={3}>

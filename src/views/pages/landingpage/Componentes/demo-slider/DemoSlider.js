@@ -177,91 +177,9 @@ const DemoSlider = () => {
       }}
     >
       <Container maxWidth="lg">
-        {/* Title */}
-        <DemoTitle />
 
-        {/* slider */}
-        <Box mt={9}>
-          <Grid container spacing={3} justifyContent="center">
-            {demos.map((demo, index) => (
-              <Grid item xs={12} lg={3} key={index}>
-                <Box>
-                  {/* <Link href={demo.link}> */}
-                  <StyledBox>
-                    <Avatar
-                      src={demo.img}
-                      sx={{
-                        borderRadius: '8px',
-                        width: '100%',
-                        height: '100%',
-                      }}
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      href={demo.link}
-                      target="_blank"
-                    >
-                      Live Preview
-                    </Button>
-                  </StyledBox>
-                  {/* </Link> */}
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    textAlign="center"
-                    fontWeight={500}
-                    mt={2}
-                  >
-                    {demo.title}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-          <Box mb={2} mt={5} textAlign="center">
-            <Chip label="Apps" color="primary" />
-          </Box>
-          <Grid container spacing={3} justifyContent="center">
-            {apps.map((demo, index) => (
-              <Grid item xs={12} lg={3} key={index}>
-                <Box>
-                  {/* <Link href={demo.link}> */}
-                  <StyledBox>
-                    <Avatar
-                      src={demo.img}
-                      sx={{
-                        borderRadius: '8px',
-                        width: '100%',
-                        height: '100%',
-                      }}
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      href={demo.link}
-                      target="_blank"
-                    >
-                      Live Preview
-                    </Button>
-                  </StyledBox>
-                  {/* </Link> */}
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    textAlign="center" component="div"
-                    fontWeight={500}
-                    mt={2}
-                  >
-                    {demo.title} {demo.hot ? <Chip label="New" color="error" size="small" /> : null}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        <Box mt={9}></Box>
+        
       </Container>
     </Box>
   );
