@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 
-const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
+const apiUrl = 'https://spaceimoveis-api-dev.onrender.com/';
 
 
 export async function getData(url= '',token = '') {

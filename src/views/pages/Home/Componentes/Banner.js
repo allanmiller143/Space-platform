@@ -1,12 +1,16 @@
-import {Typography, Button, Box,} from '@mui/material';
+import { Typography, Button, Box, useTheme, useMediaQuery } from '@mui/material';
 import image from '../../../../assets/images/posters/imagem-8.jpg';
 import Anuncioslaterais from '../../../../components/apps/Anuncios/Anuncioslaterais';
+
 const Banner = () => {
+  const theme = useTheme();
+  const isLg = useMediaQuery(theme.breakpoints.up('lg')); // Verifica se a tela é lg ou maior
 
   return (
-    <Box sx = {{ width : '100%', display : 'flex', flexDirection : 'row', justifyContent : 'space-around', alignItems : 'center' }}>
-      <Anuncioslaterais side = 'left'/>
-      <Box sx={{ position : 'relative', width : '100%', maxWidth : 'lg', px : { xs : 2, sm : 2}}} pt = {3}>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+      {isLg && <Anuncioslaterais side="left" />}
+      
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 'lg', px: { xs: 2, sm: 2 } }} pt={3}>
         <Box
           sx={{
             position: 'relative',
@@ -33,8 +37,8 @@ const Banner = () => {
           </Box>
         </Box>
       </Box>
-      <Anuncioslaterais side = 'right'/>
 
+      {isLg && <Anuncioslaterais side="right" />}
     </Box>
   );
 };
