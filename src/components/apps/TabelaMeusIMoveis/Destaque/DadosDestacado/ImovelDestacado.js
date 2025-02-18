@@ -10,7 +10,7 @@ import StatsCards from './StatsCards';
 import MapUsers from './MapUsers';
 import Settings from './Settings';
 
-function ImovelDestacado({ open, handleClose, property }) {
+function ImovelDestacado({ open, handleClose, property, setImovelToSee, setFilteredImoveis, setImoveis }) {
   const [adType, setAdType] = useState('big'); 
   const handleTabChange = (event, newValue) => {
     setAdType(newValue);
@@ -32,13 +32,13 @@ function ImovelDestacado({ open, handleClose, property }) {
         {
           adType === 'big' ?
             <>
-              <StatsCards/>
-              <Growth/>
-              <MapUsers/>
+              <StatsCards property = {property}/>
+              <Growth property = {property}/>
+              <MapUsers property={property}/>
             </>
           :
             <>
-              <Settings/>
+              <Settings property={property} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis}/>
             </>
         }
 

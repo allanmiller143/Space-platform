@@ -15,8 +15,6 @@ import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
 import { Button } from '@mui/material';
 import ImoveisSharedDialog from './ImoveisSharedDialog';
 import DestacarDialog from './Destaque/DestacarDialog';
-import { hi } from 'date-fns/locale';
-
 
 const ImoveisTableList = () => {
   const [imoveis, setImoveis] = useState([]);
@@ -81,6 +79,7 @@ const ImoveisTableList = () => {
           destaque : property.isHighlight
 
         }));
+        console.log(data);
         setImoveis(data);
         setFilteredImoveis(data);
 
@@ -203,7 +202,7 @@ const ImoveisTableList = () => {
   };
 
   const handleDestacar = (imovel) => {
-    setImovelToSee(imovel.fullImovel);
+    setImovelToSee(imovel);
     setOpenDestaque(true);
   };
 
@@ -331,7 +330,7 @@ const ImoveisTableList = () => {
       )}
       {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
-      {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={{highlighted: true}}/>)}
+      {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={imovelToSee} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis}/>)}
 
     </Paper>
 

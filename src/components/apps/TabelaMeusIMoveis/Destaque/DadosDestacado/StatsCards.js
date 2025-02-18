@@ -2,11 +2,11 @@ import { Card, CardContent, Typography, Grid } from "@mui/material";
 import { IconCalendar, IconEyeTable, IconHeart } from "@tabler/icons";
 import BlankCard from "../../../../shared/BlankCard";
 
-const StatsCards = ({ views = 1500, likes = 300, bookings = 50 }) => {
+const StatsCards = ({ property }) => {
   const stats = [
-    { label: "Visualizações", value: views },
-    { label: "Curtidas", value: likes },
-    { label: "Agendamentos", value: bookings},
+    { label: "Visualizações", value: property.fullImovel.timesSeen },
+    { label: "Curtidas", value: property.fullImovel.totalFavorites },
+    { label: "Agendamentos", value: 'Em Breve'},
   ];
 
   return (

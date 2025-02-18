@@ -6,22 +6,19 @@ import { Cancel, CheckCircle } from '@mui/icons-material';
 import Vantagens from './Vantagens';
 import ImovelDestacado from './DadosDestacado/ImovelDestacado';
 
-function DestacarDialog({ open, handleClose, property }) {
-  const [currentPage, setCurrentPage] = useState('info'); // Estado para controlar a página atual
+function DestacarDialog({ open, handleClose, property, setImovelToSee, setFilteredImoveis, setImoveis }) {
 
   if (!property) {
     return null;
-  }
-
-  useEffect(() => {
+  }else{
     console.log(property);
-  }, [property]);
+  }
 
 
   return (
     <Dialog
       fullWidth
-      maxWidth= {property.highlighted ? "md" : "sm"}
+      maxWidth= {property.destaque ? "md" : "sm"}
       open={open}
       onClose={handleClose}
       PaperProps={{
@@ -44,35 +41,14 @@ function DestacarDialog({ open, handleClose, property }) {
       <Divider />
 
       <DialogContent>
-        {currentPage === 'info' && (
-          <Box sx={{  mt: 2 }}>
-            {property.highlighted ? (
-              <ImovelDestacado open={open} handleClose={handleClose} property={property} />
-            ) : (
-              <Vantagens currentPage={currentPage} setCurrentPage={setCurrentPage} property={property} />
-            )}
-          </Box>
-        )}
+        <Box sx={{  mt: 2 }}>
+          {property.destaque ? (
+            <ImovelDestacado open={open} handleClose={handleClose} property={property} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis} />
+          ) : (
+            <Vantagens property={property} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis}  />
+          )}
+        </Box>
 
-        {currentPage === 'highlighted' && (
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Anúncio destacado com sucesso!
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Seu anúncio agora está destacado e receberá todas as vantagens mencionadas.
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
-              onClick={handleClose}
-            >
-              Fechar
-            </Button>
-          </Box>
-        )}
       </DialogContent>
     </Dialog>
   );

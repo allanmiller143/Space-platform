@@ -4,27 +4,52 @@ import { Box } from '@mui/material';
 
 import BlankCard from '../../../../shared/BlankCard';
 import { Typography } from 'antd';
+import { getData } from '../../../../../Services/Api';
+import { useEffect, useState } from 'react';
 
-const Growth = () => {
+
+const monthMap = [
+  "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+  "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+];
+
+const Growth = ({property}) => {
   // chart color
   const theme = useTheme();
   const secondary = theme.palette.secondary.main;
+  const [data, SetData] = useState([]);
 
-  // Dados no formato desejado
-  const data = [
-    { month: 'Jan', value: 50 },
-    { month: 'Fev', value: 10 },
-    { month: 'Mar', value: 30 },
-    { month: 'Abr', value: 35 },
-    { month: 'Mai', value: 45 },
-    { month: 'Jun', value: 60 },
-    { month: 'Jul', value: 30 },
-    { month: 'Ago', value: 600 },
-    { month: 'Set', value: 50 },
-    { month: 'Out', value: 52 },
-    { month: 'Nov', value: 30 },
-    { month: 'Dez', value: 40 },
-  ];
+
+
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+
+  async function loadData(){
+    try{
+      const response = await getData(`properties/times-seen/monthly/${property.fullImovel.id}`);
+      console.log(response);
+      if(response.status === 200 || response.status === 201){
+        console.log(response.userInfo);
+        const monthlyCounts = Array(12).fill(0);
+        response.userInfo.visualizations.forEach(item => {
+          const monthIndex = new Date(item.createdAt).getMonth();
+          monthlyCounts[monthIndex]++;
+        });
+        const FormattedData = monthMap.map((month, index) => ({
+          month,
+          value: monthlyCounts[index]
+        }));
+
+        SetData(FormattedData);
+      }
+    }catch(e){
+      console.log(e);
+    }
+  }
+
 
   // Extraindo meses e valores
   const meses = data.map((item) => item.month);

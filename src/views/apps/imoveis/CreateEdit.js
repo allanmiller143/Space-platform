@@ -113,7 +113,7 @@ const EditImovel = () => {
           Sacada : imovel.commodities.balcony,
           Laje : imovel.commodities.slab,
           Condominio_fechado : imovel.commodities.gatedCommunity,
-          Jardin : imovel.commodities.garden,
+          Jardim : imovel.commodities.garden,
         },
         otherImages: imovel.pictures,
       });
@@ -263,7 +263,7 @@ const EditImovel = () => {
       formJson.porch = formData.opcoesRapidas.Sacada;
       formJson.slab = formData.opcoesRapidas.Laje;
       formJson.gatedCommunity = formData.opcoesRapidas.Condominio_fechado; 
-      formJson.garden = formData.opcoesRapidas.Jardin;
+      formJson.garden = formData.opcoesRapidas.Jardim;
       formJson.furnished = formData.mobiliado;
     }
 
@@ -364,7 +364,7 @@ const EditImovel = () => {
       formJson.porch = formData.opcoesRapidas.Sacada;
       formJson.slab = formData.opcoesRapidas.Laje;
       formJson.gatedCommunity = formData.opcoesRapidas.Condominio_fechado; 
-      formJson.garden = formData.opcoesRapidas.Jardin;
+      formJson.garden = formData.opcoesRapidas.Jardim;
       formJson.furnished = formData.mobiliado;
 
     }
