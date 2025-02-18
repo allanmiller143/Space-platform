@@ -1,14 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
 import axios from 'axios';
 
-
-<<<<<<< HEAD
-const apiUrl = 'https://spaceimoveis-api-dev.onrender.com/';
-=======
 const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
->>>>>>> bac2417eb284444fa0aff441ca4349f96f09e1e8
+
 
 
 export async function getData(url= '',token = '') {
