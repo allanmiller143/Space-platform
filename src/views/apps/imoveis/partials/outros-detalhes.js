@@ -109,7 +109,7 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
                 { value: 'Sacada', label: 'Sacada', checked: formData.opcoesRapidas.Sacada },
                 { value: 'Laje', label: 'Laje', checked: formData.opcoesRapidas.Laje },
                 { value: 'Condominio_fechado', label: 'Condomínio fechado', checked: formData.opcoesRapidas.Condominio_fechado },
-                { value: 'Jardin', label: 'Jardin', checked: formData.opcoesRapidas.Jardin },
+                { value: 'Jardim', label: 'Jardim', checked: formData.opcoesRapidas.Jardim },
               ]
             }}
           />

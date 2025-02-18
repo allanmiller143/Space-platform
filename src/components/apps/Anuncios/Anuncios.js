@@ -2,7 +2,7 @@ import {Box, Skeleton, CardMedia, Button } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { putData } from '../../../Services/Api';
+import { getData, putData } from '../../../Services/Api';
 
 import Banner1 from '../../../assets/images/posters/imagem-8.jpg';
 import Banner2 from '../../../assets/images/posters/imagem-9.jpg';
@@ -15,12 +15,11 @@ const CarroselCompleto = () => {
   const filter = async () => {
     setLoading(true);
     try {
-      const response = await putData(`properties/filter?page=${1}&verified=true`, {});
+      const response = await getData(`announcement/valid`);
       if (response.status === 200 || response.status === 201) {
-        setAnuncios([
-          { id: 1, imageUrl: Banner1, link: 'https://exemplo.com/1' },
-          { id: 2, imageUrl: Banner2, link: 'https://exemplo.com/2' },
-        ]);
+        const anunciosFiltrados = response.userInfo.filter(anuncio => anuncio.type === "big");
+        setAnuncios(anunciosFiltrados);
+        console.log(anunciosFiltrados);
       } else {
         navigate('/error');
       }
@@ -30,7 +29,15 @@ const CarroselCompleto = () => {
       setLoading(false);
     }
   };
-
+  
+  async function handleClick (id){
+    try{
+      const response = await putData(`announcement/view/${id}`);
+      console.log(response);
+    }catch(error){
+      null
+    }
+  }
   useEffect(() => {
     filter();
   }, []);
@@ -81,7 +88,7 @@ const CarroselCompleto = () => {
               <CardMedia
                 component="img"
                 height="380"
-                image={anuncio.imageUrl}
+                image={anuncio.photoUrl }
                 alt={`Anúncio ${anuncio.id}`}
                 sx={{ borderRadius: 1, objectFit: 'fill' }}
               />
@@ -97,7 +104,7 @@ const CarroselCompleto = () => {
                   backgroundColor: 'primary.main',
                   color: '#fff',
                 }}
-                onClick={() => window.open(anuncio.link, '_blank')} // Abre o link em uma nova aba
+                onClick={() =>{ window.open(anuncio.siteUrl, '_blank'); handleClick(anuncio.id)}} // Abre o link em uma nova aba
               >
                 Saiba mais
               </Button>

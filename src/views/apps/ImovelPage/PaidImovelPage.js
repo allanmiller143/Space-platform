@@ -53,14 +53,35 @@ const PaidImovelPage = () => {
     }
 
     const click = async () => {
+
+      const savedLocation = localStorage.getItem('userLocation');
+      let location = {};
+      if (savedLocation) {
+          const jsonLocation = JSON.parse(savedLocation);
+          location = {
+            latitude : jsonLocation[0],
+            longitude : jsonLocation[1]
+          }
+      }else{
+        location = {
+          latitude : null,
+          longitude : null
+        }
+      }
+
+      console.log(location);
+
       try{
-        const clickResponse = await postData(`properties/times-seen/${id}`,{});
+        const clickResponse = await postData(`properties/times-seen/${id}`, location);
+        console.log(clickResponse);
+
         if (clickResponse.status === 200 || clickResponse.status === 201) {
           console.log(clickResponse);
         } else {
           navigate('/error');
         }
       }catch(e){
+        console.log(e);
         navigate('/error');
       }
     };
@@ -158,7 +179,7 @@ const PaidImovelPage = () => {
     }, []);
 
     useEffect(() => {
-      if(advertiser){
+      if(advertiser && currentUserls){
         setActiveChatFunction();
       }
   }, [advertiser]);

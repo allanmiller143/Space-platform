@@ -2,17 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import {
-  CardContent,
-  Stack,
-  Avatar,
-  Typography,
-  CardMedia,
-  Chip,
-  Tooltip,
-  Box,
-  Skeleton,
-} from '@mui/material';
+import {CardContent,Stack,Avatar,Typography,CardMedia,Chip,Tooltip,Box,Skeleton,} from '@mui/material';
 import { IconEye, IconHeart, IconPoint } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 import BlankCard from '../../shared/BlankCard';
@@ -63,9 +53,12 @@ const BlogCard = ({ post }) => {
           ></Skeleton>
         </>
       ) : (
-        <Box sx={{ cursor: 'pointer', width: '100%' }} onClick={() => {
-          window.open(`/imovel/${post.id}`, '_blank'); // Abre em uma nova aba
-        }}>
+          <Box
+            sx={{ cursor: 'pointer', width: '100%' }}
+            onClick={() => {
+              window.location.href = `/imovel/${post.id}`; // Abre na mesma aba e recarrega a página
+            }}
+          >
           <BlankCard className="hoverCard">
             <Box sx = {{display: 'flex', justifyContent: 'center', position: 'relative'}}>
               <CardMedia
@@ -81,7 +74,7 @@ const BlogCard = ({ post }) => {
               <Chip sx={{position: 'absolute', bottom: '5px',right:'10px',backgroundColor: (theme) =>theme.palette.mode === 'dark' ? theme.palette.background.dark : 'white',}}label={post.negotiable ? 'Negociável' : 'Não Negociável'} size="small"/>
               <Chip 
                 sx={{
-                  display: post.highlighted ? 'flex' : 'none',
+                  display: post.isHighlight ? 'flex' : 'none',
                   position: 'absolute', 
                   top: '10px', 
                   left: '10px',
@@ -101,22 +94,12 @@ const BlogCard = ({ post }) => {
                 label={'Destaque'} 
                 size="small"
               />
-
-
-
-
-              
             </Box>
             <CardContent>
               <Stack direction="row" sx={{ marginTop: '-45px' }}>
                 <Tooltip title="" placement="top">
                   <Avatar aria-label="receita" src={userData.profile ? userData.profile.url : ''}></Avatar>
                 </Tooltip>
-                  
-                    
-                    
-                    
-                
               </Stack>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end' }}>
                 <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>

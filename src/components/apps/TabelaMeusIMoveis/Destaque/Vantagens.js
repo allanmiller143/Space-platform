@@ -5,7 +5,7 @@ import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, Button } f
 import React from 'react';
 import { CheckCircle } from '@mui/icons-material';
 import { toast } from 'sonner';
-import { putFormData } from '../../../../Services/Api';
+import { putData, putFormData } from '../../../../Services/Api';
 const vantagens = [
   {
     title: "Maior visibilidade",
@@ -28,7 +28,7 @@ const vantagens = [
     description: "Seu imóvel terá prioridade nos resultados de busca, aparecendo antes dos anúncios comuns.",
   },
 ];
-function Vantagens({ currentPage, setCurrentPage, property }) {
+function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }) {
 
   if (!property) {
     return null;
@@ -42,24 +42,19 @@ function Vantagens({ currentPage, setCurrentPage, property }) {
 
 
   const handleHighlight = async () => {
-    const imgs = [];
-    property.pictures.map((image) => imgs.push(image.url));
-    const formJson = {
-      'sellerEmail': currentUserls.email,
-      'sellerType': currentUserls.type,
-      'oldPhotos': imgs,
-    };
-    formJson.isHighlighted = true;
-    formJson.isPublished = false;
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(formJson));
+   
     setLoading(true);
     try {
-      const response = await putFormData(`properties/${property.id}`, formData, token);
+      const response = await putData(`properties/highlight/${property.id}`,{}, token);
       console.log(response);    
       if (response.status === 201 || response.status === 200) {
         toast.success('Anúncio destacado com sucesso!');
-        setCurrentPage('highlighted'); // Muda para a página de confirmação
+        setImovelToSee(prevState => ({
+          ...prevState,
+          destaque: true
+        }));
+        setImoveis(prevState => prevState.map(imovel => imovel.id === property.id ? { ...imovel, destaque: true, } : imovel));
+        setFilteredImoveis(prevState => prevState.map(imovel => imovel.id === property.id ? { ...imovel, destaque: true } : imovel));
       } else if(response.status === 403) {
         toast.error('Ocorreu um erro ao destacar o anúncio. Tente novamente mais tarde.');
       }else{

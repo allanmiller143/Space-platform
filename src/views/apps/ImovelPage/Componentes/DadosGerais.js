@@ -26,27 +26,38 @@ import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 const DadosGerais = ({property,advertiser}) => {
 
     const [opcoesRapidas, setOpcoesRapidas] = useState({});
+
     useEffect(() => {
-    if(property === null){
-        return;
-    }
-    const temp =  {
-        Piscina: property.commodities.pool,
-        Churrasqueira : property.commodities.grill,
-        Ar_Condicionado : property.commodities.airConditioning,
-        Playground : property.commodities.playground,
-        Sala_de_eventos :  property.commodities.eventArea,
-        Academia :property.commodities.gym,
-        Varanda : property.commodities.porch,
-        Energia_solar : property.commodities.solarEnergy,
-        Portaria_24h : property.commodities.concierge,
-        Quintal : property.commodities.yard,
-        Area_Gourmet : property.commodities.gourmetArea,
-        Sacada : property.commodities.balcony,
-        Laje : property.commodities.slab,
-        Condominio_fechado : property.commodities.gatedCommunity,
-        Jardin : property.commodities.garden,
-    }     
+        if(!property){
+            return;
+        }
+        console.log(property);
+    }, [property])
+
+    useEffect(() => {
+        if(!property){
+            return;
+        }
+        if(!property.commodities){
+            return;
+           } 
+        const temp =  {
+            Piscina: property.commodities.pool,
+            Churrasqueira : property.commodities.grill,
+            Ar_Condicionado : property.commodities.airConditioning,
+            Playground : property.commodities.playground,
+            Sala_de_eventos :  property.commodities.eventArea,
+            Academia :property.commodities.gym,
+            Varanda : property.commodities.porch,
+            Energia_solar : property.commodities.solarEnergy,
+            Portaria_24h : property.commodities.concierge,
+            Quintal : property.commodities.yard,
+            Area_Gourmet : property.commodities.gourmetArea,
+            Sacada : property.commodities.balcony,
+            Laje : property.commodities.slab,
+            Condominio_fechado : property.commodities.gatedCommunity,
+            Jardin : property.commodities.garden,
+        }     
         setOpcoesRapidas(temp)
     }, [property])
 
