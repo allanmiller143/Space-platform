@@ -20,7 +20,10 @@ const Anuncioslaterais = ({side}) => {
       const response = await getData(`announcement/valid`);
       if (response.status === 200 || response.status === 201) {
         // Filtrar apenas os anúncios do tipo "small"
+<<<<<<< HEAD
         setTotal(response.userInfo.length)
+=======
+>>>>>>> bac2417eb284444fa0aff441ca4349f96f09e1e8
         const anunciosSmall = response.userInfo.filter(anuncio => anuncio.type === "small");
   
         // Separar índices pares e ímpares
@@ -54,7 +57,11 @@ const Anuncioslaterais = ({side}) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <Box sx={{ width: '100%', maxWidth: (total === 0 || total === 1 )? '0px' : '250px', pt: 3, mx: 2 }}>
+=======
+    <Box sx={{ width: '100%', maxWidth: '250px', pt: 3, mx: 2, display: { xs: 'none', lg: 'block' } }}>
+>>>>>>> bac2417eb284444fa0aff441ca4349f96f09e1e8
       {loading ? (
         <Skeleton animation="wave" variant="rectangular" width="100%" height={200} sx={{ borderRadius: 1 }} />
       ) : anuncios.length > 0 ? (
@@ -89,10 +96,15 @@ const Anuncioslaterais = ({side}) => {
           ))}
         </Carousel>
       ) : (
+<<<<<<< HEAD
         <> 
           {(total === 0 || total === 1)  ? null : <Box sx={{ width: '100%', height: 300, borderRadius: 1, backgroundColor: 'red' }}> skdnsd</Box>}
         </>
         
+=======
+        // Exibe um Box vazio com a mesma altura do CardMedia para manter o layout
+        <Box sx={{ width: '100%', height: 300, borderRadius: 1, backgroundColor: 'transparent' }} />
+>>>>>>> bac2417eb284444fa0aff441ca4349f96f09e1e8
       )}
     </Box>
   );
