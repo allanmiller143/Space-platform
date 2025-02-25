@@ -88,7 +88,7 @@ const Anuncioslaterais = ({side}) => {
         </Carousel>
       ) : (
         <> 
-          {(total === 0 || total === 1)  ? null : <Box sx={{ width: '100%', height: 300, borderRadius: 1, backgroundColor: 'red' }}> skdnsd</Box>}
+          {(total === 0 || total === 1)  ? null : <Box sx={{ width: '100%', height: 300, borderRadius: 1}}></Box>}
         </>
       )}
     </Box>
