@@ -21,7 +21,7 @@ const CorretoresCarrossel = () => {
     slidesToScroll: 1,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: Math.min(2, corretores.length) } },
-      { breakpoint: 600, settings: { slidesToShow: 1 } },
+      { breakpoint: 600, settings: { slidesToShow: Math.min(2, corretores.length) } },
     ],
   };
 
@@ -32,13 +32,13 @@ const CorretoresCarrossel = () => {
 
   async function loadData() {
     try {
-      const response = await getData("realtor");
+      const response = await getData("sellers");
+      console.log(response);
       if(response.status === 200 || response.status === 201){
-        setCorretores(response.userInfo.users);
+        setCorretores(response.userInfo.sellers);
       }else{
         navigate('/error');
       }
-      console.log(response.userInfo.users);
     } catch (error) {
       console.error("Erro ao buscar os corretores:", error);
     }
@@ -55,7 +55,7 @@ const CorretoresCarrossel = () => {
   }
 
   return (
-    <Box sx={{ width: "100%", maxWidth: "lg", margin: "auto", mt: 1, px: 1, py: 2 }}>
+    <Box sx={{ width: "100%", maxWidth: "lg", margin: "auto", mt: 1, px: 1, pb: 2 }}>
       
       <Typography variant="h5" fontWeight="bold" mb={2} ml={1}>
         Sugestão de corretores para seguir
@@ -69,13 +69,13 @@ const CorretoresCarrossel = () => {
                 <Avatar
                   src= {corretor.profile ? corretor.profile.url : ""}
                   alt={corretor.name}
-                  sx={{ width: 80, height: 80, margin: "auto", mb: 2 }}
+                  sx={{ width: 80, height: 80, margin: "auto" }}
                 />
                 <CardContent>
-                  <Typography variant="h6" fontWeight="bold">
+                  <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
                     {corretor.name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2, display: { xs: "none", sm: "block" } }}>
                     {corretor.email}
                   </Typography>
                   <Button 
