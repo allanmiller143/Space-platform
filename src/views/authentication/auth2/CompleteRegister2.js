@@ -5,6 +5,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthCompleteRegister from '../authForms/AuthCompleteRegister';
 import BackScreenAdviceDialog from '../authForms/completeRegisterComponentes/BackScreenAdviceDialog';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const CompleteRegister2 = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -110,6 +111,7 @@ const CompleteRegister2 = () => {
         </Grid>
       </Box>
       <BackScreenAdviceDialog openDialog={openDialog} setOpenDialog={setOpenDialog}/>
+      <Footer/>
     </PageContainer>
   );
 };

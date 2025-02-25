@@ -130,7 +130,7 @@ const Gallery = ({ property }) => {
                 <Typography>
                   Compartilhar
                 </Typography>
-                <ShareComponent post={property} url = '/apps/post/' sx={{ ml: 'auto' }} />  
+                <ShareComponent post={property} url = '/imovel/' sx={{ ml: 'auto' }} />  
               </Box>
 
               <Tooltip title="Salvar">

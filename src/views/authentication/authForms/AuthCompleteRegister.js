@@ -85,7 +85,7 @@ const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d
 const isValidCRECI = (creci) => /^CRECI-[A-Z]{2} \d{5}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const [selectedType, setSelectedType] = useState('');
   const [canGoNext, setCanGoNext] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -109,8 +109,6 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     password: '',
     confirmPassword: '',
     profilePhotoFile: null,
-
-
   });
   const [ dropdownLocaleValue,setDropdownLocaleValue] = useState('');
   const cuString = localStorage.getItem('currentUser');

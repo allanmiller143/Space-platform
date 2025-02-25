@@ -3,6 +3,7 @@ import { Grid, Box, Stack, Typography } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import AuthLogin from '../authForms/AuthLogin';
 import HpHeader from '../../../components/frontend-pages/shared/header/HpHeader';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const Login = () => (
   <PageContainer title="Login" description="Acesse sua conta">
@@ -79,6 +80,7 @@ const Login = () => (
         </Box>
       </Grid>
     </Grid>
+    <Footer/>
   </PageContainer>
 );
 

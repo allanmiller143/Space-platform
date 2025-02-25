@@ -7,6 +7,7 @@ import img1 from 'src/assets/images/backgrounds/login-bg.svg';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 
 import AuthRegister from '../authForms/AuthRegister';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const Register = () => (
   <PageContainer title="Register" description="this is Register page">
@@ -97,6 +98,7 @@ const Register = () => (
         </Box>
       </Grid>
     </Grid>
+    <Footer/>
   </PageContainer>
 );
 

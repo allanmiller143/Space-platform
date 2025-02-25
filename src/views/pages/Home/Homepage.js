@@ -14,6 +14,8 @@ import CarroselCompleto from './Componentes/CarroselCompleto';
 import CarrosselHome from './Componentes/CarrosselHome';
 import Anuncioslaterais from '../../../components/apps/Anuncios/Anuncioslaterais';
 import { Box } from '@mui/system';
+import Footer from '../../../components/landingpage/footer/Footer';
+import CorretoresCarrossel from './Componentes/RealtorSlider/CorretoresCarrossel';
 
 const HomePage = () => {
 
@@ -51,16 +53,16 @@ const HomePage = () => {
       <HeaderAlert />
       <HpHeader />
       <SearchBar/>
-
-
       <Banner/>
       <CarrosselHome/>
       <AnunciosCarrossel/>
+      <CorretoresCarrossel/>
       <Filtros/>
       <CarroselCompleto/>
       {/* <DestinationComponent/> */}
       <Features />
       <ScrollToTop />
+      <Footer/>
     </PageContainer>
   );
 };

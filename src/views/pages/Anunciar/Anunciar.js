@@ -2,11 +2,11 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import { ApartmentOutlined, House, Landslide } from "@mui/icons-material";
 import Image from '../../../assets/images/posters/imagem-4.jpg'
 import Process from "./Componentes/process";
-import ReviewCarousel from "./Componentes/reviews/ReviewCarousel";
 import CardInfo from "./Componentes/CardInfo/CardInfo";
 import { useState } from "react";
 import PageContainer from "../../../components/container/PageContainer";
 import HpHeader from "../../../components/frontend-pages/shared/header/HpHeader";
+import Footer from "../../../components/landingpage/footer/Footer";
 
 export default function Anunciar() {
     const [open, setOpen] = useState(false);
@@ -45,15 +45,10 @@ export default function Anunciar() {
                     </Grid>
                 </Grid>
                 
-                <Process />
-                {
-                    open ?  <CardInfo open = {open} onClose={() => setOpen(false)}/> : null
-                }
-                
-
-                <ReviewCarousel/>   
-
+                <Process/>
+                {open ?  <CardInfo open = {open} onClose={() => setOpen(false)}/> : null}
             </Container>
+            <Footer/>
         </PageContainer>
     );
 }

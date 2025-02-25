@@ -7,6 +7,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import img1 from '/images/posters/imagem-28.jpg';
 
 import AuthForgotPassword from '../authForms/AuthForgotPassword';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const ForgotPassword = () => (
   <PageContainer title="Esqueceu a Senha" description="Recupere o acesso à sua conta">
@@ -58,6 +59,7 @@ const ForgotPassword = () => (
         </Box>
       </Grid>
     </Grid>
+    <Footer/>
   </PageContainer>
 );
 

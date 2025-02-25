@@ -3,12 +3,9 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Grid, Box, Pagination, Skeleton, Typography, Button, Drawer } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import Header from '../../../layouts/full/horizontal/header/Header';
-import CardImovel from '../../../components/spaceUI/card-imovel/cardImovel';
-import { toast } from 'sonner';
 import MarketplaceMaps from './MarcketPlaceMap';
 import FilterVitrine from 'src/components/marketplace/Filter';
 import { putData } from '../../../Services/Api';
-import { useNavigate } from 'react-router';
 import marketplaceContext from './MarketplaceContext/MarketplaceContext';
 import BlogPost from '../../../components/apps/blog/BlogCard';
 // import nodata from "../../"

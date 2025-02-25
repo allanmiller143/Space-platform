@@ -4,6 +4,7 @@ import PageContainer from 'src/components/container/PageContainer';
 import img1 from 'src/assets/images/backgrounds/login-bg.svg';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthTwoSteps from '../authForms/AuthTwoSteps';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const TwoSteps = () => {
   const location = useLocation(); // Obtém o objeto de localização
@@ -85,6 +86,7 @@ const TwoSteps = () => {
           </Box>
         </Grid>
       </Grid>
+      <Footer/>
     </PageContainer>
   );
 };

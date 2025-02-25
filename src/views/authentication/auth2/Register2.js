@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'; // Hook para navegação
 import PageContainer from 'src/components/container/PageContainer';
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthSimpleRegister from '../authForms/AuthSimpleRegister';
+import Footer from '../../../components/landingpage/footer/Footer';
 
 const Register2 = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -108,6 +109,7 @@ const Register2 = () => {
           </Grid>
         </Grid>
       </Box>
+      <Footer/>
     </PageContainer>
   );
 };
