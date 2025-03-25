@@ -30,7 +30,7 @@ const Helper = ({formData, setFormData}) => {
                   onChange={handleChange}
                   label="Comissão (%)"
                 >
-                  {Array.from({ length: 15 }, (_, index) => (
+                  {Array.from({ length: 10 }, (_, index) => (
                     <MenuItem
                     key={index + 1} value={index + 1}>
                       {index + 1}%
