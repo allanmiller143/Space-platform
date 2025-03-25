@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from 'react';
-import { IconButton, Box, Badge, Menu, MenuItem, Avatar, Typography, Chip } from '@mui/material';
+import { IconButton, Box, Badge, Menu, MenuItem, Avatar, Typography, Chip, Button } from '@mui/material';
 import { IconBellRinging } from '@tabler/icons';
 import { Stack } from '@mui/system';
 import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
@@ -12,6 +12,7 @@ import Loading from '../../../../components/Loading/Loading';
 import { io } from 'socket.io-client';
 import socket from '../../../../Services/socket'
 import { seeNotification } from '../../../../Services/Utils/Notifications';
+import { forEach } from 'lodash';
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
@@ -38,7 +39,9 @@ const Notifications = () => {
       }else if(type === "appointment_response"){
         navigate("/apps/calendar");
         seeNotification(id,notifications,setNotifications);
-
+      }else if(type === 'like'){
+        seeNotification(id,notifications,setNotifications);
+        setAnchorEl2(false);
       }
 
 
@@ -55,6 +58,16 @@ const Notifications = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  const markAllAsRead = async () => {
+    const notificationsCopy = notifications;
+    setNotifications([]);
+    for (const notification of notifications) {
+      setNotifications([]);
+      await seeNotification(notification.id, notificationsCopy, setNotifications);
+    }
+  };
+  
 
 
     const [open, setOpen] = useState(false);
@@ -183,7 +196,7 @@ const Notifications = () => {
             </Typography>
           )}
         </Box>
-        {/* {notifications.length > 0 && (
+        {notifications.length > 0 && (
           <Box p={2}>
             <Button
               onClick={markAllAsRead}
@@ -194,7 +207,7 @@ const Notifications = () => {
               Marcar todas como lidas
             </Button>
           </Box>
-        )} */}
+        )}
       </Menu>
     </Box>
   );

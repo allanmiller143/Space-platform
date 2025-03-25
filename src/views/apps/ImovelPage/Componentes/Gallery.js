@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Tooltip } from "@mui/material";
-import { IconArrowLeft, IconCamera, IconHeart, IconShare } from "@tabler/icons";
+import { Box, Typography, Button, Tooltip, Fab } from "@mui/material";
+import { IconArrowLeft, IconCamera, IconHeart, IconShare, IconThumbUp } from "@tabler/icons";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import moment from 'moment';
 import { deleteData, postData } from "../../../../Services/Api";
 import GalleryPhotos from "./GalleryPhotos";
 import ShareComponent from "../../../../components/apps/userprofile/feed/ShareComponent";
+import socket from "../../../../Services/socket";
 
 const Gallery = ({ property }) => {
   const navigate = useNavigate();
@@ -17,6 +18,16 @@ const Gallery = ({ property }) => {
   const [favorite, setFavorite] = useState(false);
     const back = () => {
       navigate(-1);
+    };
+
+    const sendNotification = () => {
+        const data = {
+          'sender': currentUserls.email,
+          'receiver': property.seller.email,
+          'title': 'Curtiu seu imóvel',
+          'type': 'like'
+        };
+        socket.emit('send_notification', data);
     };
   
     const toggleFavorite = async () => {
@@ -28,8 +39,10 @@ const Gallery = ({ property }) => {
       try {
         const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
         if (isFavorite) {
+          setFavorite(false);
           await UnFavorite(); // Chama UnFavorite sem passar o evento
         } else {
+          setFavorite(true);
           await Favorite(); // Chama Favorite sem passar o evento
         }
       } catch (error) {
@@ -47,22 +60,23 @@ const Gallery = ({ property }) => {
         currentUserls.favorites.push({ propertyId: property.id });
         localStorage.setItem('currentUser', JSON.stringify(currentUserls));
         setFavorite(true);
+        sendNotification();
       } else {
         toast.error('Erro ao favoritar, por favor tente novamente mais tarde ou entre em contato com o suporte.');
-        console.log(favoriteResponse);
+        setFavorite(false);
       }
     };
   
     const UnFavorite = async () => {
       const unfavoriteResponse = await deleteData(`favorites/${currentUserls.email}/${property.id}`, token);
-      console.log(property.id);
       if (unfavoriteResponse.status === 200 || unfavoriteResponse.status === 204) {
         currentUserls.favorites = currentUserls.favorites.filter(fav => fav.propertyId !== property.id);
         localStorage.setItem('currentUser', JSON.stringify(currentUserls));
         setFavorite(false);
       } else {
         toast.error('Erro ao desfavoritar, por favor tente novamente mais tarde ou entre em contato com o suporte.');
-        console.log(unfavoriteResponse);
+        setFavorite(true);
+
       }
     };
 
@@ -133,14 +147,10 @@ const Gallery = ({ property }) => {
                 <ShareComponent post={property} url = '/imovel/' sx={{ ml: 'auto' }} />  
               </Box>
 
-              <Tooltip title="Salvar">
-                <Button
-                  variant="outlined"
-                  sx={{ backgroundColor:  '#fff' }}
-                  onClick={toggleFavorite}
-                >
-                  <IconHeart color={favorite ? 'red' : '#000'} />
-                </Button>
+              <Tooltip title="Curtir" placement="top" onClick={() => toggleFavorite()}>
+                <Fab size="small" color={favorite ? 'primary' : 'default'}>
+                    <IconThumbUp size="16"  />
+                </Fab>
               </Tooltip>
             </Box>
           </Box>
