@@ -3,13 +3,15 @@
 import { CardContent, Button, Typography, Avatar } from '@mui/material';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { CalendarToday, Event } from '@mui/icons-material';
 import { toast } from 'sonner';
 import { getData, postData } from '../../../../Services/Api';
 import BlankCard from '../../../../components/shared/BlankCard';
-
+import socket from "../../../../Services/socket";
+import { seeAppointmentNotification } from '../../../../Services/Utils/Notifications';
+import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
 const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }) => {
   const [pendingEvents, setPendingEvents] = useState([]);
   const [propertiesData, setPropertiesData] = useState([]);
@@ -18,6 +20,19 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
   const [loadAceita, setLoadAceita] = useState(false);
   const [loadNega, setLoadNega] = useState(false);
   const token = localStorage.getItem('token');
+  const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
+
+
+
+  const sendNotification = (string) => {
+    const data = {
+      'sender': currentUserls.email,
+      'receiver': 'teste3@gmail.com',
+      'title': string,
+      'type': 'appointment_response'
+    };
+    socket.emit('send_notification', data);
+};
 
   useEffect(() => {
     const now = new Date();
@@ -58,6 +73,8 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
       const response = await postData(`realtor/appointment/approve/${selectedEvent.id}`,{}, token);
       if (response.status === 200 || response.status === 201) {
         toast.success('Agendamento aceito com sucesso!');
+        sendNotification("agendamento aceito com sucesso");
+        await seeAppointmentNotification(selectedEvent.id, notifications,setNotifications);
 
         const updatedEvents = events.map((event) => {
           if (event.id === selectedEvent.id) {
@@ -85,7 +102,8 @@ const PendentEvents = ({ events,setEvents,advertiserEvents,setAdvertiserEvents }
         const response = await postData(`realtor/appointment/reject/${selectedEvent.id}`,{}, token);
         if (response.status === 200 || response.status === 201) {
           toast.success('Agendamento negado com sucesso!');
-  
+          sendNotification("Agendamento não foi aceito!");
+          await seeAppointmentNotification(selectedEvent.id, notifications,setNotifications);
           const updatedEvents = events.map((event) => {
             if (event.id === selectedEvent.id) {
               return { ...event, status: 'rejected' };

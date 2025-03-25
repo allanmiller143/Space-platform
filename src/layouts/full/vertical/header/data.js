@@ -71,6 +71,12 @@ const profileNoCompleted = [
     subtitle: 'Chat com corretores e clientes',
     icon: ddIcon1,
   },
+  {
+    href: '/apps/calendar',
+    title: 'Calendário',
+    subtitle: 'Agendamentos e visitas',
+    icon: ddIcon4,
+  },
 
 ];
 

@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import Loading from '../../../../components/Loading/Loading';
 import { io } from 'socket.io-client';
 import socket from '../../../../Services/socket'
+import { seeNotification } from '../../../../Services/Utils/Notifications';
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
@@ -22,20 +23,25 @@ const Notifications = () => {
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
 
 
-
-
-  const seePhone = async ({email,senderName,chatId,profile}) => {
+  const seePhone = async ({email,senderName,chatId,profile,type,id}) => {
     if (currentUser) {
-      setSelectedUser(null);
-      handleClose2();
-      setMessages([]);
-      setActiveChat(chatId);
-      setSelectedUser({email : email, name: senderName, profile: profile
+      if(type === "message"){
+        setSelectedUser(null);
+        handleClose2();
+        setMessages([]);
+        setActiveChat(chatId);
+        setSelectedUser({email : email, name: senderName, profile: profile});
+        navigate(`/apps/chats`);
+      }else if(type === "appointment"){
+        navigate("/apps/calendar");
+        //seeNotification(id,notifications,setNotifications);
+      }else if(type === "appointment_response"){
+        navigate("/apps/calendar");
+        seeNotification(id,notifications,setNotifications);
+
+      }
 
 
-      });
-      navigate(`/apps/chats`);
-  
     } else {
       navigate('/auth/login');
       toast.success('Faça um cadastro para enviar uma mensagem');
@@ -58,7 +64,8 @@ const Notifications = () => {
       if (!open) {
         setOpen(true);
         socket.emit("open_notification", { email: currentUser.email }, (response) => {
-          setNotifications(response.messages);
+          console.log(response)
+          setNotifications(response);
         });
       }
 
@@ -66,11 +73,11 @@ const Notifications = () => {
 
       // Listen for notifications
       socket.on("notification", (notification) => {
-        setNotifications(notification.messages);
+        console.log(notification);
+        setNotifications((prevNotifications) => [notification, ...prevNotifications]);
       });
-
-
-    
+      
+  
       return () => {
         socket.off('notification');
         };
@@ -136,7 +143,7 @@ const Notifications = () => {
         <Box>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile})}} >
+              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile, type : notification.type, id: notification.id})}} >
                 <Stack direction="row" spacing={2}>
                   <Avatar
                     src={notification.senderProfile ? notification.senderProfile.url : ''}
@@ -164,7 +171,7 @@ const Notifications = () => {
                         width: '240px',
                       }}
                     >
-                      {notification.text}
+                      {notification.type === "message" ? notification.text : notification.title}
                     </Typography>
                   </Box>
                 </Stack>

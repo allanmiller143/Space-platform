@@ -6,7 +6,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, 
 import { Cancel, CheckCircleOutline } from '@mui/icons-material';
 import { toast } from 'sonner';
 import { postData } from '../../Api';
-
+import socket from '../../socket';
 const AgendarDialog = ({
   onClose,
   close,
@@ -22,7 +22,6 @@ const AgendarDialog = ({
   const currentUserls = JSON.parse(cuString);
   const token = localStorage.getItem('token');
   const [openSolicitacao, setOpenSolicitacao] = useState(false);
-  const [openAvisoMesmoDia, setOpenAvisoMesmoDia] = useState(false);
   const [openRestricaoHoras, setOpenRestricaoHoras] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +33,20 @@ const AgendarDialog = ({
   };
 
   const convertToISODate = (isoString) => new Date(isoString);
+
+  const sendNotification = (id) => {
+    console.log(id);
+      const data = {
+        'sender': currentUserls.email,
+        'receiver': advertiser.email,
+        'title': 'Novo agendamento',
+        'appointmentId' : id,
+        'type': 'appointment'
+      };
+      socket.emit('send_notification', data);
+    
+  };
+
 
   const handleMarcarConsulta = async () => {
     if (verificarRestricaoTempo(eventoSelecionado)) {
@@ -66,6 +79,7 @@ const AgendarDialog = ({
       console.log(response);
       if(response.status === 200 || response.status === 201){
         // Atualiza os eventos no estado local
+        sendNotification(response.data.id);
         setEventosDisponiveis((prevEventos) => {
           const novosEventos = prevEventos.map((evento) => {
             if (

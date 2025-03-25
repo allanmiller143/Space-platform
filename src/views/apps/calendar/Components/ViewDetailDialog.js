@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {Button,Dialog,DialogActions,DialogContent,IconButton,Typography,Divider,CardContent,DialogTitle,Box,Stack,Chip,Tooltip,CircularProgress,}from '@mui/material';
 import { Cancel, Delete, CalendarToday, Email, Event } from '@mui/icons-material';
 import moment from 'moment';
 import { getData, postData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 import ImageViewer from '../../../../components/apps/TabelaMeusIMoveis/ImoveisImageView';
-
+import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
+import socket from '../../../../Services/socket';
+import { seeAppointmentNotification } from '../../../../Services/Utils/Notifications';
 const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents  }) => {
   const [confirmDeleteEvent, setConfirmDeleteEvent] = useState(null);
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -16,6 +18,8 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
   const [loadAceita, setLoadAceita] = useState(false);
   const [loadNega, setLoadNega] = useState(false);
   const token = localStorage.getItem('token');
+  const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
+  
   const openConfirmDeleteDialog = () => {
     setConfirmDeleteEvent(selectedEvent);
   };
@@ -32,6 +36,16 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
         return <Chip label="Desconhecido" />;
     }
   };
+
+    const sendNotification = (string) => {
+        const data = {
+          'sender': currentUser.email,
+          'receiver': selectedEvent.solicitorEmail,
+          'title': string,
+          'type': 'appointment_response'
+        };
+        socket.emit('send_notification', data);
+    };
   async function loadPropertyData() {
     setLoading(true);
     try {
@@ -61,7 +75,8 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
       const response = await postData(`realtor/appointment/approve/${selectedEvent.id}`,{}, token);
       if (response.status === 200 || response.status === 201) {
         toast.success('Agendamento aceito com sucesso!');
-
+        sendNotification("agendamento aceito com sucesso");
+        await seeAppointmentNotification(selectedEvent.id, notifications,setNotifications);
         const updatedEvents = events.map((event) => {
           if (event.id === selectedEvent.id) {
             return { ...event, status: 'accepted' };
@@ -86,6 +101,9 @@ const ViewDetailDialog = ({ open, handleClose, selectedEvent, events, setEvents 
       const response = await postData(`realtor/appointment/reject/${selectedEvent.id}`,{}, token);
       if (response.status === 200 || response.status === 201) {
         toast.success('Agendamento negado com sucesso!');
+        sendNotification("Agendamento não foi aceito!");
+        await seeAppointmentNotification(selectedEvent.id, notifications,setNotifications);
+
 
         const updatedEvents = events.map((event) => {
           if (event.id === selectedEvent.id) {
