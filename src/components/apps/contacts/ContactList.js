@@ -12,17 +12,22 @@ import { Box } from '@mui/system';
 
 const ContactList = () => {
 
-  const {list, active,activeList, setActive,accepted} = useContext(ContactsContext);
+  const {list, active, activeList, setActive, accepted, afterLoad, setAfterLoad} = useContext(ContactsContext);
 
+
+  const click = (contact) => {
+    setActive(contact);
+    console.log(contact);
+  }
 
   return (
     <List>
       <Scrollbar sx={{ height: { lg: 'calc(100vh - 300px)', md: '100vh' }, maxHeight: '800px' }}>
         {activeList.map((contact) => (
-          <Box key={contact.id}  onClick ={() => {setActive(contact);}}>
+          <Box key={contact.shared.id}  onClick ={() => click(contact)}>
           <ContactListItem
             imovel= {contact}
-            selected={contact.id === active?.id}
+            selected={contact.shared.id === active?.shared.id}
           />
           </Box>
         ))}

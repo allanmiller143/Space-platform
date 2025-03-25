@@ -6,7 +6,8 @@ import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 import ContactsContext from "../../../views/apps/contacts/ContactsContext/ContactsContext";
 import { postData } from "../../../Services/Api";
-
+import socket from "../../../Services/socket";
+import { seeSharedNotification } from "../../../Services/Utils/Notifications";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -15,6 +16,7 @@ const AceitarNegarCompartilhamentoDialog = ({ open, onClose }) => {
   const token = localStorage.getItem("token");
   const [motivo, setMotivo] = useState("");
   const [loading, setLoading] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const { list, setList, active, setActive, accepted, acticveList, setActiveList } = useContext(ContactsContext);
 
   const motivosNegacao = [
@@ -24,6 +26,17 @@ const AceitarNegarCompartilhamentoDialog = ({ open, onClose }) => {
     "Imóvel duplicado",
     "Informações insuficientes",
   ];
+
+  const sendNotification = (string) => {
+    const data = {
+      'sender': currentUser.email,
+      'receiver': active.seller.email,
+      'title': string,
+      'type': 'share_response',
+    };
+    socket.emit('send_notification', data);
+};
+
 
   const handleConfirmar = async () => {
     if (!accepted && !motivo) {
@@ -60,6 +73,7 @@ const AceitarNegarCompartilhamentoDialog = ({ open, onClose }) => {
     if(response.status === 200 || response.status === 201){
       setList(list.filter((item) => item.id !== active.id));
       setActiveList(list.filter((item) => item.id !== active.id));
+      sendNotification('Compartilhamento aceito');
       toast.success("Imóvel aceito com sucesso!");
       setActive(null);
 
@@ -78,7 +92,9 @@ const AceitarNegarCompartilhamentoDialog = ({ open, onClose }) => {
     if(response.status === 200 || response.status === 201){
       setList(list.filter((item) => item.id !== active.id));
       setActiveList(list.filter((item) => item.id !== active.id));
+      sendNotification('Compartilhamento negado');
       setActive(null);
+
       toast.success("Imóvel negado com sucesso!");
     }else{
       toast.error("Ocorreu um erro ao negar o compartilhamento.");

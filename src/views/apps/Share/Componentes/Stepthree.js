@@ -5,9 +5,11 @@ import { putData } from '../../../../Services/Api';
 import {useNavigate} from 'react-router-dom';
 import PropertyInfo from './PropertyInfo';
 import { toast } from 'sonner';
+import socket from "../../../../Services/socket";
 const PropertyDetails = ({ formData, setActiveStep }) => {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const navigate = useNavigate();
 
    const renderCommision = (property) => {
@@ -67,6 +69,8 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
       const response = await putData(`properties/share/${formData.property.id}`,body,token);
       if(response.status === 200){
         toast.success('Pedido enviado com sucesso');
+        console.log(response);
+        sendNotification(response.data.shared.id);
         navigate('/apps/imoveis/list');
       }else{
         toast.error('Ocorreu um erro ao compartilhar o imóvel, tente novamente mais tarde');
@@ -78,6 +82,17 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
     }
   }
 
+
+  const sendNotification = (id) => {
+      const data = {
+        'sender': currentUser.email,
+        'receiver': formData.selectedUser.email,
+        'title': 'Novo compartilhamento',
+        'type': 'share',
+        "sharedPropertyId" : id
+      };
+      socket.emit('send_notification', data);
+  };
 
 
 

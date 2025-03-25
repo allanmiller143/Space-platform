@@ -18,7 +18,7 @@ const Contacts = () => {
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
-  const {test, list,setList,loading,setLoading,acceptedList,setAcceptedList, activeList, setActiveList} = useContext(ContactsContext);
+  const {test, list,setList,loading,setLoading,acceptedList,setAcceptedList, activeList, setActiveList,afterLoad,setAfterLoad,setActive} = useContext(ContactsContext);
 
   const token = localStorage.getItem('token');
 
@@ -36,6 +36,12 @@ const Contacts = () => {
         setList(response.userInfo.properties);
         setActiveList(response.userInfo.properties);
         console.log(response.userInfo.properties);
+
+        if(afterLoad !== null){
+          const notificationClick = response.userInfo.properties.find((item) => item.shared.id === afterLoad);
+          setActive(notificationClick);
+          setAfterLoad(null);
+        }
       }else{
         console.log(response);
       }

@@ -10,6 +10,7 @@ function ContactsContextProvider({children}){
   const [accepted, setAccepted] = useState(	);
   const [loading , setLoading] = useState(false);
   const [activeList , setActiveList] = useState([]);
+  const [afterLoad, setAfterLoad] = useState(null);
 
   const value = {
     list, setList,
@@ -18,7 +19,8 @@ function ContactsContextProvider({children}){
     accepted, setAccepted,
     loading, setLoading,
     acceptedList, setAcceptedList,
-    activeList, setActiveList
+    activeList, setActiveList,
+    afterLoad, setAfterLoad
   };
 
   return (

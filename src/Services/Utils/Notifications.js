@@ -50,4 +50,33 @@ export async function seeAppointmentNotification(id, notifications, setNotificat
     }
 }
 
+export async function seeSharedNotification(id, notifications, setNotifications) {
+    const token = localStorage.getItem('token');
+    console.log(id);
+
+    // Encontre a notificação específica com base no appointmentId
+    const notification = notifications.find((notification) => notification.sharedPropertyId === id);
+
+    // Verifique se a notificação existe antes de tentar usar ela
+    if (notification) {
+        try {
+            const response = await postData(`notifications/${notification.id}`, {}, token);
+            if (response.status === 204) {
+                // Atualizar o estado usando a função baseada no estado anterior
+                setNotifications((prevNotifications) => {
+                    const newNotifications = prevNotifications.filter(
+                        (notification) => notification.id !== id
+                    );
+                    return newNotifications;
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        console.log('Notificação não encontrada para o sharedPropertyId:', id);
+    }
+}
+
+
 

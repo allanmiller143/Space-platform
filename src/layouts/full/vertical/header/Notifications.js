@@ -6,13 +6,15 @@ import { Stack } from '@mui/system';
 import NotificationContext from '../../../../Services/Notification/NotificationContext/NotificationContext';
 import { openNotification } from '../../../../Services/Notification/NotificationApi';
 import ChatContext from '../../../../components/apps/chats/ChatContext/ChatContext';
-import { useNavigate } from 'react-router';
+import { useNavigate,useLocation } from 'react-router';
 import { toast } from 'sonner';
 import Loading from '../../../../components/Loading/Loading';
 import { io } from 'socket.io-client';
 import socket from '../../../../Services/socket'
 import { seeNotification } from '../../../../Services/Utils/Notifications';
 import { forEach } from 'lodash';
+import ContactsContext from '../../../../views/apps/contacts/ContactsContext/ContactsContext';
+
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const { notifications, setNotifications,called,setCalled } = useContext(NotificationContext);
@@ -22,9 +24,11 @@ const Notifications = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
+  const {list, active, activeList, setActive, accepted,afterLoad,setAfterLoad} = useContext(ContactsContext);
+  const location = useLocation();
 
 
-  const seePhone = async ({email,senderName,chatId,profile,type,id}) => {
+  const seePhone = async ({email,senderName,chatId,profile,type,id,notification}) => {
     if (currentUser) {
       if(type === "message"){
         setSelectedUser(null);
@@ -32,22 +36,40 @@ const Notifications = () => {
         setMessages([]);
         setActiveChat(chatId);
         setSelectedUser({email : email, name: senderName, profile: profile});
-        navigate(`/apps/chats`);
+        handleNavigate("/apps/chats");
       }else if(type === "appointment"){
-        navigate("/apps/calendar");
+        handleNavigate("/apps/calendar");
         //seeNotification(id,notifications,setNotifications);
       }else if(type === "appointment_response"){
-        navigate("/apps/calendar");
+        handleNavigate("/apps/calendar");
         seeNotification(id,notifications,setNotifications);
       }else if(type === 'like'){
         seeNotification(id,notifications,setNotifications);
         setAnchorEl2(false);
+      }else if(type === "share"){
+        console.log("share")
+        setAfterLoad(notification.sharedPropertyId);
+        handleNavigate("/apps/contacts");
+        seeNotification(id,notifications,setNotifications);
+        
+      }else if(type === "share_response"){
+        handleNavigate("/apps/imoveis/list");
+        seeNotification(id,notifications,setNotifications);
       }
-
-
     } else {
       navigate('/auth/login');
       toast.success('Faça um cadastro para enviar uma mensagem');
+    }
+  };
+
+  const handleNavigate = (route) => {
+    // Verificar se já estamos na rota desejada
+    if (location.pathname === route) {
+      // Se já estamos na tela, recarregar a página
+      window.location.reload();
+    } else {
+      // Caso contrário, apenas navegar para a rota
+      navigate(route);
     }
   };
 
@@ -156,7 +178,7 @@ const Notifications = () => {
         <Box>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile, type : notification.type, id: notification.id})}} >
+              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile, type : notification.type, id: notification.id, notification: notification})}} >
                 <Stack direction="row" spacing={2}>
                   <Avatar
                     src={notification.senderProfile ? notification.senderProfile.url : ''}
