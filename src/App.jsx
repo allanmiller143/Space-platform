@@ -11,6 +11,7 @@ import '../src/index.css'
 import ChatContextProvider from './components/apps/chats/ChatContext/ChatContextProvider';
 import NotificationContextProvider from './Services/Notification/NotificationContext/NotificationContextProvider';
 import MarketplaceContextProvider from './views/apps/Classificados/MarketplaceContext/MarketplaceContextProvider';
+import ContractContextProvider from './views/apps/Contract/ContractContext/ContractContextProvider';
 import ContactsContextProvider from './views/apps/contacts/ContactsContext/ContactsContextProvider';
 
 function App() {
@@ -27,10 +28,12 @@ function App() {
           <ChatContextProvider>
             <MarketplaceContextProvider>
               <ContactsContextProvider>
+                <ContractContextProvider>
                 <RTL direction={customizer.activeDir}>
                   <CssBaseline />
                   <ScrollToTop>{routing}</ScrollToTop>
                 </RTL>
+                </ContractContextProvider>
              </ContactsContextProvider>
             </MarketplaceContextProvider> 
           </ChatContextProvider>

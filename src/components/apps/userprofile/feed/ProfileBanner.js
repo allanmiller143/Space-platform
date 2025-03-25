@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { deleteData, getData, postData, putFormData } from '../../../../Services/Api';
 import Loading from '../../../Loading/Loading';
-
+import sockete from '../../../../Services/socket';
 
 
 const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
@@ -61,6 +61,17 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
   };
 
 
+  const sendNotification = (string) => {
+    const data = {
+      'sender': currentUserls.email,
+      'receiver': userData.email,
+      'title': string,
+      'type': 'follow',
+    };
+    sockete.emit('send_notification', data);
+  };
+
+
   const follow = async () => {
     setLoadFollowing(true);
     try {
@@ -68,6 +79,10 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
       const response = await postData(`follow/${userData.email}`,{},token);
       if (response.status === 200 || response.status === 201) {
         toast.success('Seguido com sucesso');
+        console.log(userData.email);
+        console.log(currentUserls.email)
+
+        sendNotification('Te seguiu');
 
         currentUserls.follow.push(response.data);
         localStorage.setItem('currentUser', JSON.stringify(currentUserls));
@@ -92,6 +107,7 @@ const ProfileBanner = ({userData,socket,myPost,setMyPost}) => {
       const response = await deleteData(`follow/${userData.email}`,token);
       if (response.status === 200 || response.status === 201) {
         toast.success('Deixou de Seguir com sucesso');
+        sendNotification('Deixou de te seguir');
         currentUserls.follow = currentUserls.follow.filter(follow => follow.followedEmail !== userData.email);
         localStorage.setItem('currentUser', JSON.stringify(currentUserls));
       } else {

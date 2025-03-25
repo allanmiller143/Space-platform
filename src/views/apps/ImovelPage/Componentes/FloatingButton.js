@@ -10,7 +10,7 @@ export default function FloatingButton({advertiser}) {
     navigate(`/imoveis/${advertiser.email.replaceAll(/[.]/g, '-')}`);
 }  
   return (
-    <Box sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', bottom: 16, right: 16 }} onClick={onclick}>
+    <Box sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', bottom: 16, right: 16, zIndex: 99900 }} onClick={onclick}>
       <Fab variant="extended" color='primary'>
         <NavigationIcon sx={{ mr: 1 }} />
             Mais Imóveis

@@ -13,6 +13,7 @@ import PaidImovelPage from '../views/apps/ImovelPage/PaidImovelPage';
 import Anunciar from '../views/pages/Anunciar/Anunciar';
 import SobreNosPage from '../views/pages/sobrenos/sobrenos'
 import Landingpage from '../views/pages/landingpage/Landingpage';
+import ContractsPage from '../views/apps/Contract/ContractsPage';
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
@@ -80,10 +81,9 @@ const Router = [
       { path: '/apps/post/:id', element: <EcommerceDetail /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
       { path: '/error', element: <CatchError /> },
-      { path: '/imovel/:id', element: <PaidImovelPage /> },
-
-
-      
+      { path: '/imovel/:id', element: <PaidImovelPage/> },
+      { path: '/contracts/:id', element: <ContractsPage/> },
+ 
     ],
   },
   {

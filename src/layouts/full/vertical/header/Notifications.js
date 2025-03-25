@@ -55,6 +55,10 @@ const Notifications = () => {
       }else if(type === "share_response"){
         handleNavigate("/apps/imoveis/list");
         seeNotification(id,notifications,setNotifications);
+      }else if(type === "follow"){
+        
+        handleNavigate(`/user-profile/${notification.senderEmail.replaceAll('.', '-')}`);
+        seeNotification(id,notifications,setNotifications);
       }
     } else {
       navigate('/auth/login');
@@ -145,7 +149,7 @@ const Notifications = () => {
           <IconBellRinging size="21" stroke="1.5" />
         </Badge>
       </IconButton>
-      <Menu
+     <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
         keepMounted
@@ -156,54 +160,58 @@ const Notifications = () => {
         sx={{
           '& .MuiMenu-paper': {
             width: '360px',
+            maxHeight: 'calc(100vh - 32px)', // Adiciona um limite máximo de altura
+            overflowY: 'auto', // Permite scroll se necessário
           },
         }}
       >
-        {/* <Stack
-          direction="row"
-          py={2}
-          px={4}
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="h6">Notificações</Typography>
-          {notifications.some((n) => n.isNew) && (
-            <Chip
-              label={`${notifications.length} novas`}
-              color="primary"
-              size="small"
-            />
-          )}
-        </Stack> */}
         <Box>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} sx={{ py: 2, px: 4 }} onClick={()=>{seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile, type : notification.type, id: notification.id, notification: notification})}} >
+              <MenuItem 
+                key={notification.id} 
+                sx={{ 
+                  py: 2, 
+                  px: 4,
+                  display: 'block', // Importante para o layout do conteúdo
+                  width: '100%',
+                }} 
+                onClick={() => {seePhone({email: notification.senderEmail, chatId: notification.chatId, senderName: notification.senderName, profile: notification.senderProfile, type: notification.type, id: notification.id, notification: notification})}}
+              >
                 <Stack direction="row" spacing={2}>
                   <Avatar
                     src={notification.senderProfile ? notification.senderProfile.url : ''}
-                    alt= 'oi'
+                    alt='profile'
                     sx={{
                       width: 48,
                       height: 48,
                     }}
                   />
-                  <Box>
+                  <Box sx={{ 
+                    minWidth: 0, // Importante para evitar problemas de overflow
+                    width: 'calc(100% - 64px)' // 48px do avatar + 16px de spacing
+                  }}>
                     <Typography
-                      variant="subtitle2"
+                      variant="h6"
                       noWrap
                       sx={{
-                        width: '240px',
+                        width: '100%',
                       }}
                     >
                       {notification.senderEmail}
                     </Typography>
                     <Typography
                       color="textSecondary"
-                      variant="subtitle2"
-                      noWrap
+                      variant="subtitle1"
                       sx={{
-                        width: '240px',
+                        width: '100%',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 3,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'normal', // Sobrescreve o comportamento padrão do Typography
+                        wordBreak: 'break-word', // Quebra palavras longas se necessário
                       }}
                     >
                       {notification.type === "message" ? notification.text : notification.title}
@@ -212,13 +220,11 @@ const Notifications = () => {
                 </Stack>
               </MenuItem>
             ))
-          ) : (
-            <Typography textAlign="center" p={2}>
-              Sem notificações para mostrar
-            </Typography>
-          )}
-        </Box>
-        {notifications.length > 0 && (
+            ) : (
+              <Typography sx={{ p: 2 }}>Nenhuma notificação</Typography>
+            )}
+          </Box>
+          {notifications.length > 0 && (
           <Box p={2}>
             <Button
               onClick={markAllAsRead}
@@ -230,7 +236,7 @@ const Notifications = () => {
             </Button>
           </Box>
         )}
-      </Menu>
+        </Menu>
     </Box>
   );
 };

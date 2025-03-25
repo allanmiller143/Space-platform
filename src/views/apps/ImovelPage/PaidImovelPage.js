@@ -69,19 +69,14 @@ const PaidImovelPage = () => {
         }
       }
 
-      console.log(location);
 
       try{
         const clickResponse = await postData(`properties/times-seen/${id}`, location);
-        console.log(clickResponse);
-
         if (clickResponse.status === 200 || clickResponse.status === 201) {
-          console.log(clickResponse);
         } else {
           navigate('/error');
         }
       }catch(e){
-        console.log(e);
         navigate('/error');
       }
     };
@@ -94,7 +89,6 @@ const PaidImovelPage = () => {
           try {
             await openNewChat(socket, advertiser.email);
           } catch (err) {
-            console.log('Error loading messages:', err);
           }
       
           try {
@@ -128,7 +122,6 @@ const PaidImovelPage = () => {
 
     const setActiveChatFunction = async () => {
         if (currentUserls && !selectedUser  ) {
-          console.log('entrei no setActiveChatFunction');
           setLoadPlayer(true);
           setSelectedUser({});
           setMessages([]);
@@ -146,7 +139,6 @@ const PaidImovelPage = () => {
               if(response.userInfo.length > 0){
                 const selectedChat = response.userInfo.find(chat => chat.user1.email === advertiser.email || chat.user2.email === advertiser.email);
                 const user = selectedChat.user1.email === currentUserls.email ? selectedChat.user2 : selectedChat.user1;
-                console.log(user);
                 setActiveChat(selectedChat.id);
                 setSelectedUser(user);                
               }else{
@@ -158,12 +150,10 @@ const PaidImovelPage = () => {
           } catch (e) {
             navigate('/error');
           }finally{
-            console.log('carreguei o chat')
             setLoadPlayer(false);
             setLoadingInitialPlayer(false);
           }    
         }else if((currentUserls && selectedUser)){
-          console.log("entrei aqui")
           setPlayerOpen(true);
         } 
         else {
@@ -215,6 +205,13 @@ const PaidImovelPage = () => {
                               sx={{ display: { xs: 'flex', md: 'none' } }}  // Exibe apenas em telas menores
                             >
                               Entre em contato
+                            </Button>
+                            <Button 
+                              variant="outlined" 
+                              color="primary" 
+                              onClick={()=> {navigate(`/contracts/${id}`)}} 
+                            >
+                              Fazer Proposta
                             </Button>
                           </Box>
                           {/* Botão para desktops */}

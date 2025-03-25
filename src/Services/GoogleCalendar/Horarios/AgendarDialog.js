@@ -34,12 +34,12 @@ const AgendarDialog = ({
 
   const convertToISODate = (isoString) => new Date(isoString);
 
-  const sendNotification = (id) => {
+  const sendNotification = (id,eventoSelecionado) => {
     console.log(id);
       const data = {
         'sender': currentUserls.email,
         'receiver': advertiser.email,
-        'title': 'Novo agendamento',
+        'title': `Novo agendamento em ${property.address.street} - ${property.address.number} na data ${moment(eventoSelecionado.start).format('DD/MM/YYYY HH:mm').toString()} - ${moment(eventoSelecionado.end).format('HH:mm').toString()}`,
         'appointmentId' : id,
         'type': 'appointment'
       };
@@ -76,10 +76,9 @@ const AgendarDialog = ({
     try {
       // Faz a chamada à API para registrar o evento
       const response = await postData('client/appointment', novoEvento, token);
-      console.log(response);
       if(response.status === 200 || response.status === 201){
         // Atualiza os eventos no estado local
-        sendNotification(response.data.id);
+        sendNotification(response.data.id, eventoSelecionado);
         setEventosDisponiveis((prevEventos) => {
           const novosEventos = prevEventos.map((evento) => {
             if (
