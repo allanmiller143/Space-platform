@@ -207,7 +207,7 @@ const Notifications = () => {
                         width: '100%',
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 3,
+                        WebkitLineClamp: 4,
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'normal', // Sobrescreve o comportamento padrão do Typography

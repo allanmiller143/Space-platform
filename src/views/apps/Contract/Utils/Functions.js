@@ -6,6 +6,7 @@ export async function loadPropertyData(setLoading, setProperty, navigate, id) {
         const response = await getData(`properties/${id}`);
         if (response.status === 200 || response.status === 201) {
             setProperty(response.userInfo);
+            console.log(response.userInfo);
         } else {
             navigate('/error');
         }

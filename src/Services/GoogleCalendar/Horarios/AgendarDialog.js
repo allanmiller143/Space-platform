@@ -34,18 +34,18 @@ const AgendarDialog = ({
 
   const convertToISODate = (isoString) => new Date(isoString);
 
-  const sendNotification = (id,eventoSelecionado) => {
+  const sendNotification = (id, eventoSelecionado) => {
     console.log(id);
-      const data = {
-        'sender': currentUserls.email,
-        'receiver': advertiser.email,
-        'title': `Novo agendamento em ${property.address.street} - ${property.address.number} na data ${moment(eventoSelecionado.start).format('DD/MM/YYYY HH:mm').toString()} - ${moment(eventoSelecionado.end).format('HH:mm').toString()}`,
-        'appointmentId' : id,
-        'type': 'appointment'
-      };
-      socket.emit('send_notification', data);
-    
+    const data = {
+      sender: currentUserls.email,
+      receiver: advertiser.email,
+      title: `Novo agendamento em ${property.address.street} - ${property.address.number} na data ${moment(eventoSelecionado.start).format("DD/MM/YYYY HH:mm")} - ${moment(eventoSelecionado.end).format("HH:mm")}`,
+      appointmentId: id,
+      type: 'appointment'
+    };
+    socket.emit('send_notification', data);
   };
+  
 
 
   const handleMarcarConsulta = async () => {

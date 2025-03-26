@@ -206,13 +206,13 @@ const PaidImovelPage = () => {
                             >
                               Entre em contato
                             </Button>
-                            <Button 
+                            {/* <Button 
                               variant="outlined" 
                               color="primary" 
                               onClick={()=> {navigate(`/contracts/${id}`)}} 
                             >
                               Fazer Proposta
-                            </Button>
+                            </Button> */}
                           </Box>
                           {/* Botão para desktops */}
                           <Box>

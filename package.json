@@ -24,7 +24,7 @@
     "@mercadopago/sdk-react": "^0.0.21",
     "@mui/icons-material": "^5.16.14",
     "@mui/lab": "5.0.0-alpha.106",
-    "@mui/material": "^5.16.14",
+    "@mui/material": "^5.17.1",
     "@mui/system": "^5.14.12",
     "@mui/utils": "^5.14.12",
     "@mui/x-charts": "^7.23.6",

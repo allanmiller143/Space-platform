@@ -1,12 +1,10 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ContractContext from "./ContractContext/ContractContext";
-import { useNavigate, useParams } from "react-router";
-import { loadPropertyData } from "./Utils/Functions";
-import { Typography } from "@mui/material";
 import Breadcrumb from "../../../layouts/full/shared/breadcrumb/Breadcrumb";
+import HorizontalStepper from "./Componentes/HorizontalStepper";
+import { useNavigate, useParams } from "react-router";
 import Spinner from "../../spinner/Spinner";
+import { loadPropertyData } from "./Utils/Functions";
 
 const ContractsPage = () => {
     const { currentStep, setCurrentStep, property, loading, setLoading, setProperty } = useContext(ContractContext);
@@ -14,19 +12,17 @@ const ContractsPage = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        loadPropertyData(setLoading,setProperty,navigate,id);
-    }, []);
+        loadPropertyData(setLoading, setProperty, navigate, id);
+    }, [id, navigate, setLoading, setProperty]);
 
-    if (loading) {
+    if (loading || !property) {
         return <Spinner />;
     }
 
     return (
         <>
             <Breadcrumb title={"Contratos"} subtitle={"Contratos"} />
-            <Typography variant="h5" gutterBottom>
-                Contratos
-            </Typography>
+            <HorizontalStepper />
         </>
     );
 };

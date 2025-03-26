@@ -5,7 +5,7 @@ import ContractContext from './ContractContext';
 
 function ContractContextProvider({children}){
   const [currentStep,setCurrentStep] = useState(0);
-  const [property,setProperty] = useState({});
+  const [property,setProperty] = useState(null);
   const [loading,setLoading] = useState(false);
 
   const value = {
