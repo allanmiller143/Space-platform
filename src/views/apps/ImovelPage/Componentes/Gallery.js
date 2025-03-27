@@ -165,7 +165,7 @@ const Gallery = ({ property }) => {
             </Box>
           </Box>
 
-          <Typography variant="h2" component="h1" sx={{ mb: 3 }}>
+          <Typography variant="h2"  sx={{ mb: 3, fontSize: { xs: '20px', sm: '36px', }, }}>
             {`${property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' : property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara'} com
              ${property.bedrooms} Quartos e ${property.bathrooms} Banheiros, ${property.suites} suítes, com ${property.parkingSpaces} vagas próximo do ${property.address.neighborhood}, ${property.address.city}`}
           </Typography>

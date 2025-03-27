@@ -8,7 +8,6 @@ import { openNewChat } from "../../../components/apps/chats/ChatService/Api";
 import { toast } from "sonner";
 import Spinner from "../../spinner/Spinner";
 import PageContainer from 'src/components/container/PageContainer';
-import Header from '../../../layouts/full/horizontal/header/Header';
 import { Button, Grid, Box } from "@mui/material";
 import FloatingMiniPlayer from "../../../components/apps/FloatingMiniPlayer/FloatingMiniPlayer";
 import ChatContent from "../../../components/apps/chats/ChatContent";
@@ -184,16 +183,12 @@ const PaidImovelPage = () => {
 
     return (
       <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
-          <Box maxWidth="lg" margin='0 auto' py = {5} px = {2} >
+          <Box maxWidth="lg" margin='0 auto' py = {2}  >
           <FloatingButton advertiser = {advertiser}/>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Grid container sx={{ height: '100%' }}>
-                  <Grid
-                      item
-                      xs={12}
-                  >
+                  <Grid item xs={12} >
                       <Gallery property={property} advertiser={advertiser} />
-  
                       <Box sx={{ display: 'flex' , alignItems : { md : 'center', xs : 'start'} , flexDirection: {md: 'row', xs : 'column'},justifyContent : "space-between", gap: 3 }}>
                         <Box sx={{ display: 'flex', gap: 1 }}>
                           <Agendar advertiser={advertiser} property={property} />
