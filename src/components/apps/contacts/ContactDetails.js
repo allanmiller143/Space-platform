@@ -98,7 +98,7 @@ const ContactDetails = () => {
       ) : 
       (
         activeList.length === 0 && !loading ? (
-          <Box p={3} height="50vh" display={'flex'} justifyContent="center" alignItems={'center'}>
+          <Box p={3} height="70vh" display={'flex'} justifyContent="center" alignItems={'center'}>
             <Box display={'flex'} justifyContent="center" alignItems={'center'} flexDirection={'column'}>
               <Typography variant="h4" textAlign={'center'}>Você não tem pedidos de compartilhamento pendentes no momento</Typography>
               <br />
@@ -114,9 +114,9 @@ const ContactDetails = () => {
           </Box>
           :
 
-          <Box p={3} height="50vh" display={'flex'} justifyContent="center" alignItems={'center'}>
+          <Box p={3} height="70vh" display={'flex'} justifyContent="center" alignItems={'center'}>
             <Box>
-              <Typography variant="h4" textAlign={'center'}>Por favor, selecione um imovel</Typography>
+              <Typography variant="h4" textAlign={'center'}>Por favor, selecionefgh um imovel</Typography>
               <br />
               <img src={emailIcon} alt={emailIcon} width={'250px'} />
             </Box>

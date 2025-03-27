@@ -77,6 +77,7 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
       }
     }catch(error){
       navigate('/error');
+      console.log(error);
     }finally{
       setLoading(false);
     }
@@ -87,10 +88,11 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
       const data = {
         'sender': currentUser.email,
         'receiver': formData.selectedUser.email,
-        'title': 'Novo compartilhamento',
+        'title': `Novo compartilhamento de imóvel em ${formData.property.address.street} - ${formData.property.address.number}, ${formData.property.address.city} - ${formData.property.address.state}`, 
         'type': 'share',
         "sharedPropertyId" : id
       };
+
       socket.emit('send_notification', data);
   };
 
