@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
 import ContractContext from "./ContractContext/ContractContext";
 import Breadcrumb from "../../../layouts/full/shared/breadcrumb/Breadcrumb";
-import HorizontalStepper from "./Componentes/HorizontalStepper";
 import { useNavigate, useParams } from "react-router";
 import Spinner from "../../spinner/Spinner";
 import { loadPropertyData } from "./Utils/Functions";
+import HorizontalStepper from "./Componentes/HorizontalStepper";
 
 const ContractsPage = () => {
     const { currentStep, setCurrentStep, property, loading, setLoading, setProperty } = useContext(ContractContext);

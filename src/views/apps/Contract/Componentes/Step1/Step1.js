@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
-import { Grid } from '@mui/material';
-
-const PropertyDetails = () => {
+import { Divider, Grid } from '@mui/material';
+import PropertyDetails from './Components/PropertyDetails';
+import Form from './Components/Form';
+const Step1 = () => {
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx = {{mt: 3}}>
+        <Form/>
         <PropertyDetails/>
     </Grid>
   );
 };
 
-export default PropertyDetails;
+export default Step1;

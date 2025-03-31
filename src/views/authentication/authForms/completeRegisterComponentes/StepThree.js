@@ -104,21 +104,22 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
         <Grid container spacing={2} pb ={2}>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="cep">CEP</CustomFormLabel>
-            <InputMask
-            mask="99999-999"
-            value={cep}
-            onChange={(e) => handleCepChange(e.target.value)}
-          >
-            {(inputProps) => (
-              <CustomTextField
-                {...inputProps}
-                id="cep"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-              />
-            )}
-          </InputMask>          </Grid>
+              <InputMask
+              mask="99999-999"
+              value={cep}
+              onChange={(e) => handleCepChange(e.target.value)}
+            >
+              {(inputProps) => (
+                <CustomTextField
+                  {...inputProps}
+                  id="cep"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                />
+              )}
+            </InputMask>         
+          </Grid>
           <Grid item xs={12} sm={6}>
             <CustomFormLabel htmlFor="city">Cidade</CustomFormLabel>
             <TextField id="city" variant="outlined" fullWidth value={formData.city} onChange={handleChange} />

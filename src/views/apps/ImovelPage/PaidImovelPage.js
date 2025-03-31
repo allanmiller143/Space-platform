@@ -14,11 +14,8 @@ import ChatContent from "../../../components/apps/chats/ChatContent";
 import Agendar from "../../../Services/GoogleCalendar/Agendar";
 import DadosGerais from "./Componentes/DadosGerais";
 import AdvertiserCard from "./Componentes/AdvertiserCard";
-import Map from "./Componentes/Map";
 import Gallery from './Componentes/Gallery'
-import NotificationContext from "../../../Services/Notification/NotificationContext/NotificationContext";
 import FloatingButton from "./Componentes/FloatingButton";
-import { set } from "lodash";
 import CarrosselHome from "../../pages/Home/Componentes/CarrosselHome";
 import ChatContext from "../../../components/apps/chats/ChatContext/ChatContext";
 import socket from "../../../Services/socket";
