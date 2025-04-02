@@ -19,13 +19,18 @@ const HorizontalStepper = () => {
   const { currentStep, setCurrentStep,history } = useContext(ContractContext);
 
   useEffect(() => {
+    console.log(history);
     if( history.negociation){
       if(history.negociation && (history.negociation.buyer === "pending" && history.negociation.seller === "pending")){
         setCurrentStep(2);
+        console.log('2');
       }else if(history.negociation && (history.negociation.buyer === "pending" && history.negociation.seller === "accepted")){
         setCurrentStep(3);
+        console.log('3');
       }else if(history.negociation && history.negociation.buyer === "accepted" && history.negociation.seller === "accepted"){
         setCurrentStep(4);
+        console.log('4');
+
       }
     }
   }, [setCurrentStep]);

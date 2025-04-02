@@ -37,7 +37,7 @@ const PropertyDetails = () => {
         <Divider sx={{ mb: 2 }} />
         <Grid container spacing={2}>
           {basicInfo.map((item, index) => (
-            <Grid item xs={6} md={3} key={index}>
+            <Grid item xs={6} md={4} key={index}>
               <TextModel title={item.title} label={item.value} icon={item.icon} />
             </Grid>
           ))}

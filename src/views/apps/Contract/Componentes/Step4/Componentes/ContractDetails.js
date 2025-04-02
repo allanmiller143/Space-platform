@@ -41,7 +41,7 @@ const ContractDetails = () => {
             Informações do Imóvel
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <Typography variant="body1" sx = {{mb : 0.5}}>
                 <strong>Endereço:</strong> {history.property.address.street}
               </Typography>
@@ -55,7 +55,7 @@ const ContractDetails = () => {
                 <strong>Cidade/Estado:</strong> {history.property.address.city}/{history.property.address.state}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <Typography variant="body1" sx = {{mb : 0.5}}>
                 <strong>CEP:</strong> {history.property.address.cep}
               </Typography>
