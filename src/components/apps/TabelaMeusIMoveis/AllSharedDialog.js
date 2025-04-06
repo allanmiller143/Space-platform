@@ -32,16 +32,17 @@ function AllSharedDialog({ open, handleClose, property }) {
 
   const statusColor = (status) => {
     const statuses = {
-      pending: 'red',
+      pending: 'orange',
       accepted: 'green',
-      rejected: 'orange',
+      rejected: 'red',
     };
     return statuses[status] || 'black';
   };
   const OpenDialog = (imovel) => {
-    setImovelToSee(imovel);
-    setOpenShared(true);
     //handleClose();
+    setImovelToSee(imovel);
+    setSharingDialogOpen(true);
+    
   };
 
   return (
@@ -99,10 +100,10 @@ function AllSharedDialog({ open, handleClose, property }) {
                   />
                 </ListItem>
               ))}
-            <Button onClick={() => navigate(`/apps/share/${property.id}`)}> Compartilhar com outro corretor</Button>
+            <Button onClick={() => navigate(`/apps/share/${property.id}`)} sx = {{marginTop: 2}}> Compartilhar com outro corretor</Button>
         </DialogContent>
       </Dialog>
-      {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee}/>)}
+      {sharingDialogOpen && (<ImoveisSharedDialog open={sharingDialogOpen} handleClose={() => setSharingDialogOpen(false)} property={imovelToSee}/>)}
 
     </>
   );

@@ -1,6 +1,6 @@
 import {Box,Button,Typography,Divider,Grid, CircularProgress,} from '@mui/material';
 import emailIcon from '../../../assets/images/breadcrumb/emailSv.png';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ContactsContext from '../../../views/apps/contacts/ContactsContext/ContactsContext';
 import AceitarNegarCompartilhamentoDialog from './AceitarNegarCompartilhamentoDialog';
 import InfoProprietario from './InfoProprietario';
@@ -10,12 +10,16 @@ const ContactDetails = () => {
   const {list, activeList, active, setActive, accepted, setAccepted,loading} = useContext(ContactsContext);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    console.log(active);
+  }, [active]);
+
   const renderCommision = () => {
     if (active.announcementType === "both") {
       return (
         <Grid item xs={12}>
           <Typography variant="body1" sx={{ fontWeight: 500, color: "#000" }}>
-            Em caso de venda você recebe {active.shared.cut *100 }% do valor do imóvel. que equivale a cerca de R$
+            Em caso de venda você recebe {active.shared.cut * 100}% do valor do imóvel. que equivale a cerca de R$
             {active.prices.sellPrice * (active.shared.cut)}
           </Typography>
           <Typography variant="body1" sx={{ fontWeight: 500, color: "#000", mt : 1 }}>
@@ -116,7 +120,7 @@ const ContactDetails = () => {
 
           <Box p={3} height="70vh" display={'flex'} justifyContent="center" alignItems={'center'}>
             <Box>
-              <Typography variant="h4" textAlign={'center'}>Por favor, selecionefgh um imovel</Typography>
+              <Typography variant="h4" textAlign={'center'}>Por favor, selecione um imóvel</Typography>
               <br />
               <img src={emailIcon} alt={emailIcon} width={'250px'} />
             </Box>

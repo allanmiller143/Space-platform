@@ -18,36 +18,36 @@ function ImoveisSharedDialog({ open, handleClose, property }) {
   const steps = [
     {
       label: 'Anúncio sob análise',
-      description: 'O corretor/imobiliária está analisando seu anúncio. Em breve ele dará uma resposta.',
+      description: `O corretor/imobiliária ${property.user.email} está analisando seu anúncio. Em breve ele dará uma resposta.`,
     },
   ];
 
-  if (property.shared.status === 'rejected') {
+  if (property.status === 'rejected') {
     steps.push({
       label: 'Anúncio recusado',
-      description: `Infelizmente, O corretor/imobiliária recusou seu pedido.\n\n${property.shared.reasonRejected}`,
+      description: `Infelizmente, O corretor/imobiliária recusou seu pedido.\n\n${property.reasonRejected}`,
     });
   }
 
-  if (property.shared.status === 'accepted') {
+  if (property.status === 'accepted') {
     steps.push({
       label: 'Corretor/imobiliária deu resposta',
-      description: 'O corretor Aceitou seu pedido, para ver mais detalhes, clique no botão abaixo.',
+      description: 'O corretor Aceitou seu pedido de compartilhamento.',
     });
   }
 
   useEffect(() => {
-    if (property.shared.status === 'pending') {
+    if (property.status === 'pending') {
       setActiveStep(0);
-    } else if (property.shared.status === 'accepted') {
+    } else if (property.status === 'accepted') {
       setActiveStep(1);
-    } else if (property.shared.status === 'rejected') {
+    } else if (property.status === 'rejected') {
       setActiveStep(1);
     }
   }, [open]);
 
   const handleNavigate = () => {
-    navigate(`/apps/share/${property.id}`);
+    navigate(`/apps/share/${property.propertyId}`);
   };
 
   const handleOpenSharingDialog = () => {
@@ -62,11 +62,12 @@ function ImoveisSharedDialog({ open, handleClose, property }) {
     <>
       <Dialog
         fullWidth
+        maxWidth="lg"
         open={open}
         onClose={handleClose}
         PaperProps={{
           style: {
-            borderRadius: '30px', // Bordas arredondadas
+            borderRadius: '10px', // Bordas arredondadas
             padding: '10px', // Padding adicional
           },
         }}
@@ -99,7 +100,7 @@ function ImoveisSharedDialog({ open, handleClose, property }) {
                   <StepContent>
                     <Typography variant="body2">{step.description}</Typography>
 
-                    {property.shared.status === 'rejected' && index === 1 && (
+                    {property.status === 'rejected' && index === 1 && (
                       <Button
                         variant="contained"
                         color="error"
@@ -110,7 +111,7 @@ function ImoveisSharedDialog({ open, handleClose, property }) {
                       </Button>
                     )}
 
-                    {property.shared.status === 'accepted' && index === 1 && (
+                    {/* {property.status === 'accepted' && index === 1 && (
                       <Button
                         variant="contained"
                         color="primary"
@@ -119,7 +120,7 @@ function ImoveisSharedDialog({ open, handleClose, property }) {
                       >
                         Ver Informações do Compartilhamento
                       </Button>
-                    )}
+                    )} */}
                   </StepContent>
                 </Step>
               ))}
