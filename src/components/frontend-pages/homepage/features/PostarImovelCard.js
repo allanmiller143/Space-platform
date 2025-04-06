@@ -12,12 +12,15 @@ import { useNavigate } from "react-router-dom";
 import Screen1 from "src/assets/images/frontend-pages/homepage/screen1.png";
 import LogoIcon from "src/assets/images/logos/logoIcon.svg";
 import { toast } from "sonner";
+import AskLoginType from "../../../../views/authentication/auth1/AskLoginType";
+import { set } from "lodash";
 
 const PostarImovelCard = () => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); 
+  const [open, setOpen] = useState(false);  
 
   // Alternar o estado de expansão
   const handleExpandClick = () => {
@@ -119,7 +122,7 @@ const PostarImovelCard = () => {
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={handleNavigate}
+                onClick={() =>{ setOpen(true) }}
                 fullWidth
                 sx={{
                   borderRadius: "8px",
@@ -128,6 +131,8 @@ const PostarImovelCard = () => {
               >
                 Criar Conta Agora
               </Button>
+              <AskLoginType open={open} setOpen={setOpen}/>
+              
             </CardContent>
           </Collapse>
         </Box>

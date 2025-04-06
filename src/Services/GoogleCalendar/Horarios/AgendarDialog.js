@@ -108,7 +108,7 @@ const AgendarDialog = ({
      }else{
       toast.error(`Erro ao marcar consulta:\n ${response.message}`);
      }
-
+     console.log(response);
      if(response.status === 200 || response.status === 201){
       setOpenSolicitacao(true);
      }
@@ -118,6 +118,7 @@ const AgendarDialog = ({
       setEventoSelecionado(null);
     } catch (error) {
       console.error('Erro ao marcar consulta:', error);
+      console.log(error);
       // Trate o erro aqui, exibindo mensagens ou registrando logs
     }finally{
       setLoading(false);

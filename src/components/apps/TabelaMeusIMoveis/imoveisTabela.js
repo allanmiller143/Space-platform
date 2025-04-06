@@ -15,6 +15,7 @@ import DashBoardWaitingAvaliationProperties from './imoveisStatusDilalog';
 import { Button } from '@mui/material';
 import ImoveisSharedDialog from './ImoveisSharedDialog';
 import DestacarDialog from './Destaque/DestacarDialog';
+import AllSharedDialog from './AllSharedDialog';
 
 const ImoveisTableList = () => {
   const [imoveis, setImoveis] = useState([]);
@@ -46,7 +47,6 @@ const ImoveisTableList = () => {
     { id: 'galeria', label: 'Galeria', minWidth: 100 },
     { id: 'endereco', label: 'Endereço', minWidth: 170 },
     { id: 'tipo', label: 'Tipo', minWidth: 100 },
-    { id: 'finalidade', label: 'Finalidade', minWidth: 100 },
     { id: 'preco_aluguel',label: 'Aluguel',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
     { id: 'preco_venda',label: 'Venda',minWidth: 100,align: 'right', format: (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),},
     { id: 'highlighted', label: 'Destaque', minWidth: 100 },
@@ -70,7 +70,6 @@ const ImoveisTableList = () => {
           endereco: `${property.address.city} - ${property.address.state}`,
           tipo: property.propertyType === 'house' ? 'Casa' : property.propertyType === 'apartment' ? 'Apartamento' :  property.propertyType === 'land' ? 'Terreno' : 'Fazenda/Chácara',
           preco: property.prices.rentPrice || property.prices.sellPrice,
-          finalidade: property.announcementType === 'both' ? 'Ambas' : property.announcementType === 'rent' ? 'Aluguel' : 'Venda',
           preco_aluguel: property.prices.rentPrice || 0,
           preco_venda: property.prices.sellPrice || 0,
           verified : property.verified,
@@ -100,7 +99,7 @@ const ImoveisTableList = () => {
     setSearchTerm(term);
     const filtered = imoveis.filter(
       (imovel) =>
-        imovel.endereco.toLowerCase().includes(term) || imovel.tipo.toLowerCase().includes(term) || imovel.finalidade.toLowerCase().includes(term),
+        imovel.endereco.toLowerCase().includes(term) || imovel.tipo.toLowerCase().includes(term),
     );
     setFilteredImoveis(filtered);
     setPage(0);
@@ -140,7 +139,7 @@ const ImoveisTableList = () => {
 
   const handleSeeShared = (imovel) => {
     console.log(imovel);
-    if(imovel.fullImovel.shared === null){
+    if(imovel.fullImovel.shared.length === 0){
       navigate(`/apps/share/${imovel.id}`);
     }else{
       setImovelToSee(imovel);
@@ -277,9 +276,8 @@ const ImoveisTableList = () => {
                       </TableCell>
                       <TableCell>{imovel.endereco}</TableCell>
                       <TableCell>{imovel.tipo}</TableCell>
-                      <TableCell>{imovel.finalidade}</TableCell>
-                      <TableCell align="right">{columns[4].format(imovel.preco_aluguel)}</TableCell>
-                      <TableCell align="right">{columns[5].format(imovel.preco_venda)}</TableCell>
+                      <TableCell align="right">{columns[3].format(imovel.preco_aluguel)}</TableCell>
+                      <TableCell align="right">{columns[4].format(imovel.preco_venda)}</TableCell>
                       <TableCell align="left">
                         <IconButton onClick={() => handleDestacar(imovel)}>
                           <Star color = {imovel.destaque === true ? 'warning' : 'disabled'}/>
@@ -293,7 +291,7 @@ const ImoveisTableList = () => {
                       {
                         currentUserls.type === 'owner'?
                           <TableCell>
-                            <Button color='primary' sx={{color : `${imovel.share === null ? 'black' : imovel.share.status === 'accepted' ? 'green' : imovel.share.status === 'pending' ? 'orange' : 'red'}`, textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeShared(imovel)}>{imovel.share === null ? 'Compartilhar' : imovel.share.status === 'accepted' ? 'Aprovado' : imovel.share.status === 'pending' ? 'Análise' : 'Rejeitado'}</Button>
+                            <Button color='primary' sx={{color :  'black',  textTransform : 'capitalize', fontWeight : 'active', fontSize : '11px'}} onClick={() => handleSeeShared(imovel)}>{imovel.share.length === 0 ? 'Compartilhar' : "Compartilhamentos"}</Button>
                           </TableCell> : null
                       }
                       <TableCell>
@@ -328,7 +326,7 @@ const ImoveisTableList = () => {
           onCancel={handleDeleteCancel}
         />
       )}
-      {openShared && (<ImoveisSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
+      {openShared && (<AllSharedDialog open={openShared} handleClose={() => setOpenShared(false)} property={imovelToSee.fullImovel}/>)}
       {openStep &&(<DashBoardWaitingAvaliationProperties open={openStep} handleClose={()=> setOpenStep(false)} property={imovelToSee}/>)}
       {openDestaque &&(<DestacarDialog open={openDestaque} handleClose={()=> setOpenDestaque(false)} property={imovelToSee} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis}/>)}
 

@@ -55,7 +55,7 @@ const Helper = ({formData, setFormData}) => {
                 borderRadius: "4px",
                 boxShadow: 1,
                 backgroundColor: "white",
-                zIndex: 1,
+                zIndex: 10000,
                 }}
             >
                 Comissão em porcentagem em relação ao valor de venda ou aluguel que será repassado ao corretor

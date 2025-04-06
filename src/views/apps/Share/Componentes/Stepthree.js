@@ -73,7 +73,7 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
         sendNotification(response.data.shared.id);
         navigate('/apps/imoveis/list');
       }else{
-        toast.error('Ocorreu um erro ao compartilhar o imóvel, tente novamente mais tarde');
+        toast.error(`Ocorreu um erro ao compartilhar o imóvel: ${response.message}`);
       }
     }catch(error){
       navigate('/error');

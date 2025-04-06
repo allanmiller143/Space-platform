@@ -2,9 +2,9 @@
 
 import axios from 'axios';
 
-const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
+//const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
 
-
+const apiUrl = 'https://monkfish-engaged-crow.ngrok-free.app/'; // 
 
 export async function getData(url= '',token = '') {
   try {

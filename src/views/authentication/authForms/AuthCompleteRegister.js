@@ -82,7 +82,7 @@ const validatePassword = (password, confirmPassword) => {
 };
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
-const isValidCRECI = (creci) => /^[A-Z]{2}-\d{5}-[FJ]$/i.test(creci);
+const isValidCRECI = (creci) => /^PE \d{4,6}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -141,10 +141,10 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
           toast.warning("Para 'Corretor', CPF deve ter 11 dígitos e RG deve ser fornecido.");
           return false;
         }else if(!isValidCRECI(creci)){
-          toast.warning("Para 'Corretor', CRECI deve estar no formato: XX-12345-Y.");
+          toast.warning("Para 'Corretor', CRECI deve estar no formato: XX 12345.");
           return false;
         }
-        toast.warning("Para 'Corretor', CPF deve ter 11 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
+        toast.warning("Para 'Corretor', CPF deve ter 11 dígitos e CRECI deve estar no formato: XX 12345.");
         return false;
       }
     } else if (selectedType === 'Proprietário') {
@@ -160,13 +160,13 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
       if (selectedType === 'Imobiliária') {
         if (!cnpj || !creci || !isValidCRECI(creci) || !isValidCNPJ(cnpj)) {
           if(!isValidCRECI(creci)){
-            toast.warning("Para 'Imobiliária', CRECI deve estar no formato: CRECI-XX 12345.");
+            toast.warning("Para 'Imobiliária', CRECI deve estar no formato: XX 12345.");
             return false;
           }else if(!isValidCNPJ(cnpj)){
             toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos válidos.");
             return false;
           }
-          toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos e CRECI deve estar no formato: CRECI-XX 12345.");
+          toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos e CRECI deve estar no formato: XX 12345.");
           return false;
         }
       }
