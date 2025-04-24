@@ -12,6 +12,17 @@ import { Box } from '@mui/system';
 import { Typography } from 'antd';
 import { Cancel } from '@mui/icons-material';
 
+
+moment.locale('pt-br');
+moment.updateLocale('pt-br', {
+  months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
+  monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+  weekdays: 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
+  weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
+  weekdaysMin: 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_')
+});
+const localizer = momentLocalizer(moment);
+
 const CalendarioDisponibilidade = ({ open, onClose, property, advertiser }) => {
   const localizer = momentLocalizer(moment);
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -31,9 +42,27 @@ const CalendarioDisponibilidade = ({ open, onClose, property, advertiser }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [dadosCarregados, setDadosCarregados] = useState(false);
   const [eventosDisponiveis, setEventosDisponiveis] = useState([]);
-
   const inicioPeriodo = moment().startOf('day');
   const fimPeriodo = moment().add(1, 'month').endOf('day');
+
+  const messages = {
+    today: 'Hoje',
+    previous: 'Anterior',
+    next: 'Próximo',
+    month: 'Mês',
+    week: 'Semana',
+    day: 'Dia',
+    agenda: 'Agenda',
+    date: 'Data',
+    time: 'Hora',
+    event: 'Evento',
+    noEventsInRange: 'Nenhum evento neste período.',
+    showMore: (total) => `+ Ver mais (${total})`,
+    yesterday: 'Ontem',
+    tomorrow: 'Amanhã',
+    work_week: 'Semana de trabalho',
+    allDay: 'Dia inteiro',
+  };
 
   // Converte strings de data ISO 8601 em objetos Date
   const convertToISODate = (isoString) => new Date(isoString);
@@ -199,6 +228,7 @@ const CalendarioDisponibilidade = ({ open, onClose, property, advertiser }) => {
                     endAccessor="end"
                     style={{ height: 500 }}
                     defaultView="month"
+                    messages={messages}
                     views={['month', 'week', 'day']}
                     onSelectEvent={handleClickEvent}
                     eventPropGetter={(event) => ({

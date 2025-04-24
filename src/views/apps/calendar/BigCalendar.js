@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CardContent, CircularProgress, Stack, Typography } from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
+import 'moment/locale/pt-br'; // Importe o locale de português
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './Calendar.css';
 import PageContainer from '../../../components/container/PageContainer';
@@ -13,7 +14,14 @@ import { getData } from '../../../Services/Api';
 import { Box } from '@mui/system';
 import PendentEvents from './Components/PendentEvents';
 
-moment.locale('pt-BR');
+moment.locale('pt-br');
+moment.updateLocale('pt-br', {
+  months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
+  monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+  weekdays: 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
+  weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
+  weekdaysMin: 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_')
+});
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
@@ -131,6 +139,10 @@ const BigCalendar = () => {
     event: 'Evento',
     noEventsInRange: 'Nenhum evento neste período.',
     showMore: (total) => `+ Ver mais (${total})`,
+    yesterday: 'Ontem',
+    tomorrow: 'Amanhã',
+    work_week: 'Semana de trabalho',
+    allDay: 'Dia inteiro',
   };
 
   const editEvent = (event) => {
@@ -168,6 +180,7 @@ const BigCalendar = () => {
           <BlankCard sx={{ p: 4 }}>
             <CardContent>
               <Calendar
+                culture="pt" // Esta propriedade é CRUCIAL
                 events={displayEvents} // Exibe a lista de eventos selecionada
                 defaultView="month"
                 views={['month', 'week', 'day']} // Adicione as views para habilitar botões
@@ -178,6 +191,7 @@ const BigCalendar = () => {
                 onSelectEvent={editEvent}
                 eventPropGetter={eventStyleGetter}
                 messages={messages}
+
               />
               <ViewDetailDialog
                 open={open}

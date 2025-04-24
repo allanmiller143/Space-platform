@@ -11,7 +11,7 @@ export async function openNewChat(socket, email) {
       chatId = response.data.id;
       localStorage.setItem('chatId', chatId);
     } else {
-      console.log(`Deu ruim ${response}`);
+      console.log(`ocorreu um erro: ${response}`);
     }
 
     const data = {

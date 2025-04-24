@@ -2,9 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Box, Popover, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Box} from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
-import MessageActions from './Actions/MessageActions ';
 
 const TextMessage = ({ message }) => {
     const [anchorEl, setAnchorEl] = useState(null);

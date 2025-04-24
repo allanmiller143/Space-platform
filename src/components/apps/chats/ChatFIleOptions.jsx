@@ -36,7 +36,7 @@ export default function PlaygroundSpeedDial({ socket }) {
     event.preventDefault();
     const files = Array.from(event.target.files); // Use target.files for manual selection
     setPreviewFiles(files);
-    setPreviewOpen(true);  };
+    setPreviewOpen(true);};
   
 
   const handleDocumentInputChange = (event) => {

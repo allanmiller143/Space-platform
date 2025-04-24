@@ -82,7 +82,7 @@ const validatePassword = (password, confirmPassword) => {
 };
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
-const isValidCRECI = (creci) => /^PE \d{4,6}$/.test(creci);
+const isValidCRECI = (creci) => /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO) \d{4,6}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);

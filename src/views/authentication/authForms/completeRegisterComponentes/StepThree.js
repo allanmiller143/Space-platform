@@ -115,7 +115,6 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
                   id="cep"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                 />
               )}
             </InputMask>         

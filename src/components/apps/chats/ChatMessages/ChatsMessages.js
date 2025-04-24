@@ -48,7 +48,6 @@ const ChatsMessages = ({ message }) => {
             {message.type === 'image' ? (<ImageMessage message={message}/>) : null}
             {message.type === 'file' ? (<FileMessage message={message}/>) : null}
             {message.type === 'audio' ? (<AudioCard message={message}/>) : null}
-
           </Box>
         </Box>
       )}

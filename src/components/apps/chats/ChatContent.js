@@ -13,7 +13,7 @@ import  socket  from '../../../Services/socket';
 import { ArrowBack } from '@mui/icons-material';
 
 const ChatContent = () => {
-  const { userChats, setUserChats, filteredChats, setFilteredChats,activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
+  const {activeChat, setActiveChat, messages, setMessages,selectedUser, setSelectedUser  } = useContext(ChatContext);
   const [dragging, setDragging] = useState(false);
   const messagesEndRef = useRef(null);
   const [previewOpen, setPreviewOpen] = useState(false); // Controle do diálogo de pré-visualização
@@ -32,7 +32,6 @@ const ChatContent = () => {
     }
   }, [messages]);
 
-
   useEffect(() => {
       socket.on('message', (data) => {   
         setMessages((prevMessages) => {const filteredMessages = prevMessages.filter((message) => message.id !== 1);
@@ -46,12 +45,10 @@ const ChatContent = () => {
         });
         scrollToBottom();
       });
-    
-
-    return () => {
+      return () => {
         socket.off('message');
         socket.off('deleted_message');
-    };
+      };
   }, [setMessages, socket]);
 
   useEffect(() => {

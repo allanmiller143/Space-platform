@@ -13,7 +13,9 @@ import NotificationContextProvider from './Services/Notification/NotificationCon
 import MarketplaceContextProvider from './views/apps/Classificados/MarketplaceContext/MarketplaceContextProvider';
 import ContractContextProvider from './views/apps/Contract/ContractContext/ContractContextProvider';
 import ContactsContextProvider from './views/apps/contacts/ContactsContext/ContactsContextProvider';
-
+import moment from 'moment';
+import 'moment/locale/pt-br';
+moment.locale('pt-br');
 function App() {
   const routing = useRoutes(Router);
   const theme = ThemeSettings();
