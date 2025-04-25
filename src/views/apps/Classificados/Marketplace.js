@@ -101,7 +101,7 @@ const Marketplace = () => {
                     </Box>
                 </Drawer>
                 <Grid container sx={{ height: 'calc(100vh - 107px )', overflow: 'hidden' }}>
-                    <Grid item xs={12} md={7} pt="0px !important">
+                    <Grid item xs={12} pt="0px !important">
                         {/* Adicione a referência ao Box */}
                         <Box 
                             ref={scrollContainerRef} 
@@ -111,7 +111,7 @@ const Marketplace = () => {
                                 {/* Render Skeletons when loading */}
                                 {loading ? (
                                     Array.from(new Array(itemsPerPage)).map((_, index) => (
-                                        <Grid item xs={12} sm={6} md={4} key={index}>
+                                        <Grid item xs={12} sm={6} md={3} key={index}>
                                             <Skeleton animation="wave"variant="square"width="100%"height={440}sx={{ borderRadius: (theme) => theme.shape.borderRadius / 5 }}></Skeleton>           
                                         </Grid>
                                     ))
@@ -123,7 +123,7 @@ const Marketplace = () => {
                                     </Grid>
                                 ) : (
                                     properties.map((property, index) => (
-                                        <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <BlogPost post={property} />
                                         </Grid>
                                     ))
@@ -143,7 +143,7 @@ const Marketplace = () => {
                             }
                         </Box>
                     </Grid>
-                    <MarketplaceMaps properties={properties} formData={formData} />
+                    {/* <MarketplaceMaps properties={properties} formData={formData} /> */}
                 </Grid>
             </Box>
         </PageContainer>

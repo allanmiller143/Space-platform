@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Tooltip, Fab } from "@mui/material";
+import { Box, Typography, Button, Tooltip, Fab, IconButton } from "@mui/material";
 import { IconArrowLeft, IconCamera, IconHeart, IconShare, IconThumbUp } from "@tabler/icons";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
@@ -9,6 +9,7 @@ import { deleteData, postData } from "../../../../Services/Api";
 import GalleryPhotos from "./GalleryPhotos";
 import ShareComponent from "../../../../components/apps/userprofile/feed/ShareComponent";
 import socket from "../../../../Services/socket";
+import QRCodeGenerator from "./QrCode";
 
 const Gallery = ({ property }) => {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ const Gallery = ({ property }) => {
         toast.warning('Para favoritar, faça o login');
         return;
       }
-  
       try {
         const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
         if (isFavorite) {
@@ -85,7 +85,7 @@ const Gallery = ({ property }) => {
           const isFavorite = currentUserls.favorites.some(fav => fav.propertyId === property.id);
           setFavorite(isFavorite);
         }
-      }, [property, currentUserls]);
+      }, []);
     
       const FormattedDateComponent = ({ date }) => {
         // Format the date using moment
@@ -141,17 +141,14 @@ const Gallery = ({ property }) => {
 
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography>
-                  Compartilhar
-                </Typography>
+                <QRCodeGenerator url={"https://www.youtube.com/watch?v=0B57XFyNP2g"} />
                 <ShareComponent post={property} url = '/imovel/' sx={{ ml: 'auto' }} />  
+                <Tooltip title= { favorite ? "Desfavoritar" : "Favoritar"} sx = {{ml : '12px'}}>
+                  <IconButton onClick={() => toggleFavorite()} color={favorite ? 'primary' : 'default'}>
+                    <IconThumbUp />
+                  </IconButton>
+                </Tooltip>
               </Box>
-
-              <Tooltip title="Curtir" placement="top" onClick={() => toggleFavorite()}>
-                <Fab size="small" color={favorite ? 'primary' : 'default'}>
-                    <IconThumbUp size="16"  />
-                </Fab>
-              </Tooltip>
             </Box>
           </Box>
           <GalleryPhotos property={property} />

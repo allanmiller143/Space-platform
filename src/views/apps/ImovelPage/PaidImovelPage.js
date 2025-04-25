@@ -180,7 +180,7 @@ const PaidImovelPage = () => {
 
     return (
       <PageContainer title="Imóveis para venda ou locação" description="Space iMóveis">
-          <Box maxWidth="lg" margin='0 auto' py = {2}  >
+          <Box maxWidth="lg" margin='0 auto' py = {2}>
           <FloatingButton advertiser = {advertiser}/>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Grid container sx={{ height: '100%' }}>

@@ -7,13 +7,13 @@ import Vantagens from './Vantagens';
 import ImovelDestacado from './DadosDestacado/ImovelDestacado';
 
 function DestacarDialog({ open, handleClose, property, setImovelToSee, setFilteredImoveis, setImoveis }) {
+  
 
   if (!property) {
     return null;
   }else{
     console.log(property);
   }
-
 
   return (
     <Dialog
@@ -48,8 +48,8 @@ function DestacarDialog({ open, handleClose, property, setImovelToSee, setFilter
             <Vantagens property={property} setImovelToSee={setImovelToSee} setFilteredImoveis={setFilteredImoveis} setImoveis={setImoveis}  />
           )}
         </Box>
-
       </DialogContent>
+
     </Dialog>
   );
 }

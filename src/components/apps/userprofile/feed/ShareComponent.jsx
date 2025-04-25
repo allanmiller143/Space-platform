@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Dialog, DialogContent, DialogTitle, IconButton, Slide, Typography, Snackbar } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, IconButton, Slide, Typography, Snackbar, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LinkedinShareButton, LinkedinIcon, WhatsappShareButton, WhatsappIcon } from 'react-share';
 import { IconShare } from '@tabler/icons';
@@ -96,9 +96,13 @@ const ShareComponent = ({ post, url }) => {
       </Dialog>
 
       {/* Botão de compartilhar */}
-      <IconButton sx={{ ml: 'auto' }} onClick={handleClickOpen}>
-        <IconShare size="16" />
-      </IconButton>
+
+
+      <Tooltip title="Compartilhar">
+        <IconButton onClick={handleClickOpen} color="primary">
+          <IconShare />
+        </IconButton>
+      </Tooltip>
 
       {/* Snackbar para feedback ao usuário */}
       <Snackbar

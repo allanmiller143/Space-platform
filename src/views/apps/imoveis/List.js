@@ -4,10 +4,10 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import houseImage from 'src/assets/images/ilustracoes/house.png';
 import { Grid, Stack, useMediaQuery } from '@mui/material';
-import { Add as IconPlus } from '@mui/icons-material';
+import { Add as IconPlus, RepeatOneSharp } from '@mui/icons-material';
 import { IconCalendar } from '@tabler/icons';
 import LimitAdvice from './LimitAdvice/LimitAdvice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getData } from '../../../Services/Api';
 import { Box } from '@mui/system';
 import FilteringTable from '../../../components/apps/TabelaMeusIMoveis/imoveisTabela'
@@ -15,12 +15,14 @@ import MobileImoveisTabela from '../../../components/apps/TabelaMeusIMoveis/mobi
 function Page() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
+
   const token = localStorage.getItem('token');
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  
   const isMd = useMediaQuery((theme) => theme.breakpoints.up('md')); // Verifica se a tela é maior ou igual ao breakpoint 'md'
+  const [myLimit, setMyLimit] = useState(0);
+  const [myTotal, setMyTotal] = useState(0);
 
-  async function handleOpenDialog(){
+  async function handleOpenDialog() {
     try{
       const response = await getData('properties/limits',token);
       console.log(response);
@@ -38,6 +40,25 @@ function Page() {
     }
   }
 
+  async function seeLimit() {
+    try{
+      const response = await getData('properties/limits',token);
+      if(response.status === 200 || response.status === 201){
+        console.log(response);
+        setMyLimit(response.userInfo.publishLimit);
+        setMyTotal(response.userInfo.totalHighlightedProperties + response.userInfo.totalPublishProperties);
+      }else{
+        navigate('/error');
+      }
+    }catch(e){
+      navigate('/error');
+    }
+  }
+
+  useEffect (() => {
+    seeLimit();
+  }, []);
+
   return (
     <>
       <PageContainer title="Central de Imóveis" description="Gerencie seus imóveis de forma eficiente">
@@ -51,6 +72,11 @@ function Page() {
               <Typography variant="h5" color="text.secondary" paragraph fontWeight={400} fontSize={ { xs: '14px', md: '16px' }}>
                 Aqui você pode gerenciar todos os seus imóveis de forma fácil e eficiente. 
               </Typography>
+
+              <Typography gutterBottom sx = {{mt : -2, mb: 2}}>
+                vc ja postou {myTotal} de um limite de {myLimit} imóveis
+              </Typography>
+
               <Stack sx = {{flexDirection :'row',width : '100%', alignItems : 'end', gap: 2}} spacing={2} >
                 <Button 
                     variant="contained" 
@@ -74,7 +100,6 @@ function Page() {
             </Grid>
           </Grid>
         </Box>
-
         {/* Exibe FilteringTable para telas maiores ou iguais a 'md' e MobileImoveisTabela para telas menores */}
         {isMd ? <FilteringTable /> : <MobileImoveisTabela />}
 

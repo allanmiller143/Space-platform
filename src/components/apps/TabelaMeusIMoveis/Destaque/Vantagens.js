@@ -2,10 +2,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, Button } from '@mui/material';
-import React from 'react';
+import React,{useState} from 'react';
 import { CheckCircle } from '@mui/icons-material';
 import { toast } from 'sonner';
 import { putData, putFormData } from '../../../../Services/Api';
+import HighlightLimitAdvice from './HighlightLimitAdvice';
 const vantagens = [
   {
     title: "Maior visibilidade",
@@ -39,6 +40,7 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
   const [loading, setLoading] = React.useState(false);
   const currentUserls = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('token');
+  const [openDialog, setOpenDialog] = useState(false);
 
 
   const handleHighlight = async () => {
@@ -59,6 +61,7 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
         toast.error('Ocorreu um erro ao destacar o anúncio. Tente novamente mais tarde.');
       }else{
         toast.error(response.message);
+        setOpenDialog(true);
       }
     } catch (error) {
       toast.error(error.message);
@@ -99,6 +102,8 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
           loading ? "Carregando..." : "Destacar"          
         }
       </Button>
+      <HighlightLimitAdvice openDialog={openDialog} setOpenDialog={setOpenDialog}/>
+
     </Box>
   );
 }
