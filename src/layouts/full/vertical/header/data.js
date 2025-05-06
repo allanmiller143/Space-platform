@@ -11,6 +11,14 @@ import ddIcon3 from 'src/assets/images/svgs/icon-dd-invoice.svg';
 import ddIcon4 from 'src/assets/images/svgs/icon-dd-date.svg';
 import ddIcon5 from 'src/assets/images/svgs/icon-dd-mobile.svg';
 import ddIcon6 from 'src/assets/images/svgs/icon-dd-lifebuoy.svg';
+import {
+  IconPoint,
+  IconNotes,
+  IconMail,
+  IconUserCircle,
+  IconAperture,
+
+} from '@tabler/icons';
 
 //
 // Notifications dropdown
@@ -80,8 +88,8 @@ const profileNoCompleted = [
   {
     href: '/apps/meus-anuncios',
     title: 'Anuncios',
-    subtitle: 'Agendamentos e visitas',
-    icon: ddIcon4,
+    subtitle: 'Gerencie seus anúncios',
+    icon: ddIcon6,
   },
 
 ];
