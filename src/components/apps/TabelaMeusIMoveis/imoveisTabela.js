@@ -201,6 +201,7 @@ const ImoveisTableList = () => {
   };
 
   const handleDestacar = (imovel) => {
+
     setImovelToSee(imovel);
     setOpenDestaque(true);
   };

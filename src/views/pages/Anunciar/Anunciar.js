@@ -7,9 +7,22 @@ import { useState } from "react";
 import PageContainer from "../../../components/container/PageContainer";
 import HpHeader from "../../../components/frontend-pages/shared/header/HpHeader";
 import Footer from "../../../components/landingpage/footer/Footer";
-
+import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
 export default function Anunciar() {
     const [open, setOpen] = useState(false);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const navigate = useNavigate();
+    const handleClick = () => {
+        if(currentUser === null){
+            setOpen(true);
+            return;
+        }else if(currentUser.type === 'client'){
+            navigate('/auth/complete-register2');
+        }else{
+            navigate('/apps/imoveis/edit');
+        }
+    };
 
     return (
         <PageContainer title={'Anunciar'}>
@@ -38,8 +51,7 @@ export default function Anunciar() {
                                 <Button startIcon={<Landslide />}>Terrenos</Button>
                             </Grid>
                         </Grid>
-
-                        <Button variant="contained" color="primary" onClick={() => setOpen(true)} >
+                        <Button variant="contained" color="primary" onClick={() => handleClick()} >
                             Quero anunciar
                         </Button>
                     </Grid>

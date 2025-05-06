@@ -59,7 +59,7 @@ const Breadcrumb = ({ subtitle, items, title, children }) => (
         }}
       >
         {children ? (
-          <Box sx={{ top: '0px', position: 'absolute' }}>{children}</Box>
+          <Box >{children}</Box>
         ) : (
           <>
             <Box sx={{ top: '0px', position: 'absolute' }}>

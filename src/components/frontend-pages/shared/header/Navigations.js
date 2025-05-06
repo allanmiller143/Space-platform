@@ -23,8 +23,12 @@ export const NavLinks = [
     to: '/templates/sobre',
   },
   {
-    title: 'Anunciar',
+    title: 'Postar Imóvel',
     to: '/anunciar',
+  },
+  {
+    title: 'Anunciar',
+    to: '/propaganda',
   },
   {
     title: 'Fale conosco',

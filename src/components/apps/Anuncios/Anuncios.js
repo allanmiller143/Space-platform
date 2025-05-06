@@ -1,4 +1,4 @@
-import {Box, Skeleton, CardMedia, Button } from '@mui/material';
+import {Box, Skeleton, CardMedia, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -6,6 +6,7 @@ import { getData, putData } from '../../../Services/Api';
 
 import Banner1 from '../../../assets/images/posters/imagem-8.jpg';
 import Banner2 from '../../../assets/images/posters/imagem-9.jpg';
+import { ArrowOutward } from '@mui/icons-material';
 
 const CarroselCompleto = () => {
   const [loading, setLoading] = useState(false);
@@ -85,12 +86,26 @@ const CarroselCompleto = () => {
         >
           {anuncios.map((anuncio) => (
             <Box key={anuncio.id} sx={{ position: 'relative' }}>
+              <Box sx = {{
+                backgroundColor : "#6E35B7",
+                padding: '8px 8px',
+                borderRadius: '10px 10px 0px 0px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'start',
+              }}>
+                <ArrowOutward sx={{ fontSize: "1rem", mr: 1 }} />
+                <Typography variant="caption" sx={{ color: "white", fontWeight: 500 }}>
+                  {anuncio.siteUrl}
+                </Typography>
+              </Box>
+
               <CardMedia
                 component="img"
                 height="380"
                 image={anuncio.photoUrl }
                 alt={`Anúncio ${anuncio.id}`}
-                sx={{ borderRadius: 1, objectFit: 'fill' }}
+                sx={{ borderRadius: "0px 0px 8px 8px", objectFit: 'fill' }}
               />
               
               {/* Caixa do texto Saiba Mais */}
@@ -117,3 +132,7 @@ const CarroselCompleto = () => {
 };
 
 export default CarroselCompleto;
+
+
+
+

@@ -14,6 +14,8 @@ import Anunciar from '../views/pages/Anunciar/Anunciar';
 import SobreNosPage from '../views/pages/sobrenos/sobrenos'
 import Landingpage from '../views/pages/landingpage/Landingpage';
 import ContractsPage from '../views/apps/Contract/ContractsPage';
+import Propaganda from '../views/pages/Propaganda/Propaganda';
+import PropagandaPage from '../views/pages/PropagandaPage/Anunciar';
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
@@ -28,6 +30,7 @@ const ImoveisList = Loadable(lazy(() => import('../views/apps/imoveis/List')));
 const ImoveisEdit = Loadable(lazy(() => import('../views/apps/imoveis/CreateEdit')));
 const AccountSetting = Loadable(lazy(() => import('../views/pages/account-setting/AccountSetting')));
 const EcommerceDetail = Loadable(lazy(() => import('../views/apps/eCommerce/EcommerceDetail')));
+const MeusAnuncios = Loadable(lazy(() => import('../views/apps/MeusAnuncios/MeusAnuncios')));
 
 const FormWizard = Loadable(lazy(() => import('../views/apps/Share/FormWizard')));
 
@@ -60,6 +63,8 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/frontend-pages/homepage" /> },
       { path: '/apps/imoveis/list', element: <ImoveisList /> },
+      { path: '/apps/meus-anuncios', element: <MeusAnuncios /> },
+
       { path: '/apps/imoveis/edit', element: <ImoveisEdit /> },
       { path: '/apps/dash', element: <Dash /> },
       { path: 'apps/share/:id', element: <SharePropertyForm/> },
@@ -103,6 +108,10 @@ const Router = [
       { path: '/marketplace', element: <Marketplace /> },
       { path: '/frontend-pages/homepage', element: <Homepage /> },
       { path: '/anunciar', element: <Anunciar/> },
+      { path: '/propaganda', element: <PropagandaPage/> },
+      { path: '/inserirPropaganda', element: <Propaganda/> },
+
+      
       { path: '/e', element: <Ecommerce /> },
 
       

@@ -77,6 +77,12 @@ const profileNoCompleted = [
     subtitle: 'Agendamentos e visitas',
     icon: ddIcon4,
   },
+  {
+    href: '/apps/calendar',
+    title: 'Calendário',
+    subtitle: 'Agendamentos e visitas',
+    icon: ddIcon4,
+  },
 
 ];
 

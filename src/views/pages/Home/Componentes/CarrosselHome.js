@@ -17,7 +17,8 @@ const CarrosselHome = () => {
 
   const filter = async () => {
     try {
-      const response = await putData(`properties/filter?page=${1}&verified=true`, {});
+      const response = await putData(`properties/filter?page=${1}&verified=true&limit=10`, {isHighlight: true});
+      console.log(response);
       if (response.status === 200 || response.status === 201) {
         setProperties(response.data.result);
       } else {
@@ -112,7 +113,7 @@ const CarrosselHome = () => {
             color: theme.palette.primary.main,
           }}
         >
-          Imóveis patrocinados
+          Destaques
         </Typography>
 
         <Box sx={{  position: 'relative', marginBottom: '20px' }}>

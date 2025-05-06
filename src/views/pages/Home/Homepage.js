@@ -58,7 +58,7 @@ const HomePage = () => {
       <AnunciosCarrossel/>
       <CorretoresCarrossel/>
       <Filtros/>
-      <CarroselCompleto/>
+      {/* <CarroselCompleto/> */}
       {/* <DestinationComponent/> */}
       <Features />
       <ScrollToTop />

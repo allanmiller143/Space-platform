@@ -35,8 +35,6 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
     return null;
   }
 
-
-
   const [loading, setLoading] = React.useState(false);
   const currentUserls = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('token');
@@ -49,6 +47,7 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
     try {
       const response = await putData(`properties/highlight/${property.id}`,{}, token);
       console.log(response);    
+      console.log(token);
       if (response.status === 201 || response.status === 200) {
         toast.success('Anúncio destacado com sucesso!');
         setImovelToSee(prevState => ({
@@ -59,15 +58,15 @@ function Vantagens({ property,  setImovelToSee, setFilteredImoveis, setImoveis }
         setFilteredImoveis(prevState => prevState.map(imovel => imovel.id === property.id ? { ...imovel, destaque: true } : imovel));
       } else if(response.status === 403) {
         toast.error('Ocorreu um erro ao destacar o anúncio. Tente novamente mais tarde.');
-      }else{
-        toast.error(response.message);
+      } else if(response.status === 418) {
         setOpenDialog(true);
+      }else{
+        toast.error('Ocorreu um erro ao destacar o anúncio. Tente novamente mais tarde.');
       }
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
-      
     }
   };
 

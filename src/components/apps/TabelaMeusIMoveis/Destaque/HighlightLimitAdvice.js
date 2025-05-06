@@ -33,6 +33,7 @@ const HighlightLimitAdvice = ({ openDialog, setOpenDialog }) => {
           number: currentUser.info.cpf,
         },
       },
+      type : "highlight"
     } },
 
   ];
@@ -54,12 +55,10 @@ const HighlightLimitAdvice = ({ openDialog, setOpenDialog }) => {
           Você atingiu o limite de destaques gratuitos. Para continuar destacando, escolha uma das opções de pagamento e libere mais destaques!
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Pague apenas R$ <span style ={{ fontWeight: 'bold' }}> 10,90 </span> por mês e libere destques ilimitados
+          Pague apenas R$ <span style ={{ fontWeight: 'bold' }}> 10,90 </span> por mês e libere 10 destaques
         </Typography>
         <PaymentButton2 data={paymentOptions[0].data} close={handleDialogClose}/>
-       
       </DialogContent>
-      
     </Dialog>
   );
 };

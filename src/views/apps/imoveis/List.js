@@ -27,7 +27,7 @@ function Page() {
       const response = await getData('properties/limits',token);
       console.log(response);
       if(response.status === 200 || response.status === 201){
-        if(response.userInfo.totalPublishProperties >= response.userInfo.publishLimit){
+        if(response.userInfo.totalPublishProperties + response.userInfo.totalHighlightedProperties >= response.userInfo.publishLimit){
           setOpenDialog(true);
         }else{
           navigate('/apps/imoveis/edit', { state: { mode: 'add' } })
@@ -43,8 +43,8 @@ function Page() {
   async function seeLimit() {
     try{
       const response = await getData('properties/limits',token);
+      console.log(response);
       if(response.status === 200 || response.status === 201){
-        console.log(response);
         setMyLimit(response.userInfo.publishLimit);
         setMyTotal(response.userInfo.totalHighlightedProperties + response.userInfo.totalPublishProperties);
       }else{

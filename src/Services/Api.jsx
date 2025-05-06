@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 import axios from 'axios';
-
 const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
 
-//const apiUrl = 'https://monkfish-engaged-crow.ngrok-free.app/'; // 
+//const apiUrl = 'https://e52a-177-37-233-96.ngrok-free.app/'; 
 
 export async function getData(url= '',token = '') {
   try {

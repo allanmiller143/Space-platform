@@ -4,6 +4,7 @@ import ddIcon1 from 'src/assets/images/svgs/icon-dd-chat.svg';
 import ddIcon3 from 'src/assets/images/svgs/icon-dd-invoice.svg';
 import ddIcon4 from 'src/assets/images/svgs/icon-dd-date.svg';
 import ddIcon5 from 'src/assets/images/svgs/icon-dd-mobile.svg';
+import ddIcon6 from 'src/assets/images/svgs/icon-dd-cart.svg';
 import { useNavigate } from 'react-router-dom';
 const AppLinks = ({ close }) => {
   const navigate = useNavigate();
@@ -40,6 +41,12 @@ const AppLinks = ({ close }) => {
       avatar: ddIcon1,
     },
   
+    {
+      href: '/apps/meus-anuncios',
+      title: 'Anúncios',
+      subtext: 'Gerencie seus anúncios',
+      avatar: ddIcon6,
+    },
     {
       href: '/apps/calendar',
       title: 'Calendário',
