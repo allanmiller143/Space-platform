@@ -6,7 +6,7 @@ import {
 import InputMask from 'react-input-mask';
 import ContractContext from "../../ContractContext/ContractContext";
 import { handleCepChange } from "./Functions/Validations";
-import { validateClientInfo } from "./Functions/ValidateClientInfo";
+import { validateClientInfo } from "./Functions/validateClientInfo";
 
 function ClientInfoStep() {
   const [errors, setErrors] = useState({});
