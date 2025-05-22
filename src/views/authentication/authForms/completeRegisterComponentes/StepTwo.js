@@ -239,7 +239,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     fullWidth
                     value={formData.creciNumber}
                     onChange={(e) => handleCreciChange("creciNumber", e.target.value.replace(/\D/g, ""))} // apenas números
-                    helperText="Ex. 12345"
+                    helperText="Ex. 00000"
                   />
                 </Grid>
               </Grid>
@@ -367,7 +367,7 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     fullWidth
                     value={formData.creciNumber}
                     onChange={(e) => handleCreciChange("creciNumber", e.target.value.replace(/\D/g, ""))} // apenas números
-                    helperText="Ex. 12345"
+                    helperText="Ex. 00000"
                   />
                 </Grid>
               </Grid>
