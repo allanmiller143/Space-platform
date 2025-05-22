@@ -82,7 +82,8 @@ const validatePassword = (password, confirmPassword) => {
 };
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
-const isValidCRECI = (creci) => /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO) \d{4,6}$/.test(creci);
+const isValidCRECI = (creci) =>
+  /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO) (J)?\d{4,6}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -109,6 +110,9 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     password: '',
     confirmPassword: '',
     profilePhotoFile: null,
+    creciType: '',
+    creciNumber: '',
+    uf :''
   });
   const [ dropdownLocaleValue,setDropdownLocaleValue] = useState('');
   const cuString = localStorage.getItem('currentUser');
@@ -160,7 +164,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
       if (selectedType === 'Imobiliária') {
         if (!cnpj || !creci || !isValidCRECI(creci) || !isValidCNPJ(cnpj)) {
           if(!isValidCRECI(creci)){
-            toast.warning("Para 'Imobiliária', CRECI deve estar no formato: XX 12345.");
+            toast.warning("Para 'Imobiliária', CRECI deve estar no formato: XX J12345.");
             return false;
           }else if(!isValidCNPJ(cnpj)){
             toast.warning("Para 'Imobiliária', CNPJ deve ter 14 dígitos válidos.");
@@ -201,7 +205,13 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
     }
   };
 
-  const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if(activeStep === 2 || activeStep === 1){
+      setFormData({ ...formData, creci: '', creciNumber: '', uf: '' });
+    }
+    
+  };
 
   const handleFinish = async () => {
     let postDataExample = {};

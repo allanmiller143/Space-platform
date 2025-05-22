@@ -93,26 +93,34 @@ function ClientInfoStep() {
         Endereço
       </Typography>
       <Grid container spacing={2} sx={{ mt: 1 }}>
-        <Grid item xs={12} sm={6}>
-            <InputMask
-                mask="99999-999"
-                name="cep"
-                label="CEP"
-                id="cep"
-                onChange={(e) => handleCepChange(e.target.value,setHistory )}
-                value ={history.client?.cep || ""}
-            >
-            {(inputProps) => (
-            <TextField
-                id="cep"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                label="CEP"
-            />
-            )}
-            </InputMask>          
-        </Grid>
+<Grid item xs={12} sm={6}>
+  <InputMask
+    mask="99999-999"
+    value={history.client?.cep || ""}
+    onChange={(e) => {
+      handleCepChange(e.target.value, setHistory);
+      // Also update the local state to show the typed characters
+      setHistory(prev => ({
+        ...prev,
+        client: {
+          ...prev.client,
+          cep: e.target.value
+        }
+      }));
+    }}
+  >
+    {(inputProps) => (
+      <TextField
+        {...inputProps}
+        fullWidth
+        label="CEP"
+        error={!!errors.cep}
+        helperText={errors.cep}
+        required
+      />
+    )}
+  </InputMask>
+</Grid>
         <Grid item xs={12} sm={6}>
           <TextField fullWidth label="Rua" name="street" onChange={handleChange} error={!!errors.street} helperText={errors.street} required value ={history.client?.street || ""} />
         </Grid>

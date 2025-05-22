@@ -89,7 +89,6 @@ export default function PropagandaPage() {
                             borderRadius: 1,
                             fontWeight: 600,
                             }}
-                            
                         >
                             Reserve seu espaço
                         </Button>

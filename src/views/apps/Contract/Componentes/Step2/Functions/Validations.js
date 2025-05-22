@@ -46,32 +46,34 @@ export const isValidCEP = (cep) => {
     return cep.length === 8 ? "" : "CEP inválido. Exemplo: 12345-678";
 };
 
-export const handleCepChange = async (value,setHistory) => {
+export const handleCepChange = async (value, setHistory) => {
   const unmaskedValue = value.replace(/\D/g, ''); // Removes any non-numeric characters
+
+  // First update the CEP field immediately
+  setHistory(prev => ({
+    ...prev,
+    client: {
+      ...prev.client,
+      cep: value // keep the masked value here
+    }
+  }));
 
   if (unmaskedValue.length === 8) {
     try {
       const cepData = await fetchCepData(unmaskedValue);
-      console.log(cepData);
-      const data = {
-          cep: unmaskedValue,
-          street: cepData.street,
-          city: cepData.city,
-          neighborhood: cepData.district,
-          state: cepData.state
-      }
-  
-      setHistory((prev) => ({
-          ...prev,
-          client:  data ,
-        }));
-
+      setHistory(prev => ({
+        ...prev,
+        client: {
+          ...prev.client,
+          street: cepData.street || prev.client.street,
+          city: cepData.city || prev.client.city,
+          neighborhood: cepData.district || prev.client.neighborhood,
+          state: cepData.state || prev.client.state
+        }
+      }));
     } catch (error) {
-      setHistory((prev) => ({
-          ...prev,
-          client: {} ,
-        }));
-
+      console.error("Error fetching CEP data:", error);
+      // Don't clear the other fields if the API fails
     }
   }
 };

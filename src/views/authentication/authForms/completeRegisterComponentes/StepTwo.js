@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography, Grid, Paper, TextField, Stack } from '@mui/material';
+import { Box, Typography, Grid, Paper, TextField, Stack, MenuItem} from '@mui/material';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import { useEffect } from 'react';
 
@@ -14,11 +14,42 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
         ...formData,
         email: currentUserls.email || '',
         phone: currentUserls.phone || formData.phone,
-        name : currentUserls.name || ''
+        name : currentUserls.name || '',
+      });
+    }
+
+    if (selectedType === 'Imobiliária') {
+      setFormData({
+        ...formData,
+        creciType: 'PJ',
+      });
+    }
+    if (selectedType === 'Corretor') {
+      setFormData({
+        ...formData,
+        creciType: 'PF',
       });
     }
 
   }, []);
+  
+  const handleCreciChange = (field, value) => {
+    const updatedForm = {
+      ...formData,
+      [field]: value.toUpperCase(), // garante letras maiúsculas
+    };
+
+    let creci = updatedForm.uf;
+    if (updatedForm.creciType === "PJ") creci += " J";
+    if (updatedForm.creciType === "PF") creci += ` ${updatedForm.creciNumber}`;
+    if (updatedForm.creciType === "PJ") creci += `${updatedForm.creciNumber}`;
+
+    setFormData({
+      ...updatedForm,
+      creci: creci.trim(),
+    });
+  };
+
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -165,9 +196,51 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <CustomFormLabel htmlFor="cpf">CPF</CustomFormLabel>
                   <TextField id="cpf" variant="outlined" fullWidth value={formData.cpf} onChange={handleCPFChange} />
                 </Grid>
+              </Grid>
+              <Typography variant="h6" gutterBottom  pt ={3}>
+                Informações do CRECI
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={4} sm={2}>
+                  <CustomFormLabel htmlFor="uf">UF</CustomFormLabel>
+                  <TextField
+                    id="uf"
+                    select
+                    fullWidth
+                    value={formData.uf}
+                    onChange={(e) => handleCreciChange("uf", e.target.value)}
+                  >
+                    {["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map((uf) => (
+                      <MenuItem key={uf} value={uf}>{uf}</MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={8} sm={4}>
+                  <CustomFormLabel htmlFor="creciType">Tipo</CustomFormLabel>
+                  <TextField
+                    id="creciType"
+                    select
+                    fullWidth
+                    value={formData.creciType}
+                    onChange={(e) => handleCreciChange("creciType", e.target.value)}
+                    disabled
+                  >
+                    <MenuItem value="PF">Pessoa Física</MenuItem>
+                    <MenuItem value="PJ">Pessoa Jurídica</MenuItem>
+                  </TextField>
+                </Grid>
+
                 <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="creci">CRECI</CustomFormLabel>
-                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange} helperText="Ex. XX 00000" />
+                  <CustomFormLabel htmlFor="creciNumber">Número</CustomFormLabel>
+                  <TextField
+                    id="creciNumber"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.creciNumber}
+                    onChange={(e) => handleCreciChange("creciNumber", e.target.value.replace(/\D/g, ""))} // apenas números
+                    helperText="Ex. 12345"
+                  />
                 </Grid>
               </Grid>
             </Paper>
@@ -246,14 +319,56 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                   <TextField id="phone" variant="outlined" fullWidth value={formData.phone} onChange={handlePhoneChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <CustomFormLabel htmlFor="creci">Creci</CustomFormLabel>
-                  <TextField id="creci" variant="outlined" fullWidth value={formData.creci} onChange={handleChange}  helperText="Ex. XX 00000" />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
                   <CustomFormLabel htmlFor="cnpj">CNPJ</CustomFormLabel>
                   <TextField id="cnpj" variant="outlined" fullWidth value={formData.cnpj} onChange={handleCNPJChange}  />
+                </Grid>
+              </Grid>
+
+              <Typography variant="h6" gutterBottom  pt ={3}>
+                Informações do CRECI
+              </Typography>
+
+              <Grid container spacing={2}>
+                <Grid item xs={4} sm={2}>
+                  <CustomFormLabel htmlFor="uf">UF</CustomFormLabel>
+                  <TextField
+                    id="uf"
+                    select
+                    fullWidth
+                    value={formData.uf}
+                    onChange={(e) => handleCreciChange("uf", e.target.value)}
+                  >
+                    {["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map((uf) => (
+                      <MenuItem key={uf} value={uf}>{uf}</MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={8} sm={4}>
+                  <CustomFormLabel htmlFor="creciType">Tipo</CustomFormLabel>
+                  <TextField
+                    id="creciType"
+                    select
+                    fullWidth
+                    value={formData.creciType}
+                    onChange={(e) => handleCreciChange("creciType", e.target.value)}
+                    disabled
+                  >
+                    <MenuItem value="PF">Pessoa Física</MenuItem>
+                    <MenuItem value="PJ">Pessoa Jurídica</MenuItem>
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <CustomFormLabel htmlFor="creciNumber">Número</CustomFormLabel>
+                  <TextField
+                    id="creciNumber"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.creciNumber}
+                    onChange={(e) => handleCreciChange("creciNumber", e.target.value.replace(/\D/g, ""))} // apenas números
+                    helperText="Ex. 12345"
+                  />
                 </Grid>
               </Grid>
             </Paper>
