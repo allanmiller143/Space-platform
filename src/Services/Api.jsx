@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 const apiUrl = 'https://spaceimoveis-api-729fe2d11cef.herokuapp.com/';
-
+//const apiUrl = 'https://5ebe-2804-29b8-515c-19b-a490-a9bc-26a5-3d43.ngrok-free.app/';
 //const apiUrl = 'https://e52a-177-37-233-96.ngrok-free.app/'; 
 
 export async function getData(url= '',token = '') {
@@ -62,6 +62,7 @@ export async function postFormData(url = '', formData = {},token = '') {
       const status = error.response.status;
       return  {message,status};
     });
+    console.log(`${apiUrl}${url}`);
   return response;
 }
 

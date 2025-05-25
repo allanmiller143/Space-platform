@@ -67,23 +67,22 @@ const isValidCNPJ = (cnpj) => {
   return firstVerifierValid && secondVerifierValid;
 };
 const validatePassword = (password, confirmPassword) => {
-  const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (!password.match(passwordRequirements)) {
-    return false;
-  } 
-  else if (confirmPassword && password !== confirmPassword) {
-    return false;
-  } else if(password !== '' && confirmPassword === '') {
-    return false;
-  }
-  else {
-    return true;
+  const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{8,}$/;
+  if (confirmPassword && password !== confirmPassword) {
+    return [false, 'As senhas devem ser iguais.'];
+  } else if (password !== '' && confirmPassword === '') {
+    return [false, 'As senhas devem ser iguais.'];
+  } else if (!password.match(passwordRequirements)) {
+    return [false, 'Sua senha não possui as seguintes condições: 8 caracteres, 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial.'];
+  } else {
+    return [true, ''];
   }
 };
+
 const isValidPhone = (phone) => /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,3}\)?[-.\s]?)?[\d-.\s]{7,13}$/.test(phone);
 
 const isValidCRECI = (creci) =>
-  /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO) (J)?\d{4,6}$/.test(creci);
+  /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO) (J)?\d{2,6}$/.test(creci);
 
 const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -184,10 +183,13 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
       return false;
     }
 
-    if(!validatePassword(formData.password, formData.confirmPassword)){
-      toast.warning("Verifique o campo de senha");
+    const [isValid, message] = validatePassword(formData.password, formData.confirmPassword);
+    if (!isValid) {
+      toast.warning(message);
       return false;
     }
+
+
 
     return true;
   };
@@ -207,7 +209,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    if(activeStep === 2 || activeStep === 1){
+    if( activeStep === 1){
       setFormData({ ...formData, creci: '', creciNumber: '', uf: '' });
     }
     
@@ -299,7 +301,7 @@ const AuthCompleteRegister = ({ title, subtitle, subtext }) => {
         }
 
         if(elevateTypeResponse.status == 200 || elevateTypeResponse.status == 201){
-          const data = { 'email': postDataExample.email, 'password': postDataExample.password };
+          const data = {'email': postDataExample.email, 'password': postDataExample.password };
           const loginResponse = await postData('login', data);
           if (loginResponse.status === 200 || loginResponse.status === 201) {
             const token = loginResponse.data.accessToken;

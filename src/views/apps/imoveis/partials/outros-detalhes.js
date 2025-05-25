@@ -56,8 +56,9 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
             {descricao.length}/1500
           </Typography>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <FormControl fullWidth margin="normal">
+
+        {(formData.tipoDeImovel !== 'land') && (
+          <Grid item xs={12} md={6} >
             <CustomFormLabel htmlFor="Mobiliado">Mobiliado</CustomFormLabel>
             <CustomSelect
               value={formData.mobiliado}
@@ -69,24 +70,28 @@ const OutrosDetalhes = ({ formData, setFormData }) => {
               <MenuItem value="partial">Semi-mobiliado</MenuItem>
               <MenuItem value="no">Não-mobiliado</MenuItem>
             </CustomSelect>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FormControl fullWidth margin="normal">
-            <CustomFormLabel htmlFor="Aceita financiamento">Aceita financiamento</CustomFormLabel>
-            <CustomSelect
-              value={formData.aceitaFinanciamento}
-              onChange={aceitaFinanciamentoChange}
-              label="Aceita financiamento"
-              id="Aceita financiamento"
-            >
-              <MenuItem value={true}>Sim</MenuItem>
-              <MenuItem value={false}>Não</MenuItem>
-            </CustomSelect>
-          </FormControl>
-        </Grid>
+          </Grid>
+        )}
+
+        {(formData.tipoDeAnuncio !== 'rent') && (
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth margin="normal">
+              <CustomFormLabel htmlFor="Aceita financiamento">Aceita financiamento</CustomFormLabel>
+              <CustomSelect
+                value={formData.aceitaFinanciamento}
+                onChange={aceitaFinanciamentoChange}
+                label="Aceita financiamento"
+                id="Aceita financiamento"
+              >
+                <MenuItem value={true}>Sim</MenuItem>
+                <MenuItem value={false}>Não</MenuItem>
+              </CustomSelect>
+            </FormControl>
+          </Grid>
+        )}
+
       </Grid>
-      {formData.tipoDeImovel !== 'Terreno' && (
+      {formData.tipoDeImovel !== 'land' && (
         <Grid item xs={12} md={12}>
           <CustomFormLabel htmlFor="lado-imovel" sx={{ fontSize: 25 }}>Comodidades (opcional)</CustomFormLabel>
           <CheckboxesGroup

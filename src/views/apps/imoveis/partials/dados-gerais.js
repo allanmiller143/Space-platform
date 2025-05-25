@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Box, Typography, Grid, FormControl, MenuItem, Checkbox, FormControlLabel, Select, Tooltip, Divider, IconButton, Button } from "@mui/material";
+import { Box, Typography, Grid, FormControl, MenuItem, Checkbox, FormControlLabel, Select, Tooltip, Divider, IconButton, Button, TextField } from "@mui/material";
 import CustomTextField from '../../../../components/forms/theme-elements/CustomTextField';
 import CustomFormLabel from '../../../../components/forms/theme-elements/CustomFormLabel';
 import CustomSelect from '../../../../components/forms/theme-elements/CustomSelect';
@@ -140,8 +140,10 @@ const DadosGerais = ({ formData, setFormData }) => {
 
         {(formData.tipoDeAnuncio === 'sell' || formData.tipoDeAnuncio === 'both') && (
           <Grid item xs={12} md={6}>
+                      <FormControl fullWidth margin="normal">
+
             <CustomFormLabel htmlFor="preco-venda">Preço de Venda</CustomFormLabel>
-            <CustomTextField
+            <TextField
               id="preco-venda"
               variant="outlined"
               fullWidth
@@ -149,20 +151,25 @@ const DadosGerais = ({ formData, setFormData }) => {
               value={formatPrice(formData.precoDeVenda)}
               onChange={handleChangePrice('precoDeVenda')}
             />
+            </FormControl>
           </Grid>
+
+          
         )}
 
         {(formData.tipoDeAnuncio === 'rent' || formData.tipoDeAnuncio === 'both') && (
           <Grid item xs={12} md={6}>
-            <CustomFormLabel htmlFor="preco-aluguel">Preço de Aluguel</CustomFormLabel>
-            <CustomTextField
-              id="preco-aluguel"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formatPrice(formData.precoDeAluguel)}
-              onChange={handleChangePrice('precoDeAluguel')}
-            />
+            <FormControl fullWidth margin="normal">
+              <CustomFormLabel htmlFor="preco-aluguel">Preço de Aluguel</CustomFormLabel>
+              <TextField
+                id="preco-aluguel"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formatPrice(formData.precoDeAluguel)}
+                onChange={handleChangePrice('precoDeAluguel')}
+              />
+            </FormControl>
           </Grid>
         )}
 
@@ -227,7 +234,7 @@ const DadosGerais = ({ formData, setFormData }) => {
           <>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="numero-quartos-imovel">Número de Quartos</CustomFormLabel>
-              <CustomTextField
+              <TextField
                 id="numero-quartos-imovel"
                 variant="outlined"
                 fullWidth
@@ -239,7 +246,7 @@ const DadosGerais = ({ formData, setFormData }) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="numero-banheiros-imovel">Número de Banheiros</CustomFormLabel>
-              <CustomTextField
+              <TextField
                 id="numero-banheiros-imovel"
                 variant="outlined"
                 fullWidth
@@ -251,7 +258,7 @@ const DadosGerais = ({ formData, setFormData }) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="numero-suites-imovel">Número de Suítes</CustomFormLabel>
-              <CustomTextField
+              <TextField
                 id="numero-suites-imovel"
                 variant="outlined"
                 fullWidth
@@ -263,7 +270,7 @@ const DadosGerais = ({ formData, setFormData }) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomFormLabel htmlFor="vagas-garagem-imovel">Vagas de Garagem</CustomFormLabel>
-              <CustomTextField
+              <TextField
                 id="vagas-garagem-imovel"
                 variant="outlined"
                 fullWidth
@@ -278,16 +285,18 @@ const DadosGerais = ({ formData, setFormData }) => {
 
   
         <Grid item xs={12} md={6}>
-          <CustomFormLabel htmlFor="area-total-imovel">Área Total (m²)</CustomFormLabel>
-          <CustomTextField
-            id="area-total-imovel"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            type="number"
-            onChange={(e) => setFormData({ ...formData, area: e.target.value })}
-            value={formData.area || ''}
-          />
+          <FormControl fullWidth margin="normal">
+            <CustomFormLabel htmlFor="area-total-imovel">Área Total (m²)</CustomFormLabel>
+            <TextField
+              id="area-total-imovel"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              type="number"
+              onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+              value={formData.area || ''}
+            />
+          </FormControl>
         </Grid>
       </Grid>
     </Box>

@@ -10,7 +10,7 @@ import CustomTextField from '../../../../components/forms/theme-elements/CustomT
 import InputMask from 'react-input-mask';
 
 const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue }) => {
-  const [cep, setCep] = useState('');
+  const [cep, setCep] = useState(formData.cep || '');
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -19,6 +19,7 @@ const StepThree = ({ selectedType, formData, setFormData, setDropdownLocaleValue
       [id]: value,
     });
   };
+  
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;

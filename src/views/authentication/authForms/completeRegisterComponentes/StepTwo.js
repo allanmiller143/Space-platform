@@ -8,30 +8,23 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = JSON.parse(cuString); // Parse para obter o objeto
 
-  useEffect(() => {
-    if(currentUserls){
-      setFormData({
-        ...formData,
-        email: currentUserls.email || '',
-        phone: currentUserls.phone || formData.phone,
-        name : currentUserls.name || '',
-      });
-    }
+useEffect(() => {
+  if (!currentUserls && !selectedType) return;
 
-    if (selectedType === 'Imobiliária') {
-      setFormData({
-        ...formData,
-        creciType: 'PJ',
-      });
-    }
-    if (selectedType === 'Corretor') {
-      setFormData({
-        ...formData,
-        creciType: 'PF',
-      });
-    }
+  setFormData((prevData) => {
+    return {
+      ...prevData,
+      email: currentUserls?.email || prevData.email || '',
+      phone: currentUserls?.phone || prevData.phone,
+      name: currentUserls?.name || prevData.name ||'',
+      creciType:
+        selectedType === 'Imobiliária' ? 'PJ' :
+        selectedType === 'Corretor' ? 'PF' :
+        prevData.creciType, // mantém o atual se não for nenhum dos dois
+    };
+  });
+}, [currentUserls, selectedType]);
 
-  }, []);
   
   const handleCreciChange = (field, value) => {
     const updatedForm = {
@@ -226,8 +219,8 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     onChange={(e) => handleCreciChange("creciType", e.target.value)}
                     disabled
                   >
-                    <MenuItem value="PF">Pessoa Física</MenuItem>
-                    <MenuItem value="PJ">Pessoa Jurídica</MenuItem>
+                    <MenuItem value="PF">Pessoa Física (Sem Letra)</MenuItem>
+                    <MenuItem value="PJ">Pessoa Jurídica (J)</MenuItem>
                   </TextField>
                 </Grid>
 
@@ -354,8 +347,8 @@ const StepTwo = ({ selectedType, formData, setFormData }) => {
                     onChange={(e) => handleCreciChange("creciType", e.target.value)}
                     disabled
                   >
-                    <MenuItem value="PF">Pessoa Física</MenuItem>
-                    <MenuItem value="PJ">Pessoa Jurídica</MenuItem>
+                    <MenuItem value="PF">Pessoa Física (Sem Letra)</MenuItem>
+                    <MenuItem value="PJ">Pessoa Jurídica (J)</MenuItem>
                   </TextField>
                 </Grid>
 

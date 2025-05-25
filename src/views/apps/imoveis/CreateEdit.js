@@ -163,27 +163,26 @@ const EditImovel = () => {
       toast.warning('Por favor, preencha o CEP!'); return false;
     }  
     if (!cidade) {
-      toast.warning('Por favor, preencha o compo cidade!'); return false;
+      toast.warning('Por favor, preencha o campo cidade!'); return false;
     }
     if (!rua) {
-      toast.warning('Por favor, preencha o compo rua!'); return false;
+      toast.warning('Por favor, preencha o campo rua!'); return false;
     }
     if (!estado) {
-      toast.warning('Por favor, preencha o compo estado!'); return false;
+      toast.warning('Por favor, preencha o campo estado!'); return false;
     }
-    if (tipoDeImovel !== 'land' && !numero) {
+    if ((tipoDeImovel !== 'farm' && tipoDeImovel !== 'land') && !numero) {
       toast.warning('Por favor, preencha o campo número!');
-      toast.warning(tipoDeImovel);
-       return false;
+      return false;
     }
     if (!bairro) {
-      toast.warning('Por favor, preencha o compo bairro!'); return false;
+      toast.warning('Por favor, preencha o campo bairro!'); return false;
     }
     return true;
   };
   const validateStep2 = () => {
     const {otherImages } = formData;
-    if ( mode !== 'edit' && (otherImages.length + 1 < 5 || otherImages.length + 1 > 10)) {
+    if ( mode !== 'edit' && (otherImages.length + 1 < 6 || otherImages.length + 1 > 10)) {
       toast.warning('Por favor, selecione entre 5 e 10 imagens!');
       return false;
     }

@@ -23,7 +23,7 @@ const InfoCard = ( {userData}) => {
   const [whatsapp, setWhatsapp] = useState(socialsMap["whatsapp"] || '');
   const [site, setSite] = useState(socialsMap["site"] || 'https://meusite.com');
   const [email, setEmail] = useState(socialsMap["email"] || 'email@gmail.com');
-  const [phone, setPhone] = useState(socialsMap["phone"] || '(11) 99999-9999');
+  const [phone, setPhone] = useState(socialsMap["otherPhone"] || '(11) 99999-9999');
   const facebook = socialsMap["facebook"] || '.';
   const instagram = socialsMap["instagram"] || '.';
   
@@ -79,7 +79,7 @@ const InfoCard = ( {userData}) => {
         }
       } else {
         console.log(formData);
-        toast.error(`Erro ao atualizar reddfgfges sociais:\n ${response.message}`);
+        toast.error(`Erro ao atualizar redes sociais:\n ${response.message}`);
       }
     } catch (error) {
       toast.error(`Erro ao atualizar redes sociais:\n ${error.message}`);

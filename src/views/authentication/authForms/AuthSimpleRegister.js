@@ -128,7 +128,7 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
           </Box>
 
           {/* Divider e Botões Sociais */}
-          <Box mt={3}>
+          {/* <Box mt={3}>
             <Divider>
               <Typography
                 component="span"
@@ -145,7 +145,7 @@ const AuthSimpleRegister = ({ title, subtitle, subtext, onBack }) => {
 
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <GoogleSignIn />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 

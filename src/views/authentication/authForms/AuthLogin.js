@@ -62,8 +62,8 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
 
       {subtext}
 
-      <GoogleSignIn/>
-      <Box mt={3}>
+      {/* <GoogleSignIn/> */}
+      {/* <Box mt={3}>
         <Divider>
           <Typography
             component="span"
@@ -76,7 +76,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
             ou faça login com
           </Typography>
         </Divider>
-      </Box>
+      </Box> */}
 
       <Stack component="form" onSubmit={handleLogin}>
         <Box>

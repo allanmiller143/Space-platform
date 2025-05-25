@@ -7,19 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
 
 const CustomTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
-  '& .MuiOutlinedInput-input::-webkit-input-placeholder': {
-    color: theme.palette.text.secondary,
-    opacity: '0.8',
-  },
-  '& .MuiOutlinedInput-input.Mui-disabled::-webkit-input-placeholder': {
-    color: theme.palette.text.secondary,
-    opacity: '1',
-  },
-  '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.grey[200],
-  },
-  '& .css-1fckcnt-MuiFormControl-root-MuiTextField-root': {
-    margintop: '16'  },
+
 }));
 
 const ToggleableTextField = ({ type = 'text', ...props }) => {

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, TextField } from "@mui/material";
 import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import fetchCepData from '../../../../Services/SearchCep';
@@ -65,7 +65,7 @@ const Localizacao = ({ formData, setFormData }) => {
             onChange={(e) => handleCepChange(e.target.value)}
           >
             {(inputProps) => (
-              <CustomTextField
+              <TextField
                 {...inputProps}
                 id="cep"
                 variant="outlined"
@@ -79,7 +79,7 @@ const Localizacao = ({ formData, setFormData }) => {
         {/* Rest of your fields */}
         <Grid item xs={12} md={6}>
           <CustomFormLabel htmlFor="cidade">Cidade</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="cidade"
             variant="outlined"
             fullWidth
@@ -90,7 +90,7 @@ const Localizacao = ({ formData, setFormData }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomFormLabel htmlFor="estado">Estado</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="estado"
             variant="outlined"
             fullWidth
@@ -101,7 +101,7 @@ const Localizacao = ({ formData, setFormData }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomFormLabel htmlFor="bairro">Bairro</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="bairro"
             variant="outlined"
             fullWidth
@@ -112,7 +112,7 @@ const Localizacao = ({ formData, setFormData }) => {
         </Grid>
         <Grid item xs={9} md={10}>
           <CustomFormLabel htmlFor="endereco-completo">Endereço Completo</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="endereco-completo"
             variant="outlined"
             fullWidth
@@ -123,7 +123,7 @@ const Localizacao = ({ formData, setFormData }) => {
         </Grid>
         <Grid item xs={3} md={2}>
           <CustomFormLabel htmlFor="numero">Número</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="numero"
             variant="outlined"
             fullWidth
@@ -134,7 +134,7 @@ const Localizacao = ({ formData, setFormData }) => {
         </Grid>
         <Grid item xs={12} md={12}>
           <CustomFormLabel htmlFor="complemento">Complemento</CustomFormLabel>
-          <CustomTextField
+          <TextField
             id="complemento"
             variant="outlined"
             fullWidth

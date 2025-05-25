@@ -76,6 +76,7 @@ const Login = () => {
                     sx={{
                       textDecoration: 'none',
                       color: 'primary.main',
+                      cursor: 'pointer',
                     }}
                   >
                     Crie uma conta
