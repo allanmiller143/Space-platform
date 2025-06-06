@@ -5,12 +5,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button,
   Tooltip,
   Box,
   Typography,
   Divider,
-  Chip
 } from '@mui/material';
 import QRCode from 'qrcode';
 import { 

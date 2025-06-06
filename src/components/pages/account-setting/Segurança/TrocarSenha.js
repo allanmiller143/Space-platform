@@ -9,16 +9,18 @@ import { useNavigate } from 'react-router-dom';
 
 const TrocarSenha = () => {
   const [step, setStep] = useState(0);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem('currentUser')).email || '');
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resendingEmail, setResendingEmail] = useState(false);
   const steps = ['Verificação de E-mail', 'Redefinir Senha', 'Confirmação'];
+  const user = JSON.parse(localStorage.getItem('currentUser'));
 
 
   const handleSendCode = async () => {
     if (email.trim()) {
-      setLoading(true);
+      setResendingEmail(true);
       try {
         const data = {
           email: email,
@@ -35,7 +37,7 @@ const TrocarSenha = () => {
       } catch (error) {
         toast.error('Ocorreu um erro ao enviar o e-mail, por favor tente novamente mais tarde');
       } finally {
-        setLoading(false);
+        setResendingEmail(false);
       }
     } else {
       toast.error('Por favor, insira um endereço de email válido.');
@@ -90,9 +92,9 @@ const TrocarSenha = () => {
           {step === 0 && (
             <>
               <Typography variant='body1' mb={2}>Digite seu e-mail para receber um código de verificação.</Typography>
-              <TextField fullWidth variant="outlined" label="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Button variant="contained" color="primary" onClick={handleSendCode} disabled={!email} sx={{ mt: 2 }}>
-                {loading ? 'Enviando...' : 'Enviar Código'}
+              <TextField fullWidth variant="outlined" label="E-mail" value={email} disabled onChange={(e) => setEmail(e.target.value)} />
+              <Button variant="contained" color="primary" onClick={handleSendCode} disabled={!email || loading} sx={{ mt: 2 }}>
+                {resendingEmail ? 'Enviando...' : 'Enviar Código'}
               </Button>
             </>
           )}
@@ -101,8 +103,12 @@ const TrocarSenha = () => {
               <Typography variant='body1' mb={2}>Digite o código de verificação recebido e sua nova senha.</Typography>
               <TextField fullWidth variant="outlined" label="Código de Verificação" value={code} onChange={(e) => setCode(e.target.value)} />
               <TextField fullWidth variant="outlined" label="Nova Senha" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} sx={{ mt: 2 }} />
-              <Button variant="contained" color="primary" onClick={handleResetPassword} disabled={!code || !newPassword} sx={{ mt: 2 }}>
-                {loading ? 'Redefinindo...' : 'Redefinir Senha'}
+              <Button variant="contained" color="primary" onClick={handleResetPassword} disabled={!code || !newPassword || resendingEmail}  sx={{ mt: 2 }}>
+                {loading ? 'Redefinindo...' : (resendingEmail) ? "Redefinir Senha" :  'Redefinir Senha'}
+              </Button>
+
+              <Button variant="contained" color="primary" onClick={handleSendCode}  sx={{ mt: 2, ml: 2 }} disabled={resendingEmail || loading}>
+                {resendingEmail ? 'enviando' : 'reenviar código'}
               </Button>
             </>
           )}

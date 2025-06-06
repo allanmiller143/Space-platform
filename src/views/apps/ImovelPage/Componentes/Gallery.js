@@ -16,6 +16,7 @@ const Gallery = ({ property }) => {
   const cuString = localStorage.getItem('currentUser');
   const currentUserls = cuString ? JSON.parse(cuString) : null; // Verifica se o usuário está definido
   const token = localStorage.getItem('token');
+  const url = window.location.href;
   const [favorite, setFavorite] = useState(false);
     const back = () => {
       navigate(-1);
@@ -141,7 +142,7 @@ const Gallery = ({ property }) => {
 
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <QRCodeGenerator url={"https://www.youtube.com/watch?v=0B57XFyNP2g"} />
+                <QRCodeGenerator url={url} />
                 <ShareComponent post={property} url = '/imovel/' sx={{ ml: 'auto' }} />  
                 <Tooltip title= { favorite ? "Desfavoritar" : "Favoritar"} sx = {{ml : '12px'}}>
                   <IconButton onClick={() => toggleFavorite()} color={favorite ? 'primary' : 'default'}>

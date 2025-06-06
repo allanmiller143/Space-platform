@@ -78,14 +78,14 @@ function AllSharedDialog({ open, handleClose, property }) {
                 >
                   <ListItemAvatar>
                     <Avatar
-                      src={property.pictures[0].url}
+                      src={imovel.user.userPhoto ? imovel.user.userPhoto.url : ""}
                       alt={'imagem do imovel'}
                       sx={{ width: 55, height: 55, borderRadius: 1, mr: 1 }}
                     />
                   </ListItemAvatar>
                   <ListItemText
                     primary={status(imovel.status)}
-                    secondary={`${property.address.street}, ${property.address.number} - ${property.address.neighborhood} - ${property.address.city}, ${property.address.state}`}
+                    secondary={`Imóvel compartilhado com o(a) corretor(a) ${imovel.user.name} de email ${imovel.user.email}`}
                     primaryTypographyProps={{color: statusColor(imovel.status) }}
                     secondaryTypographyProps={{
                       sx: {

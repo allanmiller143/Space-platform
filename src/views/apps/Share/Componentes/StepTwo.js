@@ -6,6 +6,7 @@ import PageContainer from 'src/components/container/PageContainer';
 
 const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores, searchQuery, filteredCorretores, setActiveStep, formData, setFormData }) => {
   const [selectedCorretor, setSelectedCorretor] = useState(formData.selectedUser); // Novo estado para o corretor selecionado
+  const [list,setList] = useState([]);
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -19,11 +20,26 @@ const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores,
     setFilteredCorretores(filtered);
   };
 
-  const handleSelectCorretor = (corretor) => {
-    setSelectedCorretor(corretor); // Marca o corretor como selecionado
-    console.log("Corretor selecionado:", corretor);
-    setFormData({ ...formData, selectedUser: corretor });
-  };
+const handleSelectCorretor = (corretor) => {
+  setSelectedCorretor(corretor); // Marca o corretor como selecionado
+  setFormData({ ...formData, selectedUser: corretor });
+
+  setList((prevList) => {
+    const exists = prevList.find((c) => c.email === corretor.email);
+    if (exists) {
+      // Remove se já existir
+      setFormData({ ...formData, list: prevList.filter((c) => c.email !== corretor.email) });
+      return prevList.filter((c) => c.email !== corretor.email);
+    } else {
+      // Adiciona se não existir
+      setFormData({ ...formData, list: [...prevList, corretor] });
+      return [...prevList, corretor];
+    }
+  });  
+  console.log("Corretor selecionado:", corretor);
+  console.log("lista:", list);
+};
+
 
   const handleContinue = () => {
     if (selectedCorretor) {
@@ -67,10 +83,9 @@ const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores,
               />
             </Box>
           </Box>
-
           <Grid container spacing={3}>
             {filteredCorretores.map((corretor) => (
-              <Grid item xs={12} sm={6} md={4} key={corretor.id}>
+              <Grid item xs={12} sm={6} md={4} key={corretor.email}>
                 <Card
                   sx={{
                     borderRadius: 1,
@@ -87,10 +102,6 @@ const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores,
                   }}
                   onClick={() => handleSelectCorretor(corretor)} // Seleciona o corretor ao clicar no card
                 >
-
-
-                      
-                  
                   <Box sx={{ display: "flex", alignItems: "center", padding: 1, gap: 2 }}>
                     <Avatar
                       alt={corretor.name}
@@ -116,7 +127,7 @@ const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores,
                         {corretor.address.city}, {corretor.address.state}
                       </Typography>
                     </Box>
-                    {selectedCorretor && selectedCorretor.email === corretor.email && // Exibe o nome do corretor selecionado
+                    {list.length > 0 && list.some((c) => c.email === corretor.email)  && // Exibe o nome do corretor selecionado
                     <Typography
                       variant="body1"
                       sx={{
@@ -167,7 +178,7 @@ const StepTwo = ({ isLoading, corretores, setSearchQuery, setFilteredCorretores,
                 variant="contained"
                 color="primary"
                 onClick={handleContinue}
-                disabled={!selectedCorretor} // Desabilita o botão se nenhum corretor estiver selecionado
+                disabled={list.length === 0} // Desabilita o botão se nenhum corretor estiver selecionado
               >
                 {isLoading ? <CircularProgress size={24} color="inherit" /> : "Ir para o próximo passo"}
               </Button>

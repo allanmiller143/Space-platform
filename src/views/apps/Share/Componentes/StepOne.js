@@ -3,7 +3,6 @@ import {Box,Typography,TextField,Button,Grid,Select,MenuItem,InputLabel,FormCont
 import { toast } from "sonner";
 import Helper from "./Helper";
 import { getData } from "../../../../Services/Api";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useEffect, useState } from "react";
 
 const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores, corretores, setFilteredCorretores, setActiveStep }) => {
@@ -27,21 +26,17 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
       toast.warning(`Os seguintes campos são obrigatórios: ${emptyFields.join(", ")}`);
       return;
     }
+
     if (formData.comissao > 10) {
       toast.warning(`Normalmente a comissão fica entre 1% e 5%`);
       return;
     }
 
-
     if(corretores.length === 0 && !stillLoading){
-      console.log('entrei aqui')
       loadRealtors(false);
-
     }else{
       setActiveStep(1); 
     }
-
-    console.log(formData);
   };
 
   useEffect(() => {
@@ -55,23 +50,18 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
       }else{
         setStillLoading(true);
       }
-      
       try {
         const response = await getData(`realtors-and-realstates?page=-1`);
         if (response.status === 200 || response.status === 201) {
           setCorretores(response.userInfo || []);
           setFilteredCorretores(response.userInfo || []);
-          console.log(response.userInfo);
         } else {
           toast.error(`Erro ao buscar os corretores: ${response.message}`);
-          console.error(response);
         }
       } catch (error) {
         toast.error("Ocorreu um erro ao buscar os corretores");
-        console.error(error);
       } finally {
         setIsLoading(false); // Desativa o loading
-
         if(!onOpen){
           setActiveStep(1); // Avança para o próximo passo
         }else{
@@ -83,9 +73,6 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
     }
 
   }
-
-
-
 
   return (
     <>
@@ -115,9 +102,7 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
                   </Select>
                 </FormControl>
               </Grid>
-
               <Helper formData={formData} setFormData={setFormData} />
-
               {(formData.tipoAnuncio === "venda" || formData.tipoAnuncio === "ambos") && (
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -131,7 +116,6 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
                   />
                 </Grid>
               )}
-
               {(formData.tipoAnuncio === "aluguel" || formData.tipoAnuncio === "ambos") && (
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -146,7 +130,6 @@ const StepOne = ({ formData, setFormData, setIsLoading, isLoading, setCorretores
                 </Grid>
               )}
             </Grid>
-
               <Box display={"flex"} justifyContent="flex-end" mt={3}>
                 <Box>
                 <Button

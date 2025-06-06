@@ -59,35 +59,41 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
     }
   };
 
-  async function shareProperty() {
-    setLoading(true);
-    try{
+async function shareProperty() {
+  setLoading(true);
+
+  try {
+    for (const corretor of formData.list) {
       const body = {
-        guestEmail : formData.selectedUser.email,
-        cut : formData.comissao/100,
-      }
-      const response = await putData(`properties/share/${formData.property.id}`,body,token);
-      if(response.status === 200){
+        guestEmail: corretor.email,
+        cut: formData.comissao / 100,
+      };
+
+      const response = await putData(`properties/share/${formData.property.id}`, body, token);
+
+      if (response.status === 200) {
         toast.success('Pedido enviado com sucesso');
         console.log(response);
-        sendNotification(response.data.shared.id);
-        navigate('/apps/imoveis/list');
-      }else{
+        sendNotification(response.data.shared.id, corretor);
+      } else {
         toast.error(`Ocorreu um erro ao compartilhar o imóvel: ${response.message}`);
       }
-    }catch(error){
-      navigate('/error');
-      console.log(error);
-    }finally{
-      setLoading(false);
     }
+
+    navigate('/apps/imoveis/list');
+  } catch (error) {
+    navigate('/error');
+    console.error(error);
+  } finally {
+    setLoading(false);
   }
+}
 
 
-  const sendNotification = (id) => {
+  const sendNotification = (id,corretor) => {
       const data = {
         'sender': currentUser.email,
-        'receiver': formData.selectedUser.email,
+        'receiver': corretor.email,
         'title': `Novo compartilhamento de imóvel em ${formData.property.address.street} - ${formData.property.address.number}, ${formData.property.address.city} - ${formData.property.address.state}`, 
         'type': 'share',
         "sharedPropertyId" : id
@@ -118,67 +124,68 @@ const PropertyDetails = ({ formData, setActiveStep }) => {
       <Divider sx={{ marginY: 3 }} />
       <Box>
       <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-        Informações do Anunciante
+        Informações do(s) Anunciante(s)
       </Typography>
 
-      <Grid container spacing={1} alignItems="center">
-        {/* Avatar */}
-        <Grid item xs={2} md = {1.5}>
-          <Avatar
-            alt={formData.selectedUser?.profile?.url || "Avatar"}
-            src={formData.selectedUser?.profile?.url || ""}
-            sx={{ width: 72, height: 72 }}
-          />
-        </Grid>
-
-        {/* Informações do Anunciante */}
-        <Grid item xs={10} md = {10.5}>
-          <Box mb={1}>
-            <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
-              Nome :  {formData.selectedUser?.name || "Não informado"}
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
-              Contato :  {formData.selectedUser?.info?.phone || "Não informado"}
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
+        {
+          formData.list.map ((corretor,index)=>{
+            return(
+              <Grid container spacing={1} alignItems="center" key={index} sx={{ marginBottom: 2 }}>
+                <Grid item xs={2} md = {1.5} >
+                  <Avatar
+                    alt={corretor?.profile?.url || "Avatar"}
+                    src={corretor?.profile?.url || ""}
+                    sx={{ width: 72, height: 72 }}
+                  />
+                </Grid>
+                {/* Informações do Anunciante */}
+                <Grid item xs={10} md = {10.5}>
+                  <Box mb={1}>
+                    <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
+                      Nome :  {corretor?.name || "Não informado"}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: "#888", mb: 0.5 }}>
+                      Contato :  {corretor?.info?.phone || "Não informado"}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            )
+          }
+        )
+      }
     </Box>
+    <Divider sx={{ marginY: 3 }} />
+    
+    <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
+      Dados da Comissão
+    </Typography>
 
-   
-      <Divider sx={{ marginY: 3 }} />
-
-      <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
-        Dados da Comissão
-      </Typography>
-
-      <Grid container spacing={2}>
-        {renderCommision(formData.property)}
-      </Grid>
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
-            <Box>
-              <Button fullWidth variant="outlined" onClick={() => setActiveStep(1)}>
-                Voltar
-              </Button>
-            </Box>
-            <Box>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={shareProperty}
-              >
-                {loading ? <CircularProgress size={24} color="inherit" /> : "Enviar pedido"}
-              </Button>
-            </Box>
-          </Box>
-    </Box>
-
+    <Grid container spacing={2}>
+      {renderCommision(formData.property)}
+    </Grid>
+    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+      <Box>
+        <Button fullWidth variant="outlined" onClick={() => setActiveStep(1)}>
+          Voltar
+        </Button>
+      </Box>
+      <Box>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={shareProperty}
+        >
+          {loading ? <CircularProgress size={24} color="inherit" /> : "Enviar pedido"}
+        </Button>
+      </Box>
+      </Box>
   </Box>
-  );
+</Box>
+);
 }
 
 
